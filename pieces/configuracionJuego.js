@@ -36,7 +36,7 @@ export const configuracionJuego = {
             imgElement.setAttribute( 'piece-type', pieceType )
             imgElement.src = `${ pieceImageLocation }`
 
-            $( `#${ piecePosition }` ).append( imgElement )
+            document.querySelector(`#${ piecePosition }` ).append( imgElement )
         }
     },
 }
