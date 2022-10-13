@@ -1,33 +1,33 @@
 // import { playerTurn } from '../../../services/playerTurn.service.js'
-// import { checkMate } from '../../checkMate.service.js'
-// import { piecesDetermine } from '../../piecesDetermine.service.js'
+import { checkMate } from '../../checkMate.js'
+import { piecesDetermine } from '../../piecesDetermine.service.js'
 // import handlePieceMovingHelpers from '../helpers/handlePieceMoving.helpers.js'
 
 export default {
-    // handlePieceClick({ pieceBoxElement, pieceBoxPosition, pieceElement, pieceType }) {
-    //     if ( checkMate.gameOver ) {
-    //         return
-    //     }
+    handlePieceClick({ pieceBoxElement, pieceBoxPosition, pieceElement, pieceType }) {
+        if ( checkMate.gameOver ) {
+            return
+        }
 
-    //     const { pieceSelectedPosition } = this
+        const { pieceSelectedPosition } = this
         
-    //     if ( piecesDetermine.hasPiecePotential( pieceSelectedPosition, pieceBoxPosition ) ) {
-    //         if ( checkMate.cantMoveDueToCheck({ pieceSelectedPosition, pieceBoxPosition }) ) {
-    //             this.setNotAllowed( pieceBoxElement )
-    //             return
-    //         }
+        if ( piecesDetermine.hasPiecePotential( pieceSelectedPosition, pieceBoxPosition ) ) {
+            if ( checkMate.cantMoveDueToCheck({ pieceSelectedPosition, pieceBoxPosition }) ) {
+                this.setNotAllowed( pieceBoxElement )
+                return
+            }
             
-    //         this.handleMovingThePiece({ pieceBoxElement, pieceElement })
+            this.handleMovingThePiece({ pieceBoxElement, pieceElement })
 
-    //         if ( checkMate.isCheckMate() ) {
-    //             checkMate.displayCheckMateMessage()
-    //         }
-    //         return
-    //     }
+            if ( checkMate.isCheckMate() ) {
+                checkMate.displayCheckMateMessage()
+            }
+            return
+        }
 
-    //     if ( !pieceElement ) {
-    //         return
-    //     }
+        if ( !pieceElement ) {
+            return
+        }
     //     if ( 
     //         this.isPieceSelected() && 
     //         this.isNotOnPieceSelected( pieceBoxPosition )
@@ -63,7 +63,7 @@ export default {
     //         this.setNotAllowed( pieceBoxElement )
     //         return
     //     }
-    // },
+    },
 
     // setPiecePotentials( pieceBoxPosition ) {
     //     piecesDetermine.itereateDetermine( pieceBoxPosition, this.setPotential )
