@@ -45,6 +45,14 @@ li {
 .allpawn {
     transform: scale(0.7);
 }
+
+.white-box {
+    background: rgb(100, 75, 43);
+}
+.black-box {
+    background: rgb(240, 201, 150);
+}
+
 /* 
 
 .authcont {
