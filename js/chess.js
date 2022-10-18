@@ -1,13 +1,42 @@
-import { movimientoPawn } from './piezas/pawn.js';
+// import { movimientoPawn } from './piezas/pawn.js';
 import { movimientoKing } from './piezas/king.js';
 import { movimientoRook } from './piezas/rook.js';
 import { movimientoBishoop } from './piezas/bishoop.js';
 import { movimientoQueen } from './piezas/queen.js';
 import { movimientoKnight } from './piezas/knight.js';
 import {colorOpciones} from './util/configuracionGeneral.js'
+import {piezasGame} from './config/configuracionPiezas.js'
+import {montanas,lagos} from './config/configuracionTablero.js'
 let pinkId = "";
 let pinkText = "";
 
+const posicionClasesTablero = () => {
+    for ( const piecePosition in montanas ) {
+        const div = document.getElementById(montanas[piecePosition]);
+        div.classList.remove( 'white-box' )
+        div.classList.add( 'green-box' )
+    }
+
+    for ( const piecePosition in lagos ) {
+        const div = document.getElementById(lagos[piecePosition]);
+        div.classList.remove("white-box");
+        div.classList.add( 'blue-box' )
+    }
+
+}
+
+posicionClasesTablero()
+
+
+const posicionPiezas = () => {
+    for ( const piecePosition in piezasGame ) {
+        console.log(piecePosition)
+        var div = document.getElementById(piecePosition);
+        div.innerHTML += piezasGame[piecePosition];
+    }
+}
+
+posicionPiezas()
 
 const insertImage = () => {
     document.querySelectorAll('.box').forEach(image => {
@@ -46,7 +75,7 @@ function coloring() {
     })
 
     document.querySelectorAll('.blue-box').forEach(colorNegro => {
-        colorNegro.style.backgroundColor = 'rgb(0, 141, 155)'; 
+        colorNegro.style.backgroundColor = 'rgb(63, 234, 229)'; 
     })
 
     
