@@ -4,9 +4,9 @@ import { movimientoRook } from './piezas/rook.js';
 import { movimientoBishoop } from './piezas/bishoop.js';
 import { movimientoQueen } from './piezas/queen.js';
 import { movimientoKnight } from './piezas/knight.js';
+import {colorOpciones} from './util/configuracionGeneral.js'
 let pinkId = "";
 let pinkText = "";
-let colorFuturaPosicion = 'rgb(0, 141, 155)';
 
 
 const insertImage = () => {
@@ -37,17 +37,16 @@ function coloring() {
     //         color.style.backgroundColor = 'rgb(100, 75, 43)'
     //     }
     // })
-
-    document.querySelectorAll('.white-box').forEach(colorBlanco => {
-        colorBlanco.style.backgroundColor = 'rgb(100, 75, 43)';
-    })
-
-    document.querySelectorAll('.black-box').forEach(colorNegro => {
+    document.querySelectorAll('.white-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = 'rgb(240, 201, 150)'; 
     })
 
     document.querySelectorAll('.green-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = 'rgb(14, 155, 0)'; 
+    })
+
+    document.querySelectorAll('.blue-box').forEach(colorNegro => {
+        colorNegro.style.backgroundColor = 'rgb(0, 141, 155)'; 
     })
 
     
@@ -59,7 +58,7 @@ function reddish() {
     document.querySelectorAll('.box').forEach(i1 => {
         if (i1.style.backgroundColor == 'pink') {
             document.querySelectorAll('.box').forEach(i2 => {
-                if (i2.style.backgroundColor == colorFuturaPosicion && i2.innerText.length !== 0) {
+                if (i2.style.backgroundColor == colorOpciones && i2.innerText.length !== 0) {
 
                     let greenText = i2.innerText
 
@@ -75,11 +74,8 @@ function reddish() {
                     let aup = eval(arr.shift())
                     let a = aside + aup
             
-                    if (a % 2 == 0 && pinkColor == greenColor) {
+                    if (pinkColor == greenColor) {
                         i2.style.backgroundColor = 'rgb(240, 201, 150)'
-                    }
-                    if (a % 2 !== 0 && pinkColor == greenColor) {
-                        i2.style.backgroundColor = 'rgb(100, 75, 43)'
                     }
 
 //                     // if (pinkColor == greenColor) {
@@ -96,11 +92,9 @@ let tog = 1
 document.querySelectorAll('.box').forEach(item => {
     item.addEventListener('click', function () {
         // To delete the opposite element
-        if (item.style.backgroundColor == colorFuturaPosicion && item.innerText.length == 0) {
+        if (item.style.backgroundColor == colorOpciones && item.innerText.length == 0) {
             tog = tog + 1
-            console.log('entre a las condicion tog')
-        } else if (item.style.backgroundColor == colorFuturaPosicion && item.innerText.length !== 0) {
-            console.log('entre a otra parte')
+        } else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
             document.querySelectorAll('.box').forEach(i => {
                 if (i.style.backgroundColor == 'pink') {
                     pinkId = i.id
@@ -198,7 +192,7 @@ document.querySelectorAll('.box').forEach(hathiTest => {
             pinkText = hathiTest.innerText;
             document.querySelectorAll('.box').forEach(hathiTest2 => {
                 hathiTest2.addEventListener('click', function () {
-                    if (hathiTest2.style.backgroundColor == colorFuturaPosicion && hathiTest2.innerText.length == 0) {
+                    if (hathiTest2.style.backgroundColor == colorOpciones && hathiTest2.innerText.length == 0) {
                         document.getElementById(pinkId).innerText = '';
                         hathiTest2.innerText = pinkText;
                         coloring()
@@ -215,7 +209,7 @@ let z = 0;
 document.querySelectorAll('.box').forEach(ee => {
     ee.addEventListener('click', function () {
         z = z + 1
-        if (z % 2 == 0 && ee.style.backgroundColor !== colorFuturaPosicion) {
+        if (z % 2 == 0 && ee.style.backgroundColor !== colorOpciones) {
             coloring()
         }
     })

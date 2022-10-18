@@ -1,0 +1,1 @@
+export let colorOpciones = 'rgb(195, 208, 39)';
