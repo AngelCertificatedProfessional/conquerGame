@@ -13,12 +13,14 @@ let pinkText = "";
 const posicionClasesTablero = () => {
     for ( const piecePosition in montanas ) {
         const div = document.getElementById(montanas[piecePosition]);
+        div.innerHTML += "montana";
         div.classList.remove( 'white-box' )
         div.classList.add( 'green-box' )
     }
 
     for ( const piecePosition in lagos ) {
         const div = document.getElementById(lagos[piecePosition]);
+        div.innerHTML += "lago";
         div.classList.remove("white-box");
         div.classList.add( 'blue-box' )
     }
