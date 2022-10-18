@@ -6,6 +6,8 @@ import { movimientoQueen } from './piezas/queen.js';
 import { movimientoKnight } from './piezas/knight.js';
 let pinkId = "";
 let pinkText = "";
+let colorFuturaPosicion = 'rgb(0, 141, 155)';
+
 
 const insertImage = () => {
     document.querySelectorAll('.box').forEach(image => {
@@ -43,6 +45,12 @@ function coloring() {
     document.querySelectorAll('.black-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = 'rgb(240, 201, 150)'; 
     })
+
+    document.querySelectorAll('.green-box').forEach(colorNegro => {
+        colorNegro.style.backgroundColor = 'rgb(14, 155, 0)'; 
+    })
+
+    
 }
 coloring()
 
@@ -51,7 +59,7 @@ function reddish() {
     document.querySelectorAll('.box').forEach(i1 => {
         if (i1.style.backgroundColor == 'pink') {
             document.querySelectorAll('.box').forEach(i2 => {
-                if (i2.style.backgroundColor == 'green' && i2.innerText.length !== 0) {
+                if (i2.style.backgroundColor == colorFuturaPosicion && i2.innerText.length !== 0) {
 
                     let greenText = i2.innerText
 
@@ -88,10 +96,10 @@ let tog = 1
 document.querySelectorAll('.box').forEach(item => {
     item.addEventListener('click', function () {
         // To delete the opposite element
-        if (item.style.backgroundColor == 'green' && item.innerText.length == 0) {
+        if (item.style.backgroundColor == colorFuturaPosicion && item.innerText.length == 0) {
             tog = tog + 1
             console.log('entre a las condicion tog')
-        } else if (item.style.backgroundColor == 'green' && item.innerText.length !== 0) {
+        } else if (item.style.backgroundColor == colorFuturaPosicion && item.innerText.length !== 0) {
             console.log('entre a otra parte')
             document.querySelectorAll('.box').forEach(i => {
                 if (i.style.backgroundColor == 'pink') {
@@ -123,9 +131,10 @@ document.querySelectorAll('.box').forEach(item => {
 
         function whosTurn(toggle) {
             // PAWN
-            if (item.innerText == `${toggle}pawn`) {
-                movimientoPawn(tog,a,aup,aside,item)
-            }else if (item.innerText == `${toggle}king`) {
+            // if (item.innerText == `${toggle}pawn`) {
+            //     movimientoPawn(tog,a,aup,aside,item)
+            // }else 
+            if (item.innerText == `${toggle}king`) {
                 movimientoKing(a,aup,aside,item)
             }else if (item.innerText == `${toggle}rook`) {
                 movimientoRook(a,aup,item)
@@ -189,7 +198,7 @@ document.querySelectorAll('.box').forEach(hathiTest => {
             pinkText = hathiTest.innerText;
             document.querySelectorAll('.box').forEach(hathiTest2 => {
                 hathiTest2.addEventListener('click', function () {
-                    if (hathiTest2.style.backgroundColor == 'green' && hathiTest2.innerText.length == 0) {
+                    if (hathiTest2.style.backgroundColor == colorFuturaPosicion && hathiTest2.innerText.length == 0) {
                         document.getElementById(pinkId).innerText = '';
                         hathiTest2.innerText = pinkText;
                         coloring()
@@ -202,11 +211,11 @@ document.querySelectorAll('.box').forEach(hathiTest => {
 })
 
 // // Prvents from selecting multiple elements
-let z = 0
+let z = 0;
 document.querySelectorAll('.box').forEach(ee => {
     ee.addEventListener('click', function () {
         z = z + 1
-        if (z % 2 == 0 && ee.style.backgroundColor !== 'green') {
+        if (z % 2 == 0 && ee.style.backgroundColor !== colorFuturaPosicion) {
             coloring()
         }
     })
