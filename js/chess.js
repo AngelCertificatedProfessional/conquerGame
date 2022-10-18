@@ -24,25 +24,25 @@ const insertImage = () => {
 insertImage();
 
 function coloring() {
-    document.querySelectorAll('.box').forEach(color => {
-        let arr = Array.from(color.id);
-        arr.shift()
-        let a = eval(arr.pop()) + eval(arr.shift())
-        if (a % 2 == 0) {
-            color.style.backgroundColor = 'rgb(240, 201, 150)'
-        }
-        if (a % 2 !== 0) {
-            color.style.backgroundColor = 'rgb(100, 75, 43)'
-        }
+    // document.querySelectorAll('.box').forEach(color => {
+    //     let arr = Array.from(color.id);
+    //     arr.shift()
+    //     let a = eval(arr.pop()) + eval(arr.shift())
+    //     if (a % 2 == 0) {
+    //         color.style.backgroundColor = 'rgb(240, 201, 150)'
+    //     }
+    //     if (a % 2 !== 0) {
+    //         color.style.backgroundColor = 'rgb(100, 75, 43)'
+    //     }
+    // })
+
+    document.querySelectorAll('.white-box').forEach(colorBlanco => {
+        colorBlanco.style.backgroundColor = 'rgb(100, 75, 43)';
     })
 
-    // document.querySelectorAll('.white-box').forEach(color => {
-    //     color.style.backgroundColor = 'rgb(240, 201, 150)'
-    // })
-
-    // document.querySelectorAll('.black-box').forEach(color => {
-    //     color.style.backgroundColor = 'rgb(100, 75, 43)'
-    // })
+    document.querySelectorAll('.black-box').forEach(colorNegro => {
+        colorNegro.style.backgroundColor = 'rgb(240, 201, 150)'; 
+    })
 }
 coloring()
 
@@ -202,12 +202,12 @@ document.querySelectorAll('.box').forEach(hathiTest => {
 })
 
 // // Prvents from selecting multiple elements
-// let z = 0
-// document.querySelectorAll('.box').forEach(ee => {
-//     ee.addEventListener('click', function () {
-//         z = z + 1
-//         if (z % 2 == 0 && ee.style.backgroundColor !== 'green') {
-//             coloring()
-//         }
-//     })
-// })
+let z = 0
+document.querySelectorAll('.box').forEach(ee => {
+    ee.addEventListener('click', function () {
+        z = z + 1
+        if (z % 2 == 0 && ee.style.backgroundColor !== 'green') {
+            coloring()
+        }
+    })
+})
