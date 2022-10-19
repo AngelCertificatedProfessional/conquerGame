@@ -13,18 +13,17 @@ let pinkText = "";
 const posicionClasesTablero = () => {
     for ( const piecePosition in montanas ) {
         const div = document.getElementById(montanas[piecePosition]);
-        div.innerHTML += "montana";
+        div.innerHTML += "Montana";
         div.classList.remove( 'white-box' )
         div.classList.add( 'green-box' )
     }
 
     for ( const piecePosition in lagos ) {
         const div = document.getElementById(lagos[piecePosition]);
-        div.innerHTML += "lago";
+        div.innerHTML += "Lago";
         div.classList.remove("white-box");
         div.classList.add( 'blue-box' )
     }
-
 }
 
 posicionClasesTablero()
@@ -91,22 +90,26 @@ function reddish() {
             document.querySelectorAll('.box').forEach(i2 => {
                 if (i2.style.backgroundColor == colorOpciones && i2.innerText.length !== 0) {
 
+                    console.log(i1)
+                    console.log(i2)
+
                     let greenText = i2.innerText
 
                     let pinkText = i1.innerText
 
                     let pinkColor = ((Array.from(pinkText)).shift()).toString()
                     let greenColor = ((Array.from(greenText)).shift()).toString()
-
-                    let getId = i2.id
-                    let arr = Array.from(getId)
-                    arr.shift()
-                    let aside = eval(arr.pop())
-                    let aup = eval(arr.shift())
-                    let a = aside + aup
-            
+                    console.log("pinkColor"+pinkColor)
+                    console.log("greenColor"+greenColor)
+                    
+                    //En esta validacion se pregunta si la pieza a pazar es del mismo color a otra del mismo
+                    //team, aparte de condicionar si es un lago o una montana
                     if (pinkColor == greenColor) {
                         i2.style.backgroundColor = 'rgb(240, 201, 150)'
+                    }else if (greenColor == "L") {
+                        i2.style.backgroundColor = 'rgb(63, 234, 229)'
+                    } else if (greenColor == "M") {
+                        i2.style.backgroundColor = 'rgb(14, 155, 0)'
                     }
 
 //                     // if (pinkColor == greenColor) {
