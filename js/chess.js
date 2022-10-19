@@ -23,21 +23,21 @@ const insertImage = () => {
 }
 insertImage();
 
-// function coloring() {
-//     document.querySelectorAll('.box').forEach(color => {
-//         let arr = Array.from(color.id);
-//         arr.shift()
-//         let a = eval(arr.pop()) + eval(arr.shift())
-//         if (a % 2 == 0) {
-//             color.style.backgroundColor = 'rgb(240, 201, 150)'
-//         }
-//         if (a % 2 !== 0) {
-//             color.style.backgroundColor = 'rgb(100, 75, 43)'
-//         }
+function coloring() {
+    document.querySelectorAll('.box').forEach(color => {
+        let arr = Array.from(color.id);
+        arr.shift()
+        let a = eval(arr.pop()) + eval(arr.shift())
+        if (a % 2 == 0) {
+            color.style.backgroundColor = 'rgb(240, 201, 150)'
+        }
+        if (a % 2 !== 0) {
+            color.style.backgroundColor = 'rgb(100, 75, 43)'
+        }
 
-//     })
-// }
-// coloring()
+    })
+}
+coloring()
 
 //function to not remove the same team element
 function reddish() {
@@ -93,7 +93,7 @@ document.querySelectorAll('.box').forEach(item => {
 
                     document.getElementById(pinkId).innerText = ''
                     item.innerText = pinkText
-                    //coloring()
+                    coloring()
                     insertImage()
                     tog = tog + 1
                     
@@ -185,7 +185,7 @@ document.querySelectorAll('.box').forEach(hathiTest => {
                     if (hathiTest2.style.backgroundColor == 'green' && hathiTest2.innerText.length == 0) {
                         document.getElementById(pinkId).innerText = '';
                         hathiTest2.innerText = pinkText;
-                        //coloring()
+                        coloring()
                         insertImage()
                     }
                 })
