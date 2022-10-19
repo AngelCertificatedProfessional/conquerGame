@@ -65,6 +65,15 @@ li {
 }
 */
 
+.menu-juego{
+    display:flex;
+}
+
+form{
+    display:flex;
+    flex-direction: column;
+}
+
 @media (max-width:650px){
 
     #tog {
