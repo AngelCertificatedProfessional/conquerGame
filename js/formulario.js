@@ -39,14 +39,41 @@ posicionClasesTablero()
 function coloring() {
     document.querySelectorAll('.white-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = 'rgb(240, 201, 150)'; 
+        let arr = Array.from(colorNegro.id)
+        arr.shift()
+        let nValor = parseInt(arr.shift());
+        if((sTurno === "W" && (nValor ===1 || nValor ===2 || nValor ===3 || nValor ===4)) ||
+         (sTurno === "B" && (nValor ===5 || nValor ===6 || nValor ===7 || nValor ===8))){
+            colorNegro.style.opacity = 0.3; 
+        }else{
+            colorNegro.style.opacity = 1;  
+        }
     })
 
     document.querySelectorAll('.green-box').forEach(colorNegro => {
-        colorNegro.style.backgroundColor = 'rgb(14, 155, 0)'; 
+        colorNegro.style.backgroundColor = 'rgb(14, 155, 0)';
+        let arr = Array.from(colorNegro.id)
+        arr.shift()
+        let nValor = parseInt(arr.shift());
+        if((sTurno === "W" && (nValor ===1 || nValor ===2 || nValor ===3 || nValor ===4)) ||
+         (sTurno === "B" && (nValor ===5 || nValor ===6 || nValor ===7 || nValor ===8))){
+            colorNegro.style.opacity = 0.3; 
+        }else{
+            colorNegro.style.opacity = 1;  
+        }
     })
 
     document.querySelectorAll('.blue-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = 'rgb(63, 234, 229)'; 
+        let arr = Array.from(colorNegro.id)
+        arr.shift()
+        let nValor = parseInt(arr.shift());
+        if((sTurno === "W" && (nValor ===1 || nValor ===2 || nValor ===3 || nValor ===4)) ||
+         (sTurno === "B" && (nValor ===5 || nValor ===6 || nValor ===7 || nValor ===8))){
+            colorNegro.style.opacity = 0.3; 
+        }else{
+            colorNegro.style.opacity = 1;  
+        }
     })
 }
 coloring()
@@ -158,6 +185,24 @@ export const guardarConfiguracionPiezas = () => {
     piezasGame[sTurno+"bishop2"] = caballero2;
     piezasGame[sTurno+"rook2"] = torre2;
 
+    document.getElementById(torre1).innerHTML = ''
+    document.getElementById(torre2).innerHTML = ''
+    document.getElementById(caballero1).innerHTML = ''
+    document.getElementById(caballero2).innerHTML = ''
+    document.getElementById(alfil1).innerHTML = ''
+    document.getElementById(alfil2).innerHTML = ''
+    document.getElementById(rey).innerHTML = ''
+    document.getElementById(reina).innerHTML = ''
+
+    document.getElementById("torre1").value = ''
+    document.getElementById("torre2").value = ''
+    document.getElementById("caballero1").value = ''
+    document.getElementById("caballero2").value = ''
+    document.getElementById("alfil1").value = ''
+    document.getElementById("alfil2").value = ''
+    document.getElementById("rey").value = ''
+    document.getElementById("reina").value = ''
+
     torre1 = '';
     torre2 = '';
     caballero1 = '';
@@ -166,10 +211,12 @@ export const guardarConfiguracionPiezas = () => {
     alfil2 = '';
     rey = '';
     reina = '';
+
     switch(sTurno){
         case "W":
             sTurno = "B";
             document.getElementById('tog').innerText = "Black's Turn"
+            coloring();
             break;
         case "B":
             window.localStorage.setItem('piezas', JSON.stringify(piezasGame))
