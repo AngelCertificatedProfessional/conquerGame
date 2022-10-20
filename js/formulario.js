@@ -79,8 +79,14 @@ function coloring() {
 coloring()
 
 export const colocarConfiguracionPiezas = () =>{
+
     if(document.getElementById('torre1').value !== ""){
+
         //Se evalua si los elementos sin iguales
+        if(validaIconoMismaPosicion('torre1')){
+            return;
+        }
+        //Se evalua si los valores son diferentes, esto ayudando a eliminar la posicion anterior
         if(torre1 !== '' && torre1 !== document.getElementById('torre1').value){
             let div = document.getElementById(torre1);
             div.innerHTML = '';
@@ -91,6 +97,12 @@ export const colocarConfiguracionPiezas = () =>{
     }
 
     if(document.getElementById('torre2').value !== ""){
+
+        //Se evalua si los elementos sin iguales
+        if(validaIconoMismaPosicion('torre2')){
+            return;
+        }
+
         //Se evalua si los elementos sin iguales
         if(torre2 !== '' && torre2 !== document.getElementById('torre2').value){
             let div = document.getElementById(torre2);
@@ -101,29 +113,13 @@ export const colocarConfiguracionPiezas = () =>{
         div2.innerHTML = sTurno+'rook';
     }
     
-    if(document.getElementById('alfil1').value !== ""){
-        //Se evalua si los elementos sin iguales
-        if(alfil1 !== '' && alfil1 !== document.getElementById('alfil1').value){
-            let div = document.getElementById(alfil1);
-            div.innerHTML = '';
-        }
-        alfil1 = document.getElementById('alfil1').value;
-        let div2 = document.getElementById(alfil1);
-        div2.innerHTML = sTurno+'bishop';
-    }
-
-    if(document.getElementById('alfil2').value !== ""){
-        //Se evalua si los elementos sin iguales
-        if(alfil2 !== '' && alfil2 !== document.getElementById('alfil2').value){
-            let div = document.getElementById(alfil2);
-            div.innerHTML = '';
-        }
-        alfil2 = document.getElementById('alfil2').value;
-        let div2 = document.getElementById(alfil2);
-        div2.innerHTML = sTurno+'bishop';
-    }
-
     if(document.getElementById('caballero1').value !== ""){
+
+        //Se evalua si los elementos sin iguales
+        if(validaIconoMismaPosicion('caballero1')){
+            return;
+        }
+
         //Se evalua si los elementos sin iguales
         if(caballero1 !== '' && caballero1 !== document.getElementById('caballero1').value){
             let div = document.getElementById(caballero1);
@@ -135,6 +131,12 @@ export const colocarConfiguracionPiezas = () =>{
     }
 
     if(document.getElementById('caballero2').value !== ""){
+
+        //Se evalua si los elementos sin iguales
+        if(validaIconoMismaPosicion('caballero2')){
+            return;
+        }
+
         //Se evalua si los elementos sin iguales
         if(caballero2 !== '' && caballero2 !== document.getElementById('caballero2').value){
             let div = document.getElementById(caballero2);
@@ -145,7 +147,48 @@ export const colocarConfiguracionPiezas = () =>{
         div2.innerHTML = sTurno+'knight';
     }
 
+    if(document.getElementById('alfil1').value !== ""){
+        
+        //Se evalua si los elementos sin iguales
+        if(validaIconoMismaPosicion('alfil1')){
+            return;
+        }
+
+        //Se evalua si los elementos sin iguales
+        if(alfil1 !== '' && alfil1 !== document.getElementById('alfil1').value){
+            let div = document.getElementById(alfil1);
+            div.innerHTML = '';
+        }
+        alfil1 = document.getElementById('alfil1').value;
+        let div2 = document.getElementById(alfil1);
+        div2.innerHTML = sTurno+'bishop';
+    }
+
+    if(document.getElementById('alfil2').value !== ""){
+
+        //Se evalua si los elementos sin iguales
+        if(validaIconoMismaPosicion('alfil2')){
+            return;
+        }
+
+        //Se evalua si los elementos sin iguales
+        if(alfil2 !== '' && alfil2 !== document.getElementById('alfil2').value){
+            let div = document.getElementById(alfil2);
+            div.innerHTML = '';
+        }
+        alfil2 = document.getElementById('alfil2').value;
+        let div2 = document.getElementById(alfil2);
+        div2.innerHTML = sTurno+'bishop';
+    }
+
+
     if(document.getElementById('reina').value !== ""){
+
+        //Se evalua si los elementos sin iguales
+        if(validaIconoMismaPosicion('reina')){
+            return;
+        }
+
         //Se evalua si los elementos sin iguales
         if(reina !== '' && reina !== document.getElementById('reina').value){
             let div = document.getElementById(reina);
@@ -158,6 +201,9 @@ export const colocarConfiguracionPiezas = () =>{
 
     if(document.getElementById('rey').value !== ""){
         //Se evalua si los elementos sin iguales
+        if(validaIconoMismaPosicion('rey')){
+            return;
+        }
         if(rey !== '' && rey !== document.getElementById('rey').value){
             let div = document.getElementById(rey);
             div.innerHTML = '';
@@ -176,6 +222,7 @@ export const guardarConfiguracionPiezas = () => {
         alert("Debe agregar todas las piezas al tablero primero")
         return;
     }
+
     piezasGame[sTurno+"rook1"] = torre1;
     piezasGame[sTurno+"knight1"] = caballero1;
     piezasGame[sTurno+"bishop1"] = alfil1;
@@ -240,4 +287,19 @@ const insertImage = () => {
             }
         }
     })
+}
+
+const validaIconoMismaPosicion = (sValorComparar) => {
+    if((document.getElementById('torre1').value === document.getElementById(sValorComparar).value && sValorComparar !== "torre1")|| 
+        (document.getElementById('torre2').value === document.getElementById(sValorComparar).value && sValorComparar !== "torre2")|| 
+        (document.getElementById('caballero1').value === document.getElementById(sValorComparar).value  && sValorComparar !== "caballero1")|| 
+        (document.getElementById('caballero2').value  === document.getElementById(sValorComparar).value  && sValorComparar !== "caballero2")|| 
+        (document.getElementById('alfil1').value === document.getElementById(sValorComparar).value  && sValorComparar !== "alfil1")||
+        (document.getElementById('alfil2').value === document.getElementById(sValorComparar).value  && sValorComparar !== "alfil2")|| 
+        (document.getElementById('rey').value === document.getElementById(sValorComparar).value  && sValorComparar !== "rey")|| 
+        (document.getElementById('reina').value === document.getElementById(sValorComparar).value && sValorComparar !== "reina")){
+            alert(`La pieza ${sValorComparar} esta repitiendo su posicion con otra pieza`);
+            return true;
+    }
+    return false;
 }
