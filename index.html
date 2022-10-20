@@ -8,7 +8,8 @@
     <meta name="author" content="Angel Espinoza">
     <link rel="stylesheet" href="css/index.css">
     <script type="module">
-        import { guardarConfiguracionPiezas } from "./js/formulario.js";
+        import { colocarConfiguracionPiezas,guardarConfiguracionPiezas } from "./js/formulario.js";
+        window.colocarConfiguracionPiezas = colocarConfiguracionPiezas;
         window.guardarConfiguracionPiezas = guardarConfiguracionPiezas;
     </script>
     <title>Conquer Game</title>
@@ -23,22 +24,22 @@
     <section class="menu-juego">
         <form action="javascript:void(0);">
             <label> Torre 1</label>
-            <input/>
+            <input name="torre1" id="torre1" placeholder="Posicion Torre 1"/>
             <label> Torre 2</label>
-            <input/>
+            <input name="torre2" id="torre2" placeholder="Posicion Torre 2"/>
             <label> Alfil 1</label>
-            <input/>
-            <label> Alfil 1</label>
-            <input/>
+            <input name="alfil1" id="alfil1" placeholder="Posicion Alfil 1"/>
+            <label> Alfil 2</label>
+            <input name="alfil2" id="alfil2" placeholder="Posicion Alfil 2"/>
             <label> Reina</label>
-            <input/>
+            <input name="reina" id="reina" placeholder="Posicion Reyna"/>
             <label> Rey</label>
-            <input/>
+            <input name="rey" id="rey" placeholder="Posicion Rey"/>
             <label> Caballero 1</label>
-            <input/>
+            <input name="caballero1" id="caballero1" placeholder="Posicion Caballero 1"/>
             <label> Caballero 2</label>
-            <input/>
-            <button>Colocar</button>
+            <input name="caballero2" id="caballero2" placeholder="Posicion Caballero 2"/>
+            <button onclick="colocarConfiguracionPiezas()">Colocar</button>
             <button onclick="guardarConfiguracionPiezas()">Guardar</button>
         </form>
         <div class="juego">

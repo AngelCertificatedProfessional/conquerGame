@@ -5,11 +5,11 @@ import { movimientoBishoop } from './piezas/bishoop.js';
 import { movimientoQueen } from './piezas/queen.js';
 import { movimientoKnight } from './piezas/knight.js';
 import {colorOpciones} from './util/configuracionGeneral.js'
-import {piezasGame} from './config/configuracionPiezas.js'
+// import {piezasGame} from './config/configuracionPiezas.js'
 import {montanas,lagos} from './config/configuracionTablero.js'
 let pinkId = "";
 let pinkText = "";
-
+let numOfKings = 0;
 const posicionClasesTablero = () => {
     for ( const piecePosition in montanas ) {
         const div = document.getElementById(montanas[piecePosition]);
@@ -30,11 +30,16 @@ posicionClasesTablero()
 
 
 const posicionPiezas = () => {
-    for ( const piecePosition in piezasGame ) {
-        console.log(piecePosition)
-        var div = document.getElementById(piecePosition);
-        div.innerHTML += piezasGame[piecePosition];
+    if(window.localStorage.getItem('piezas') === ""){
+        window.open("http://127.0.0.1:5501/index.html","_self")
+        return;
     }
+    const piezasGame =JSON.parse(window.localStorage.getItem('piezas'))
+    for ( const piecePosition in piezasGame ) {
+        var div = document.getElementById(piezasGame[piecePosition]);
+        div.innerHTML += piecePosition.replace(/[0-9]/g, '');
+    }
+    window.localStorage.setItem('piezas','')
 }
 
 posicionPiezas()
@@ -56,17 +61,6 @@ const insertImage = () => {
 insertImage();
 
 function coloring() {
-    // document.querySelectorAll('.box').forEach(color => {
-    //     let arr = Array.from(color.id);
-    //     arr.shift()
-    //     let a = eval(arr.pop()) + eval(arr.shift())
-    //     if (a % 2 == 0) {
-    //         color.style.backgroundColor = 'rgb(240, 201, 150)'
-    //     }
-    //     if (a % 2 !== 0) {
-    //         color.style.backgroundColor = 'rgb(100, 75, 43)'
-    //     }
-    // })
     document.querySelectorAll('.white-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = 'rgb(240, 201, 150)'; 
     })
@@ -89,9 +83,6 @@ function reddish() {
         if (i1.style.backgroundColor == 'pink') {
             document.querySelectorAll('.box').forEach(i2 => {
                 if (i2.style.backgroundColor == colorOpciones && i2.innerText.length !== 0) {
-
-                    console.log(i1)
-                    console.log(i2)
 
                     let greenText = i2.innerText
 
@@ -147,13 +138,9 @@ document.querySelectorAll('.box').forEach(item => {
         let arr = Array.from(item.id)
         arr.shift()
         let aside = eval(arr.pop())
-        console.log(aside)
         arr.push('0')
-        console.log(arr)
         let aup = eval(arr.join(''))
-        console.log(aup)
         let a = aside + aup
-        console.log(a)
 
         // Function to display the available paths for all pieces
 
@@ -177,7 +164,6 @@ document.querySelectorAll('.box').forEach(item => {
 
 
         // Toggling the turn
-
         if (tog % 2 !== 0) {
             document.getElementById('tog').innerText = "White's Turn"
             whosTurn('W')
@@ -189,31 +175,26 @@ document.querySelectorAll('.box').forEach(item => {
 
         reddish()
 
-        // // winning()
+        document.querySelectorAll('.box').forEach(win => {
+            if (win.innerText == 'Wking' || win.innerText == 'Bking') {
+                numOfKings += 1
+            }
+            console.log(numOfKings)
+        })
 
-        // numOfKings = 0
-
-
-        // document.querySelectorAll('.box').forEach(win => {
-        //     if (win.innerText == 'Wking' || win.innerText == 'Bking') {
-        //         numOfKings += 1
-        //     }
-
-        // })
-
-        // if (numOfKings == 1) {
-        //     setTimeout(() => {
-        //         // console.log(`${toggle}`) 
-        //         if (tog % 2 == 0) {
-        //             alert('White Wins !!')
-        //             location.reload()
-        //         }
-        //         else if (tog % 2 !== 0) {
-        //             alert('Black Wins !!')
-        //             location.reload()
-        //         }
-        //     }, 100)
-        // }
+        if (numOfKings == 1) {
+            if (tog % 2 == 0) {
+                alert('White Wins !!')
+            }
+            else if (tog % 2 !== 0) {
+                alert('Black Wins !!')
+            }
+            setTimeout(() => {
+                window.open("http://127.0.0.1:5501/index.html","_self")
+            }, 600)
+        }else{
+            numOfKings = 0;
+        }
     })
 
 })
