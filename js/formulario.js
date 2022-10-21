@@ -41,9 +41,9 @@ function coloring() {
         colorNegro.style.backgroundColor = 'rgb(240, 201, 150)'; 
         let arr = Array.from(colorNegro.id)
         arr.shift()
-        let nValor = parseInt(arr.shift());
-        if((sTurno === "W" && (nValor ===1 || nValor ===2 || nValor ===3 || nValor ===4)) ||
-         (sTurno === "B" && (nValor ===5 || nValor ===6 || nValor ===7 || nValor ===8))){
+        const nValor = parseInt(arr.shift());
+        if((sTurno === "W" && (nValor >= 1 && nValor <=4)) ||
+         (sTurno === "B" && (nValor >= 5 && nValor <=8))){
             colorNegro.style.opacity = 0.3; 
         }else{
             colorNegro.style.opacity = 1;  
@@ -54,9 +54,9 @@ function coloring() {
         colorNegro.style.backgroundColor = 'rgb(14, 155, 0)';
         let arr = Array.from(colorNegro.id)
         arr.shift()
-        let nValor = parseInt(arr.shift());
-        if((sTurno === "W" && (nValor ===1 || nValor ===2 || nValor ===3 || nValor ===4)) ||
-         (sTurno === "B" && (nValor ===5 || nValor ===6 || nValor ===7 || nValor ===8))){
+        const nValor = parseInt(arr.shift());
+        if((sTurno === "W" && (nValor >= 1 && nValor <=4)) ||
+        (sTurno === "B" && (nValor >= 5 && nValor <=8))){
             colorNegro.style.opacity = 0.3; 
         }else{
             colorNegro.style.opacity = 1;  
@@ -67,9 +67,9 @@ function coloring() {
         colorNegro.style.backgroundColor = 'rgb(63, 234, 229)'; 
         let arr = Array.from(colorNegro.id)
         arr.shift()
-        let nValor = parseInt(arr.shift());
-        if((sTurno === "W" && (nValor ===1 || nValor ===2 || nValor ===3 || nValor ===4)) ||
-         (sTurno === "B" && (nValor ===5 || nValor ===6 || nValor ===7 || nValor ===8))){
+        const nValor = parseInt(arr.shift());
+        if((sTurno === "W" && (nValor >= 1 && nValor <=4)) ||
+        (sTurno === "B" && (nValor >= 5 && nValor <=8))){
             colorNegro.style.opacity = 0.3; 
         }else{
             colorNegro.style.opacity = 1;  
@@ -81,136 +81,128 @@ coloring()
 export const colocarConfiguracionPiezas = () =>{
 
     if(document.getElementById('torre1').value !== ""){
-
         //Se evalua si los elementos sin iguales
-        if(validaIconoMismaPosicion('torre1')){
-            return;
+        if(!validaIconoMismaPosicion('torre1') && !validaPosicionPieza("torre1")){
+            //Se evalua si los valores son diferentes, esto ayudando a eliminar la posicion anterior
+            if(torre1 !== '' && torre1 !== document.getElementById('torre1').value){
+                let div = document.getElementById(torre1);
+                div.innerHTML = '';
+            }
+            torre1 = document.getElementById('torre1').value;
+            let div2 = document.getElementById(torre1);
+            div2.innerHTML = sTurno+'rook';
         }
-        //Se evalua si los valores son diferentes, esto ayudando a eliminar la posicion anterior
-        if(torre1 !== '' && torre1 !== document.getElementById('torre1').value){
-            let div = document.getElementById(torre1);
-            div.innerHTML = '';
-        }
-        torre1 = document.getElementById('torre1').value;
-        let div2 = document.getElementById(torre1);
-        div2.innerHTML = sTurno+'rook';
     }
 
     if(document.getElementById('torre2').value !== ""){
 
         //Se evalua si los elementos sin iguales
-        if(validaIconoMismaPosicion('torre2')){
-            return;
+        if(!validaIconoMismaPosicion('torre2') && !validaPosicionPieza("torre2")){
+            if(torre2 !== '' && torre2 !== document.getElementById('torre2').value){
+                let div = document.getElementById(torre2);
+                div.innerHTML = '';
+            }
+            torre2 = document.getElementById('torre2').value;
+            let div2 = document.getElementById(torre2);
+            div2.innerHTML = sTurno+'rook';
         }
-
-        //Se evalua si los elementos sin iguales
-        if(torre2 !== '' && torre2 !== document.getElementById('torre2').value){
-            let div = document.getElementById(torre2);
-            div.innerHTML = '';
-        }
-        torre2 = document.getElementById('torre2').value;
-        let div2 = document.getElementById(torre2);
-        div2.innerHTML = sTurno+'rook';
     }
     
     if(document.getElementById('caballero1').value !== ""){
 
         //Se evalua si los elementos sin iguales
-        if(validaIconoMismaPosicion('caballero1')){
-            return;
+        if(!validaIconoMismaPosicion('caballero1') && !validaPosicionPieza("caballero1")){
+             //Se evalua si los elementos sin iguales
+            if(caballero1 !== '' && caballero1 !== document.getElementById('caballero1').value){
+                let div = document.getElementById(caballero1);
+                div.innerHTML = '';
+            }
+            caballero1 = document.getElementById('caballero1').value;
+            let div2 = document.getElementById(caballero1);
+            div2.innerHTML = sTurno+'knight';
         }
-
-        //Se evalua si los elementos sin iguales
-        if(caballero1 !== '' && caballero1 !== document.getElementById('caballero1').value){
-            let div = document.getElementById(caballero1);
-            div.innerHTML = '';
-        }
-        caballero1 = document.getElementById('caballero1').value;
-        let div2 = document.getElementById(caballero1);
-        div2.innerHTML = sTurno+'knight';
+       
     }
 
     if(document.getElementById('caballero2').value !== ""){
 
         //Se evalua si los elementos sin iguales
-        if(validaIconoMismaPosicion('caballero2')){
-            return;
+        if(!validaIconoMismaPosicion('caballero2') && !validaPosicionPieza("caballero2")){
+             //Se evalua si los elementos sin iguales
+            if(caballero2 !== '' && caballero2 !== document.getElementById('caballero2').value){
+                let div = document.getElementById(caballero2);
+                div.innerHTML = '';
+            }
+            caballero2 = document.getElementById('caballero2').value;
+            let div2 = document.getElementById(caballero2);
+            div2.innerHTML = sTurno+'knight';
         }
-
-        //Se evalua si los elementos sin iguales
-        if(caballero2 !== '' && caballero2 !== document.getElementById('caballero2').value){
-            let div = document.getElementById(caballero2);
-            div.innerHTML = '';
-        }
-        caballero2 = document.getElementById('caballero2').value;
-        let div2 = document.getElementById(caballero2);
-        div2.innerHTML = sTurno+'knight';
     }
 
     if(document.getElementById('alfil1').value !== ""){
         
         //Se evalua si los elementos sin iguales
-        if(validaIconoMismaPosicion('alfil1')){
-            return;
+        if(!validaIconoMismaPosicion('alfil1') && 
+        !validaPosicionPieza("alfil1")){
+            //Se evalua si los elementos sin iguales
+            if(alfil1 !== '' && alfil1 !== document.getElementById('alfil1').value){
+                let div = document.getElementById(alfil1);
+                div.innerHTML = '';
+            }
+            alfil1 = document.getElementById('alfil1').value;
+            let div2 = document.getElementById(alfil1);
+            div2.innerHTML = sTurno+'bishop';
         }
-
-        //Se evalua si los elementos sin iguales
-        if(alfil1 !== '' && alfil1 !== document.getElementById('alfil1').value){
-            let div = document.getElementById(alfil1);
-            div.innerHTML = '';
-        }
-        alfil1 = document.getElementById('alfil1').value;
-        let div2 = document.getElementById(alfil1);
-        div2.innerHTML = sTurno+'bishop';
+        
     }
 
     if(document.getElementById('alfil2').value !== ""){
 
         //Se evalua si los elementos sin iguales
-        if(validaIconoMismaPosicion('alfil2')){
-            return;
+        if(!validaIconoMismaPosicion('alfil2') && !validaPosicionPieza("alfil2")){
+            //Se evalua si los elementos sin iguales
+            if(alfil2 !== '' && alfil2 !== document.getElementById('alfil2').value){
+                let div = document.getElementById(alfil2);
+                div.innerHTML = '';
+            }
+            alfil2 = document.getElementById('alfil2').value;
+            let div2 = document.getElementById(alfil2);
+            div2.innerHTML = sTurno+'bishop';
         }
 
-        //Se evalua si los elementos sin iguales
-        if(alfil2 !== '' && alfil2 !== document.getElementById('alfil2').value){
-            let div = document.getElementById(alfil2);
-            div.innerHTML = '';
-        }
-        alfil2 = document.getElementById('alfil2').value;
-        let div2 = document.getElementById(alfil2);
-        div2.innerHTML = sTurno+'bishop';
+
     }
 
 
     if(document.getElementById('reina').value !== ""){
 
         //Se evalua si los elementos sin iguales
-        if(validaIconoMismaPosicion('reina')){
-            return;
+        if(!validaIconoMismaPosicion('reina') && !validaPosicionPieza("reina")){
+             //Se evalua si los elementos sin iguales
+            if(reina !== '' && reina !== document.getElementById('reina').value){
+                let div = document.getElementById(reina);
+                div.innerHTML = '';
+            }
+            reina = document.getElementById('reina').value;
+            let div2 = document.getElementById(reina);
+            div2.innerHTML = sTurno+'queen';
         }
 
-        //Se evalua si los elementos sin iguales
-        if(reina !== '' && reina !== document.getElementById('reina').value){
-            let div = document.getElementById(reina);
-            div.innerHTML = '';
-        }
-        reina = document.getElementById('reina').value;
-        let div2 = document.getElementById(reina);
-        div2.innerHTML = sTurno+'queen';
+       
     }
 
-    if(document.getElementById('rey').value !== ""){
+    if(document.getElementById('rey').value !== "" ){
         //Se evalua si los elementos sin iguales
-        if(validaIconoMismaPosicion('rey')){
-            return;
+        if(validaIconoMismaPosicion('rey')|| !validaPosicionPieza("rey")){
+            if(rey !== '' && rey !== document.getElementById('rey').value){
+                let div = document.getElementById(rey);
+                div.innerHTML = '';
+            }
+            rey = document.getElementById('rey').value;
+            let div2 = document.getElementById(rey);
+            div2.innerHTML = sTurno+'king';
         }
-        if(rey !== '' && rey !== document.getElementById('rey').value){
-            let div = document.getElementById(rey);
-            div.innerHTML = '';
-        }
-        rey = document.getElementById('rey').value;
-        let div2 = document.getElementById(rey);
-        div2.innerHTML = sTurno+'king';
+       
     }
 
     insertImage();
@@ -302,4 +294,19 @@ const validaIconoMismaPosicion = (sValorComparar) => {
             return true;
     }
     return false;
+}
+
+//Este metodo evalua si la pieza la estan poniendo en cesped rio o esta invadiendo terreno
+const validaPosicionPieza = (sPieza) =>{
+    let sEDT_Valor = document.getElementById(sPieza).value;
+    let arr = Array.from(sEDT_Valor)
+    arr.shift()
+    let nValor = parseInt(arr.shift());
+
+    //Evaluaremos si la pieza esta invadiendo terreno
+    if((sTurno === "W" && (nValor >= 1 && nValor <=4)) ||
+        (sTurno === "B" && (nValor >= 5 && nValor <=8))){
+        alert('Esta pieza esta invadiendo terreno')
+        return true;
+   }
 }
