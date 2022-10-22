@@ -4,7 +4,6 @@
 // import { movimientoBishoop } from './piezas/bishoop.js';
 // import { movimientoQueen } from './piezas/queen.js';
 // import { movimientoKnight } from './piezas/knight.js';
-// import {colorOpciones} from './util/configuracionGeneral.js'
 import {piezasGame} from './config/configuracionPiezas.js'
 import {montanas,lagos} from './config/configuracionTablero.js'
 
@@ -308,5 +307,18 @@ const validaPosicionPieza = (sPieza) =>{
         (sTurno === "B" && (nValor >= 5 && nValor <=8))){
         alert('Esta pieza esta invadiendo terreno')
         return true;
-   }
+    }
+
+    console.log(sEDT_Valor)
+
+    if(sPieza === "reina" && document.getElementById(sEDT_Valor).innerHTML.replace(/\s/g, '') === "Lago"){
+        alert('Esta pieza no puede invadir un lago');
+        return true;
+    }
+
+    if(document.getElementById(sEDT_Valor).innerHTML.replace(/\s/g, '') === "Montana"){
+        alert('Esta pieza no puede invadir una montana');
+        return true;
+    }
+
 }
