@@ -48,10 +48,7 @@ const insertImage = () => {
     document.querySelectorAll('.box').forEach(image => {
         //Validamos que contenga texto los elementos del div
         if (image.innerText.length !== 0) {
-            if (image.innerText == 'Wpawn' || image.innerText == 'Bpawn') {
-                image.innerHTML = `${image.innerText} <img class='allimg allpawn' src="img/${image.innerText}.png" alt="">`
-                image.style.cursor = 'pointer'
-            } else {
+            if(image.innerText.replace(/\s/g, '') !== 'Montana' && image.innerText.replace(/\s/g, '') !== 'Lago'){
                 image.innerHTML = `${image.innerText} <img class='allimg' src="img/${image.innerText}.png" alt="">`
                 image.style.cursor = 'pointer'
             }
@@ -78,7 +75,7 @@ function coloring() {
 coloring()
 
 //function to not remove the same team element
-function reddish() {
+function reddish(sPieza) {
     document.querySelectorAll('.box').forEach(i1 => {
         if (i1.style.backgroundColor == 'pink') {
             document.querySelectorAll('.box').forEach(i2 => {
@@ -97,7 +94,7 @@ function reddish() {
                     //team, aparte de condicionar si es un lago o una montana
                     if (pinkColor == greenColor) {
                         i2.style.backgroundColor = 'rgb(240, 201, 150)'
-                    }else if (greenColor == "L") {
+                    }else if (greenColor == "L" && (sPieza ===`Wqueen` || sPieza ===`Bqueen`)) {
                         i2.style.backgroundColor = 'rgb(63, 234, 229)'
                     } else if (greenColor == "M") {
                         i2.style.backgroundColor = 'rgb(14, 155, 0)'
@@ -149,7 +146,9 @@ document.querySelectorAll('.box').forEach(item => {
             // if (item.innerText == `${toggle}pawn`) {
             //     movimientoPawn(tog,a,aup,aside,item)
             // }else 
-            if (item.innerText == `${toggle}king`) {
+            if (item.innerText == `${toggle}archer`) {
+                movimientoKing(a,aup,aside,item)
+            }else if (item.innerText == `${toggle}king`) {
                 movimientoKing(a,aup,aside,item)
             }else if (item.innerText == `${toggle}rook`) {
                 movimientoRook(a,aup,item)
@@ -173,7 +172,7 @@ document.querySelectorAll('.box').forEach(item => {
             whosTurn('B')
         }
 
-        reddish()
+        reddish(item.innerText)
 
         document.querySelectorAll('.box').forEach(win => {
             if (win.innerText == 'Wking' || win.innerText == 'Bking') {

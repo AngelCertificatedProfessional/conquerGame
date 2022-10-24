@@ -15,6 +15,7 @@ let alfil1 = '';
 let alfil2 = '';
 let rey = '';
 let reina = '';
+let archer = '';
 let sTurno = 'W';
 
 const posicionClasesTablero = () => {
@@ -186,8 +187,6 @@ export const colocarConfiguracionPiezas = () =>{
             let div2 = document.getElementById(reina);
             div2.innerHTML = sTurno+'queen';
         }
-
-       
     }
 
     if(document.getElementById('rey').value !== "" ){
@@ -204,12 +203,25 @@ export const colocarConfiguracionPiezas = () =>{
        
     }
 
+    if(document.getElementById('archer').value !== "" ){
+        //Se evalua si los elementos sin iguales
+        if(validaIconoMismaPosicion('archer')|| !validaPosicionPieza("archer")){
+            if(archer !== '' && archer !== document.getElementById('archer').value){
+                let div = document.getElementById(archer);
+                div.innerHTML = '';
+            }
+            archer = document.getElementById('archer').value;
+            let div2 = document.getElementById(archer);
+            div2.innerHTML = sTurno+'archer';
+        }  
+    }
+
     insertImage();
 }
 
 export const guardarConfiguracionPiezas = () => {
     if(torre1 === "" || torre2 === "" || caballero1 === "" || caballero2 === "" || alfil1 === "" ||
-    alfil2 === "" || rey === "" || reina === ""){
+    alfil2 === "" || rey === "" || reina === ""|| archer === ""){
         alert("Debe agregar todas las piezas al tablero primero")
         return;
     }
@@ -222,6 +234,7 @@ export const guardarConfiguracionPiezas = () => {
     piezasGame[sTurno+"knight2"] = alfil2;
     piezasGame[sTurno+"bishop2"] = caballero2;
     piezasGame[sTurno+"rook2"] = torre2;
+    piezasGame[sTurno+"archer"] = archer;
 
     document.getElementById(torre1).innerHTML = ''
     document.getElementById(torre2).innerHTML = ''
@@ -231,6 +244,7 @@ export const guardarConfiguracionPiezas = () => {
     document.getElementById(alfil2).innerHTML = ''
     document.getElementById(rey).innerHTML = ''
     document.getElementById(reina).innerHTML = ''
+    document.getElementById(archer).innerHTML = ''
 
     document.getElementById("torre1").value = ''
     document.getElementById("torre2").value = ''
@@ -240,6 +254,7 @@ export const guardarConfiguracionPiezas = () => {
     document.getElementById("alfil2").value = ''
     document.getElementById("rey").value = ''
     document.getElementById("reina").value = ''
+    document.getElementById("archer").value = ''
 
     torre1 = '';
     torre2 = '';
@@ -249,6 +264,7 @@ export const guardarConfiguracionPiezas = () => {
     alfil2 = '';
     rey = '';
     reina = '';
+    archer = '';
 
     switch(sTurno){
         case "W":
@@ -269,10 +285,7 @@ const insertImage = () => {
     document.querySelectorAll('.box').forEach(image => {
         //Validamos que contenga texto los elementos del div
         if (image.innerText.length !== 0) {
-            if (image.innerText == 'Wpawn' || image.innerText == 'Bpawn') {
-                image.innerHTML = `${image.innerText} <img class='allimg allpawn' src="img/${image.innerText}.png" alt="">`
-                image.style.cursor = 'pointer'
-            } else if(image.innerText.replace(/\s/g, '') !== 'Montana' && image.innerText.replace(/\s/g, '') !== 'Lago'){
+            if(image.innerText.replace(/\s/g, '') !== 'Montana' && image.innerText.replace(/\s/g, '') !== 'Lago'){
                 image.innerHTML = `${image.innerText} <img class='allimg' src="img/${image.innerText}.png" alt="">`
                 image.style.cursor = 'pointer'
             }
@@ -288,7 +301,8 @@ const validaIconoMismaPosicion = (sValorComparar) => {
         (document.getElementById('alfil1').value === document.getElementById(sValorComparar).value  && sValorComparar !== "alfil1")||
         (document.getElementById('alfil2').value === document.getElementById(sValorComparar).value  && sValorComparar !== "alfil2")|| 
         (document.getElementById('rey').value === document.getElementById(sValorComparar).value  && sValorComparar !== "rey")|| 
-        (document.getElementById('reina').value === document.getElementById(sValorComparar).value && sValorComparar !== "reina")){
+        (document.getElementById('reina').value === document.getElementById(sValorComparar).value && sValorComparar !== "reina")||
+        (document.getElementById('archer').value === document.getElementById(sValorComparar).value && sValorComparar !== "archer")){
             alert(`La pieza ${sValorComparar} esta repitiendo su posicion con otra pieza`);
             return true;
     }
