@@ -272,7 +272,7 @@ const insertImage = () => {
             if (image.innerText == 'Wpawn' || image.innerText == 'Bpawn') {
                 image.innerHTML = `${image.innerText} <img class='allimg allpawn' src="img/${image.innerText}.png" alt="">`
                 image.style.cursor = 'pointer'
-            } else {
+            } else if(image.innerText.replace(/\s/g, '') !== 'Montana' && image.innerText.replace(/\s/g, '') !== 'Lago'){
                 image.innerHTML = `${image.innerText} <img class='allimg' src="img/${image.innerText}.png" alt="">`
                 image.style.cursor = 'pointer'
             }
@@ -315,7 +315,7 @@ const validaPosicionPieza = (sPieza) =>{
         alert('Esta pieza no puede invadir un lago');
         return true;
     }
-
+    console.log(document.getElementById(sEDT_Valor).innerHTML.replace(/\s/g, ''))
     if(document.getElementById(sEDT_Valor).innerHTML.replace(/\s/g, '') === "Montana"){
         alert('Esta pieza no puede invadir una montana');
         return true;
