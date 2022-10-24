@@ -11,6 +11,25 @@ import { movimientoArcher } from './piezas/archer.js';
 let pinkId = "";
 let pinkText = "";
 let numOfKings = 0;
+
+const agregarDivsTablero = () => {
+    for(let nContRow=8;nContRow>0;nContRow--){
+        let divElement = document.createElement("div");
+        divElement.id = "row"+nContRow;
+        divElement.className = "row";  
+        document.getElementById("tablero_juego").appendChild(divElement);
+        for(let nContCol=1;nContCol<9;nContCol++){
+            let liElement2 = document.createElement("li");
+            liElement2.id = "b"+nContRow+"0"+nContCol;
+            liElement2.className = "box white-box";  
+            document.getElementById("row"+nContRow).appendChild(liElement2);
+        }
+    }
+}
+agregarDivsTablero();
+
+
+
 const posicionClasesTablero = () => {
     for ( const piecePosition in montanas ) {
         const div = document.getElementById(montanas[piecePosition]);
