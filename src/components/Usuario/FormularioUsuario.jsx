@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-// import { iniciarSesion } from '../../utils/ConexionAPI';
+import { agregar } from '../../utils/ConexionAPI';
 import swal from 'sweetalert';
 
 const schema = yup.object({
@@ -26,8 +26,12 @@ const FormularioUsuario = ({ usuario, ingresarSesion,setAccion,accion }) => {
   return (
     <Formik
     initialValues={{
-        usuario: usuario.usuario,
-        contrasena: usuario.contrasena,
+        usuario: usuario.usuario || '',
+        contrasena: usuario.contrasena || '',
+        validaContrasena:usuario.contrasena || '',
+        nombre: usuario.nombre || '',
+        apellido: usuario.apellido || '',
+        correo: usuario.correo || ''
       }}
       validationSchema={schema}
       onSubmit={(values, e) => {
@@ -36,26 +40,27 @@ const FormularioUsuario = ({ usuario, ingresarSesion,setAccion,accion }) => {
         usuario.nombre = values.nombre;
         usuario.apellido = values.apellido;
         usuario.correo = values.correo;
-        // if (accion === 2) {
-        //   agregar('usuario/agregarUsuario', usuario)
-        //     .then(() => {
-        //       swal({
-        //         title: 'Usuario Agregado',
-        //         text: 'Su usuario se a agregado exitosamente',
-        //         icon: 'success',
-        //         button: 'OK',
-        //       });
-        //       actualizarListado();
-        //     })
-        //     .catch((error) => {
-        //       swal({
-        //         title: 'Error',
-        //         text: error,
-        //         icon: 'error',
-        //         button: 'OK',
-        //       });
-        //     });
-        // } else {
+        if (accion === 2) {
+          agregar('usuario/agregarUsuario', usuario)
+            .then(() => {
+              swal({
+                title: 'Usuario Agregado',
+                text: 'Su usuario se a agregado exitosamente',
+                icon: 'success',
+                button: 'OK',
+              });
+              actualizarListado();
+            })
+            .catch((error) => {
+              swal({
+                title: 'Error',
+                text: error,
+                icon: 'error',
+                button: 'OK',
+              });
+            });
+        } 
+        //else {
         //   actualizar('usuario/actualizarUsuario', usuario)
         //     .then(() => {
         //       swal({
@@ -118,7 +123,7 @@ const FormularioUsuario = ({ usuario, ingresarSesion,setAccion,accion }) => {
             </div>
             <div className='campo-input'>
                 <label htmlFor="validaContrasena"> Validar Contraseña: </label>
-                <input type="password" placeholder="validar contraseña" name="validaContrasena" id="validaContrasena" onChange={handleChange} onBlur={handleBlur} value={values.contrasena}
+                <input type="password" placeholder="validar contraseña" name="validaContrasena" id="validaContrasena" onChange={handleChange} onBlur={handleBlur} value={values.validaContrasena}
                     className = {(!!touched.validaContrasena && !!errors.validaContrasena) ? 'border-mensaje-error' : ''} />
                 {(!!touched.validaContrasena && !!errors.validaContrasena) && (
                     <span className='mensaje-error'>{errors.validaContrasena}</span>
@@ -140,51 +145,11 @@ const FormularioUsuario = ({ usuario, ingresarSesion,setAccion,accion }) => {
                     <span className='mensaje-error'>{errors.apellido}</span>
                 )}
             </div>
-          {/* <Row className="mb-3">
-            <Form.Group as={Col}>
-              <Form.Label>Usuario</Form.Label>
-              <Form.Control
-                placeholder="Usuario"
-                name="usuario"
-                id="usuario"
-                value={values.usuario}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={!!touched.usuario && !!errors.usuario}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.usuario}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row className="mb-3">
-            <Form.Group as={Col}>
-              <Form.Label>Contraseña</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Contraseña"
-                name="contrasena"
-                id="contrasena"
-                value={values.contrasena}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                isInvalid={!!touched.contrasena && !!errors.contrasena}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.contrasena}
-              </Form.Control.Feedback>
-            </Form.Group>
-          </Row>
-          <Row align="end">
-            <Button className="ph-6" variant="primary" type="submit">
-              Ingresar
-            </Button>
-          </Row> */}
           <div className='flex-orientation-button'>
             <button className="boton blue" onClick={() => setAccion(1)} type="button">
               Loguearse
             </button>
-            <button className="boton blue">
+            <button className="boton blue" type="submit">
               Registrar
             </button>
           </div>
