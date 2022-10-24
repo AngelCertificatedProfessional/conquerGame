@@ -245,7 +245,7 @@ export const guardarConfiguracionPiezas = () => {
     document.getElementById(rey).innerHTML = ''
     document.getElementById(reina).innerHTML = ''
     document.getElementById(archer).innerHTML = ''
-
+    /*
     document.getElementById("torre1").value = ''
     document.getElementById("torre2").value = ''
     document.getElementById("caballero1").value = ''
@@ -255,6 +255,17 @@ export const guardarConfiguracionPiezas = () => {
     document.getElementById("rey").value = ''
     document.getElementById("reina").value = ''
     document.getElementById("archer").value = ''
+    */
+
+    document.getElementById("torre1").value = 'b101'
+    document.getElementById("torre2").value = 'b103'
+    document.getElementById("caballero1").value = 'b104'
+    document.getElementById("caballero2").value = 'b105'
+    document.getElementById("alfil1").value = 'b102'
+    document.getElementById("alfil2").value = 'b106'
+    document.getElementById("rey").value = 'b107'
+    document.getElementById("reina").value = 'b108'
+    document.getElementById("archer").value = 'b201'
 
     torre1 = '';
     torre2 = '';
@@ -323,13 +334,11 @@ const validaPosicionPieza = (sPieza) =>{
         return true;
     }
 
-    console.log(sEDT_Valor)
-
     if(sPieza === "reina" && document.getElementById(sEDT_Valor).innerHTML.replace(/\s/g, '') === "Lago"){
         alert('Esta pieza no puede invadir un lago');
         return true;
     }
-    console.log(document.getElementById(sEDT_Valor).innerHTML.replace(/\s/g, ''))
+
     if(document.getElementById(sEDT_Valor).innerHTML.replace(/\s/g, '') === "Montana"){
         alert('Esta pieza no puede invadir una montana');
         return true;

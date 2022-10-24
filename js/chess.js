@@ -4,9 +4,10 @@ import { movimientoRook } from './piezas/rook.js';
 import { movimientoBishoop } from './piezas/bishoop.js';
 import { movimientoQueen } from './piezas/queen.js';
 import { movimientoKnight } from './piezas/knight.js';
-import {colorOpciones} from './util/configuracionGeneral.js'
+import {colorDisparoArcher, colorOpciones} from './util/configuracionGeneral.js'
 // import {piezasGame} from './config/configuracionPiezas.js'
 import {montanas,lagos} from './config/configuracionTablero.js'
+import { movimientoArcher } from './piezas/archer.js';
 let pinkId = "";
 let pinkText = "";
 let numOfKings = 0;
@@ -79,7 +80,7 @@ function reddish(sPieza) {
     document.querySelectorAll('.box').forEach(i1 => {
         if (i1.style.backgroundColor == 'pink') {
             document.querySelectorAll('.box').forEach(i2 => {
-                if (i2.style.backgroundColor == colorOpciones && i2.innerText.length !== 0) {
+                if ((i2.style.backgroundColor == colorOpciones || i2.style.backgroundColor == colorDisparoArcher)&& i2.innerText.length !== 0) {
 
                     let greenText = i2.innerText
 
@@ -87,8 +88,6 @@ function reddish(sPieza) {
 
                     let pinkColor = ((Array.from(pinkText)).shift()).toString()
                     let greenColor = ((Array.from(greenText)).shift()).toString()
-                    console.log("pinkColor"+pinkColor)
-                    console.log("greenColor"+greenColor)
                     
                     //En esta validacion se pregunta si la pieza a pazar es del mismo color a otra del mismo
                     //team, aparte de condicionar si es un lago o una montana
@@ -117,13 +116,29 @@ document.querySelectorAll('.box').forEach(item => {
         if (item.style.backgroundColor == colorOpciones && item.innerText.length == 0) {
             tog = tog + 1
         } else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
+            //este segmento de codigo sirve para validar que se este eliminando la pieza
             document.querySelectorAll('.box').forEach(i => {
                 if (i.style.backgroundColor == 'pink') {
+                    console.log('estare eliminado la pieza?')
                     pinkId = i.id
                     pinkText = i.innerText
-
                     document.getElementById(pinkId).innerText = ''
                     item.innerText = pinkText
+                    coloring()
+                    insertImage()
+                    tog = tog + 1
+                    
+                }
+            })
+        }else if (item.style.backgroundColor == colorDisparoArcher && item.innerText.length !== 0) {
+            //este segmento de codigo sirve para validar que se este eliminando la pieza
+            document.querySelectorAll('.box').forEach(i => {
+                if (i.style.backgroundColor == 'pink') {
+                    console.log('estare eliminado la pieza?')
+                    //pinkId = i.id
+                    //pinkText = i.innerText
+                    //document.getElementById(pinkId).innerText = ''
+                    item.innerText = ''
                     coloring()
                     insertImage()
                     tog = tog + 1
@@ -147,7 +162,7 @@ document.querySelectorAll('.box').forEach(item => {
             //     movimientoPawn(tog,a,aup,aside,item)
             // }else 
             if (item.innerText == `${toggle}archer`) {
-                movimientoKing(a,aup,aside,item)
+                movimientoArcher(a,aup,aside,item)
             }else if (item.innerText == `${toggle}king`) {
                 movimientoKing(a,aup,aside,item)
             }else if (item.innerText == `${toggle}rook`) {
@@ -178,7 +193,6 @@ document.querySelectorAll('.box').forEach(item => {
             if (win.innerText == 'Wking' || win.innerText == 'Bking') {
                 numOfKings += 1
             }
-            console.log(numOfKings)
         })
 
         if (numOfKings == 1) {
@@ -204,14 +218,24 @@ document.querySelectorAll('.box').forEach(hathiTest => {
         if (hathiTest.style.backgroundColor == 'pink') {
             pinkId = hathiTest.id;
             pinkText = hathiTest.innerText;
+            console.log(pinkText);
+            console.log(pinkId);
             document.querySelectorAll('.box').forEach(hathiTest2 => {
                 hathiTest2.addEventListener('click', function () {
-                    if (hathiTest2.style.backgroundColor == colorOpciones && hathiTest2.innerText.length == 0) {
+                    if (hathiTest2.style.backgroundColor == colorOpciones && hathiTest2.innerText.length == 0) {                        
                         document.getElementById(pinkId).innerText = '';
                         hathiTest2.innerText = pinkText;
                         coloring()
                         insertImage()
                     }
+
+                    // if (hathiTest2.style.backgroundColor == colorDisparoArcher && hathiTest2.innerText.length == 0) {    
+                    //     console.log('entre')                    
+                    //     // document.getElementById(pinkId).innerText = '';
+                    //     hathiTest2.innerText = '';
+                    //     coloring()
+                    //     insertImage()
+                    // }
                 })
             })
         }
