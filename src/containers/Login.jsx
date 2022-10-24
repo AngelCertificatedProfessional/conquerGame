@@ -11,8 +11,13 @@ const LoginFormulario = lazy(() =>
   import('./../components/Usuario/LoginFormulario')
 );
 
+const FormularioUsuario = lazy(() =>
+  import('./../components/Usuario/FormularioUsuario')
+);
+
 const Login = () => {
 //   // let navigate  = useNavigate();
+    const [accion, setAccion] = useState(1);
     const [usuarioTemp, setUsuario] = useState({});
 //   // let { usuario } = state;
 //   // useEffect(() => {
@@ -33,20 +38,32 @@ const Login = () => {
         navigate('/');
         window.location.href = window.location.href;
     };
-
     return (
-        <header>
-            {/* <main className="fondo">
-            </main> */}
-            <section>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <LoginFormulario
-                        usuario={usuarioTemp}
-                        ingresarSesion={ingresarSesion}
-                    />
-                </Suspense>
-            </section>
-        </header>
+            <main className=" header-login">
+                <section className='formularioSeccion'>
+                    {accion === 1 && (
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <LoginFormulario
+                                    usuario={usuarioTemp}
+                                    ingresarSesion={ingresarSesion}
+                                    setAccion={setAccion}
+                                />
+                            </Suspense>
+                        
+                    )}
+                    {(accion === 2) && (
+                         <Suspense fallback={<div>Loading...</div>}>
+                            <FormularioUsuario
+                                usuario={usuarioTemp}
+                                ingresarSesion={ingresarSesion}
+                                setAccion={setAccion}
+                                accion={accion}
+                            />
+                        </Suspense>
+                    )}
+                </section>
+                    
+            </main>
 //     <main className="fondo">
 //       <Container>
 //         <Row className="justify-content-md-center mt-3">
