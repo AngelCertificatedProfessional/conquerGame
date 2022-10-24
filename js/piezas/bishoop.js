@@ -1,6 +1,9 @@
-import {colorOpciones} from '../util/configuracionGeneral.js'
+import {colorOpciones,validaPiezaMontana} from '../util/configuracionGeneral.js'
 export const movimientoBishoop = (a,aup,aside,item) =>{
     for (let i = 1; i < 9; i++) {
+        if(i < (900 - aup) / 100 && i < 9 - aside && validaPiezaMontana(`b${a + i * 100 + i}`)){
+            break
+        }
         if (i < (900 - aup) / 100 && i < 9 - aside && document.getElementById(`b${a + i * 100 + i}`).innerText.length == 0) {
             document.getElementById(`b${a + i * 100 + i}`).style.backgroundColor = colorOpciones
         }
@@ -10,6 +13,9 @@ export const movimientoBishoop = (a,aup,aside,item) =>{
         }
     }
     for (let i = 1; i < 9; i++) {
+        if(i < aup / 100 && i < 9 - aside && validaPiezaMontana(`b${a - i * 100 + i}`)){
+            break
+        }
         if (i < aup / 100 && i < 9 - aside && document.getElementById(`b${a - i * 100 + i}`).innerText.length == 0) {
             document.getElementById(`b${a - i * 100 + i}`).style.backgroundColor = colorOpciones
         }
@@ -19,6 +25,9 @@ export const movimientoBishoop = (a,aup,aside,item) =>{
         }
     }
     for (let i = 1; i < 9; i++) {
+        if(i < (900 - aup) / 100 && i < aside && validaPiezaMontana(`b${a + i * 100 - i}`)){
+            break
+        }
         if (i < (900 - aup) / 100 && i < aside && document.getElementById(`b${a + i * 100 - i}`).innerText.length == 0) {
             document.getElementById(`b${a + i * 100 - i}`).style.backgroundColor = colorOpciones
         }
@@ -29,6 +38,9 @@ export const movimientoBishoop = (a,aup,aside,item) =>{
 
     }
     for (let i = 1; i < 9; i++) {
+        if(i < aup / 100 && i < aside && validaPiezaMontana(`b${a - i * 100 - i}`)){
+            break
+        }
         if (i < aup / 100 && i < aside && document.getElementById(`b${a - i * 100 - i}`).innerText.length == 0) {
             document.getElementById(`b${a - i * 100 - i}`).style.backgroundColor = colorOpciones
         }

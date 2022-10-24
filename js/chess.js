@@ -4,7 +4,7 @@ import { movimientoRook } from './piezas/rook.js';
 import { movimientoBishoop } from './piezas/bishoop.js';
 import { movimientoQueen } from './piezas/queen.js';
 import { movimientoKnight } from './piezas/knight.js';
-import {colorDisparoArcher, colorOpciones} from './util/configuracionGeneral.js'
+import {colorDisparoArcher, colorLago, colorMontana, colorOpciones} from './util/configuracionGeneral.js'
 // import {piezasGame} from './config/configuracionPiezas.js'
 import {montanas,lagos} from './config/configuracionTablero.js'
 import { movimientoArcher } from './piezas/archer.js';
@@ -14,14 +14,12 @@ let numOfKings = 0;
 const posicionClasesTablero = () => {
     for ( const piecePosition in montanas ) {
         const div = document.getElementById(montanas[piecePosition]);
-        div.innerHTML += "Montana";
         div.classList.remove( 'white-box' )
         div.classList.add( 'green-box' )
     }
 
     for ( const piecePosition in lagos ) {
         const div = document.getElementById(lagos[piecePosition]);
-        div.innerHTML += "Lago";
         div.classList.remove("white-box");
         div.classList.add( 'blue-box' )
     }
@@ -49,10 +47,8 @@ const insertImage = () => {
     document.querySelectorAll('.box').forEach(image => {
         //Validamos que contenga texto los elementos del div
         if (image.innerText.length !== 0) {
-            if(image.innerText.replace(/\s/g, '') !== 'Montana' && image.innerText.replace(/\s/g, '') !== 'Lago'){
-                image.innerHTML = `${image.innerText} <img class='allimg' src="img/${image.innerText}.png" alt="">`
-                image.style.cursor = 'pointer'
-            }
+            image.innerHTML = `${image.innerText} <img class='allimg' src="img/${image.innerText}.png" alt="">`
+            image.style.cursor = 'pointer'
         }
     })
 }
@@ -64,11 +60,11 @@ function coloring() {
     })
 
     document.querySelectorAll('.green-box').forEach(colorNegro => {
-        colorNegro.style.backgroundColor = 'rgb(14, 155, 0)'; 
+        colorNegro.style.backgroundColor = colorMontana; 
     })
 
     document.querySelectorAll('.blue-box').forEach(colorNegro => {
-        colorNegro.style.backgroundColor = 'rgb(63, 234, 229)'; 
+        colorNegro.style.backgroundColor = colorLago; 
     })
 
     
@@ -80,28 +76,20 @@ function reddish(sPieza) {
     document.querySelectorAll('.box').forEach(i1 => {
         if (i1.style.backgroundColor == 'pink') {
             document.querySelectorAll('.box').forEach(i2 => {
-                if ((i2.style.backgroundColor == colorOpciones || i2.style.backgroundColor == colorDisparoArcher)&& i2.innerText.length !== 0) {
+                if ((i2.style.backgroundColor == colorOpciones || i2.style.backgroundColor == colorDisparoArcher)) {
+                    if(i2.innerText.length !== 0){
+                        let greenText = i2.innerText
 
-                    let greenText = i2.innerText
-
-                    let pinkText = i1.innerText
-
-                    let pinkColor = ((Array.from(pinkText)).shift()).toString()
-                    let greenColor = ((Array.from(greenText)).shift()).toString()
-                    
-                    //En esta validacion se pregunta si la pieza a pazar es del mismo color a otra del mismo
-                    //team, aparte de condicionar si es un lago o una montana
-                    if (pinkColor == greenColor) {
-                        i2.style.backgroundColor = 'rgb(240, 201, 150)'
-                    }else if (greenColor == "L" && (sPieza ===`Wqueen` || sPieza ===`Bqueen`)) {
-                        i2.style.backgroundColor = 'rgb(63, 234, 229)'
-                    } else if (greenColor == "M") {
-                        i2.style.backgroundColor = 'rgb(14, 155, 0)'
+                        let pinkText3 = i1.innerText;
+                        let pinkColor = ((Array.from(pinkText3)).shift()).toString()
+                        let greenColor = ((Array.from(greenText)).shift()).toString()
+                        
+                        //En esta validacion se pregunta si la pieza a pazar es del mismo color a otra del mismo
+                        //team, aparte de condicionar si es un lago o una montana
+                        if (pinkColor == greenColor) {
+                            i2.style.backgroundColor = 'rgb(240, 201, 150)'
+                        }
                     }
-
-//                     // if (pinkColor == greenColor) {
-//                     //     i2.style.backgroundColor = 'rgb(253, 60, 60)'
-//                     // }
                 }
             })
         }
@@ -119,11 +107,10 @@ document.querySelectorAll('.box').forEach(item => {
             //este segmento de codigo sirve para validar que se este eliminando la pieza
             document.querySelectorAll('.box').forEach(i => {
                 if (i.style.backgroundColor == 'pink') {
-                    console.log('estare eliminado la pieza?')
-                    pinkId = i.id
-                    pinkText = i.innerText
-                    document.getElementById(pinkId).innerText = ''
-                    item.innerText = pinkText
+                    let pinkId2 = i.id
+                    let pinkText2 = i.innerText
+                    document.getElementById(pinkId2).innerText = '';
+                    item.innerText = pinkText2
                     coloring()
                     insertImage()
                     tog = tog + 1
@@ -134,11 +121,7 @@ document.querySelectorAll('.box').forEach(item => {
             //este segmento de codigo sirve para validar que se este eliminando la pieza
             document.querySelectorAll('.box').forEach(i => {
                 if (i.style.backgroundColor == 'pink') {
-                    console.log('estare eliminado la pieza?')
-                    //pinkId = i.id
-                    //pinkText = i.innerText
-                    //document.getElementById(pinkId).innerText = ''
-                    item.innerText = ''
+                    document.getElementById(pinkId).innerText = '';
                     coloring()
                     insertImage()
                     tog = tog + 1
@@ -218,15 +201,16 @@ document.querySelectorAll('.box').forEach(hathiTest => {
         if (hathiTest.style.backgroundColor == 'pink') {
             pinkId = hathiTest.id;
             pinkText = hathiTest.innerText;
-            console.log(pinkText);
-            console.log(pinkId);
             document.querySelectorAll('.box').forEach(hathiTest2 => {
                 hathiTest2.addEventListener('click', function () {
-                    if (hathiTest2.style.backgroundColor == colorOpciones && hathiTest2.innerText.length == 0) {                        
+                    if (hathiTest2.style.backgroundColor == colorOpciones && hathiTest2.innerText.length == 0) {    
+                        console.log('entre' + pinkText)
                         document.getElementById(pinkId).innerText = '';
                         hathiTest2.innerText = pinkText;
                         coloring()
                         insertImage()
+                        pinkId = '';
+                        pinkText = '';
                     }
 
                     // if (hathiTest2.style.backgroundColor == colorDisparoArcher && hathiTest2.innerText.length == 0) {    
