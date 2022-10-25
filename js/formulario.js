@@ -1,65 +1,118 @@
-// // import { movimientoPawn } from './piezas/pawn.js';
-// import { movimientoKing } from './piezas/king.js';
-// import { movimientoRook } from './piezas/rook.js';
-// import { movimientoBishoop } from './piezas/bishoop.js';
-// import { movimientoQueen } from './piezas/queen.js';
-// import { movimientoKnight } from './piezas/knight.js';
 import {piezasGame} from './config/configuracionPiezas.js'
 import {montanas,lagos} from './config/configuracionTablero.js'
+import { eliminarLetras, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
-let torre1 = '';
-let torre2 = '';
-let caballero1 = '';
-let caballero2 = '';
-let alfil1 = '';
-let alfil2 = '';
-let rey = '';
-let reina = '';
-let archer = '';
 let sTurno = 'W';
 
+let arregloPiezas = [{
+    campoNombre:"edt_hachero1",
+    nombre:"hachero1",
+    posicion:"",
+    icono:"rook",
+},{
+    campoNombre:"edt_hachero2",
+    nombre:"hachero2",
+    posicion:"",
+    icono:"rook",
+},
+{
+    campoNombre:"edt_lancero1",
+    nombre:"lancero1",
+    posicion:"",
+    icono:"bishop",
+},
+{
+    campoNombre:"edt_lancero2",
+    nombre:"lancero2",
+    posicion:"",
+    icono:"bishop",
+},
+{
+    campoNombre:"edt_lancero3",
+    nombre:"lancero3",
+    posicion:"",
+    icono:"bishop",
+},
+{
+    campoNombre:"edt_lancero4",
+    nombre:"lancero4",
+    posicion:"",
+    icono:"bishop",
+},
+{
+    campoNombre:"edt_archer",
+    nombre:"archer",
+    posicion:"",
+    icono:"archer",
+},
+{
+    campoNombre:"edt_asesino",
+    nombre:"asesino",
+    posicion:"",
+    icono:"knight",
+},
+{
+    campoNombre:"edt_caballero1",
+    nombre:"caballero1",
+    posicion:"",
+    icono:"queen",
+},
+{
+    campoNombre:"edt_caballero2",
+    nombre:"caballero2",
+    posicion:"",
+    icono:"queen",
+},
+{
+    campoNombre:"edt_caballero3",
+    nombre:"caballero3",
+    posicion:"",
+    icono:"queen",
+},
+{
+    campoNombre:"edt_caballero4",
+    nombre:"caballero4",
+    posicion:"",
+    icono:"queen",
+},
+{
+    campoNombre:"edt_rey",
+    nombre:"rey",
+    posicion:"",
+    icono:"king",
+},
+]
+
+
 const agregarDivsTablero = () => {
-    for(let nContRow=8;nContRow>0;nContRow--){
+    for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
         let divElement = document.createElement("div");
         divElement.id = "row"+nContRow;
         divElement.className = "row";  
         document.getElementById("tablero_juego").appendChild(divElement);
-        for(let nContCol=1;nContCol<9;nContCol++){
+        for(let nContCol=1;nContCol<tamanoTableroAncho+1;nContCol++){
             let liElement2 = document.createElement("li");
-            liElement2.id = "b"+nContRow+"0"+nContCol;
-            liElement2.className = "box white-box";  
+            liElement2.id = nContRow+numeroAAlfabeto(nContCol);
+            //Se toma la desicion de como se pintara el tablero
+            if(lagos.includes(liElement2.id)){
+                liElement2.className = "box blue-box";
+            }else if(montanas.includes(liElement2.id )){
+                liElement2.className = "box green-box";
+            }else{
+                liElement2.className = "box white-box";
+            }
             document.getElementById("row"+nContRow).appendChild(liElement2);
         }
     }
 }
 agregarDivsTablero();
 
-const posicionClasesTablero = () => {
-    for ( const piecePosition in montanas ) {
-        const div = document.getElementById(montanas[piecePosition]);
-        div.innerHTML += "Montana";
-        div.classList.remove( 'white-box' )
-        div.classList.add( 'green-box' )
-    }
-
-    for ( const piecePosition in lagos ) {
-        const div = document.getElementById(lagos[piecePosition]);
-        div.innerHTML += "Lago";
-        div.classList.remove("white-box");
-        div.classList.add( 'blue-box' )
-    }
-}
-
-posicionClasesTablero()
-
 function coloring() {
     document.querySelectorAll('.white-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = 'rgb(240, 201, 150)'; 
-        let arr = Array.from(colorNegro.id)
-        arr.shift()
-        const nValor = parseInt(arr.shift());
-        if((sTurno === "W" && (nValor >= 1 && nValor <=4)) ||
-         (sTurno === "B" && (nValor >= 5 && nValor <=8))){
+        const nValor = eliminarLetras(colorNegro.id)
+        if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+         (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
             colorNegro.style.opacity = 0.3; 
         }else{
             colorNegro.style.opacity = 1;  
@@ -68,11 +121,9 @@ function coloring() {
 
     document.querySelectorAll('.green-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = 'rgb(14, 155, 0)';
-        let arr = Array.from(colorNegro.id)
-        arr.shift()
-        const nValor = parseInt(arr.shift());
-        if((sTurno === "W" && (nValor >= 1 && nValor <=4)) ||
-        (sTurno === "B" && (nValor >= 5 && nValor <=8))){
+        const nValor = eliminarLetras(colorNegro.id)
+        if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+         (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
             colorNegro.style.opacity = 0.3; 
         }else{
             colorNegro.style.opacity = 1;  
@@ -81,11 +132,9 @@ function coloring() {
 
     document.querySelectorAll('.blue-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = 'rgb(63, 234, 229)'; 
-        let arr = Array.from(colorNegro.id)
-        arr.shift()
-        const nValor = parseInt(arr.shift());
-        if((sTurno === "W" && (nValor >= 1 && nValor <=4)) ||
-        (sTurno === "B" && (nValor >= 5 && nValor <=8))){
+        const nValor = eliminarLetras(colorNegro.id)
+        if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+         (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
             colorNegro.style.opacity = 0.3; 
         }else{
             colorNegro.style.opacity = 1;  
@@ -94,204 +143,59 @@ function coloring() {
 }
 coloring()
 
+
+
 export const colocarConfiguracionPiezas = () =>{
 
-    if(document.getElementById('torre1').value !== ""){
-        //Se evalua si los elementos sin iguales
-        if(!validaIconoMismaPosicion('torre1') && !validaPosicionPieza("torre1")){
-            //Se evalua si los valores son diferentes, esto ayudando a eliminar la posicion anterior
-            if(torre1 !== '' && torre1 !== document.getElementById('torre1').value){
-                let div = document.getElementById(torre1);
+    for ( const piecePosition in arregloPiezas ) {  
+        console.log(arregloPiezas[piecePosition].campoNombre)
+        console.log(arregloPiezas[piecePosition].posicion)
+        console.log(arregloPiezas[piecePosition].icono)
+        if(document.getElementById(arregloPiezas[piecePosition].campoNombre).value !== "" 
+            && !validaIconoMismaPosicion(arregloPiezas[piecePosition].campoNombre) 
+            && !validaPosicionPieza(arregloPiezas[piecePosition].campoNombre)){
+                
+            if(arregloPiezas[piecePosition].posicion !== '' && arregloPiezas[piecePosition].posicion !== document.getElementById(arregloPiezas[piecePosition].campoNombre).value){
+                const div = document.getElementById(arregloPiezas[piecePosition].posicion);
                 div.innerHTML = '';
             }
-            torre1 = document.getElementById('torre1').value;
-            let div2 = document.getElementById(torre1);
-            div2.innerHTML = sTurno+'rook';
+            arregloPiezas[piecePosition].posicion = document.getElementById(arregloPiezas[piecePosition].campoNombre).value;
+            const div2 = document.getElementById(arregloPiezas[piecePosition].posicion);
+            div2.innerHTML = sTurno+arregloPiezas[piecePosition].icono;
         }
     }
-
-    if(document.getElementById('torre2').value !== ""){
-
-        //Se evalua si los elementos sin iguales
-        if(!validaIconoMismaPosicion('torre2') && !validaPosicionPieza("torre2")){
-            if(torre2 !== '' && torre2 !== document.getElementById('torre2').value){
-                let div = document.getElementById(torre2);
-                div.innerHTML = '';
-            }
-            torre2 = document.getElementById('torre2').value;
-            let div2 = document.getElementById(torre2);
-            div2.innerHTML = sTurno+'rook';
-        }
-    }
-    
-    if(document.getElementById('caballero1').value !== ""){
-
-        //Se evalua si los elementos sin iguales
-        if(!validaIconoMismaPosicion('caballero1') && !validaPosicionPieza("caballero1")){
-             //Se evalua si los elementos sin iguales
-            if(caballero1 !== '' && caballero1 !== document.getElementById('caballero1').value){
-                let div = document.getElementById(caballero1);
-                div.innerHTML = '';
-            }
-            caballero1 = document.getElementById('caballero1').value;
-            let div2 = document.getElementById(caballero1);
-            div2.innerHTML = sTurno+'knight';
-        }
-       
-    }
-
-    if(document.getElementById('caballero2').value !== ""){
-
-        //Se evalua si los elementos sin iguales
-        if(!validaIconoMismaPosicion('caballero2') && !validaPosicionPieza("caballero2")){
-             //Se evalua si los elementos sin iguales
-            if(caballero2 !== '' && caballero2 !== document.getElementById('caballero2').value){
-                let div = document.getElementById(caballero2);
-                div.innerHTML = '';
-            }
-            caballero2 = document.getElementById('caballero2').value;
-            let div2 = document.getElementById(caballero2);
-            div2.innerHTML = sTurno+'knight';
-        }
-    }
-
-    if(document.getElementById('alfil1').value !== ""){
-        
-        //Se evalua si los elementos sin iguales
-        if(!validaIconoMismaPosicion('alfil1') && 
-        !validaPosicionPieza("alfil1")){
-            //Se evalua si los elementos sin iguales
-            if(alfil1 !== '' && alfil1 !== document.getElementById('alfil1').value){
-                let div = document.getElementById(alfil1);
-                div.innerHTML = '';
-            }
-            alfil1 = document.getElementById('alfil1').value;
-            let div2 = document.getElementById(alfil1);
-            div2.innerHTML = sTurno+'bishop';
-        }
-        
-    }
-
-    if(document.getElementById('alfil2').value !== ""){
-
-        //Se evalua si los elementos sin iguales
-        if(!validaIconoMismaPosicion('alfil2') && !validaPosicionPieza("alfil2")){
-            //Se evalua si los elementos sin iguales
-            if(alfil2 !== '' && alfil2 !== document.getElementById('alfil2').value){
-                let div = document.getElementById(alfil2);
-                div.innerHTML = '';
-            }
-            alfil2 = document.getElementById('alfil2').value;
-            let div2 = document.getElementById(alfil2);
-            div2.innerHTML = sTurno+'bishop';
-        }
-
-
-    }
-
-
-    if(document.getElementById('reina').value !== ""){
-
-        //Se evalua si los elementos sin iguales
-        if(!validaIconoMismaPosicion('reina') && !validaPosicionPieza("reina")){
-             //Se evalua si los elementos sin iguales
-            if(reina !== '' && reina !== document.getElementById('reina').value){
-                let div = document.getElementById(reina);
-                div.innerHTML = '';
-            }
-            reina = document.getElementById('reina').value;
-            let div2 = document.getElementById(reina);
-            div2.innerHTML = sTurno+'queen';
-        }
-    }
-
-    if(document.getElementById('rey').value !== "" ){
-        //Se evalua si los elementos sin iguales
-        if(validaIconoMismaPosicion('rey')|| !validaPosicionPieza("rey")){
-            if(rey !== '' && rey !== document.getElementById('rey').value){
-                let div = document.getElementById(rey);
-                div.innerHTML = '';
-            }
-            rey = document.getElementById('rey').value;
-            let div2 = document.getElementById(rey);
-            div2.innerHTML = sTurno+'king';
-        }
-       
-    }
-
-    if(document.getElementById('archer').value !== "" ){
-        //Se evalua si los elementos sin iguales
-        if(validaIconoMismaPosicion('archer')|| !validaPosicionPieza("archer")){
-            if(archer !== '' && archer !== document.getElementById('archer').value){
-                let div = document.getElementById(archer);
-                div.innerHTML = '';
-            }
-            archer = document.getElementById('archer').value;
-            let div2 = document.getElementById(archer);
-            div2.innerHTML = sTurno+'archer';
-        }  
-    }
-
     insertImage();
 }
 
 export const guardarConfiguracionPiezas = () => {
-    if(torre1 === "" || torre2 === "" || caballero1 === "" || caballero2 === "" || alfil1 === "" ||
-    alfil2 === "" || rey === "" || reina === ""|| archer === ""){
-        alert("Debe agregar todas las piezas al tablero primero")
-        return;
+    //Validamos que no halla piezas vacias
+    for ( const piecePosition in arregloPiezas ) {  
+        if(arregloPiezas[piecePosition].posicion === ""){
+            alert("Debe agregar todas las piezas al tablero primero")
+            return;
+        }
+    }
+    //agregamos la informaicon a un arreglo para poderlo limpar la info despues
+    for ( const piecePosition in arregloPiezas ) {  
+        piezasGame[sTurno+arregloPiezas[piecePosition].nombre] = arregloPiezas[piecePosition].posicion;
+        document.getElementById(arregloPiezas[piecePosition].posicion).innerHTML = '';
+        arregloPiezas[piecePosition].posicion = '';
+        // document.getElementById(arregloPiezas[piecePosition].campoNombre).value = ''
     }
 
-    piezasGame[sTurno+"rook1"] = torre1;
-    piezasGame[sTurno+"knight1"] = caballero1;
-    piezasGame[sTurno+"bishop1"] = alfil1;
-    piezasGame[sTurno+"king"] = rey;
-    piezasGame[sTurno+"queen"] = reina;
-    piezasGame[sTurno+"knight2"] = alfil2;
-    piezasGame[sTurno+"bishop2"] = caballero2;
-    piezasGame[sTurno+"rook2"] = torre2;
-    piezasGame[sTurno+"archer"] = archer;
-
-    document.getElementById(torre1).innerHTML = ''
-    document.getElementById(torre2).innerHTML = ''
-    document.getElementById(caballero1).innerHTML = ''
-    document.getElementById(caballero2).innerHTML = ''
-    document.getElementById(alfil1).innerHTML = ''
-    document.getElementById(alfil2).innerHTML = ''
-    document.getElementById(rey).innerHTML = ''
-    document.getElementById(reina).innerHTML = ''
-    document.getElementById(archer).innerHTML = ''
-    /*
-    document.getElementById("torre1").value = ''
-    document.getElementById("torre2").value = ''
-    document.getElementById("caballero1").value = ''
-    document.getElementById("caballero2").value = ''
-    document.getElementById("alfil1").value = ''
-    document.getElementById("alfil2").value = ''
-    document.getElementById("rey").value = ''
-    document.getElementById("reina").value = ''
-    document.getElementById("archer").value = ''
-    */
-
-    document.getElementById("torre1").value = 'b101'
-    document.getElementById("torre2").value = 'b103'
-    document.getElementById("caballero1").value = 'b104'
-    document.getElementById("caballero2").value = 'b105'
-    document.getElementById("alfil1").value = 'b102'
-    document.getElementById("alfil2").value = 'b106'
-    document.getElementById("rey").value = 'b107'
-    document.getElementById("reina").value = 'b108'
-    document.getElementById("archer").value = 'b201'
-
-    torre1 = '';
-    torre2 = '';
-    caballero1 = '';
-    caballero2 = '';
-    alfil1 = '';
-    alfil2 = '';
-    rey = '';
-    reina = '';
-    archer = '';
+    document.getElementById("edt_hachero1").value = '1A'
+    document.getElementById("edt_hachero2").value = '1B'
+    document.getElementById("edt_lancero1").value = '1C'
+    document.getElementById("edt_lancero2").value = '1D'
+    document.getElementById("edt_lancero3").value = '1E'
+    document.getElementById("edt_lancero4").value = '1F'
+    document.getElementById("edt_archer").value =   '1G'
+    document.getElementById("edt_asesino").value =  '4A'
+    document.getElementById("edt_caballero1").value = '4B'
+    document.getElementById("edt_caballero2").value = '4C'
+    document.getElementById("edt_caballero3").value = '4D'
+    document.getElementById("edt_caballero4").value = '4E'
+    document.getElementById("edt_rey").value = '4F'
 
     switch(sTurno){
         case "W":
@@ -321,17 +225,13 @@ const insertImage = () => {
 }
 
 const validaIconoMismaPosicion = (sValorComparar) => {
-    if((document.getElementById('torre1').value === document.getElementById(sValorComparar).value && sValorComparar !== "torre1")|| 
-        (document.getElementById('torre2').value === document.getElementById(sValorComparar).value && sValorComparar !== "torre2")|| 
-        (document.getElementById('caballero1').value === document.getElementById(sValorComparar).value  && sValorComparar !== "caballero1")|| 
-        (document.getElementById('caballero2').value  === document.getElementById(sValorComparar).value  && sValorComparar !== "caballero2")|| 
-        (document.getElementById('alfil1').value === document.getElementById(sValorComparar).value  && sValorComparar !== "alfil1")||
-        (document.getElementById('alfil2').value === document.getElementById(sValorComparar).value  && sValorComparar !== "alfil2")|| 
-        (document.getElementById('rey').value === document.getElementById(sValorComparar).value  && sValorComparar !== "rey")|| 
-        (document.getElementById('reina').value === document.getElementById(sValorComparar).value && sValorComparar !== "reina")||
-        (document.getElementById('archer').value === document.getElementById(sValorComparar).value && sValorComparar !== "archer")){
-            alert(`La pieza ${sValorComparar} esta repitiendo su posicion con otra pieza`);
-            return true;
+
+    const resiltado = arregloPiezas.filter(function (item) {
+        return item.posicion === document.getElementById(sValorComparar).value && sValorComparar !== item.campoNombre;
+    });
+
+    if(resiltado.length > 0 ){
+        return true
     }
     return false;
 }
@@ -339,23 +239,21 @@ const validaIconoMismaPosicion = (sValorComparar) => {
 //Este metodo evalua si la pieza la estan poniendo en cesped rio o esta invadiendo terreno
 const validaPosicionPieza = (sPieza) =>{
     let sEDT_Valor = document.getElementById(sPieza).value;
-    let arr = Array.from(sEDT_Valor)
-    arr.shift()
-    let nValor = parseInt(arr.shift());
+    const nValor = eliminarLetras(sEDT_Valor)
 
     //Evaluaremos si la pieza esta invadiendo terreno
-    if((sTurno === "W" && (nValor >= 1 && nValor <=4)) ||
-        (sTurno === "B" && (nValor >= 5 && nValor <=8))){
+    if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+         (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
         alert('Esta pieza esta invadiendo terreno')
         return true;
     }
 
-    if(sPieza === "reina" && document.getElementById(sEDT_Valor).innerHTML.replace(/\s/g, '') === "Lago"){
+    if((sPieza === "edt_caballero1"||sPieza === "edt_caballero2"||sPieza === "edt_caballero3"||
+        sPieza === "edt_caballero4" )&& lagos.includes(sEDT_Valor)){
         alert('Esta pieza no puede invadir un lago');
         return true;
     }
-
-    if(document.getElementById(sEDT_Valor).innerHTML.replace(/\s/g, '') === "Montana"){
+    if(montanas.includes(sEDT_Valor)){
         alert('Esta pieza no puede invadir una montana');
         return true;
     }
