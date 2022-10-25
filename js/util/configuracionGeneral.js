@@ -28,3 +28,8 @@ export const numeroAAlfabeto = (nValor) => {
 export const eliminarLetras = (sValor) => {
     return sValor.replace(/\D/g, "")
 }
+
+export const eliminarNumeros = (sValor) => {
+    return sValor.replace(/[0-9]/g, '')
+}
+;

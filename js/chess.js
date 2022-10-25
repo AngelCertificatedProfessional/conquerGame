@@ -1,11 +1,11 @@
 // import { movimientoPawn } from './piezas/pawn.js';
-import { movimientoKing } from './piezas/king.js';
-import { movimientoRook } from './piezas/rook.js';
-import { movimientoBishoop } from './piezas/bishoop.js';
-import { movimientoQueen } from './piezas/queen.js';
-import { movimientoKnight } from './piezas/knight.js';
+import { movimientoRey } from './piezas/rey.js';
+import { movimientoHachero } from './piezas/hachero.js';
+import {  movimientoLancero } from './piezas/lancero.js';
+import { movimientoCaballero } from './piezas/caballero.js';
+import { movimientoAsesino } from './piezas/asesino.js';
 import {colorDisparoArcher, colorLago, colorMontana, colorOpciones,
-    numeroAAlfabeto,tamanoTableroLargo,tamanoTableroAncho} from './util/configuracionGeneral.js'
+    numeroAAlfabeto,tamanoTableroLargo,tamanoTableroAncho, eliminarLetras, eliminarNumeros} from './util/configuracionGeneral.js'
 import { movimientoArcher } from './piezas/archer.js';
 // import {piezasGame} from './config/configuracionPiezas.js'
 import {montanas,lagos} from './config/configuracionTablero.js'
@@ -80,7 +80,7 @@ function coloring() {
 coloring()
 
 //function to not remove the same team element
-function reddish(sPieza) {
+function reddish() {
     document.querySelectorAll('.box').forEach(i1 => {
         if (i1.style.backgroundColor == 'pink') {
             document.querySelectorAll('.box').forEach(i2 => {
@@ -138,33 +138,28 @@ document.querySelectorAll('.box').forEach(item => {
             })
         }
 
-        let arr = Array.from(item.id)
-        arr.shift()
-        let aside = eval(arr.pop())
-        arr.push('0')
-        let aup = eval(arr.join(''))
-        let a = aside + aup
+        const row = eliminarNumeros(item.id)
+        const col = eliminarLetras(item.id)
 
+        console.log(col)
+        console.log(row)
         // Function to display the available paths for all pieces
 
         function whosTurn(toggle) {
-            // PAWN
-            // if (item.innerText == `${toggle}pawn`) {
-            //     movimientoPawn(tog,a,aup,aside,item)
+            // if (item.innerText == `${toggle}archer`) {
+            //     movimientoArcher(a,aup,aside,item)
             // }else 
-            if (item.innerText == `${toggle}archer`) {
-                movimientoArcher(a,aup,aside,item)
-            }else if (item.innerText == `${toggle}king`) {
-                movimientoKing(a,aup,aside,item)
-            }else if (item.innerText == `${toggle}rook`) {
-                movimientoRook(a,aup,item)
-            }else if(item.innerText == `${toggle}bishop`) {
-                movimientoBishoop(a,aup,aside,item)
-            }else if(item.innerText == `${toggle}queen`) {
-                movimientoQueen(a,aup,aside,item)
-            }else if(item.innerText == `${toggle}knight`) {
-                movimientoKnight(a,aup,aside,item)
-            }
+            if (item.innerText == `${toggle}rey`) {
+                movimientoRey(a,aup,aside,item)
+            // }else if (item.innerText == `${toggle}hachero`) {
+            //     movimientoHachero(a,aup,item)
+            // }else if(item.innerText == `${toggle}lancero`) {
+            //     movimientoLancero(a,aup,aside,item)
+            // }else if(item.innerText == `${toggle}caballero`) {
+            //     movimientoCaballero(a,aup,aside,item)
+            // }else if(item.innerText == `${toggle}asesino`) {
+            //     movimientoAsesino(a,aup,aside,item)
+            // }
         }
 
 

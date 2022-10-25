@@ -1,5 +1,5 @@
 import {colorOpciones,validaPiezaMontana} from '../util/configuracionGeneral.js'
-export const movimientoBishoop = (a,aup,aside,item) =>{
+export const movimientoLancero = (a,aup,aside,item) =>{
     for (let i = 1; i < 9; i++) {
         if(i < (900 - aup) / 100 && i < 9 - aside && validaPiezaMontana(`b${a + i * 100 + i}`)){
             break

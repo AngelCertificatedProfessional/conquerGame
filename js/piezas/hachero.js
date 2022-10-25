@@ -1,5 +1,5 @@
 import {colorOpciones,validaPiezaMontana} from '../util/configuracionGeneral.js'
-export const movimientoRook = (a,aup,item) =>{
+export const movimientoHachero = (a,aup,item) =>{
     for (let i = 1; i < 9; i++) {
         if((a + i * 100) < 900 && validaPiezaMontana(`b${a + i * 100}`)){
             break

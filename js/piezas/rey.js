@@ -1,5 +1,5 @@
 import {colorOpciones,validaPiezaMontana} from '../util/configuracionGeneral.js'
-export const movimientoKing = (a,aup,laterales,item) =>{
+export const movimientoRey= (a,aup,laterales,item) =>{
     if (laterales < 8) {
         if(!validaPiezaMontana(`b${a + 1}`)){
             document.getElementById(`b${a + 1}`).style.backgroundColor = colorOpciones

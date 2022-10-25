@@ -1,5 +1,5 @@
 import {colorOpciones,validaPiezaLago,validaPiezaMontana} from '../util/configuracionGeneral.js'
-export const movimientoQueen = (a,aup,aside,item) =>{
+export const movimientoCaballero = (a,aup,aside,item) =>{
     for (let i = 1; i < 9; i++) {
         if((a + i * 100) < 900 && (validaPiezaMontana(`b${a + i * 100}`) || validaPiezaLago(`b${a + i * 100}`))){
             break
