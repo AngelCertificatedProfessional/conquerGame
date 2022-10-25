@@ -4,19 +4,19 @@ let usuario = JSON.parse(UtileriasPagina.b64_to_utf8(sessionStorage.getItem('usu
 
 export const agregar = async (sRuta, data) => {
   try {
-    if (!validaUsuario() && sRuta !== 'usuario/agregarUsuario') {
+    if (!validaUsuario() && sRuta !== 'usuarios/agregarUsuario') {
       throw 'No se a iniciado sesion';
     }
 
     const configuracion = {};
     configuracion.method = 'POST';
     configuracion.headers = {};
-    configuracion.headers.Accept = {};
-    configuracion.headers['Content-Type'] = {};
-    if(sRuta != 'usuario/agregarUsuario'){
+    configuracion.headers.Accept = 'application/json';
+    configuracion.headers['Content-Type'] = 'application/json';
+    configuracion.body= JSON.stringify(data);
+    if(sRuta != 'usuarios/agregarUsuario'){
         configuracion.Authorization = usuario.token;
     }
-    configuracion.body = JSON.stringify(data);
 
     let res = await fetch(
       `${config.env.apiLiutsVideoURL}/api/${sRuta}`,

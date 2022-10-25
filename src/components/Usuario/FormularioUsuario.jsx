@@ -22,7 +22,7 @@ const schema = yup.object({
     apellido: yup.string().required('El apellido es un campo obligatorio')
   });
 
-const FormularioUsuario = ({ usuario, ingresarSesion,setAccion,accion }) => {
+const FormularioUsuario = ({ usuario,setAccion,accion }) => {
   return (
     <Formik
     initialValues={{
@@ -41,7 +41,7 @@ const FormularioUsuario = ({ usuario, ingresarSesion,setAccion,accion }) => {
         usuario.apellido = values.apellido;
         usuario.correo = values.correo;
         if (accion === 2) {
-          agregar('usuario/agregarUsuario', usuario)
+          agregar('usuarios/agregarUsuario', usuario)
             .then(() => {
               swal({
                 title: 'Usuario Agregado',
@@ -49,37 +49,17 @@ const FormularioUsuario = ({ usuario, ingresarSesion,setAccion,accion }) => {
                 icon: 'success',
                 button: 'OK',
               });
-              actualizarListado();
+              setAccion(1);
             })
             .catch((error) => {
               swal({
                 title: 'Error',
-                text: error,
+                text: error.toString(),
                 icon: 'error',
                 button: 'OK',
               });
             });
         } 
-        //else {
-        //   actualizar('usuario/actualizarUsuario', usuario)
-        //     .then(() => {
-        //       swal({
-        //         title: 'Usuario Modificado',
-        //         text: 'Su usuario se a modificado exitosamente',
-        //         icon: 'success',
-        //         button: 'OK',
-        //       });
-        //       actualizarListado();
-        //     })
-        //     .catch((error) => {
-        //       swal({
-        //         title: 'Error',
-        //         text: error,
-        //         icon: 'error',
-        //         button: 'OK',
-        //       });
-        //     });
-        // }
       }}
       enableReinitialize
     >
