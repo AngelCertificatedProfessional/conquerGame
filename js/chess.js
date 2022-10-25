@@ -4,48 +4,37 @@ import { movimientoRook } from './piezas/rook.js';
 import { movimientoBishoop } from './piezas/bishoop.js';
 import { movimientoQueen } from './piezas/queen.js';
 import { movimientoKnight } from './piezas/knight.js';
-import {colorDisparoArcher, colorLago, colorMontana, colorOpciones} from './util/configuracionGeneral.js'
+import {colorDisparoArcher, colorLago, colorMontana, colorOpciones,
+    numeroAAlfabeto,tamanoTableroLargo,tamanoTableroAncho} from './util/configuracionGeneral.js'
+import { movimientoArcher } from './piezas/archer.js';
 // import {piezasGame} from './config/configuracionPiezas.js'
 import {montanas,lagos} from './config/configuracionTablero.js'
-import { movimientoArcher } from './piezas/archer.js';
 let pinkId = "";
 let pinkText = "";
 let numOfKings = 0;
 
 const agregarDivsTablero = () => {
-    for(let nContRow=8;nContRow>0;nContRow--){
+    for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
         let divElement = document.createElement("div");
         divElement.id = "row"+nContRow;
         divElement.className = "row";  
         document.getElementById("tablero_juego").appendChild(divElement);
-        for(let nContCol=1;nContCol<9;nContCol++){
+        for(let nContCol=1;nContCol<tamanoTableroAncho+1;nContCol++){
             let liElement2 = document.createElement("li");
-            liElement2.id = "b"+nContRow+"0"+nContCol;
-            liElement2.className = "box white-box";  
+            liElement2.id = nContRow+numeroAAlfabeto(nContCol);
+            //Se toma la desicion de como se pintara el tablero
+            if(lagos.includes(liElement2.id)){
+                liElement2.className = "box blue-box";
+            }else if(montanas.includes(liElement2.id )){
+                liElement2.className = "box green-box";
+            }else{
+                liElement2.className = "box white-box";
+            }
             document.getElementById("row"+nContRow).appendChild(liElement2);
         }
     }
 }
 agregarDivsTablero();
-
-
-
-const posicionClasesTablero = () => {
-    for ( const piecePosition in montanas ) {
-        const div = document.getElementById(montanas[piecePosition]);
-        div.classList.remove( 'white-box' )
-        div.classList.add( 'green-box' )
-    }
-
-    for ( const piecePosition in lagos ) {
-        const div = document.getElementById(lagos[piecePosition]);
-        div.classList.remove("white-box");
-        div.classList.add( 'blue-box' )
-    }
-}
-
-posicionClasesTablero()
-
 
 const posicionPiezas = () => {
     if(window.localStorage.getItem('piezas') === ""){

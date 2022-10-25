@@ -1,4 +1,3 @@
-import {piezasGame} from './config/configuracionPiezas.js'
 import {montanas,lagos} from './config/configuracionTablero.js'
 import { eliminarLetras, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
@@ -8,36 +7,36 @@ let arregloPiezas = [{
     campoNombre:"edt_hachero1",
     nombre:"hachero1",
     posicion:"",
-    icono:"rook",
+    icono:"hachero",
 },{
     campoNombre:"edt_hachero2",
     nombre:"hachero2",
     posicion:"",
-    icono:"rook",
+    icono:"hachero",
 },
 {
     campoNombre:"edt_lancero1",
     nombre:"lancero1",
     posicion:"",
-    icono:"bishop",
+    icono:"lancero",
 },
 {
     campoNombre:"edt_lancero2",
     nombre:"lancero2",
     posicion:"",
-    icono:"bishop",
+    icono:"lancero",
 },
 {
     campoNombre:"edt_lancero3",
     nombre:"lancero3",
     posicion:"",
-    icono:"bishop",
+    icono:"lancero",
 },
 {
     campoNombre:"edt_lancero4",
     nombre:"lancero4",
     posicion:"",
-    icono:"bishop",
+    icono:"lancero",
 },
 {
     campoNombre:"edt_archer",
@@ -49,40 +48,41 @@ let arregloPiezas = [{
     campoNombre:"edt_asesino",
     nombre:"asesino",
     posicion:"",
-    icono:"knight",
+    icono:"asesino",
 },
 {
     campoNombre:"edt_caballero1",
     nombre:"caballero1",
     posicion:"",
-    icono:"queen",
+    icono:"caballero",
 },
 {
     campoNombre:"edt_caballero2",
     nombre:"caballero2",
     posicion:"",
-    icono:"queen",
+    icono:"caballero",
 },
 {
     campoNombre:"edt_caballero3",
     nombre:"caballero3",
     posicion:"",
-    icono:"queen",
+    icono:"caballero",
 },
 {
     campoNombre:"edt_caballero4",
     nombre:"caballero4",
     posicion:"",
-    icono:"queen",
+    icono:"caballero",
 },
 {
     campoNombre:"edt_rey",
     nombre:"rey",
     posicion:"",
-    icono:"king",
+    icono:"rey",
 },
 ]
 
+const piezasGame = {};
 
 const agregarDivsTablero = () => {
     for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
@@ -148,9 +148,6 @@ coloring()
 export const colocarConfiguracionPiezas = () =>{
 
     for ( const piecePosition in arregloPiezas ) {  
-        console.log(arregloPiezas[piecePosition].campoNombre)
-        console.log(arregloPiezas[piecePosition].posicion)
-        console.log(arregloPiezas[piecePosition].icono)
         if(document.getElementById(arregloPiezas[piecePosition].campoNombre).value !== "" 
             && !validaIconoMismaPosicion(arregloPiezas[piecePosition].campoNombre) 
             && !validaPosicionPieza(arregloPiezas[piecePosition].campoNombre)){
@@ -191,8 +188,8 @@ export const guardarConfiguracionPiezas = () => {
     document.getElementById("edt_lancero4").value = '1F'
     document.getElementById("edt_archer").value =   '1G'
     document.getElementById("edt_asesino").value =  '4A'
-    document.getElementById("edt_caballero1").value = '4B'
-    document.getElementById("edt_caballero2").value = '4C'
+    document.getElementById("edt_caballero1").value = '3A'
+    document.getElementById("edt_caballero2").value = '3C'
     document.getElementById("edt_caballero3").value = '4D'
     document.getElementById("edt_caballero4").value = '4E'
     document.getElementById("edt_rey").value = '4F'
@@ -229,8 +226,8 @@ const validaIconoMismaPosicion = (sValorComparar) => {
     const resiltado = arregloPiezas.filter(function (item) {
         return item.posicion === document.getElementById(sValorComparar).value && sValorComparar !== item.campoNombre;
     });
-
     if(resiltado.length > 0 ){
+        alert('esta pieza esta chocando su posicion')
         return true
     }
     return false;
