@@ -129,31 +129,30 @@ document.querySelectorAll('.box').forEach(item => {
             //este segmento de codigo sirve para validar que se este eliminando la pieza
             document.querySelectorAll('.box').forEach(i => {
                 if (i.style.backgroundColor == 'pink') {
-                    document.getElementById(pinkId).innerText = '';
+                    item.innerText = '';
                     coloring()
                     insertImage()
                     tog = tog + 1
-                    
                 }
             })
         }
 
-        const row = eliminarNumeros(item.id)
-        const col = eliminarLetras(item.id)
+        const col= eliminarNumeros(item.id)
+        const row = eliminarLetras(item.id)
 
         console.log(col)
         console.log(row)
         // Function to display the available paths for all pieces
 
         function whosTurn(toggle) {
-            // if (item.innerText == `${toggle}archer`) {
-            //     movimientoArcher(a,aup,aside,item)
-            // }else 
-            if (item.innerText == `${toggle}rey`) {
-                movimientoRey(a,aup,aside,item)
-            // }else if (item.innerText == `${toggle}hachero`) {
-            //     movimientoHachero(a,aup,item)
-            // }else if(item.innerText == `${toggle}lancero`) {
+            if (item.innerText == `${toggle}archer`) {
+                movimientoArcher(parseInt(row),col,item)
+            }else if (item.innerText == `${toggle}rey`) {
+                movimientoRey(parseInt(row),col,item)
+            }else if (item.innerText == `${toggle}hachero`) {
+                movimientoHachero(parseInt(row),col,item)
+            }
+            //else if(item.innerText == `${toggle}lancero`) {
             //     movimientoLancero(a,aup,aside,item)
             // }else if(item.innerText == `${toggle}caballero`) {
             //     movimientoCaballero(a,aup,aside,item)
@@ -176,7 +175,7 @@ document.querySelectorAll('.box').forEach(item => {
         reddish(item.innerText)
 
         document.querySelectorAll('.box').forEach(win => {
-            if (win.innerText == 'Wking' || win.innerText == 'Bking') {
+            if (win.innerText == 'Wrey' || win.innerText == 'Brey') {
                 numOfKings += 1
             }
         })
