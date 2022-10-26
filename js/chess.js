@@ -151,10 +151,10 @@ document.querySelectorAll('.box').forEach(item => {
                 movimientoRey(parseInt(row),col,item)
             }else if (item.innerText == `${toggle}hachero`) {
                 movimientoHachero(parseInt(row),col,item)
+            }else if(item.innerText == `${toggle}lancero`) {
+                movimientoLancero(parseInt(row),col,item)
             }
-            //else if(item.innerText == `${toggle}lancero`) {
-            //     movimientoLancero(a,aup,aside,item)
-            // }else if(item.innerText == `${toggle}caballero`) {
+            //else if(item.innerText == `${toggle}caballero`) {
             //     movimientoCaballero(a,aup,aside,item)
             // }else if(item.innerText == `${toggle}asesino`) {
             //     movimientoAsesino(a,aup,aside,item)

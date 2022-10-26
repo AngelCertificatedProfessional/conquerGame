@@ -1,6 +1,5 @@
 import {alfabetoANumero, colorOpciones,numeroAAlfabeto,tamanoTableroAncho,tamanoTableroLargo,validaPiezaMontana} from '../util/configuracionGeneral.js'
 export const movimientoHachero = (row,col,item) =>{
-
     //Este
     let nCol = alfabetoANumero(col) 
     if (nCol < tamanoTableroAncho) {
