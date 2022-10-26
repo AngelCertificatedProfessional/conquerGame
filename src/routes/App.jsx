@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import Layout from '../components/generales/Layout';
 import Home from './../containers/Home';
 import Login from './../containers/Login';
+import ConquerGameOptions from './../containers/ConquerGameOptions';
 // import Usuario from './../containers/Usuario';
 // import Observacion from './../containers/Observacion';
 import Error404 from './../containers/Error404';
@@ -22,6 +23,7 @@ const App = () => {
           <Routes>
             <Route exact path="/" element={<Home/>} />
             <Route exact path="/login" element={<Login/>} />
+            <Route exact path="/conquerGameOptions" element={<ConquerGameOptions/>} />
             {/* <Route exact path="/usuario" component={Usuario} />
             <Route exact path="/observacion" component={Observacion} />
             <Route exact path="/actualizacion" component={Actualizacion} />

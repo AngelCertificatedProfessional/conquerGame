@@ -22,10 +22,36 @@ body{
     background-color:rgb(69, 100, 201);
 }
 
+.d-block{
+    display:block!important;
+}
+
 .flex-orientation-button{
     display:flex;
     justify-content: space-between;
 }
+
+.seccion {
+    margin-top:2rem;
+    margin-bottom:2rem;
+}
+
+.fw-300{
+    font-weight: 300;
+}
+
+.centrar-texto{
+    text-align: center;
+}
+h3{
+    font-size:3rem;
+}
+
+img{ /**esta sentencia esta haciendo las imagenes responsibas*/
+    max-width: 100%;
+}
+
+/*otros*/
 
 .header-login{
     margin-top:2rem;
@@ -76,9 +102,13 @@ select {
     font-size:1.8rem;
     padding:1rem 3rem;
     margin-top:1rem;
-    /* text-align: center; */
+    text-align: center;
     border:none;
     cursor: pointer;
+}
+
+.d-block{
+    display:block!important;
 }
 
 .mensaje-error{
@@ -87,15 +117,43 @@ select {
 }
 
 
+.contenedor{
+    max-width: 120rem; /*1200 px*/
+    margin: 0 auto 0 auto;
+}
 
+.contenido-centrado{
+    max-width: 80rem;
+}
 
+.centrar-texto{
+    text-align: center;
+}
 
+/*contenido*/
 
+.contenedor-contenido{
+    display:flex;    
+    justify-content: space-between;
+    flex-wrap:wrap;/**genera que lo que se ponga en anuncio se cumpla, por ejemplo el 33%*/
+}
 
+.contenido{
 
+    flex-shrink: 0; /**toma en consideracion solo lo que se ponen el flex-basis para no recrear un mal porcentaje*/
+    flex-basis:calc(33.33% - 1rem);
+    border:1px solid #b5b5b5;
+    background-color:#F5F5F5;
+    margin-bottom: 2rem;
+}
 
-
-
+.contenido-anuncio{
+    padding:2rem;
+}
+.contenido-anuncio h3,
+.contenido-anuncio p{
+    margin:0;
+}
 /*
 
 
