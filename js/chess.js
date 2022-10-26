@@ -153,10 +153,10 @@ document.querySelectorAll('.box').forEach(item => {
                 movimientoHachero(parseInt(row),col,item)
             }else if(item.innerText == `${toggle}lancero`) {
                 movimientoLancero(parseInt(row),col,item)
+            }else if(item.innerText == `${toggle}caballero`) {
+                movimientoCaballero(parseInt(row),col,item)
             }
-            //else if(item.innerText == `${toggle}caballero`) {
-            //     movimientoCaballero(a,aup,aside,item)
-            // }else if(item.innerText == `${toggle}asesino`) {
+            //else if(item.innerText == `${toggle}asesino`) {
             //     movimientoAsesino(a,aup,aside,item)
             // }
         }
@@ -206,7 +206,6 @@ document.querySelectorAll('.box').forEach(hathiTest => {
             document.querySelectorAll('.box').forEach(hathiTest2 => {
                 hathiTest2.addEventListener('click', function () {
                     if (hathiTest2.style.backgroundColor == colorOpciones && hathiTest2.innerText.length == 0) {    
-                        console.log('entre' + pinkText)
                         document.getElementById(pinkId).innerText = '';
                         hathiTest2.innerText = pinkText;
                         coloring()
@@ -214,14 +213,6 @@ document.querySelectorAll('.box').forEach(hathiTest => {
                         pinkId = '';
                         pinkText = '';
                     }
-
-                    // if (hathiTest2.style.backgroundColor == colorDisparoArcher && hathiTest2.innerText.length == 0) {    
-                    //     console.log('entre')                    
-                    //     // document.getElementById(pinkId).innerText = '';
-                    //     hathiTest2.innerText = '';
-                    //     coloring()
-                    //     insertImage()
-                    // }
                 })
             })
         }
