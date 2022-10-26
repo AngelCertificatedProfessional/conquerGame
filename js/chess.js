@@ -155,10 +155,9 @@ document.querySelectorAll('.box').forEach(item => {
                 movimientoLancero(parseInt(row),col,item)
             }else if(item.innerText == `${toggle}caballero`) {
                 movimientoCaballero(parseInt(row),col,item)
+            }else if(item.innerText == `${toggle}asesino`) {
+                movimientoAsesino(parseInt(row),col,item)
             }
-            //else if(item.innerText == `${toggle}asesino`) {
-            //     movimientoAsesino(a,aup,aside,item)
-            // }
         }
 
 
