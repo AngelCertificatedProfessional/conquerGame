@@ -3,6 +3,8 @@ export const colorOpciones = 'rgb(195, 208, 39)';
 export const colorDisparoArcher = 'rgb(223, 55, 19)';
 export const colorMontana = 'rgb(14, 155, 0)';
 export const colorLago = 'rgb(63, 234, 229)';
+export const colorCasstilloEntrada= 'rgb(185, 185, 179)';
+export const colorCasstilloSala= 'rgb(94, 94, 89)';
 export const tamanoTableroLargo = 24
 export const tamanoTableroAncho = 24
 

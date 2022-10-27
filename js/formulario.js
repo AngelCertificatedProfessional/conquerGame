@@ -185,13 +185,13 @@ export const guardarConfiguracionPiezas = () => {
     document.getElementById("edt_lancero1").value = '1C'
     document.getElementById("edt_lancero2").value = '1D'
     document.getElementById("edt_lancero3").value = '1E'
-    document.getElementById("edt_lancero4").value = '1F'
-    document.getElementById("edt_archer").value =   '1G'
+    document.getElementById("edt_lancero4").value = '2F'
+    document.getElementById("edt_archer").value =   '2G'
     document.getElementById("edt_asesino").value =  '4A'
     document.getElementById("edt_caballero1").value = '3A'
     document.getElementById("edt_caballero2").value = '3C'
     document.getElementById("edt_caballero3").value = '4D'
-    document.getElementById("edt_caballero4").value = '4E'
+    document.getElementById("edt_caballero4").value = '3E'
     document.getElementById("edt_rey").value = '4F'
 
     switch(sTurno){
