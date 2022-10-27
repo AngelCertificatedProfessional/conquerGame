@@ -65,7 +65,7 @@ export const movimientoCaballero = (row,col,item) =>{
     }
     //sur
     for (let i = 1; i < tamanoTableroLargo+1; i++) {
-        if(validaPiezaMontana(`${row-1}${numeroAAlfabeto(nCol)}`) || validaPiezaLago(`${row-i}${numeroAAlfabeto(nCol)}`)){
+        if(validaPiezaMontana(`${row-i}${numeroAAlfabeto(nCol)}`) || validaPiezaLago(`${row-i}${numeroAAlfabeto(nCol)}`)){
             break
         }
         if ((row-i) >=1 && document.getElementById(`${row-i}${numeroAAlfabeto(nCol)}`).innerText == 0) {
@@ -78,7 +78,7 @@ export const movimientoCaballero = (row,col,item) =>{
 
     //Este
     for (let i = 1; i < tamanoTableroLargo+1; i++) {
-        if(validaPiezaMontana(`${row}${numeroAAlfabeto(nCol+i)}`) || validaPiezaLago(`${row}${numeroAAlfabeto(nCol+1)}`)){
+        if(validaPiezaMontana(`${row}${numeroAAlfabeto(nCol+i)}`) || validaPiezaLago(`${row}${numeroAAlfabeto(nCol+i)}`)){
             break
         }
         if ((nCol+i) < tamanoTableroAncho+1 && document.getElementById(`${row}${numeroAAlfabeto(nCol+i)}`).innerText == 0) {
@@ -91,7 +91,7 @@ export const movimientoCaballero = (row,col,item) =>{
 
     //Oeste
     for (let i = 1; i < tamanoTableroLargo+1; i++) {
-        if(validaPiezaMontana(`${row}${numeroAAlfabeto(nCol-i)}`) || validaPiezaLago(`${row}${numeroAAlfabeto(nCol-1)}`)){
+        if(validaPiezaMontana(`${row}${numeroAAlfabeto(nCol-i)}`) || validaPiezaLago(`${row}${numeroAAlfabeto(nCol-i)}`)){
             break
         }
         if ((nCol-i) >= 1 && document.getElementById(`${row}${numeroAAlfabeto(nCol-i)}`).innerText == 0) {

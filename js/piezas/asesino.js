@@ -1,28 +1,55 @@
-import {colorOpciones,validaPiezaMontana} from '../util/configuracionGeneral.js'
-export const movimientoAsesino = (a,aup,aside,item) =>{
-    if (aside < 7 && aup < 800 && !validaPiezaMontana(`b${a + 100 + 2}`)) {
-        document.getElementById(`b${a + 100 + 2}`).style.backgroundColor = colorOpciones
-    }
-    if (aside < 7 && aup > 200 && !validaPiezaMontana(`b${a - 100 + 2}`)) {
-        document.getElementById(`b${a - 100 + 2}`).style.backgroundColor = colorOpciones
-    }
-    if (aside < 8 && aup < 700 && !validaPiezaMontana(`b${a + 200 + 1}`)) {
-        document.getElementById(`b${a + 200 + 1}`).style.backgroundColor = colorOpciones
-    }
-    if (aside > 1 && aup < 700 && !validaPiezaMontana(`b${a + 200 - 1}`)) {
-        document.getElementById(`b${a + 200 - 1}`).style.backgroundColor = colorOpciones
-    }
-    if (aside > 2 && aup < 800 && !validaPiezaMontana(`b${a - 2 + 100}`)) {
-        document.getElementById(`b${a - 2 + 100}`).style.backgroundColor = colorOpciones
-    }
-    if (aside > 2 && aup > 100 && !validaPiezaMontana(`b${a - 2 - 100}`)) {
-        document.getElementById(`b${a - 2 - 100}`).style.backgroundColor = colorOpciones
-    }
-    if (aside < 8 && aup > 200 && !validaPiezaMontana(`b${a - 200 + 1}`)) {
-        document.getElementById(`b${a - 200 + 1}`).style.backgroundColor = colorOpciones
-    }
-    if (aside > 1 && aup > 200 && !validaPiezaMontana(`b${a - 200 - 1}`)) {
-        document.getElementById(`b${a - 200 - 1}`).style.backgroundColor = colorOpciones
+import {alfabetoANumero, colorOpciones,numeroAAlfabeto,tamanoTableroAncho,tamanoTableroLargo,validaPiezaMontana} from '../util/configuracionGeneral.js'
+export const movimientoAsesino = (row,col,item,bMovioAsesino)  =>{
+    let nCol = alfabetoANumero(col) 
+    //La funcionalidad del asesino es matar dos caminar dos veces, matar dos veces por eso 
+    // se realiza una evaluacion de su movimiento
+    if(!bMovioAsesino){
+        if (nCol < tamanoTableroAncho) {
+            if(!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol+1)}`)){
+                console.log(row+numeroAAlfabeto(nCol+1))
+                document.getElementById(`${row}${numeroAAlfabeto(nCol+1)}`).style.backgroundColor = colorOpciones
+            }
+        }
+        //Oeste
+        if (nCol > 1) {
+            if(!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol-1)}`)){
+                document.getElementById(`${row}${numeroAAlfabeto(nCol-1)}`).style.backgroundColor = colorOpciones
+            }
+        }
+        //Norte
+        if (row < tamanoTableroLargo) {
+            console.log(`${ row+1}${numeroAAlfabeto(nCol)}`)
+            if(!validaPiezaMontana(`${row+1}${numeroAAlfabeto(nCol)}`)){
+                document.getElementById(`${row+1}${numeroAAlfabeto(nCol)}`).style.backgroundColor = colorOpciones
+            }
+        }
+        //Sur
+        if (row > 1) {
+            if(!validaPiezaMontana(`${row-1}${numeroAAlfabeto(nCol)}`)){
+                document.getElementById(`${row-1}${numeroAAlfabeto(nCol)}`).style.backgroundColor = colorOpciones
+            }
+        }
+    }else{
+        if (row > 1 && nCol < tamanoTableroAncho) {
+            if(!validaPiezaMontana(`${row-1}${numeroAAlfabeto(nCol+1)}`)){
+                document.getElementById(`${row-1}${numeroAAlfabeto(nCol+1)}`).style.backgroundColor = colorOpciones
+            }
+        }
+        if (row > 1 && nCol > 1) {
+            if(!validaPiezaMontana(`${row-1}${numeroAAlfabeto(nCol-1)}`)){
+                document.getElementById(`${row-1}${numeroAAlfabeto(nCol-1)}`).style.backgroundColor = colorOpciones
+            }
+        }
+        if (row < tamanoTableroLargo && nCol < tamanoTableroAncho) {
+            if(!validaPiezaMontana(`${row+1}${numeroAAlfabeto(nCol+1)}`)){
+                document.getElementById(`${row+1}${numeroAAlfabeto(nCol+1)}`).style.backgroundColor = colorOpciones
+            }
+        }
+        if (row < tamanoTableroLargo && nCol > 1) {
+            if(!validaPiezaMontana(`${row+1}${numeroAAlfabeto(nCol-1)}`)){
+                document.getElementById(`${row+1}${numeroAAlfabeto(nCol-1)}`).style.backgroundColor = colorOpciones
+            }
+        }
     }
     item.style.backgroundColor = 'pink'
 }

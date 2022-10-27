@@ -12,7 +12,9 @@ import {montanas,lagos} from './config/configuracionTablero.js'
 let pinkId = "";
 let pinkText = "";
 let numOfKings = 0;
-
+let turno = 0;
+let bMovioAsesino = false;
+let sPiezaMovimiento = "";
 const agregarDivsTablero = () => {
     for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
         let divElement = document.createElement("div");
@@ -104,13 +106,21 @@ function reddish() {
     })
 }
 
-let tog = 1
-
 document.querySelectorAll('.box').forEach(item => {
     item.addEventListener('click', function () {
         // To delete the opposite element
         if (item.style.backgroundColor == colorOpciones && item.innerText.length == 0) {
-            tog = tog + 1
+            console.log(sPiezaMovimiento)
+            console.log(sPiezaMovimiento.includes('asesino'))
+            console.log(bMovioAsesino)
+            if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
+                bMovioAsesino = true;
+            }else{
+                turno ++
+                bMovioAsesino = false;
+            }
+            console.log(bMovioAsesino)
+            console.log(turno)
         } else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
             //este segmento de codigo sirve para validar que se este eliminando la pieza
             document.querySelectorAll('.box').forEach(i => {
@@ -121,8 +131,12 @@ document.querySelectorAll('.box').forEach(item => {
                     item.innerText = pinkText2
                     coloring()
                     insertImage()
-                    tog = tog + 1
-                    
+                    if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
+                        bMovioAsesino = true;
+                    }else{
+                        turno ++
+                        bMovioAsesino = false;
+                    }
                 }
             })
         }else if (item.style.backgroundColor == colorDisparoArcher && item.innerText.length !== 0) {
@@ -132,7 +146,12 @@ document.querySelectorAll('.box').forEach(item => {
                     item.innerText = '';
                     coloring()
                     insertImage()
-                    tog = tog + 1
+                    if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
+                        bMovioAsesino = true;
+                    }else{
+                        turno ++
+                        bMovioAsesino = false;
+                    }
                 }
             })
         }
@@ -145,28 +164,27 @@ document.querySelectorAll('.box').forEach(item => {
         // Function to display the available paths for all pieces
 
         function whosTurn(toggle) {
-            if (item.innerText == `${toggle}archer`) {
+            sPiezaMovimiento = item.innerText;
+            if (item.innerText == `${toggle}archer` && !bMovioAsesino) {
                 movimientoArcher(parseInt(row),col,item)
-            }else if (item.innerText == `${toggle}rey`) {
+            }else if (item.innerText == `${toggle}rey` && !bMovioAsesino) {
                 movimientoRey(parseInt(row),col,item)
-            }else if (item.innerText == `${toggle}hachero`) {
+            }else if (item.innerText == `${toggle}hachero` && !bMovioAsesino) {
                 movimientoHachero(parseInt(row),col,item)
-            }else if(item.innerText == `${toggle}lancero`) {
+            }else if(item.innerText == `${toggle}lancero` && !bMovioAsesino) {
                 movimientoLancero(parseInt(row),col,item)
-            }else if(item.innerText == `${toggle}caballero`) {
+            }else if(item.innerText == `${toggle}caballero` && !bMovioAsesino) {
                 movimientoCaballero(parseInt(row),col,item)
             }else if(item.innerText == `${toggle}asesino`) {
-                movimientoAsesino(parseInt(row),col,item)
+                movimientoAsesino(parseInt(row),col,item,bMovioAsesino)
             }
         }
 
 
         // Toggling the turn
-        if (tog % 2 !== 0) {
-            document.getElementById('tog').innerText = "White's Turn"
+        if (turno == 0) {
             whosTurn('W')
-        }
-        if (tog % 2 == 0) {
+        }else if(turno == 1) {
             document.getElementById('tog').innerText = "Black's Turn"
             whosTurn('B')
         }
@@ -180,10 +198,9 @@ document.querySelectorAll('.box').forEach(item => {
         })
 
         if (numOfKings == 1) {
-            if (tog % 2 == 0) {
+            if (turno == 1) {
                 alert('White Wins !!')
-            }
-            else if (tog % 2 !== 0) {
+            }else if(turno == 2) {
                 alert('Black Wins !!')
             }
             setTimeout(() => {
@@ -191,6 +208,11 @@ document.querySelectorAll('.box').forEach(item => {
             }, 600)
         }else{
             numOfKings = 0;
+        }
+
+        if(turno === 2){
+            document.getElementById('tog').innerText = "White's Turn"
+            turno = 0;
         }
     })
 
