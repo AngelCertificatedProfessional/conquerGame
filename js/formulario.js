@@ -2,6 +2,8 @@ import {montanas,lagos} from './config/configuracionTablero.js'
 import { eliminarLetras, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
 let sTurno = 'W';
+let sPiezaAColocar = ''
+
 
 let arregloPiezas = [{
     campoNombre:"edt_hachero1",
@@ -83,6 +85,20 @@ let arregloPiezas = [{
 ]
 
 const piezasGame = {};
+
+const agregarImagenesListado = () => {
+    for ( const piecePosition in arregloPiezas ) {  
+        let divElement = document.createElement("div");
+
+        //divElement.id = "row"+nContRow;
+        //divElement.className = "row";  
+        divElement.className = 'iconoMenu'
+        divElement.innerHTML = sTurno+arregloPiezas[piecePosition].nombre+`<img class='allimg' src="img/${sTurno+arregloPiezas[piecePosition].icono}.png" alt="">`
+        divElement.style.cursor = 'pointer'
+        document.getElementById("lista_personajes").appendChild(divElement);
+    }
+}
+agregarImagenesListado();
 
 const agregarDivsTablero = () => {
     for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
@@ -215,7 +231,6 @@ const insertImage = () => {
         if (image.innerText.length !== 0) {
             if(image.innerText.replace(/\s/g, '') !== 'Montana' && image.innerText.replace(/\s/g, '') !== 'Lago'){
                 image.innerHTML = `${image.innerText} <img class='allimg' src="img/${image.innerText}.png" alt="">`
-                image.style.cursor = 'pointer'
             }
         }
     })
@@ -254,5 +269,28 @@ const validaPosicionPieza = (sPieza) =>{
         alert('Esta pieza no puede invadir una montana');
         return true;
     }
-
 }
+
+
+// Moving the element
+document.querySelectorAll('.box').forEach(hathiTest => {
+    hathiTest.addEventListener('click', function () {
+        if(hathiTest.style.backgroundColor === 'rgb(72, 66, 65)'){
+            hathiTest.style.backgroundColor = 'rgb(255, 255, 255)'; 
+        }else{
+            hathiTest.style.backgroundColor === 'rgb(72, 66, 65)';
+        }
+    })
+})
+
+document.querySelectorAll('.iconoMenu').forEach(hathiTest => {
+    hathiTest.addEventListener('click', function () {
+        sPiezaAColocar = hathiTest.innerText;
+        console.log(sPiezaAColocar)
+        if(hathiTest.style.backgroundColor === 'rgb(72, 66, 65)'){
+            hathiTest.style.backgroundColor = 'rgb(255, 255, 255)'; 
+        }else{
+            hathiTest.style.backgroundColor = 'rgb(72, 66, 65)';
+        }
+    })
+})

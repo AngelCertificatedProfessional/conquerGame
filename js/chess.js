@@ -89,12 +89,10 @@ function reddish() {
                 if ((i2.style.backgroundColor == colorOpciones || i2.style.backgroundColor == colorDisparoArcher)) {
                     if(i2.innerText.length !== 0){
                         let greenText = i2.innerText
-
                         let pinkText3 = i1.innerText;
                         let pinkColor = ((Array.from(pinkText3)).shift()).toString()
                         let greenColor = ((Array.from(greenText)).shift()).toString()
-                        
-                        //En esta validacion se pregunta si la pieza a pazar es del mismo color a otra del mismo
+                        //En esta validacion se pregunta si la pieza es del mismo valor (B,W) a otra del mismo
                         //team, aparte de condicionar si es un lago o una montana
                         if (pinkColor == greenColor) {
                             i2.style.backgroundColor = 'rgb(240, 201, 150)'
