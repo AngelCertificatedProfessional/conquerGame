@@ -68,6 +68,13 @@ li {
     display:flex;
 }
 
+.division-tablero-menu{
+    flex-shrink: 0; /**toma en consideracion solo lo que se ponen el flex-basis para no recrear un mal porcentaje*/
+    flex-basis:calc(25% - 1rem);
+    display:flex;
+    flex-direction: column;
+}
+
 form{
     display:flex;
     flex-direction: column;

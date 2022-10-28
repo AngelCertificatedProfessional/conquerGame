@@ -250,3 +250,19 @@ document.querySelectorAll('.box').forEach(ee => {
         }
     })
 })
+
+export const saltarTurno = () =>{
+
+    // Toggling the turn
+    if(turno == 0) {
+        document.getElementById('tog').innerText = "Black's Turn"
+    }else{
+        document.getElementById('tog').innerText = "White's Turn"
+    }
+    turno ++;
+    console.log(turno)
+    if(turno == 2){
+        document.getElementById('tog').innerText = "White's Turn"
+        turno = 0
+    }
+}
