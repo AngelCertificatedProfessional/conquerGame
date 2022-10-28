@@ -4,9 +4,13 @@ import {b64_to_utf8} from './../utils/UtileriasPagina';
 const CrearUniser = React.lazy(() =>
   import('./../components/conquerGame/CrearUniser')
 );
+const FormularioConfiguracion = React.lazy(() =>
+  import('./../components/conquerGame/FormularioConfiguracion')
+);
 const ConquerGameOptions = () => {
     let navigate  = useNavigate();
     const [opcionesJuego, setOpcionesJuego] = useState({});
+    const [accion, setAccion] = useState(0);
     useEffect(() => {
         const usuarioSesionT = JSON.parse(b64_to_utf8(sessionStorage.getItem('usuario')))
         if (
@@ -26,16 +30,27 @@ const ConquerGameOptions = () => {
             <div className="contenedor-contenido">
                 <Suspense fallback={<div>Loading...</div>}>
                     <CrearUniser
-                        texto = "Crear Partida"
-                        setOpcionesJuego = {setOpcionesJuego}
+                        accion = {accion}
+                        setAccion = {setAccion}
                     />
                 </Suspense>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <CrearUniser
-                        texto = "Uniser a partida"
-                        setOpcionesJuego = {setOpcionesJuego}
-                    />
-                </Suspense>
+                {accion === 1 && (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <FormularioConfiguracion
+                            accion = {accion}
+                            setAccion = {setAccion}
+                        />
+                    </Suspense>
+                )}
+                {/* {(accion === 2) && (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <FormularioUsuario
+                            usuario={usuarioTemp}
+                            setAccion={setAccion}
+                            accion={accion}
+                        />
+                    </Suspense>
+                )} */}
             </div>
         </main>
    );

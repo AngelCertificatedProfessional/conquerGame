@@ -17,7 +17,7 @@ const CardContenido = ({ contenido }) => {
         <div className="contenido">
             <img src={imagen} alt="Anuncio casa en el lago">
             </img>
-            <div class="contenido-anuncio">
+            <div className="contenido-anuncio">
                 <h3>Conquer Game</h3>
                 <p>Juego de estrategia basado en conquistas y ajedrez, de 2 a 6 jugadores</p>
                 <Link className = "boton blue d-block" to="conquerGameOptions">Ingresa</Link>
