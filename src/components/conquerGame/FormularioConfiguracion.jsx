@@ -5,31 +5,33 @@ import { agregar } from '../../utils/ConexionAPI';
 import swal from 'sweetalert';
 
 const schema = yup.object({
-    jugadores: yup.string().required('Seleccione una cantidad de jugadores'),
+    catidadJugadores: yup.string().required('Seleccione una cantidad de jugadores'),
     tipoJuego: yup.string().required("Seleccione un tipo de juego")
   });
 
-const FormularioConfiguracion = ({ setAccion,accion }) => {
+const FormularioConfiguracion = ({ setAccion,accion,setNumeroJuego,agregarJugadoresArreglo,usuario }) => {
   return (
     <Formik
       initialValues={{
-        jugadores: '',
+        catidadJugadores: '',
         tipoJuego: '',
       }}
       validationSchema={schema}
       onSubmit={(values, e) => {
         const partida = {};
-        partida.jugadores = values.jugadores;
+        partida.catidadJugadores = values.catidadJugadores;
         partida.tipoJuego = values.tipoJuego;
           agregar('conquerGame/crearPartida', partida)
-            .then(() => {
+            .then((resultado) => {
               swal({
                 title: 'Partida Creada',
                 text: 'Su partida se a creado exitosamente',
                 icon: 'success',
                 button: 'OK',
               });
-              setAccion(1);
+              setNumeroJuego(resultado.data.random)
+              setAccion(3); 
+              agregarJugadoresArreglo(usuario);
             })
             .catch((error) => {
               swal({
@@ -59,8 +61,8 @@ const FormularioConfiguracion = ({ setAccion,accion }) => {
                     
                 <h2 className="tituloCentrado">Creacion de partida ConquerGame</h2>
                 <div className='campo-input'>
-                    <label htmlFor="jugadores"> Cantidad de jugadores: </label>
-                    <select id="jugadores" name="jugadores" onChange={handleChange}  onBlur={handleBlur} value={values.jugadores} >
+                    <label htmlFor="catidadJugadores"> Cantidad de jugadores: </label>
+                    <select id="catidadJugadores" name="catidadJugadores" onChange={handleChange}  onBlur={handleBlur} value={values.catidadJugadores} >
                         <option value="" disabled defaultValue>--Seleccione--</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -68,8 +70,8 @@ const FormularioConfiguracion = ({ setAccion,accion }) => {
                         <option value="5">5</option>
                         <option value="6">6</option>
                     </select>
-                    {(!!touched.jugadores && !!errors.jugadores) && (
-                        <span className='mensaje-error'>{errors.jugadores}</span>
+                    {(!!touched.catidadJugadores && !!errors.catidadJugadores) && (
+                        <span className='mensaje-error'>{errors.catidadJugadores}</span>
                         )}
                 </div>
                 <p className='fw-700 seccion'>Tipo de juego</p>

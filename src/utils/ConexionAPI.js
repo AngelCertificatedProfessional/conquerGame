@@ -18,7 +18,6 @@ export const agregar = async (sRuta, data) => {
     if(sRuta !== 'usuarios/agregarUsuario'){
         configuracion.headers.Authorization = usuario.token;
     }
-    console.log(configuracion)
     let res = await fetch(
       `${config.env.apiLiutsVideoURL}/api/${sRuta}`,
       configuracion
@@ -31,7 +30,7 @@ export const agregar = async (sRuta, data) => {
     } else if (res.status !== 200 || json.hasOwnProperty('error')) {
       throw 'Hubo un error al ingresar la informacion';
     }
-
+    return json;
   } catch (error) {
     throw error;
   }
