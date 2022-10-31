@@ -9,7 +9,7 @@ const schema = yup.object({
     tipoJuego: yup.string().required("Seleccione un tipo de juego")
   });
 
-const FormularioConfiguracion = ({ setAccion,accion,setNumeroJuego,agregarJugadoresArreglo,usuario }) => {
+const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
   return (
     <Formik
       initialValues={{
@@ -29,9 +29,7 @@ const FormularioConfiguracion = ({ setAccion,accion,setNumeroJuego,agregarJugado
                 icon: 'success',
                 button: 'OK',
               });
-              setNumeroJuego(resultado.data.random)
-              setAccion(3); 
-              agregarJugadoresArreglo(usuario);
+              abrirPartidaJuego(resultado.data.random);
             })
             .catch((error) => {
               swal({

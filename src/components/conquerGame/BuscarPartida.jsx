@@ -8,7 +8,7 @@ const schema = yup.object({
     buscar: yup.string().required('Ingrese el numero de la sala'),
   });
 
-const BuscarPartida = ({ setAccion,accion,setNumeroJuego,agregarJugadoresArreglo,usuario }) => {
+const BuscarPartida = ({ setAccion,accion,setNumeroJuego,agregarJugadoresArreglo,abrirConexionPartida }) => {
   return (
     <Formik
       initialValues={{
@@ -16,18 +16,12 @@ const BuscarPartida = ({ setAccion,accion,setNumeroJuego,agregarJugadoresArreglo
       }}
       validationSchema={schema}
       onSubmit={(values, e) => {
-        console.log(values)
-        consultaById('conquerGame/buscarPartida', values.buscar)
+        consultaById('conquerGame/buscarPartida/', values.buscar)
             .then((resultado) => {
-              swal({
-                title: 'Partida Creada',
-                text: 'Su partida se a creado exitosamente',
-                icon: 'success',
-                button: 'OK',
-              });
-              setNumeroJuego(resultado.data.random)
+              setNumeroJuego(values.buscar)
               setAccion(3); 
-              agregarJugadoresArreglo(usuario);
+              agregarJugadoresArreglo(resultado);
+              abrirConexionPartida(values.buscar)
             })
             .catch((error) => {
               swal({

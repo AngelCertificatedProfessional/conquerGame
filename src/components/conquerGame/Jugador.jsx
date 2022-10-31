@@ -3,7 +3,6 @@ const Jugador = ({ jugador }) => {
     useEffect(() => {
         
     }, []);
-    console.log(jugador)
     return (
         <div className="seccion">
             <h2 className='fw-300 centrar-texto'>

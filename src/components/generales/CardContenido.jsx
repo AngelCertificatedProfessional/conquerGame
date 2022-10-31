@@ -20,7 +20,7 @@ const CardContenido = ({ contenido }) => {
             <div className="contenido-anuncio">
                 <h3>Conquer Game</h3>
                 <p>Juego de estrategia basado en conquistas y ajedrez, de 2 a 6 jugadores</p>
-                <Link className = "boton blue d-block" to="conquerGameOptions">Ingresa</Link>
+                <Link className = "boton blue d-block" to="ConquerGameOpciones">Ingresa</Link>
             </div>
         </div>
     );

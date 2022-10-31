@@ -14,7 +14,6 @@ export const agregar = async (sRuta, data) => {
     configuracion.headers.Accept = 'application/json';
     configuracion.headers['Content-Type'] = 'application/json';
     configuracion.body= JSON.stringify(data);
-    console.log(sRuta)
     if(sRuta !== 'usuarios/agregarUsuario'){
         configuracion.headers.Authorization = usuario.token;
     }
@@ -87,12 +86,13 @@ export const consultaById = async (sRuta, nIdRegistro) => {
       `${config.env.apiLiutsVideoURL}/api/${sRuta}${nIdRegistro}`,
       configuracion
     );
-
-    if (res.status !== 200) {
-      throw 'Hubo un error al ingresar la informacion';
-    }
-
     let data = await res.json();
+    
+    if (res.status !== 200 && res.status === 503) {
+      throw `${data.data}`;
+    }else if(res.status !== 200){
+      throw `Hubo un error al ingresar la informacion ${data.hasOwnProperty("data") ? data.data : ''}`;
+    }
     return data.data;
   } catch (error) {
     throw error;
