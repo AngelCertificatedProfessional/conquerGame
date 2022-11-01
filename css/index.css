@@ -80,6 +80,15 @@ form{
     flex-direction: column;
 }
 
+button{
+    width:100%;
+    margin-bottom:2px;
+}
+
+.iconoMenu{
+    font-size: 0px;
+}
+
 @media (max-width:650px){
 
     #tog {

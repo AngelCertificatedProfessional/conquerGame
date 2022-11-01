@@ -9,8 +9,7 @@
     <link rel="stylesheet" href="css/index.css">
     <title>Conquer Game</title>
     <script type="module">
-        import { colocarConfiguracionPiezas,guardarConfiguracionPiezas } from "./js/formulario.js";
-        window.colocarConfiguracionPiezas = colocarConfiguracionPiezas;
+        import { guardarConfiguracionPiezas } from "./js/formulario.js";
         window.guardarConfiguracionPiezas = guardarConfiguracionPiezas;
     </script>
 </head>
@@ -21,52 +20,16 @@
     <h5>-by Angel Espinoza</h5>
     <h2 id="tog">White's Turn</h2>
     <section class="menu-juego">
-        <form class="division-tablero-menu" action="javascript:void(0);">
-            <!-- Simboliza la torre -->
-            <label> Hachero 1</label>
-            <input name="edt_hachero1" id="edt_hachero1" placeholder="Posicion Hachero 1" value="24A"/>
-            <label> Hachero 2</label>
-            <input name="edt_hachero2" id="edt_hachero2" placeholder="Posicion Hachero 2" value="24B"/>
-            
-            <!-- Simboliza al alfil -->
-            <label> Lancero 1</label>
-            <input name="edt_lancero1" id="edt_lancero1" placeholder="Posicion lancero 1" value="24C"/>
-            <label> Lancero 2</label>
-            <input name="edt_lancero2" id="edt_lancero2" placeholder="Posicion lancero 2" value="24D"/>
-            <label> Lancero 3</label>
-            <input name="edt_lancero3" id="edt_lancero3" placeholder="Posicion lancero 3" value="24E"/>
-            <label> Lancero 4</label>
-            <input name="edt_lancero4" id="edt_lancero4" placeholder="Posicion lancero 4" value="24F"/>
-            
-            <label> Arquero</label>
-            <input name="edt_archer" id="edt_archer" placeholder="Posicion archer" value="23A"/>
-
-            <label> Asesino</label>
-            <input name="edt_asesino" id="edt_asesino" placeholder="Posicion Asesino" value="23B"/>
-            
-            <label> Caballero 1</label>
-            <input name="edt_caballero1" id="edt_caballero1" placeholder="Posicion Caballero 1" value="23C"/>
-
-            <label> Caballero 2</label>
-            <input name="edt_caballero2" id="edt_caballero2" placeholder="Posicion Caballero 2" value="23D"/>
-
-            <label> Caballero 3</label>
-            <input name="edt_caballero3" id="edt_caballero3" placeholder="Posicion Caballero 3" value="23E"/>
-
-            <label> Caballero 4</label>
-            <input name="edt_caballero4" id="edt_caballero4" placeholder="Posicion Caballero 3" value="23F"/>
-
-            <label> Rey</label>
-            <input name="edt_rey" id="edt_rey" placeholder="Posicion Rey" value="23G"/>
-            <button onclick="colocarConfiguracionPiezas()">Colocar</button>
-            <button onclick="guardarConfiguracionPiezas()">Guardar</button>
-        </form>
+        <div>
+            <button class="button" onclick="guardarConfiguracionPiezas()">Guardar</button>
+            <div class= "" id="lista_personajes">
+            </div>
+        </div>
         <div class="juego">
             <ul id="tablero_juego">
             </ul>
         </div>
     </section>
-    <div id="lista_personajes">
-    </div>
+    
 </body>
 </html>
