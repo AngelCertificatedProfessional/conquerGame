@@ -1,9 +1,9 @@
 import {montanas,lagos} from './config/configuracionTablero.js'
-import { eliminarLetras, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
+import { eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
 let sTurno = 'W';
 let sPiezaAColocar = ''
-
+let piezaSeleccionada = null;
 
 let arregloPiezas = [{
     campoNombre:"edt_hachero1",
@@ -93,6 +93,7 @@ const agregarImagenesListado = () => {
         //divElement.id = "row"+nContRow;
         //divElement.className = "row";  
         divElement.className = 'iconoMenu'
+        divElement.id = arregloPiezas[piecePosition].nombre
         divElement.innerHTML = sTurno+arregloPiezas[piecePosition].nombre+`<img class='allimg' src="img/${sTurno+arregloPiezas[piecePosition].icono}.png" alt="">`
         divElement.style.cursor = 'pointer'
         document.getElementById("lista_personajes").appendChild(divElement);
@@ -230,7 +231,7 @@ const insertImage = () => {
         //Validamos que contenga texto los elementos del div
         if (image.innerText.length !== 0) {
             if(image.innerText.replace(/\s/g, '') !== 'Montana' && image.innerText.replace(/\s/g, '') !== 'Lago'){
-                image.innerHTML = `${image.innerText} <img class='allimg' src="img/${image.innerText}.png" alt="">`
+                image.innerHTML = `${image.innerText} <img class='allimg' src="img/${eliminarNumeros(image.innerText)}.png" alt="">`
             }
         }
     })
@@ -275,22 +276,44 @@ const validaPosicionPieza = (sPieza) =>{
 // Moving the element
 document.querySelectorAll('.box').forEach(hathiTest => {
     hathiTest.addEventListener('click', function () {
-        if(hathiTest.style.backgroundColor === 'rgb(72, 66, 65)'){
-            hathiTest.style.backgroundColor = 'rgb(255, 255, 255)'; 
-        }else{
-            hathiTest.style.backgroundColor === 'rgb(72, 66, 65)';
+        console.log(sPiezaAColocar)
+        if(sPiezaAColocar === ''){
+            return
         }
+        //En este segmento detectaremos que si la pieza ya fue colocada, esta se eliminara del mapa para ponerla de nuevo
+        let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
+        console.log(nValor)
+        if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+            document.getElementById(arregloPiezas[nValor].posicion).innerHTML = '';
+        }
+        hathiTest.innerHTML = sPiezaAColocar
+        console.log(sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ))
+        console.log(hathiTest.id)
+        nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
+        if(nValor !== -1){
+            arregloPiezas[nValor].posicion = hathiTest.id;
+        }
+        console.log(arregloPiezas)
+        sPiezaAColocar = '';
+        insertImage();
     })
 })
 
 document.querySelectorAll('.iconoMenu').forEach(hathiTest => {
     hathiTest.addEventListener('click', function () {
+        //guardamos la pieza
         sPiezaAColocar = hathiTest.innerText;
-        console.log(sPiezaAColocar)
+        if(piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id){
+            piezaSeleccionada.style.backgroundColor = 'rgb(255, 255, 255)';
+            piezaSeleccionada = null;
+        }
+
         if(hathiTest.style.backgroundColor === 'rgb(72, 66, 65)'){
             hathiTest.style.backgroundColor = 'rgb(255, 255, 255)'; 
+            piezaSeleccionada = null;
         }else{
             hathiTest.style.backgroundColor = 'rgb(72, 66, 65)';
+            piezaSeleccionada = hathiTest;
         }
     })
 })
