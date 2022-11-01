@@ -5,7 +5,7 @@ import {  movimientoLancero } from './piezas/lancero.js';
 import { movimientoCaballero } from './piezas/caballero.js';
 import { movimientoAsesino } from './piezas/asesino.js';
 import {colorDisparoArcher, colorLago, colorMontana, colorOpciones,
-    numeroAAlfabeto,tamanoTableroLargo,tamanoTableroAncho, eliminarLetras, eliminarNumeros} from './util/configuracionGeneral.js'
+    numeroAAlfabeto,tamanoTableroLargo,tamanoTableroAncho, eliminarLetras, eliminarNumeros, colorTablero, colorSeleccionado} from './util/configuracionGeneral.js'
 import { movimientoArcher } from './piezas/archer.js';
 // import {piezasGame} from './config/configuracionPiezas.js'
 import {montanas,lagos} from './config/configuracionTablero.js'
@@ -66,7 +66,7 @@ insertImage();
 
 function coloring() {
     document.querySelectorAll('.white-box').forEach(colorNegro => {
-        colorNegro.style.backgroundColor = 'rgb(240, 201, 150)'; 
+        colorNegro.style.backgroundColor = colorTablero; 
     })
 
     document.querySelectorAll('.green-box').forEach(colorNegro => {
@@ -84,7 +84,7 @@ coloring()
 //function to not remove the same team element
 function reddish() {
     document.querySelectorAll('.box').forEach(i1 => {
-        if (i1.style.backgroundColor == 'pink') {
+        if (i1.style.backgroundColor == colorSeleccionado) {
             document.querySelectorAll('.box').forEach(i2 => {
                 if ((i2.style.backgroundColor == colorOpciones || i2.style.backgroundColor == colorDisparoArcher)) {
                     if(i2.innerText.length !== 0){
@@ -95,7 +95,7 @@ function reddish() {
                         //En esta validacion se pregunta si la pieza es del mismo valor (B,W) a otra del mismo
                         //team, aparte de condicionar si es un lago o una montana
                         if (pinkColor == greenColor) {
-                            i2.style.backgroundColor = 'rgb(240, 201, 150)'
+                            i2.style.backgroundColor = colorTablero
                         }
                     }
                 }
@@ -122,7 +122,7 @@ document.querySelectorAll('.box').forEach(item => {
         } else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
             //este segmento de codigo sirve para validar que se este eliminando la pieza
             document.querySelectorAll('.box').forEach(i => {
-                if (i.style.backgroundColor == 'pink') {
+                if (i.style.backgroundColor == colorSeleccionado) {
                     let pinkId2 = i.id
                     let pinkText2 = i.innerText
                     document.getElementById(pinkId2).innerText = '';
@@ -140,7 +140,7 @@ document.querySelectorAll('.box').forEach(item => {
         }else if (item.style.backgroundColor == colorDisparoArcher && item.innerText.length !== 0) {
             //este segmento de codigo sirve para validar que se este eliminando la pieza
             document.querySelectorAll('.box').forEach(i => {
-                if (i.style.backgroundColor == 'pink') {
+                if (i.style.backgroundColor == colorSeleccionado) {
                     item.innerText = '';
                     coloring()
                     insertImage()
@@ -219,7 +219,7 @@ document.querySelectorAll('.box').forEach(item => {
 // Moving the element
 document.querySelectorAll('.box').forEach(hathiTest => {
     hathiTest.addEventListener('click', function () {
-        if (hathiTest.style.backgroundColor == 'pink') {
+        if (hathiTest.style.backgroundColor == colorSeleccionado) {
             pinkId = hathiTest.id;
             pinkText = hathiTest.innerText;
             document.querySelectorAll('.box').forEach(hathiTest2 => {

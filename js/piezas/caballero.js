@@ -1,4 +1,4 @@
-import {alfabetoANumero, colorOpciones,numeroAAlfabeto,tamanoTableroAncho,tamanoTableroLargo,validaPiezaLago,validaPiezaMontana} from '../util/configuracionGeneral.js'
+import {alfabetoANumero, colorOpciones,colorSeleccionado,numeroAAlfabeto,tamanoTableroAncho,tamanoTableroLargo,validaPiezaLago,validaPiezaMontana} from '../util/configuracionGeneral.js'
 export const movimientoCaballero = (row,col,item) =>{
     //Noreste
     let nCol = alfabetoANumero(col) 
@@ -102,5 +102,5 @@ export const movimientoCaballero = (row,col,item) =>{
         }
     }
 
-    item.style.backgroundColor = 'pink'
+    item.style.backgroundColor = colorSeleccionado
 }

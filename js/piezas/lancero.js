@@ -1,4 +1,4 @@
-import {alfabetoANumero, colorOpciones,numeroAAlfabeto,tamanoTableroAncho,tamanoTableroLargo,validaPiezaMontana} from '../util/configuracionGeneral.js'
+import {alfabetoANumero, colorOpciones,colorSeleccionado,numeroAAlfabeto,tamanoTableroAncho,tamanoTableroLargo,validaPiezaMontana} from '../util/configuracionGeneral.js'
 export const movimientoLancero = (row,col,item)  =>{
     let nCol = alfabetoANumero(col) 
     if (row > 1 && nCol < tamanoTableroAncho) {
@@ -72,5 +72,5 @@ export const movimientoLancero = (row,col,item)  =>{
             break
         }
     }
-    item.style.backgroundColor = 'pink'
+    item.style.backgroundColor = colorSeleccionado
 }

@@ -1,4 +1,4 @@
-import {alfabetoANumero, colorOpciones,numeroAAlfabeto,tamanoTableroAncho,tamanoTableroLargo,validaPiezaMontana} from '../util/configuracionGeneral.js'
+import {alfabetoANumero, colorOpciones,colorSeleccionado,numeroAAlfabeto,tamanoTableroAncho,tamanoTableroLargo,validaPiezaMontana} from '../util/configuracionGeneral.js'
 export const movimientoRey= (row,col,item) =>{
     let nCol = alfabetoANumero(col) 
     for (let i = 1; i < 3; i++) {
@@ -101,5 +101,5 @@ export const movimientoRey= (row,col,item) =>{
         }
     }
 
-    item.style.backgroundColor = 'pink'
+    item.style.backgroundColor = colorSeleccionado
 }

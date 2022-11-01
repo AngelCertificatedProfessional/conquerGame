@@ -1,4 +1,4 @@
-import {alfabetoANumero, colorOpciones,numeroAAlfabeto,tamanoTableroAncho,tamanoTableroLargo,validaPiezaMontana} from '../util/configuracionGeneral.js'
+import {alfabetoANumero, colorOpciones,colorSeleccionado,numeroAAlfabeto,tamanoTableroAncho,tamanoTableroLargo,validaPiezaMontana} from '../util/configuracionGeneral.js'
 export const movimientoAsesino = (row,col,item,bMovioAsesino)  =>{
     let nCol = alfabetoANumero(col) 
     //La funcionalidad del asesino es matar dos caminar dos veces, matar dos veces por eso 
@@ -51,5 +51,5 @@ export const movimientoAsesino = (row,col,item,bMovioAsesino)  =>{
             }
         }
     }
-    item.style.backgroundColor = 'pink'
+    item.style.backgroundColor = colorSeleccionado
 }

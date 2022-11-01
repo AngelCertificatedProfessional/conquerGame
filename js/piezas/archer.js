@@ -1,4 +1,4 @@
-import {colorOpciones,colorDisparoArcher,validaPiezaMontana, alfabetoANumero, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo} from '../util/configuracionGeneral.js'
+import {colorOpciones,colorDisparoArcher,validaPiezaMontana, alfabetoANumero, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo, colorSeleccionado} from '../util/configuracionGeneral.js'
 export const movimientoArcher= (row,col,item) =>{
     let nCol = alfabetoANumero(col) 
     for (let i = 1; i < 3; i++) {
@@ -131,5 +131,5 @@ export const movimientoArcher= (row,col,item) =>{
         document.getElementById(`${row+3}${numeroAAlfabeto(nCol-3)}`).style.backgroundColor = colorDisparoArcher
     }
 
-    item.style.backgroundColor = 'pink'
+    item.style.backgroundColor = colorSeleccionado
 }
