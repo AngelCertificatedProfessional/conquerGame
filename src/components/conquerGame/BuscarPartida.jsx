@@ -8,7 +8,7 @@ const schema = yup.object({
     buscar: yup.string().required('Ingrese el numero de la sala'),
   });
 
-const BuscarPartida = ({ setAccion,accion,setNumeroJuego,agregarJugadoresArreglo,abrirConexionPartida }) => {
+const BuscarPartida = ({ abrirPartidaJuego  }) => {
   return (
     <Formik
       initialValues={{
@@ -17,11 +17,8 @@ const BuscarPartida = ({ setAccion,accion,setNumeroJuego,agregarJugadoresArreglo
       validationSchema={schema}
       onSubmit={(values, e) => {
         consultaById('conquerGame/buscarPartida/', values.buscar)
-            .then((resultado) => {
-              setNumeroJuego(values.buscar)
-              setAccion(3); 
-              agregarJugadoresArreglo(resultado);
-              abrirConexionPartida(values.buscar)
+            .then(() => {
+              abrirPartidaJuego(values.buscar);
             })
             .catch((error) => {
               swal({
@@ -48,7 +45,7 @@ const BuscarPartida = ({ setAccion,accion,setNumeroJuego,agregarJugadoresArreglo
                 onSubmit={handleSubmit}
                 noValidate
             >
-                <h2 className="tituloCentrado">Creacion de partida ConquerGame</h2>
+                <h2 className="tituloCentrado">Buscar partida de ConquerGame</h2>
                 <div className='campo-input'>
                     <label htmlFor="buscar"> Buscar: </label>
                     <input type="text" placeholder="Buscar Partida" name="buscar" id="buscar" onChange={handleChange}  onBlur={handleBlur} value={values.buscar} 

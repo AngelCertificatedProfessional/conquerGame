@@ -53,8 +53,7 @@ const ConquerGame = () => {
                 {(accion === 2) && (
                     <Suspense fallback={<div>Loading...</div>}>
                         <BuscarPartida
-                            setAccion = {setAccion}
-                            accion = {accion}
+                            abrirPartidaJuego = {abrirPartidaJuego }
                         />
                     </Suspense>
                 )}
