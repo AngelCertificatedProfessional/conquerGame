@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Angel Espinoza">
+    <link rel="stylesheet" href="css/index.css">
+    <title>Conquer Game</title>
+    <script type="module">
+        import { saltarTurno } from "./js/chess.js";
+        window.saltarTurno = saltarTurno;
+    </script>
+</head>
+
+
+<body>
+    <h1>Conquer Gamer</h1>
+    <h5>-by Angel Espinoza</h5>
+    <h2 id="tog">White's Turn</h2>
+    <section class="menu-juego">
+        <div class="division-tablero-menu">
+            <button onclick="saltarTurno()">PazarTurno</button>
+        </div>
+        <div class="juego">
+            <ul id="tablero_juego">
+            </ul>
+        </div>
+    </section>
+</body>
+</html>
