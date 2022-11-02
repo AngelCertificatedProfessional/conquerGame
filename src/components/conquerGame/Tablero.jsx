@@ -1,24 +1,25 @@
-import React from 'react';
-import { Formik } from 'formik';
-import * as yup from 'yup';
+import React,{useEffect} from 'react';
+
 import { agregar } from '../../utils/ConexionAPI';
 import swal from 'sweetalert';
+import { agregarImagenesListado } from '../../utils/ConquerGame';
 
-const schema = yup.object({
-    catidadJugadores: yup.string().required('Seleccione una cantidad de jugadores'),
-    tipoJuego: yup.string().required("Seleccione un tipo de juego")
-  });
 
 const Tablero = ({ abrirPartidaJuego}) => {
+  
+  useEffect(() => {
+    agregarImagenesListado()
+  }, []);
+  
   return (  
     <>
-        <section class="menu-juego">
+        <section className="menu-juego">
             <div>
-                <button class="button" onclick="guardarConfiguracionPiezas()">Guardar</button>
-                <div class= "" id="lista_personajes">
+                {/* <button className="button" onClick="guardarConfiguracionPiezas()">Guardar</button> */}
+                <div className= "" id="lista_personajes">
                 </div>
             </div>
-            <div class="juego">
+            <div className="juego">
                 <ul id="tablero_juego">
                 </ul>
             </div>

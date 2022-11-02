@@ -13,6 +13,9 @@ const ListaEspera = React.lazy(() =>
   import('../components/conquerGame/ListaEspera')
 );
 
+const Tablero = React.lazy(() =>
+  import('../components/conquerGame/Tablero')
+);
 
 const ConquerGame = () => {
     let { numeroPartida } = useParams(); 
@@ -134,7 +137,9 @@ const ConquerGame = () => {
             {/* Seccion para la configuracion del juego */}
             {(accion === 2) && (
                 <>
-                    
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Tablero/>
+                    </Suspense>     
                 </>
                
             )}
