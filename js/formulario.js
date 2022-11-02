@@ -1,5 +1,5 @@
 import {montanas,lagos} from './config/configuracionTablero.js'
-import { colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
+import { cantidadJugadores, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
 let sTurno = 'W';
 let sPiezaAColocar = ''
@@ -150,33 +150,73 @@ function coloring() {
     document.querySelectorAll('.white-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = colorTablero; 
         const nValor = eliminarLetras(colorNegro.id)
-        if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-         (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-            colorNegro.style.opacity = 0.3; 
-        }else{
-            colorNegro.style.opacity = 1;  
+        switch (cantidadJugadores){
+            case 2:
+                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+                (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+                break;
+            case 3:
+                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
+                (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
+                (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+            break;
         }
+        
     })
 
     document.querySelectorAll('.green-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = colorMontana;
         const nValor = eliminarLetras(colorNegro.id)
-        if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-         (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-            colorNegro.style.opacity = 0.3; 
-        }else{
-            colorNegro.style.opacity = 1;  
+        switch (cantidadJugadores){
+            case 2:
+                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+                (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+                break;
+            case 3:
+                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
+                (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
+                (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+            break;
         }
     })
 
     document.querySelectorAll('.blue-box').forEach(colorNegro => {
         colorNegro.style.backgroundColor = colorLago; 
         const nValor = eliminarLetras(colorNegro.id)
-        if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-         (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-            colorNegro.style.opacity = 0.3; 
-        }else{
-            colorNegro.style.opacity = 1;  
+        switch (cantidadJugadores){
+            case 2:
+                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+                (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+            break;
+            case 3:
+                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
+                (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
+                (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+            break;
         }
     })
 }
@@ -201,18 +241,19 @@ export const guardarConfiguracionPiezas = () => {
         arregloPiezas[piecePosition].posicion = '';
     }
     sPiezaAColocar = ''
+    
     switch(sTurno){
         case "W":
-            sTurno = "B";
-            document.getElementById('tog').innerText = "Black's Turn"
-            coloring();
-            eliminarImagenesListado()
-            agregarImagenesListado()
+            cargarJugador("B","Black's Turn")
             break;
         case "B":
-            window.localStorage.setItem('piezas', JSON.stringify(piezasGame))
-            window.open("http://127.0.0.1:5501/juego.html","_self")
-            break;
+            if(cantidadJugadores === 2){
+                window.localStorage.setItem('piezas', JSON.stringify(piezasGame))
+                window.open("http://127.0.0.1:5501/juego.html","_self")
+            }else{
+                cargarJugador("R","Red's Turn")
+            }
+        break;
     }
 }
 
@@ -233,11 +274,27 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
     const nValor = eliminarLetras(sPosicion)
 
     //Evaluaremos si la pieza esta invadiendo terreno
-    if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-         (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-        alert('Esta pieza esta invadiendo terreno')
-        return true;
+
+    switch (cantidadJugadores){
+        case 2:
+            if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+            (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+                alert('Esta pieza esta invadiendo terreno')
+                return true;
+            }
+            break;
+        case 3:
+            if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
+                (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
+                (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+        break;
     }
+
+
 
     if((sPieza === "caballero1"||sPieza === "caballero2"||sPieza === "caballero3"||
         sPieza === "caballero4" )&& lagos.includes(sPosicion)){
@@ -291,3 +348,10 @@ document.querySelectorAll('.box').forEach(hathiTest => {
     })
 })
 
+const cargarJugador = (sTurnoT,sTexto) => {
+    sTurno = sTurnoT;
+    document.getElementById('tog').innerText = sTexto
+    coloring();
+    eliminarImagenesListado()
+    agregarImagenesListado()
+}
