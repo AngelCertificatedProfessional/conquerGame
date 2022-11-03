@@ -160,9 +160,9 @@ function coloring() {
                 }
                 break;
             case 3:
-                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
-                (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
-                (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
+                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+                (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
+                (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
                     colorNegro.style.opacity = 0.3; 
                 }else{
                     colorNegro.style.opacity = 1;  
@@ -185,9 +185,9 @@ function coloring() {
                 }
                 break;
             case 3:
-                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
-                (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
-                (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
+                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+                (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
+                (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
                     colorNegro.style.opacity = 0.3; 
                 }else{
                     colorNegro.style.opacity = 1;  
@@ -209,9 +209,9 @@ function coloring() {
                 }
             break;
             case 3:
-                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
-                (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
-                (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
+                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+                (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
+                (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
                     colorNegro.style.opacity = 0.3; 
                 }else{
                     colorNegro.style.opacity = 1;  
@@ -241,13 +241,24 @@ export const guardarConfiguracionPiezas = () => {
         arregloPiezas[piecePosition].posicion = '';
     }
     sPiezaAColocar = ''
-    
+    console.log('sTurno')
+    console.log(sTurno)
+    console.log('cantidadJugadores')
+    console.log(cantidadJugadores)
     switch(sTurno){
         case "W":
             cargarJugador("B","Black's Turn")
             break;
         case "B":
             if(cantidadJugadores === 2){
+                window.localStorage.setItem('piezas', JSON.stringify(piezasGame))
+                window.open("http://127.0.0.1:5501/juego.html","_self")
+            }else{
+                cargarJugador("R","Red's Turn")
+            }
+        break;
+        case "R":
+            if(cantidadJugadores === 3){
                 window.localStorage.setItem('piezas', JSON.stringify(piezasGame))
                 window.open("http://127.0.0.1:5501/juego.html","_self")
             }else{
@@ -284,12 +295,11 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
             }
             break;
         case 3:
-            if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
-                (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
-                (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
+            if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+            (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
+            (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+                    alert('Esta pieza esta invadiendo terreno')
+                    return true; 
                 }
         break;
     }
