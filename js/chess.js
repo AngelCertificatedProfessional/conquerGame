@@ -5,16 +5,17 @@ import {  movimientoLancero } from './piezas/lancero.js';
 import { movimientoCaballero } from './piezas/caballero.js';
 import { movimientoAsesino } from './piezas/asesino.js';
 import {colorDisparoArcher, colorLago, colorMontana, colorOpciones,
-    numeroAAlfabeto,tamanoTableroLargo,tamanoTableroAncho, eliminarLetras, eliminarNumeros, colorTablero, colorSeleccionado} from './util/configuracionGeneral.js'
+    numeroAAlfabeto,tamanoTableroLargo,tamanoTableroAncho, eliminarLetras, eliminarNumeros, colorTablero, colorSeleccionado, cantidadJugadores} from './util/configuracionGeneral.js'
 import { movimientoArcher } from './piezas/archer.js';
 // import {piezasGame} from './config/configuracionPiezas.js'
 import {montanas,lagos} from './config/configuracionTablero.js'
 let pinkId = "";
 let pinkText = "";
-let numOfKings = 0;
 let turno = 0;
 let bMovioAsesino = false;
 let sPiezaMovimiento = "";
+let arrReyes = []
+
 const agregarDivsTablero = () => {
     for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
         let divElement = document.createElement("div");
@@ -47,8 +48,11 @@ const posicionPiezas = () => {
     for ( const piecePosition in piezasGame ) {
         var div = document.getElementById(piezasGame[piecePosition]);
         div.innerHTML += piecePosition.replace(/[0-9]/g, '');
+        if(piecePosition.replace(/[0-9]/g, '') == 'Wrey' || piecePosition.replace(/[0-9]/g, '')== 'Brey' || piecePosition.replace(/[0-9]/g, '') == 'Rrey'){
+            arrReyes.push(piecePosition.replace(/[0-9]/g, ''))
+        }
     }
-    window.localStorage.setItem('piezas','')
+    //window.localStorage.setItem('piezas','')
 }
 
 posicionPiezas()
@@ -108,24 +112,21 @@ document.querySelectorAll('.box').forEach(item => {
     item.addEventListener('click', function () {
         // To delete the opposite element
         if (item.style.backgroundColor == colorOpciones && item.innerText.length == 0) {
-            console.log(sPiezaMovimiento)
-            console.log(sPiezaMovimiento.includes('asesino'))
-            console.log(bMovioAsesino)
             if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
                 bMovioAsesino = true;
             }else{
                 turno ++
                 bMovioAsesino = false;
             }
-            console.log(bMovioAsesino)
-            console.log(turno)
         } else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
             //este segmento de codigo sirve para validar que se este eliminando la pieza
             document.querySelectorAll('.box').forEach(i => {
                 if (i.style.backgroundColor == colorSeleccionado) {
                     let pinkId2 = i.id
                     let pinkText2 = i.innerText
+                    
                     document.getElementById(pinkId2).innerText = '';
+                    let piezaAnterior = item.innerText;
                     item.innerText = pinkText2
                     coloring()
                     insertImage()
@@ -134,6 +135,16 @@ document.querySelectorAll('.box').forEach(item => {
                     }else{
                         turno ++
                         bMovioAsesino = false;
+                    }
+                    if(piezaAnterior == 'Wrey' || piezaAnterior == 'Brey' || piezaAnterior == 'Rrey'){
+                        const indexRey = arrReyes.indexOf(piezaAnterior);
+                        if (indexRey > -1) { // only splice array when item is found
+                            arrReyes.splice(indexRey, 1); // 2nd parameter means remove one item only
+                            if(!sPiezaMovimiento.includes('asesino')){
+                                console.log('entre al asesino')
+                                turno --
+                            }
+                        }
                     }
                 }
             })
@@ -180,37 +191,27 @@ document.querySelectorAll('.box').forEach(item => {
 
 
         // Toggling the turn
-        if (turno == 0) {
-            whosTurn('W')
-        }else if(turno == 1) {
-            document.getElementById('tog').innerText = "Black's Turn"
-            whosTurn('B')
-        }
-
+        evaluartTurnoJugador();
+        whosTurn(arrReyes[turno][0])
+        
         reddish(item.innerText)
-
-        document.querySelectorAll('.box').forEach(win => {
-            if (win.innerText == 'Wrey' || win.innerText == 'Brey') {
-                numOfKings += 1
-            }
-        })
-
-        if (numOfKings == 1) {
-            if (turno == 1) {
-                alert('White Wins !!')
-            }else if(turno == 2) {
-                alert('Black Wins !!')
+        
+        if(arrReyes.length === 1){
+            //detectamos que jugador gano
+            switch(arrReyes[0][0]){
+                case "W":
+                    alert('White Wins !!')
+                break;
+                case "B":
+                    alert('Black Wins !!')
+                break;
+                case "R":
+                    alert('Red Wins !!')
+                break;
             }
             setTimeout(() => {
                 window.open("http://127.0.0.1:5501/index.html","_self")
             }, 600)
-        }else{
-            numOfKings = 0;
-        }
-
-        if(turno === 2){
-            document.getElementById('tog').innerText = "White's Turn"
-            turno = 0;
         }
     })
 
@@ -250,17 +251,24 @@ document.querySelectorAll('.box').forEach(ee => {
 })
 
 export const saltarTurno = () =>{
-
     // Toggling the turn
-    if(turno == 0) {
-        document.getElementById('tog').innerText = "Black's Turn"
-    }else{
-        document.getElementById('tog').innerText = "White's Turn"
-    }
     turno ++;
-    console.log(turno)
-    if(turno == 2){
-        document.getElementById('tog').innerText = "White's Turn"
+    evaluartTurnoJugador()
+}
+
+const evaluartTurnoJugador = () => {
+    if(turno +1 > arrReyes.length ){
         turno = 0
     }
+    switch(arrReyes[turno][0]){
+        case "W":
+            document.getElementById('tog').innerText = "White's Turn"
+        break;
+        case "B":
+            document.getElementById('tog').innerText = "Black's Turn"
+        break;
+        case "R":
+            document.getElementById('tog').innerText = "Red's Turn"
+        break;
+    } 
 }
