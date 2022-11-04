@@ -36,7 +36,7 @@ export const movimientoLancero = (row,col,item)  =>{
     }
     //sur
     for (let i = 1; i < 14; i++) {
-        if(validaPiezaMontana(`${row-1}${numeroAAlfabeto(nCol)}`)){
+        if(validaPiezaMontana(`${row-i}${numeroAAlfabeto(nCol)}`)){
             break
         }
         if ((row-i) >=1 && document.getElementById(`${row-i}${numeroAAlfabeto(nCol)}`).innerText == 0) {
