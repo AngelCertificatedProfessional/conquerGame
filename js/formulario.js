@@ -103,20 +103,30 @@ const agregarImagenesListado = () => {
                 }
                 piezaSeleccionada = null;
             }
-    
+            //pintar el seleccionado normal o gris sobre la misma pieza
             if(hathiTest.style.backgroundColor === 'rgb(72, 66, 65)'){
                 hathiTest.style.backgroundColor = 'rgb(255, 255, 255)'; 
+                let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, '').substring(1,piezaSeleccionada.innerText.length));
+                if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+                    if(lagos.includes(arregloPiezas[nValor].posicion)){
+                        document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
+                    }else{
+                        document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorTablero;
+                    }
+                }
                 piezaSeleccionada = null;
             }else{
                 hathiTest.style.backgroundColor = 'rgb(72, 66, 65)';
                 piezaSeleccionada = hathiTest;
+                //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
+                let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
+                if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+                    console.log('entre a seleccionar');
+                    document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionado;
+                }
             }
 
-            //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
-            let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
-            if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
-                document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionado;
-            }
+            
         })
     })
 
@@ -241,10 +251,6 @@ export const guardarConfiguracionPiezas = () => {
         arregloPiezas[piecePosition].posicion = '';
     }
     sPiezaAColocar = ''
-    console.log('sTurno')
-    console.log(sTurno)
-    console.log('cantidadJugadores')
-    console.log(cantidadJugadores)
     switch(sTurno){
         case "W":
             cargarJugador("B","Black's Turn")
