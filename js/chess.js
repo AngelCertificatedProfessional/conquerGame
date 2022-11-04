@@ -265,6 +265,8 @@ const evaluartTurnoJugador = () => {
         break;
         case "R":
             document.getElementById('tog').innerText = "Red's Turn"
+        case "P":
+            document.getElementById('tog').innerText = "Purple's Turn"
         break;
     } 
 }
