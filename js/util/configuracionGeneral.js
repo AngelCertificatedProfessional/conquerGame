@@ -9,8 +9,8 @@ export const colorCasstilloEntrada= 'rgb(185, 185, 179)';
 export const colorCasstilloSala= 'rgb(94, 94, 89)';
 export const tamanoTableroLargo = 24
 export const tamanoTableroAncho = 24
-export const cantidadJugadores = 3
-export const arregloJugadores = ['W','B','R','B','G','Y']
+export const cantidadJugadores = 4
+export const arregloJugadores = ['W','B','R','P','G','Y']
 
 
 export const validaPiezaMontana = (idDiv) => {

@@ -1,5 +1,5 @@
 import {montanas,lagos} from './config/configuracionTablero.js'
-import { cantidadJugadores, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
+import { alfabetoANumero, cantidadJugadores, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
 let sTurno = 'W';
 let sPiezaAColocar = ''
@@ -103,20 +103,30 @@ const agregarImagenesListado = () => {
                 }
                 piezaSeleccionada = null;
             }
-    
+            //pintar el seleccionado normal o gris sobre la misma pieza
             if(hathiTest.style.backgroundColor === 'rgb(72, 66, 65)'){
                 hathiTest.style.backgroundColor = 'rgb(255, 255, 255)'; 
+                let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, '').substring(1,piezaSeleccionada.innerText.length));
+                if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+                    if(lagos.includes(arregloPiezas[nValor].posicion)){
+                        document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
+                    }else{
+                        document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorTablero;
+                    }
+                }
                 piezaSeleccionada = null;
             }else{
                 hathiTest.style.backgroundColor = 'rgb(72, 66, 65)';
                 piezaSeleccionada = hathiTest;
+                //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
+                let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
+                if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+                    console.log('entre a seleccionar');
+                    document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionado;
+                }
             }
 
-            //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
-            let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
-            if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
-                document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionado;
-            }
+            
         })
     })
 
@@ -151,7 +161,7 @@ function coloring() {
         colorNegro.style.backgroundColor = colorTablero; 
         const nValor = eliminarLetras(colorNegro.id)
         switch (cantidadJugadores){
-            case 2:
+            case 2,5,6:
                 if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
                 (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
                     colorNegro.style.opacity = 0.3; 
@@ -168,6 +178,19 @@ function coloring() {
                     colorNegro.style.opacity = 1;  
                 }
             break;
+            case 4:
+                console.log(eliminarLetras(colorNegro.id))
+                console.log(eliminarNumeros(colorNegro.id))
+                console.log(alfabetoANumero(eliminarNumeros(colorNegro.id)))
+                //eliminacion de numeros para el lado vertical
+                const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
+                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+                break;
         }
         
     })
@@ -191,8 +214,21 @@ function coloring() {
                     colorNegro.style.opacity = 0.3; 
                 }else{
                     colorNegro.style.opacity = 1;  
-                }
+                }    
             break;
+            case 4:
+                console.log(eliminarLetras(colorNegro.id))
+                console.log(eliminarNumeros(colorNegro.id))
+                console.log(alfabetoANumero(eliminarNumeros(colorNegro.id)))
+                //eliminacion de numeros para el lado vertical
+                const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
+                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+                break;
         }
     })
 
@@ -217,6 +253,16 @@ function coloring() {
                     colorNegro.style.opacity = 1;  
                 }
             break;
+            case 4:
+                //eliminacion de numeros para el lado vertical
+                const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
+                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+                break;
         }
     })
 }
@@ -241,10 +287,6 @@ export const guardarConfiguracionPiezas = () => {
         arregloPiezas[piecePosition].posicion = '';
     }
     sPiezaAColocar = ''
-    console.log('sTurno')
-    console.log(sTurno)
-    console.log('cantidadJugadores')
-    console.log(cantidadJugadores)
     switch(sTurno){
         case "W":
             cargarJugador("B","Black's Turn")
@@ -300,8 +342,16 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
             (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
                     alert('Esta pieza esta invadiendo terreno')
                     return true; 
-                }
+            }
         break;
+        case 4:
+                //eliminacion de numeros para el lado vertical
+                const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
+                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                    alert('Esta pieza esta invadiendo terreno')
+                    return true; 
+                }
     }
 
 

@@ -140,10 +140,6 @@ document.querySelectorAll('.box').forEach(item => {
                         const indexRey = arrReyes.indexOf(piezaAnterior);
                         if (indexRey > -1) { // only splice array when item is found
                             arrReyes.splice(indexRey, 1); // 2nd parameter means remove one item only
-                            if(!sPiezaMovimiento.includes('asesino')){
-                                console.log('entre al asesino')
-                                turno --
-                            }
                         }
                     }
                 }
@@ -269,6 +265,8 @@ const evaluartTurnoJugador = () => {
         break;
         case "R":
             document.getElementById('tog').innerText = "Red's Turn"
+        case "P":
+            document.getElementById('tog').innerText = "Purple's Turn"
         break;
     } 
 }
