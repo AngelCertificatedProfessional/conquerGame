@@ -5,7 +5,7 @@ import { agregar } from '../../utils/ConexionAPI';
 import swal from 'sweetalert';
 
 const schema = yup.object({
-    catidadJugadores: yup.string().required('Seleccione una cantidad de jugadores'),
+    cantidadJugadores: yup.string().required('Seleccione una cantidad de jugadores'),
     tipoJuego: yup.string().required("Seleccione un tipo de juego")
   });
 
@@ -13,13 +13,13 @@ const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
   return (
     <Formik
       initialValues={{
-        catidadJugadores: '',
+        cantidadJugadores: '',
         tipoJuego: '',
       }}
       validationSchema={schema}
       onSubmit={(values, e) => {
         const partida = {};
-        partida.catidadJugadores = values.catidadJugadores;
+        partida.cantidadJugadores = values.cantidadJugadores;
         partida.tipoJuego = values.tipoJuego;
           agregar('conquerGame/crearPartida', partida)
             .then((resultado) => {
@@ -59,8 +59,8 @@ const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
                     
                 <h2 className="tituloCentrado">Creacion de partida ConquerGame</h2>
                 <div className='campo-input'>
-                    <label htmlFor="catidadJugadores"> Cantidad de jugadores: </label>
-                    <select id="catidadJugadores" name="catidadJugadores" onChange={handleChange}  onBlur={handleBlur} value={values.catidadJugadores} >
+                    <label htmlFor="cantidadJugadores"> Cantidad de jugadores: </label>
+                    <select id="cantidadJugadores" name="cantidadJugadores" onChange={handleChange}  onBlur={handleBlur} value={values.cantidadJugadores} >
                         <option value="" disabled defaultValue>--Seleccione--</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -68,8 +68,8 @@ const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
                         <option value="5">5</option>
                         <option value="6">6</option>
                     </select>
-                    {(!!touched.catidadJugadores && !!errors.catidadJugadores) && (
-                        <span className='mensaje-error'>{errors.catidadJugadores}</span>
+                    {(!!touched.cantidadJugadores && !!errors.cantidadJugadores) && (
+                        <span className='mensaje-error'>{errors.cantidadJugadores}</span>
                         )}
                 </div>
                 <p className='fw-700 seccion'>Tipo de juego</p>

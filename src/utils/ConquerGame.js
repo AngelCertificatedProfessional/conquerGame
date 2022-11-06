@@ -1,7 +1,11 @@
 // import {montanas,lagos} from './config/configuracionTablero.js'
 // import { cantidadJugadores, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
+import { colorLago, colorMontana, colorTablero, lagos, montanas, tamanoTableroAncho, tamanoTableroLargo } from "./ConfiguracionTableroConquerGame.js";
+import { eliminarLetras, numeroAAlfabeto } from "./UtileriasPagina";
+
 let sTurno = 'W';
+let nCantidadJugadores = 0;
 // let sPiezaAColocar = ''
 // let piezaSeleccionada = null;
 
@@ -72,153 +76,126 @@ let arregloPiezas = [{
 
 // const piezasGame = {};
 
-export const agregarImagenesListado = async() => {
+export const agregarImagenesListado = async(turnoUsuario) => {
+    sTurno = turnoUsuario
     for ( const piecePosition in arregloPiezas ) {
         const response  = await import(`@images/${sTurno+arregloPiezas[piecePosition].icono}.png`)  
         let divElement = document.createElement("div");
         divElement.className = 'iconoMenu'
         divElement.id = arregloPiezas[piecePosition].nombre
-        divElement.innerHTML = sTurno+arregloPiezas[piecePosition].nombre+`<img className='allimg' src="${response.default}" alt="">`
+        divElement.innerHTML = sTurno+arregloPiezas[piecePosition].nombre+`<img class='allimg' src="${response.default}" alt="">`
         divElement.style.cursor = 'pointer'
         document.getElementById("lista_personajes").appendChild(divElement);
     }
-//     //Se pone dentro de esta seccion porque es necesario que cuando se vuelva a cargar el listado las imagenes
-//     //esten visibles.
-//     document.querySelectorAll('.iconoMenu').forEach(hathiTest => {
-//         hathiTest.addEventListener('click', function () {
-//             //guardamos la pieza
-//             sPiezaAColocar = hathiTest.innerText;
-//             console.log(hathiTest.innerText)
+    // document.querySelectorAll('.iconoMenu').forEach(hathiTest => {
+    //     hathiTest.addEventListener('click', function () {
+    //         //guardamos la pieza
+    //         sPiezaAColocar = hathiTest.innerText;
+    //         console.log(hathiTest.innerText)
 
-//             //Segmento para deselecconar las opciones tanto del tablero como del listado
-//             if(piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id){
-//                 piezaSeleccionada.style.backgroundColor = 'rgb(255, 255, 255)';
-//                 let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, '').substring(1,piezaSeleccionada.innerText.length));
-//                 if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
-//                     if(lagos.includes(arregloPiezas[nValor].posicion)){
-//                         document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
-//                     }else{
-//                         document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorTablero;
-//                     }
-//                 }
-//                 piezaSeleccionada = null;
-//             }
-    
-//             if(hathiTest.style.backgroundColor === 'rgb(72, 66, 65)'){
-//                 hathiTest.style.backgroundColor = 'rgb(255, 255, 255)'; 
-//                 piezaSeleccionada = null;
-//             }else{
-//                 hathiTest.style.backgroundColor = 'rgb(72, 66, 65)';
-//                 piezaSeleccionada = hathiTest;
-//             }
-
-//             //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
-//             let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
-//             if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
-//                 document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionado;
-//             }
-//         })
-//     })
+    //         //Segmento para deselecconar las opciones tanto del tablero como del listado
+    //         if(piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id){
+    //             piezaSeleccionada.style.backgroundColor = 'rgb(255, 255, 255)';
+    //             let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, '').substring(1,piezaSeleccionada.innerText.length));
+    //             if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+    //                 if(lagos.includes(arregloPiezas[nValor].posicion)){
+    //                     document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
+    //                 }else{
+    //                     document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorTablero;
+    //                 }
+    //             }
+    //             piezaSeleccionada = null;
+    //         }
+    //         //pintar el seleccionado normal o gris sobre la misma pieza
+    //         if(hathiTest.style.backgroundColor === 'rgb(72, 66, 65)'){
+    //             hathiTest.style.backgroundColor = 'rgb(255, 255, 255)'; 
+    //             let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, '').substring(1,piezaSeleccionada.innerText.length));
+    //             if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+    //                 if(lagos.includes(arregloPiezas[nValor].posicion)){
+    //                     document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
+    //                 }else{
+    //                     document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorTablero;
+    //                 }
+    //             }
+    //             piezaSeleccionada = null;
+    //         }else{
+    //             hathiTest.style.backgroundColor = 'rgb(72, 66, 65)';
+    //             piezaSeleccionada = hathiTest;
+    //             //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
+    //             let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
+    //             if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+    //                 console.log('entre a seleccionar');
+    //                 document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionado;
+    //             }
+    //         }
+    //     })
+    // })
 }
 
-// const agregarDivsTablero = () => {
-//     for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
-//         let divElement = document.createElement("div");
-//         divElement.id = "row"+nContRow;
-//         divElement.className = "row";  
-//         document.getElementById("tablero_juego").appendChild(divElement);
-//         for(let nContCol=1;nContCol<tamanoTableroAncho+1;nContCol++){
-//             let liElement2 = document.createElement("li");
-//             liElement2.id = nContRow+numeroAAlfabeto(nContCol);
-//             //Se toma la desicion de como se pintara el tablero
-//             if(lagos.includes(liElement2.id)){
-//                 liElement2.className = "box blue-box";
-//             }else if(montanas.includes(liElement2.id )){
-//                 liElement2.className = "box green-box";
-//             }else{
-//                 liElement2.className = "box white-box";
-//             }
-//             document.getElementById("row"+nContRow).appendChild(liElement2);
-//         }
-//     }
-// }
-// agregarDivsTablero();
+export const agregarDivsTablero = () => {
+    for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
+        let divElement = document.createElement("div");
+        divElement.id = "row"+nContRow;
+        divElement.className = "row";  
+        document.getElementById("tablero_juego").appendChild(divElement);
+        for(let nContCol=1;nContCol<tamanoTableroAncho+1;nContCol++){
+            let liElement2 = document.createElement("li");
+            liElement2.id = nContRow+numeroAAlfabeto(nContCol);
+            //Se toma la desicion de como se pintara el tablero
+            if(lagos.includes(liElement2.id)){
+                liElement2.className = "box blue-box";
+            }else if(montanas.includes(liElement2.id )){
+                liElement2.className = "box green-box";
+            }else{
+                liElement2.className = "box white-box";
+            }
+            document.getElementById("row"+nContRow).appendChild(liElement2);
+        }
+    }
+}
 
-// function coloring() {
-//     document.querySelectorAll('.white-box').forEach(colorNegro => {
-//         colorNegro.style.backgroundColor = colorTablero; 
-//         const nValor = eliminarLetras(colorNegro.id)
-//         switch (cantidadJugadores){
-//             case 2:
-//                 if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-//                 (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-//                     colorNegro.style.opacity = 0.3; 
-//                 }else{
-//                     colorNegro.style.opacity = 1;  
-//                 }
-//                 break;
-//             case 3:
-//                 if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
-//                 (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
-//                 (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
-//                     colorNegro.style.opacity = 0.3; 
-//                 }else{
-//                     colorNegro.style.opacity = 1;  
-//                 }
-//             break;
-//         }
-        
-//     })
+export const coloring = () => {
+    document.querySelectorAll('.box').forEach(colorNegro => {
+        if(colorNegro.classList.contains('white-box')){
+            colorNegro.style.backgroundColor = colorTablero; 
+        }else if(colorNegro.classList.contains('green-box')){
+            colorNegro.style.backgroundColor = colorMontana;
+        }else if(colorNegro.classList.contains('blue-box')){
+            colorNegro.style.backgroundColor = colorLago; 
+        }
 
-//     document.querySelectorAll('.green-box').forEach(colorNegro => {
-//         colorNegro.style.backgroundColor = colorMontana;
-//         const nValor = eliminarLetras(colorNegro.id)
-//         switch (cantidadJugadores){
-//             case 2:
-//                 if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-//                 (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-//                     colorNegro.style.opacity = 0.3; 
-//                 }else{
-//                     colorNegro.style.opacity = 1;  
-//                 }
-//                 break;
-//             case 3:
-//                 if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
-//                 (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
-//                 (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
-//                     colorNegro.style.opacity = 0.3; 
-//                 }else{
-//                     colorNegro.style.opacity = 1;  
-//                 }
-//             break;
-//         }
-//     })
-
-//     document.querySelectorAll('.blue-box').forEach(colorNegro => {
-//         colorNegro.style.backgroundColor = colorLago; 
-//         const nValor = eliminarLetras(colorNegro.id)
-//         switch (cantidadJugadores){
-//             case 2:
-//                 if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-//                 (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-//                     colorNegro.style.opacity = 0.3; 
-//                 }else{
-//                     colorNegro.style.opacity = 1;  
-//                 }
-//             break;
-//             case 3:
-//                 if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/3)) ||
-//                 (sTurno === "B" && (nValor >= (tamanoTableroLargo/3)+1 && nValor <=(tamanoTableroLargo/cantidadJugadores)*2))||
-//                 (sTurno === "R" && (nValor >= ((tamanoTableroLargo/3)*2)+1 && nValor <= tamanoTableroLargo))){
-//                     colorNegro.style.opacity = 0.3; 
-//                 }else{
-//                     colorNegro.style.opacity = 1;  
-//                 }
-//             break;
-//         }
-//     })
-// }
-// coloring()
+        const nValor = eliminarLetras(colorNegro.id)
+        switch (nCantidadJugadores){
+            case 2:
+                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+                (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+                break;
+            case 3:
+                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+                (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/nCantidadJugadores)*2))||
+                (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+            break;
+            case 4:
+                //eliminacion de numeros para el lado vertical
+                const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
+                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                    colorNegro.style.opacity = 0.3; 
+                }else{
+                    colorNegro.style.opacity = 1;  
+                }
+                break;
+        }
+    })
+}
 
 // const eliminarImagenesListado = () => {
 //     document.getElementById("lista_personajes").innerHTML = '';
@@ -353,3 +330,7 @@ export const agregarImagenesListado = async() => {
 //     eliminarImagenesListado()
 //     agregarImagenesListado()
 // }
+
+export const setCantidadJugadores = (cantidadJugadoresT) =>{
+    nCantidadJugadores = cantidadJugadoresT;
+}

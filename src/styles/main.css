@@ -11,9 +11,7 @@ html{
 body{ 
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.6rem;
-    background-image:url('../images/entrenamiento.jpg');
-    background-repeat: no-repeat;
-    background-size:cover;
+    background-color: #ebe5e5;
 }
 
 /* Generales*/
@@ -177,10 +175,55 @@ select {
     margin:0;
 }
 
+/*Listado Piezas*/
+
+.listado_piezas{
+    display:flex;
+    flex-wrap: wrap;
+}
+
+.iconoMenu{
+    border-style: dashed solid;
+    display: flex;
+    flex-direction: row;
+    color:black;
+}
 
 /*ConqueGame */
 
+.allimg {
+    width: 55px;
+    position: relative;
+    bottom: 5px;
+}
 
+ul {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+
+li {
+    list-style: none;
+    display: grid;
+    place-items: center;
+    font-size: 0px;
+}
+.box {
+    margin: .5px;
+    width: 75px;
+    height: 75px;
+}
+
+.row {
+    display: flex;
+}
+
+.allimg {
+    width: 45px;
+    position: relative;
+    bottom: 5px;
+}
 
 /*Listado usuarios*/
 
@@ -227,32 +270,11 @@ h1 {
     margin: 10px 0px;
 }
 
-ul {
-    display: grid;
-    grid-template-columns: 1fr;
-}
 
-.row {
-    display: flex;
-}
 
-li {
-    list-style: none;
-    display: grid;
-    place-items: center;
-    font-size: 0px;
-}
-.box {
-    margin: .5px;
-    width: 75px;
-    height: 75px;
-}
 
-.allimg {
-    width: 45px;
-    position: relative;
-    bottom: 5px;
-}
+
+
 
 .allpawn {
     transform: scale(0.7);

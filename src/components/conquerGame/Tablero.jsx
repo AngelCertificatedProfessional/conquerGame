@@ -2,28 +2,21 @@ import React,{useEffect} from 'react';
 
 import { agregar } from '../../utils/ConexionAPI';
 import swal from 'sweetalert';
-import { agregarImagenesListado } from '../../utils/ConquerGame';
-
-
-const Tablero = ({ abrirPartidaJuego}) => {
+import { agregarDivsTablero, coloring, setCantidadJugadores } from '../../utils/ConquerGame';
+const Tablero = ({ partida}) => {
   
   useEffect(() => {
-    agregarImagenesListado()
+    setCantidadJugadores(partida.cantidadJugadores)
+    agregarDivsTablero()
+    coloring()
   }, []);
   
   return (  
     <>
-        <section className="menu-juego">
-            <div>
-                {/* <button className="button" onClick="guardarConfiguracionPiezas()">Guardar</button> */}
-                <div className= "" id="lista_personajes">
-                </div>
-            </div>
-            <div className="juego">
-                <ul id="tablero_juego">
-                </ul>
-            </div>
-        </section>
+      <div className="juego">
+          <ul id="tablero_juego">
+          </ul>
+      </div>
     </>
   );
 };
