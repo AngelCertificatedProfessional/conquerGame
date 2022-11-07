@@ -48,7 +48,7 @@ const posicionPiezas = () => {
     for ( const piecePosition in piezasGame ) {
         var div = document.getElementById(piezasGame[piecePosition]);
         div.innerHTML += piecePosition.replace(/[0-9]/g, '');
-        if(piecePosition.replace(/[0-9]/g, '') == 'Wrey' || piecePosition.replace(/[0-9]/g, '')== 'Brey' || piecePosition.replace(/[0-9]/g, '') == 'Rrey'){
+        if(piecePosition.replace(/[0-9]/g, '') == 'Wrey' || piecePosition.replace(/[0-9]/g, '')== 'Brey' || piecePosition.replace(/[0-9]/g, '') == 'Rrey' || piecePosition.replace(/[0-9]/g, '') == 'Prey'){
             arrReyes.push(piecePosition.replace(/[0-9]/g, ''))
         }
     }
@@ -136,10 +136,18 @@ document.querySelectorAll('.box').forEach(item => {
                         turno ++
                         bMovioAsesino = false;
                     }
-                    if(piezaAnterior == 'Wrey' || piezaAnterior == 'Brey' || piezaAnterior == 'Rrey'){
-                        const indexRey = arrReyes.indexOf(piezaAnterior);
-                        if (indexRey > -1) { // only splice array when item is found
-                            arrReyes.splice(indexRey, 1); // 2nd parameter means remove one item only
+                    if(piezaAnterior == 'Wrey' || piezaAnterior == 'Brey' || piezaAnterior == 'Rrey' || piezaAnterior == 'Prey'){
+                        //detectamos la posicion del rey que estan atacando
+                        const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
+                        //detectamos la posicion del rey que esta ordenando el ataque.
+                        const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
+                        if(indexReyMuerto < indexReyOrden){
+                            turno--
+                        }
+
+                        if (indexReyMuerto > -1) { // only splice array when item is found
+                            arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
+                            //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
                         }
                     }
                 }
@@ -156,6 +164,20 @@ document.querySelectorAll('.box').forEach(item => {
                     }else{
                         turno ++
                         bMovioAsesino = false;
+                    }
+                    if(piezaAnterior == 'Wrey' || piezaAnterior == 'Brey' || piezaAnterior == 'Rrey' || piezaAnterior == 'Prey'){
+                        //detectamos la posicion del rey que estan atacando
+                        const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
+                        //detectamos la posicion del rey que esta ordenando el ataque.
+                        const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
+                        if(indexReyMuerto < indexReyOrden){
+                            turno--
+                        }
+
+                        if (indexReyMuerto > -1) { // only splice array when item is found
+                            arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
+                            //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
+                        }
                     }
                 }
             })
@@ -204,6 +226,9 @@ document.querySelectorAll('.box').forEach(item => {
                 case "R":
                     alert('Red Wins !!')
                 break;
+                case "P":
+                    alert('Purple Wins !!')
+                break;
             }
             setTimeout(() => {
                 window.open("http://127.0.0.1:5501/index.html","_self")
@@ -249,6 +274,7 @@ document.querySelectorAll('.box').forEach(ee => {
 export const saltarTurno = () =>{
     // Toggling the turn
     turno ++;
+    bMovioAsesino = false;
     evaluartTurnoJugador()
 }
 
@@ -256,6 +282,8 @@ const evaluartTurnoJugador = () => {
     if(turno +1 > arrReyes.length ){
         turno = 0
     }
+    console.log(turno)
+    console.log(arrReyes)
     switch(arrReyes[turno][0]){
         case "W":
             document.getElementById('tog').innerText = "White's Turn"
@@ -265,6 +293,7 @@ const evaluartTurnoJugador = () => {
         break;
         case "R":
             document.getElementById('tog').innerText = "Red's Turn"
+        break;
         case "P":
             document.getElementById('tog').innerText = "Purple's Turn"
         break;

@@ -161,7 +161,7 @@ function coloring() {
         colorNegro.style.backgroundColor = colorTablero; 
         const nValor = eliminarLetras(colorNegro.id)
         switch (cantidadJugadores){
-            case 2,5,6:
+            case 2:
                 if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
                 (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
                     colorNegro.style.opacity = 0.3; 
@@ -185,7 +185,9 @@ function coloring() {
                 //eliminacion de numeros para el lado vertical
                 const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
                 if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                    (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) ||
+                    (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
                     colorNegro.style.opacity = 0.3; 
                 }else{
                     colorNegro.style.opacity = 1;  
@@ -223,7 +225,9 @@ function coloring() {
                 //eliminacion de numeros para el lado vertical
                 const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
                 if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                    (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) ||
+                    (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
                     colorNegro.style.opacity = 0.3; 
                 }else{
                     colorNegro.style.opacity = 1;  
@@ -257,8 +261,9 @@ function coloring() {
                 //eliminacion de numeros para el lado vertical
                 const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
                 if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
-                    colorNegro.style.opacity = 0.3; 
+                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                    (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                        colorNegro.style.opacity = 0.3; 
                 }else{
                     colorNegro.style.opacity = 1;  
                 }
@@ -304,7 +309,13 @@ export const guardarConfiguracionPiezas = () => {
                 window.localStorage.setItem('piezas', JSON.stringify(piezasGame))
                 window.open("http://127.0.0.1:5501/juego.html","_self")
             }else{
-                cargarJugador("R","Red's Turn")
+                cargarJugador("P","Purple's Turn")
+            }
+        break;
+        case "P":
+            if(cantidadJugadores === 4){
+                window.localStorage.setItem('piezas', JSON.stringify(piezasGame))
+                window.open("http://127.0.0.1:5501/juego.html","_self")
             }
         break;
     }
@@ -348,8 +359,10 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
                 //eliminacion de numeros para el lado vertical
                 const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
                 if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
-                    alert('Esta pieza esta invadiendo terreno')
+                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                    (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
+                    (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                        alert('Esta pieza esta invadiendo terreno')
                     return true; 
                 }
     }
@@ -371,7 +384,7 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
 // Moving the element
 document.querySelectorAll('.box').forEach(hathiTest => {
     hathiTest.addEventListener('click', function () {
-        if(sPiezaAColocar === ''){
+        if(sPiezaAColocar === '' || piezaSeleccionada === '' || piezaSeleccionada === null){
             return
         }
         
