@@ -16,6 +16,226 @@ let bMovioAsesino = false;
 let sPiezaMovimiento = "";
 let arrReyes = []
 
+let arregloPiezas = [{
+    nombre:"hachero1",
+    icono:"Whachero",
+},{
+    nombre:"hachero2",
+    icono:"Whachero",
+},
+{
+    nombre:"lancero1",
+    icono:"Wlancero",
+},
+{
+    nombre:"lancero2",
+    icono:"Wlancero",
+},
+{
+    nombre:"lancero3",
+    icono:"Wlancero",
+},
+{
+    nombre:"lancero4",
+    icono:"Wlancero",
+},
+{
+    nombre:"archer",
+    icono:"Warcher",
+},
+{
+    nombre:"asesino",
+    icono:"Wasesino",
+},
+{
+    nombre:"caballero1",
+    icono:"Wcaballero",
+},
+{
+    nombre:"caballero2",
+    icono:"Wcaballero",
+},
+{
+    nombre:"caballero3",
+    icono:"Wcaballero",
+},
+{
+    nombre:"caballero4",
+    icono:"Wcaballero",
+},
+{
+    nombre:"rey",
+    icono:"Wrey",
+},
+{
+    nombre:"hachero1",
+    icono:"Bhachero",
+},{
+    nombre:"hachero2",
+    icono:"Bhachero",
+},
+{
+    nombre:"lancero1",
+    icono:"Blancero",
+},
+{
+    nombre:"lancero2",
+    icono:"Blancero",
+},
+{
+    nombre:"lancero3",
+    icono:"Blancero",
+},
+{
+    nombre:"lancero4",
+    icono:"Blancero",
+},
+{
+    nombre:"archer",
+    icono:"Barcher",
+},
+{
+    nombre:"asesino",
+    icono:"Basesino",
+},
+{
+    nombre:"caballero1",
+    icono:"Bcaballero",
+},
+{
+    nombre:"caballero2",
+    icono:"Bcaballero",
+},
+{
+    nombre:"caballero3",
+    icono:"Bcaballero",
+},
+{
+    nombre:"caballero4",
+    icono:"Bcaballero",
+},
+{
+    nombre:"rey",
+    icono:"Brey",
+},
+{
+    nombre:"hachero1",
+    icono:"Rhachero",
+},{
+    nombre:"hachero2",
+    icono:"Rhachero",
+},
+{
+    nombre:"lancero1",
+    icono:"Rlancero",
+},
+{
+    nombre:"lancero2",
+    icono:"Rlancero",
+},
+{
+    nombre:"lancero3",
+    icono:"Rlancero",
+},
+{
+    nombre:"lancero4",
+    icono:"Rlancero",
+},
+{
+    nombre:"archer",
+    icono:"Rarcher",
+},
+{
+    nombre:"asesino",
+    icono:"Rasesino",
+},
+{
+    nombre:"caballero1",
+    icono:"Rcaballero",
+},
+{
+    nombre:"caballero2",
+    icono:"Rcaballero",
+},
+{
+    nombre:"caballero3",
+    icono:"Rcaballero",
+},
+{
+    nombre:"caballero4",
+    icono:"Rcaballero",
+},
+{
+    nombre:"rey",
+    icono:"Rrey",
+},
+{
+    nombre:"hachero1",
+    icono:"Phachero",
+},{
+    nombre:"hachero2",
+    icono:"Phachero",
+},
+{
+    nombre:"lancero1",
+    icono:"Plancero",
+},
+{
+    nombre:"lancero2",
+    icono:"Plancero",
+},
+{
+    nombre:"lancero3",
+    icono:"Plancero",
+},
+{
+    nombre:"lancero4",
+    icono:"Plancero",
+},
+{
+    nombre:"archer",
+    icono:"Parcher",
+},
+{
+    nombre:"asesino",
+    icono:"Pasesino",
+},
+{
+    nombre:"caballero1",
+    icono:"Pcaballero",
+},
+{
+    nombre:"caballero2",
+    icono:"Pcaballero",
+},
+{
+    nombre:"caballero3",
+    icono:"Pcaballero",
+},
+{
+    nombre:"caballero4",
+    icono:"Pcaballero",
+},
+{
+    nombre:"rey",
+    icono:"Prey",
+}
+]
+
+
+const agregarImagenesListado = () => {
+    for ( const piecePosition in arregloPiezas ) {  
+        let divElement = document.createElement("div");
+        divElement.className = 'iconoMenu'
+        //divElement.id = arregloPiezas[piecePosition].nombre
+        divElement.id = arregloPiezas[piecePosition].icono
+        divElement.innerHTML = arregloPiezas[piecePosition].icono+`<img class='allimg' src="img/${arregloPiezas[piecePosition].icono}.png" alt="">`
+        divElement.style.cursor = 'pointer'
+        document.getElementById("lista_personajes").appendChild(divElement);
+    }
+}
+agregarImagenesListado()
+
 const agregarDivsTablero = () => {
     for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
         let divElement = document.createElement("div");
@@ -127,6 +347,9 @@ document.querySelectorAll('.box').forEach(item => {
                     
                     document.getElementById(pinkId2).innerText = '';
                     let piezaAnterior = item.innerText;
+
+                    document.getElementById(piezaAnterior).style.opacity = 0.5;
+
                     item.innerText = pinkText2
                     coloring()
                     insertImage()
