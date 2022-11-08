@@ -16,6 +16,226 @@ let bMovioAsesino = false;
 let sPiezaMovimiento = "";
 let arrReyes = []
 
+let arregloPiezas = [{
+    nombre:"hachero1",
+    icono:"Whachero",
+},{
+    nombre:"hachero2",
+    icono:"Whachero",
+},
+{
+    nombre:"lancero1",
+    icono:"Wlancero",
+},
+{
+    nombre:"lancero2",
+    icono:"Wlancero",
+},
+{
+    nombre:"lancero3",
+    icono:"Wlancero",
+},
+{
+    nombre:"lancero4",
+    icono:"Wlancero",
+},
+{
+    nombre:"archer",
+    icono:"Warcher",
+},
+{
+    nombre:"asesino",
+    icono:"Wasesino",
+},
+{
+    nombre:"caballero1",
+    icono:"Wcaballero",
+},
+{
+    nombre:"caballero2",
+    icono:"Wcaballero",
+},
+{
+    nombre:"caballero3",
+    icono:"Wcaballero",
+},
+{
+    nombre:"caballero4",
+    icono:"Wcaballero",
+},
+{
+    nombre:"rey",
+    icono:"Wrey",
+},
+{
+    nombre:"hachero1",
+    icono:"Bhachero",
+},{
+    nombre:"hachero2",
+    icono:"Bhachero",
+},
+{
+    nombre:"lancero1",
+    icono:"Blancero",
+},
+{
+    nombre:"lancero2",
+    icono:"Blancero",
+},
+{
+    nombre:"lancero3",
+    icono:"Blancero",
+},
+{
+    nombre:"lancero4",
+    icono:"Blancero",
+},
+{
+    nombre:"archer",
+    icono:"Barcher",
+},
+{
+    nombre:"asesino",
+    icono:"Basesino",
+},
+{
+    nombre:"caballero1",
+    icono:"Bcaballero",
+},
+{
+    nombre:"caballero2",
+    icono:"Bcaballero",
+},
+{
+    nombre:"caballero3",
+    icono:"Bcaballero",
+},
+{
+    nombre:"caballero4",
+    icono:"Bcaballero",
+},
+{
+    nombre:"rey",
+    icono:"Brey",
+},
+{
+    nombre:"hachero1",
+    icono:"Rhachero",
+},{
+    nombre:"hachero2",
+    icono:"Rhachero",
+},
+{
+    nombre:"lancero1",
+    icono:"Rlancero",
+},
+{
+    nombre:"lancero2",
+    icono:"Rlancero",
+},
+{
+    nombre:"lancero3",
+    icono:"Rlancero",
+},
+{
+    nombre:"lancero4",
+    icono:"Rlancero",
+},
+{
+    nombre:"archer",
+    icono:"Rarcher",
+},
+{
+    nombre:"asesino",
+    icono:"Rasesino",
+},
+{
+    nombre:"caballero1",
+    icono:"Rcaballero",
+},
+{
+    nombre:"caballero2",
+    icono:"Rcaballero",
+},
+{
+    nombre:"caballero3",
+    icono:"Rcaballero",
+},
+{
+    nombre:"caballero4",
+    icono:"Rcaballero",
+},
+{
+    nombre:"rey",
+    icono:"Rrey",
+},
+{
+    nombre:"hachero1",
+    icono:"Phachero",
+},{
+    nombre:"hachero2",
+    icono:"Phachero",
+},
+{
+    nombre:"lancero1",
+    icono:"Plancero",
+},
+{
+    nombre:"lancero2",
+    icono:"Plancero",
+},
+{
+    nombre:"lancero3",
+    icono:"Plancero",
+},
+{
+    nombre:"lancero4",
+    icono:"Plancero",
+},
+{
+    nombre:"archer",
+    icono:"Parcher",
+},
+{
+    nombre:"asesino",
+    icono:"Pasesino",
+},
+{
+    nombre:"caballero1",
+    icono:"Pcaballero",
+},
+{
+    nombre:"caballero2",
+    icono:"Pcaballero",
+},
+{
+    nombre:"caballero3",
+    icono:"Pcaballero",
+},
+{
+    nombre:"caballero4",
+    icono:"Pcaballero",
+},
+{
+    nombre:"rey",
+    icono:"Prey",
+}
+]
+
+
+const agregarImagenesListado = () => {
+    for ( const piecePosition in arregloPiezas ) {  
+        let divElement = document.createElement("div");
+        divElement.className = 'iconoMenu'
+        //divElement.id = arregloPiezas[piecePosition].nombre
+        divElement.id = arregloPiezas[piecePosition].icono
+        divElement.innerHTML = arregloPiezas[piecePosition].icono+`<img class='allimg' src="img/${arregloPiezas[piecePosition].icono}.png" alt="">`
+        divElement.style.cursor = 'pointer'
+        document.getElementById("lista_personajes").appendChild(divElement);
+    }
+}
+agregarImagenesListado()
+
 const agregarDivsTablero = () => {
     for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
         let divElement = document.createElement("div");
@@ -48,7 +268,7 @@ const posicionPiezas = () => {
     for ( const piecePosition in piezasGame ) {
         var div = document.getElementById(piezasGame[piecePosition]);
         div.innerHTML += piecePosition.replace(/[0-9]/g, '');
-        if(piecePosition.replace(/[0-9]/g, '') == 'Wrey' || piecePosition.replace(/[0-9]/g, '')== 'Brey' || piecePosition.replace(/[0-9]/g, '') == 'Rrey'){
+        if(piecePosition.replace(/[0-9]/g, '') == 'Wrey' || piecePosition.replace(/[0-9]/g, '')== 'Brey' || piecePosition.replace(/[0-9]/g, '') == 'Rrey' || piecePosition.replace(/[0-9]/g, '') == 'Prey'){
             arrReyes.push(piecePosition.replace(/[0-9]/g, ''))
         }
     }
@@ -127,6 +347,9 @@ document.querySelectorAll('.box').forEach(item => {
                     
                     document.getElementById(pinkId2).innerText = '';
                     let piezaAnterior = item.innerText;
+
+                    document.getElementById(piezaAnterior).style.opacity = 0.5;
+
                     item.innerText = pinkText2
                     coloring()
                     insertImage()
@@ -136,10 +359,18 @@ document.querySelectorAll('.box').forEach(item => {
                         turno ++
                         bMovioAsesino = false;
                     }
-                    if(piezaAnterior == 'Wrey' || piezaAnterior == 'Brey' || piezaAnterior == 'Rrey'){
-                        const indexRey = arrReyes.indexOf(piezaAnterior);
-                        if (indexRey > -1) { // only splice array when item is found
-                            arrReyes.splice(indexRey, 1); // 2nd parameter means remove one item only
+                    if(piezaAnterior.includes('rey')){
+                        //detectamos la posicion del rey que estan atacando
+                        const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
+                        //detectamos la posicion del rey que esta ordenando el ataque.
+                        const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
+                        if(indexReyMuerto < indexReyOrden){
+                            turno--
+                        }
+
+                        if (indexReyMuerto > -1) { // only splice array when item is found
+                            arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
+                            //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
                         }
                     }
                 }
@@ -156,6 +387,20 @@ document.querySelectorAll('.box').forEach(item => {
                     }else{
                         turno ++
                         bMovioAsesino = false;
+                    }
+                    if(piezaAnterior.includes('rey')){
+                        //detectamos la posicion del rey que estan atacando
+                        const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
+                        //detectamos la posicion del rey que esta ordenando el ataque.
+                        const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
+                        if(indexReyMuerto < indexReyOrden){
+                            turno--
+                        }
+
+                        if (indexReyMuerto > -1) { // only splice array when item is found
+                            arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
+                            //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
+                        }
                     }
                 }
             })
@@ -204,6 +449,9 @@ document.querySelectorAll('.box').forEach(item => {
                 case "R":
                     alert('Red Wins !!')
                 break;
+                case "P":
+                    alert('Purple Wins !!')
+                break;
             }
             setTimeout(() => {
                 window.open("http://127.0.0.1:5501/index.html","_self")
@@ -249,6 +497,7 @@ document.querySelectorAll('.box').forEach(ee => {
 export const saltarTurno = () =>{
     // Toggling the turn
     turno ++;
+    bMovioAsesino = false;
     evaluartTurnoJugador()
 }
 
@@ -256,6 +505,8 @@ const evaluartTurnoJugador = () => {
     if(turno +1 > arrReyes.length ){
         turno = 0
     }
+    console.log(turno)
+    console.log(arrReyes)
     switch(arrReyes[turno][0]){
         case "W":
             document.getElementById('tog').innerText = "White's Turn"
@@ -265,6 +516,7 @@ const evaluartTurnoJugador = () => {
         break;
         case "R":
             document.getElementById('tog').innerText = "Red's Turn"
+        break;
         case "P":
             document.getElementById('tog').innerText = "Purple's Turn"
         break;
