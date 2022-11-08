@@ -1,5 +1,5 @@
 import {montanas,lagos} from './config/configuracionTablero.js'
-import { alfabetoANumero, cantidadJugadores, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
+import { alfabetoANumero, cantidadJugadores, colorCasstilloEntrada, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
 let sTurno = 'W';
 let sPiezaAColocar = ''
@@ -69,6 +69,14 @@ let arregloPiezas = [{
     posicion:"",
     icono:"rey",
 },
+{
+    nombre:"castillo",
+    posicion:{
+        entrada:"",
+        sala:""
+    },
+    icono:"castillo",
+},
 ]
 
 const piezasGame = {};
@@ -92,9 +100,12 @@ const agregarImagenesListado = () => {
 
             //Segmento para deselecconar las opciones tanto del tablero como del listado
             if(piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id){
+                //Segmento para limpiar el listado
                 piezaSeleccionada.style.backgroundColor = 'rgb(255, 255, 255)';
                 let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, '').substring(1,piezaSeleccionada.innerText.length));
-                if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+                //Segmento para limpiar el tablero
+                console.log(piezaSeleccionada)
+                if(nValor !== -1 && arregloPiezas[nValor].posicion !== '' && !piezaSeleccionada.innerText.includes('castillo')){
                     if(lagos.includes(arregloPiezas[nValor].posicion)){
                         document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
                     }else{
@@ -120,13 +131,11 @@ const agregarImagenesListado = () => {
                 piezaSeleccionada = hathiTest;
                 //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
                 let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
-                if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+                if(nValor !== -1 && arregloPiezas[nValor].posicion !== '' && !piezaSeleccionada.innerText.includes('castillo')){
                     console.log('entre a seleccionar');
                     document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionado;
                 }
             }
-
-            
         })
     })
 
@@ -369,8 +378,7 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
 
 
 
-    if((sPieza === "caballero1"||sPieza === "caballero2"||sPieza === "caballero3"||
-        sPieza === "caballero4" )&& lagos.includes(sPosicion)){
+    if((eliminarNumeros(sPieza) === "caballero" || eliminarNumeros(sPieza) === "castillo") && lagos.includes(sPosicion)){
         alert('Esta pieza no puede invadir un lago');
         return true;
     }
@@ -380,44 +388,103 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
     }
 }
 
+const validaPosicionCastillo = (sPieza,sPosicion) =>{
+    const nValor = eliminarLetras(sPosicion)
+    //Evaluaremos si la pieza esta invadiendo terreno
+    //Este escenaro pasa si imaginamos que la pieza esta en modo vertical
+    switch (cantidadJugadores){
+        case 2:
+            if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2-1)) ||
+            (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo-1))){
+                alert('Esta pieza esta invadiendo terreno')
+                return true;
+            }
+            break;
+    //     case 3:
+    //         if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+    //         (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
+    //         (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+    //                 alert('Esta pieza esta invadiendo terreno')
+    //                 return true; 
+    //         }
+    //     break;
+    //     case 4:
+    //             //eliminacion de numeros para el lado vertical
+    //             const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
+    //             if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+    //                 (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+    //                 (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
+    //                 (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+    //                     alert('Esta pieza esta invadiendo terreno')
+    //                 return true; 
+    //             }
+    }
+
+
+
+    // if((eliminarNumeros(sPieza) === "caballero" || eliminarNumeros(sPieza) === "castillo") && lagos.includes(sPosicion)){
+    //     alert('Esta pieza no puede invadir un lago');
+    //     return true;
+    // }
+    // if(montanas.includes(sPosicion)){
+    //     alert('Esta pieza no puede invadir una montana');
+    //     return true;
+    // }
+}
 
 // Moving the element
 document.querySelectorAll('.box').forEach(hathiTest => {
     hathiTest.addEventListener('click', function () {
+        //detectamos que halla por lo menos un valor seccionado en la vista y que la piezaseleccionada sea nulla
         if(sPiezaAColocar === '' || piezaSeleccionada === '' || piezaSeleccionada === null){
             return
         }
         
-        //En este segmento detectamos si hay otra pieza en ese lugar
-        let nValor = arregloPiezas.findIndex(obj => obj.posicion===hathiTest.id);
-        if(nValor !== -1){
-            alert('Ya se enceuntra una pieza en esta posicion');
-            return
-        }
-        
-        //Validamos que la pieza no este invadiendo otro terreno que no le pertenece
-        if(validaPosicionPieza(sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ),hathiTest.id)){
-            return
-        }
-
-        //En este segmento detectaremos que si la pieza ya fue colocada, esta se eliminara del mapa para ponerla de nuevo
-        nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
-        if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
-            document.getElementById(arregloPiezas[nValor].posicion).innerHTML = '';
-            if(lagos.includes(arregloPiezas[nValor].posicion)){
-                document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
-            }else{
-                document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorTablero;
+        if(!sPiezaAColocar.includes('castillo')){
+            //Validamos que la pieza no este invadiendo otro terreno que no le pertenece
+            if(validaPosicionPieza(sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ),hathiTest.id)){
+                return
             }
+            //detectamos que la pieza es o no un castillo
+            //En este segmento detectamos si hay otra pieza en ese lugar
+            let nValor = arregloPiezas.findIndex(obj => obj.posicion===hathiTest.id && !obj.nombre.includes("castillo"));
+            console.log(arregloPiezas)
+            if(nValor !== -1 ){
+                alert('Ya se enceuntra una pieza en esta posicion');
+                return
+            }
+
+            //En este segmento detectaremos que si la pieza ya fue colocada, esta se eliminara del mapa para ponerla de nuevo
+            nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
+            if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+                document.getElementById(arregloPiezas[nValor].posicion).innerHTML = '';
+                if(lagos.includes(arregloPiezas[nValor].posicion)){
+                    document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
+                }else{
+                    document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorTablero;
+                }
+            }
+
+            hathiTest.style.backgroundColor = colorSeleccionado
+            //agrega el escrito de la pieza a color
+            hathiTest.innerHTML = sPiezaAColocar
+            //se le asigna la nueva posicion
+            arregloPiezas[nValor].posicion = hathiTest.id;
+
+            insertImage();
+
+        }else{
+
+            //Validamos que la pieza no este invadiendo otro terreno que no le pertenece
+            if(validaPosicionCastillo(sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ),hathiTest.id)){
+                return
+            }
+
+            let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
+            hathiTest.style.backgroundColor = colorCasstilloEntrada
+            //se le asigna la nueva posicion
+            arregloPiezas[nValor].posicion.sala = hathiTest.id;
         }
-
-        hathiTest.style.backgroundColor = colorSeleccionado
-        //agrega el escrito de la pieza a color
-        hathiTest.innerHTML = sPiezaAColocar
-        //se le asigna la nueva posicion
-        arregloPiezas[nValor].posicion = hathiTest.id;
-
-        insertImage();
     })
 })
 

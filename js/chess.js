@@ -359,7 +359,7 @@ document.querySelectorAll('.box').forEach(item => {
                         turno ++
                         bMovioAsesino = false;
                     }
-                    if(piezaAnterior == 'Wrey' || piezaAnterior == 'Brey' || piezaAnterior == 'Rrey' || piezaAnterior == 'Prey'){
+                    if(piezaAnterior.includes('rey')){
                         //detectamos la posicion del rey que estan atacando
                         const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
                         //detectamos la posicion del rey que esta ordenando el ataque.
@@ -388,7 +388,7 @@ document.querySelectorAll('.box').forEach(item => {
                         turno ++
                         bMovioAsesino = false;
                     }
-                    if(piezaAnterior == 'Wrey' || piezaAnterior == 'Brey' || piezaAnterior == 'Rrey' || piezaAnterior == 'Prey'){
+                    if(piezaAnterior.includes('rey')){
                         //detectamos la posicion del rey que estan atacando
                         const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
                         //detectamos la posicion del rey que esta ordenando el ataque.
