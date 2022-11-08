@@ -2,13 +2,12 @@ import React,{useEffect} from 'react';
 
 import { agregar } from '../../utils/ConexionAPI';
 import swal from 'sweetalert';
-import { agregarImagenesListado } from '../../utils/ConquerGame';
 
 
-const Tablero = ({turnoUsuario}) => {
+const Tablero = ({turnoUsuario,agregarImagenesListado,bConsultar}) => {
   
   useEffect(() => {
-    agregarImagenesListado(turnoUsuario)
+    agregarImagenesListado(turnoUsuario,bConsultar)
   }, []);
   
   return (  

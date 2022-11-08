@@ -3,6 +3,8 @@ import { useParams,useNavigate } from 'react-router-dom';
 import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
+import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
+import { agregarDivsTableroJuego, agregarImagenesListado, coloring, guardarConfiguracionPiezas, setCantidadJugadores } from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -24,6 +26,7 @@ const ConquerGame = ({socket}) => {
     // // const [opcionesJuego, setOpcionesJuego] = useState({});
     const [usuario, setUsuario] = useState(JSON.parse(b64_to_utf8(sessionStorage.getItem('usuario'))) || {}); //Este metodo se utiliza para obtener la info del usuario
     const [accion, setAccion] = useState(1); //Este metodo se utiliza para ver que accion esta realizando el usuario
+    const [bloquearBotonConfirmar, setbloquearBotonConfirmar] = useState(false); //Este metodo se utiliza para ver que accion esta realizando el usuario
     const [mostrarIniciar,setMostrarIniciar] = useState(false)
 
     const partidaInitial = {};
@@ -33,8 +36,7 @@ const ConquerGame = ({socket}) => {
     const [jugadores, dispatchJugadores] = useReducer(agregarJugadoresArreglo, jugadoresInitial);
 
     const turnoUsuarioInitial = '' //Este metodo se usa para mostrar todos los jugadores en la lista de espera
-    const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(agregarPiezasTableroRes, turnoUsuarioInitial);
-
+    const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroTableroRes, turnoUsuarioInitial);
 
     useEffect(() => {
         socket.disconnect();
@@ -59,6 +61,11 @@ const ConquerGame = ({socket}) => {
                     dispatchPiezasTableroRes(payload);
                     dispatchPartidas(payload)
                     setAccion(2);
+                break;
+                case 3:
+                    dispatchPiezasTableroRes(payload);
+                    dispatchPartidas(payload)
+                    setAccion(3);
                 break;
             }
         })
@@ -122,10 +129,10 @@ const ConquerGame = ({socket}) => {
     //     });
     // }
 
-    const agregarPiezasTablero = () => {
+    const mostrarTablero = () => {
         let vEnviar = {};
         vEnviar.numeroPartida =  numeroPartida;
-        actualizarEspecifico('conquerGame/agregarPiezasTablero/',vEnviar )
+        actualizarEspecifico('conquerGame/mostrarTablero/',vEnviar )
         .then((resultado) => {
         })
         .catch((error) => {
@@ -138,7 +145,7 @@ const ConquerGame = ({socket}) => {
         });
     }
 
-    function agregarPiezasTableroRes(state, action){
+    function mostrarTableroTableroRes(state, action){
         if(state !== ''){
             return state;
         }
@@ -153,6 +160,26 @@ const ConquerGame = ({socket}) => {
         }
     }
 
+    /*Seccion funciones res*/
+
+    const guardarConfiguracion = () => {
+        const vPeticion = {};
+        vPeticion.numeroPartida = numeroPartida;
+        vPeticion.piezas = guardarConfiguracionPiezas();
+        if(vPeticion.piezas === null) return; 
+        actualizarEspecifico('conquerGame/agregarPiezasTablero/',vPeticion )
+        .then((resultado) => {
+            setbloquearBotonConfirmar(true)
+        })
+        .catch((error) => {
+          swal({
+            title: 'Error',
+            text: error.toString(),
+            icon: 'error',
+            button: 'OK',
+          });
+        });
+    }
 
     return (
         <main className="contenedor seccion">
@@ -177,7 +204,7 @@ const ConquerGame = ({socket}) => {
                     </div>
                     {(mostrarIniciar === true) && (
                         <div className="contenido-anuncio">
-                            <button className = "boton blue w-100" onClick={() => agregarPiezasTablero()}>Iniciar</button>
+                            <button className = "boton blue w-100" onClick={() => mostrarTablero()}>Iniciar</button>
                         </div>
                     )}
                 </>
@@ -187,22 +214,53 @@ const ConquerGame = ({socket}) => {
             {(accion === 2) && (
                 <>
                 <section className="menu-juego">
-                    <div>
-                        {/* <button className="button" onClick="guardarConfiguracionPiezas()">Guardar</button> */}
+                    <div className='listado-opciones'>
                         <Suspense fallback={<div>Loading...</div>}>
                             <ListadoPiezas 
-                                turnoUsuario={turnoUsuario}/>
-                        </Suspense>  
+                                turnoUsuario={turnoUsuario}
+                                agregarImagenesListado = {agregarImagenesListado}
+                                bConsultar = {false}
+                                />
+                        </Suspense>
+                        <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Confirmar</button>  
                     </div>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Tablero
                             partida = {partida}
+                            accion = {accion}
+                            setCantidadJugadores = {setCantidadJugadores}
+                            agregarDivsTablero = {agregarDivsTablero}
+                            coloring = {coloring}
                         />
                     </Suspense>   
                 </section>
                 </>
             )}
-            
+             {(accion === 3) && (
+                <>
+                <section className="menu-juego">
+                    <div className='listado-opciones'>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <ListadoPiezas 
+                                turnoUsuario={turnoUsuario}
+                                agregarImagenesListado = {agregarImagenesListado}
+                                bConsultar = {true}
+                                />
+                        </Suspense>
+                        <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Saltar Turno</button>  
+                    </div>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Tablero
+                            partida = {partida}
+                            accion = {accion}
+                            setCantidadJugadores = {setCantidadJugadores}
+                            agregarDivsTableroJuego = {agregarDivsTableroJuego}
+                            coloring = {coloring}
+                        />
+                    </Suspense>   
+                </section>
+                </>
+            )}
            
         </main>
    );

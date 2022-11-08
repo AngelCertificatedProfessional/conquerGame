@@ -225,6 +225,14 @@ li {
     bottom: 5px;
 }
 
+.listado-opciones{
+    position: sticky;
+    top:0;
+    background-color: #ebe5e5;
+    width:100%;
+    z-index: 10;
+}
+
 /*Listado usuarios*/
 
 
