@@ -1,5 +1,5 @@
 import {montanas,lagos} from './config/configuracionTablero.js'
-import { alfabetoANumero, cantidadJugadores, colorCasstilloEntrada, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
+import { alfabetoANumero, bMultiJugador, cantidadJugadores, colorCasstilloEntrada, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
 let sTurno = 'W';
 let sPiezaAColocar = ''
@@ -166,36 +166,46 @@ function coloring() {
             colorNegro.style.backgroundColor = colorLago; 
         }
         const nValor = eliminarLetras(colorNegro.id)
-        switch (cantidadJugadores){
-            case 2:
-                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-                (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
+
+        if(bMultiJugador){
+            if(((sTurno === "W" || sTurno === "B") && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+            ((sTurno === "R" || sTurno === "P") && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+                colorNegro.style.opacity = 0.3; 
+            }else{
+                colorNegro.style.opacity = 1;  
+            }
+        }else{
+            switch (cantidadJugadores){
+                case 2:
+                    if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+                    (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+                        colorNegro.style.opacity = 0.3; 
+                    }else{
+                        colorNegro.style.opacity = 1;  
+                    }
+                    break;
+                case 3:
+                    if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+                    (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/nCantidadJugadores)*2))||
+                    (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+                        colorNegro.style.opacity = 0.3; 
+                    }else{
+                        colorNegro.style.opacity = 1;  
+                    }
                 break;
-            case 3:
-                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
-                (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/nCantidadJugadores)*2))||
-                (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
-            break;
-            case 4:
-                //eliminacion de numeros para el lado vertical
-                const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
-                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
-                (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
-                (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
-                break;
+                case 4:
+                    //eliminacion de numeros para el lado vertical
+                    const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
+                    if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                    (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
+                    (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                        colorNegro.style.opacity = 0.3; 
+                    }else{
+                        colorNegro.style.opacity = 1;  
+                    }
+                    break;
+            }
         }
     })
 }
@@ -216,7 +226,9 @@ export const guardarConfiguracionPiezas = () => {
     //agregamos la informaicon a un arreglo para poderlo limpar la info despues
     for ( const piecePosition in arregloPiezas ) {  
         piezasGame[sTurno+arregloPiezas[piecePosition].nombre] = arregloPiezas[piecePosition].posicion;
-        document.getElementById(arregloPiezas[piecePosition].posicion).innerHTML = '';
+        if(!bMultiJugador || (bMultiJugador && cantidadJugadores === 4 && (sTurno !== "W" && sTurno !== "R"))){
+            document.getElementById(arregloPiezas[piecePosition].posicion).innerHTML = '';
+        }
         arregloPiezas[piecePosition].posicion = '';
     }
     sPiezaAColocar = ''
@@ -266,34 +278,42 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
     const nValor = eliminarLetras(sPosicion)
 
     //Evaluaremos si la pieza esta invadiendo terreno
-
-    switch (cantidadJugadores){
-        case 2:
-            if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-            (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-                alert('Esta pieza esta invadiendo terreno')
-                return true;
-            }
-            break;
-        case 3:
-            if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
-            (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
-            (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+    if(bMultiJugador){
+        if(((sTurno === "W" || sTurno === "B") && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+        ((sTurno === "R" || sTurno === "P") && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+            alert('Esta pieza esta invadiendo terreno')
+            return true;
+        }
+    }else{
+        switch (cantidadJugadores){
+            case 2:
+                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+                (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
                     alert('Esta pieza esta invadiendo terreno')
-                    return true; 
-            }
-        break;
-        case 4:
-                //eliminacion de numeros para el lado vertical
-                const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
-                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
-                    (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
-                    (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
-                        alert('Esta pieza esta invadiendo terreno')
-                    return true; 
+                    return true;
                 }
+                break;
+            case 3:
+                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+                (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
+                (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+                        alert('Esta pieza esta invadiendo terreno')
+                        return true; 
+                }
+            break;
+            case 4:
+                    //eliminacion de numeros para el lado vertical
+                    const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
+                    if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                        (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                        (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
+                        (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                            alert('Esta pieza esta invadiendo terreno')
+                        return true; 
+                    }
+        }
     }
+    
 
 
 
