@@ -4,10 +4,10 @@ import { agregar } from '../../utils/ConexionAPI';
 import swal from 'sweetalert';
 
 
-const Tablero = ({turnoUsuario,agregarImagenesListado,bConsultar}) => {
+const Tablero = ({turnoUsuario,agregarImagenesListado}) => {
   
   useEffect(() => {
-    agregarImagenesListado(turnoUsuario,bConsultar)
+    agregarImagenesListado(turnoUsuario)
   }, []);
   
   return (  

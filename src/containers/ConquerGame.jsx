@@ -4,7 +4,7 @@ import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListado, coloring, guardarConfiguracionPiezas, setCantidadJugadores } from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, posicionPiezasJuego} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -219,7 +219,6 @@ const ConquerGame = ({socket}) => {
                             <ListadoPiezas 
                                 turnoUsuario={turnoUsuario}
                                 agregarImagenesListado = {agregarImagenesListado}
-                                bConsultar = {false}
                                 />
                         </Suspense>
                         <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Confirmar</button>  
@@ -243,8 +242,7 @@ const ConquerGame = ({socket}) => {
                         <Suspense fallback={<div>Loading...</div>}>
                             <ListadoPiezas 
                                 turnoUsuario={turnoUsuario}
-                                agregarImagenesListado = {agregarImagenesListado}
-                                bConsultar = {true}
+                                agregarImagenesListado = {agregarImagenesListadoJuego}
                                 />
                         </Suspense>
                         <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Saltar Turno</button>  
@@ -254,10 +252,11 @@ const ConquerGame = ({socket}) => {
                             partida = {partida}
                             accion = {accion}
                             setCantidadJugadores = {setCantidadJugadores}
-                            agregarDivsTableroJuego = {agregarDivsTableroJuego}
-                            coloring = {coloring}
+                            agregarDivsTablero = {agregarDivsTableroJuego}
+                            coloring = {coloringJuego}
+                            posicionPiezasJuego = {posicionPiezasJuego}
                         />
-                    </Suspense>   
+                    </Suspense>
                 </section>
                 </>
             )}

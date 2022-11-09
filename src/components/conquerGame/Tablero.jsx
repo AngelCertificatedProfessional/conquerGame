@@ -1,12 +1,16 @@
 import React,{useEffect} from 'react';
 
 import { agregar } from '../../utils/ConexionAPI';
-import swal from 'sweetalert';
-const Tablero = ({ partida,setCantidadJugadores,agregarDivsTablero,coloring}) => {  
+const Tablero = ({ partida,setCantidadJugadores,agregarDivsTablero,coloring,accion,posicionPiezasJuego}) => {  
   useEffect(() => {
     setCantidadJugadores(partida.cantidadJugadores),
     agregarDivsTablero(),
     coloring()
+
+    if(accion === 3){
+      posicionPiezasJuego(partida)
+    }
+
   }, []);
   
   return (  
