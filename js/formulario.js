@@ -1,5 +1,5 @@
 import {montanas,lagos} from './config/configuracionTablero.js'
-import { alfabetoANumero, cantidadJugadores, colorCasstilloEntrada, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
+import { alfabetoANumero, bMultiJugador, cantidadJugadores, colorCasstilloEntrada, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
 let sTurno = 'W';
 let sPiezaAColocar = ''
@@ -68,15 +68,7 @@ let arregloPiezas = [{
     nombre:"rey",
     posicion:"",
     icono:"rey",
-},
-{
-    nombre:"castillo",
-    posicion:{
-        entrada:"",
-        sala:""
-    },
-    icono:"castillo",
-},
+}
 ]
 
 const piezasGame = {};
@@ -105,7 +97,7 @@ const agregarImagenesListado = () => {
                 let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, '').substring(1,piezaSeleccionada.innerText.length));
                 //Segmento para limpiar el tablero
                 console.log(piezaSeleccionada)
-                if(nValor !== -1 && arregloPiezas[nValor].posicion !== '' && !piezaSeleccionada.innerText.includes('castillo')){
+                if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
                     if(lagos.includes(arregloPiezas[nValor].posicion)){
                         document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
                     }else{
@@ -131,8 +123,7 @@ const agregarImagenesListado = () => {
                 piezaSeleccionada = hathiTest;
                 //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
                 let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
-                if(nValor !== -1 && arregloPiezas[nValor].posicion !== '' && !piezaSeleccionada.innerText.includes('castillo')){
-                    console.log('entre a seleccionar');
+                if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
                     document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionado;
                 }
             }
@@ -166,117 +157,55 @@ const agregarDivsTablero = () => {
 agregarDivsTablero();
 
 function coloring() {
-    document.querySelectorAll('.white-box').forEach(colorNegro => {
-        colorNegro.style.backgroundColor = colorTablero; 
-        const nValor = eliminarLetras(colorNegro.id)
-        switch (cantidadJugadores){
-            case 2:
-                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-                (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
-                break;
-            case 3:
-                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
-                (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
-                (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
-            break;
-            case 4:
-                console.log(eliminarLetras(colorNegro.id))
-                console.log(eliminarNumeros(colorNegro.id))
-                console.log(alfabetoANumero(eliminarNumeros(colorNegro.id)))
-                //eliminacion de numeros para el lado vertical
-                const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
-                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
-                    (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) ||
-                    (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
-                break;
+    document.querySelectorAll('.box').forEach(colorNegro => {
+        if(colorNegro.classList.contains('white-box')){
+            colorNegro.style.backgroundColor = colorTablero; 
+        }else if(colorNegro.classList.contains('green-box')){
+            colorNegro.style.backgroundColor = colorMontana;
+        }else if(colorNegro.classList.contains('blue-box')){
+            colorNegro.style.backgroundColor = colorLago; 
         }
-        
-    })
-
-    document.querySelectorAll('.green-box').forEach(colorNegro => {
-        colorNegro.style.backgroundColor = colorMontana;
         const nValor = eliminarLetras(colorNegro.id)
-        switch (cantidadJugadores){
-            case 2:
-                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-                (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
-                break;
-            case 3:
-                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
-                (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
-                (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }    
-            break;
-            case 4:
-                console.log(eliminarLetras(colorNegro.id))
-                console.log(eliminarNumeros(colorNegro.id))
-                console.log(alfabetoANumero(eliminarNumeros(colorNegro.id)))
-                //eliminacion de numeros para el lado vertical
-                const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
-                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
-                    (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) ||
-                    (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
-                break;
-        }
-    })
 
-    document.querySelectorAll('.blue-box').forEach(colorNegro => {
-        colorNegro.style.backgroundColor = colorLago; 
-        const nValor = eliminarLetras(colorNegro.id)
-        switch (cantidadJugadores){
-            case 2:
-                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-                (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
-            break;
-            case 3:
-                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
-                (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
-                (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
-                    colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
-            break;
-            case 4:
-                //eliminacion de numeros para el lado vertical
-                const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
-                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+        if(bMultiJugador){
+            if(((sTurno === "W" || sTurno === "B") && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+            ((sTurno === "R" || sTurno === "P") && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+                colorNegro.style.opacity = 0.3; 
+            }else{
+                colorNegro.style.opacity = 1;  
+            }
+        }else{
+            switch (cantidadJugadores){
+                case 2:
+                    if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+                    (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+                        colorNegro.style.opacity = 0.3; 
+                    }else{
+                        colorNegro.style.opacity = 1;  
+                    }
+                    break;
+                case 3:
+                    if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+                    (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/nCantidadJugadores)*2))||
+                    (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+                        colorNegro.style.opacity = 0.3; 
+                    }else{
+                        colorNegro.style.opacity = 1;  
+                    }
+                break;
+                case 4:
+                    //eliminacion de numeros para el lado vertical
+                    const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
+                    if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
                     (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                    (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
                     (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
                         colorNegro.style.opacity = 0.3; 
-                }else{
-                    colorNegro.style.opacity = 1;  
-                }
-                break;
+                    }else{
+                        colorNegro.style.opacity = 1;  
+                    }
+                    break;
+            }
         }
     })
 }
@@ -297,7 +226,9 @@ export const guardarConfiguracionPiezas = () => {
     //agregamos la informaicon a un arreglo para poderlo limpar la info despues
     for ( const piecePosition in arregloPiezas ) {  
         piezasGame[sTurno+arregloPiezas[piecePosition].nombre] = arregloPiezas[piecePosition].posicion;
-        document.getElementById(arregloPiezas[piecePosition].posicion).innerHTML = '';
+        if(!bMultiJugador || (bMultiJugador && cantidadJugadores === 4 && (sTurno !== "W" && sTurno !== "R"))){
+            document.getElementById(arregloPiezas[piecePosition].posicion).innerHTML = '';
+        }
         arregloPiezas[piecePosition].posicion = '';
     }
     sPiezaAColocar = ''
@@ -347,38 +278,46 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
     const nValor = eliminarLetras(sPosicion)
 
     //Evaluaremos si la pieza esta invadiendo terreno
-
-    switch (cantidadJugadores){
-        case 2:
-            if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
-            (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
-                alert('Esta pieza esta invadiendo terreno')
-                return true;
-            }
-            break;
-        case 3:
-            if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
-            (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
-            (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+    if(bMultiJugador){
+        if(((sTurno === "W" || sTurno === "B") && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+        ((sTurno === "R" || sTurno === "P") && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
+            alert('Esta pieza esta invadiendo terreno')
+            return true;
+        }
+    }else{
+        switch (cantidadJugadores){
+            case 2:
+                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+                (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
                     alert('Esta pieza esta invadiendo terreno')
-                    return true; 
-            }
-        break;
-        case 4:
-                //eliminacion de numeros para el lado vertical
-                const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
-                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                    (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
-                    (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
-                    (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
-                        alert('Esta pieza esta invadiendo terreno')
-                    return true; 
+                    return true;
                 }
+                break;
+            case 3:
+                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+                (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
+                (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+                        alert('Esta pieza esta invadiendo terreno')
+                        return true; 
+                }
+            break;
+            case 4:
+                    //eliminacion de numeros para el lado vertical
+                    const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
+                    if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                        (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                        (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
+                        (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                            alert('Esta pieza esta invadiendo terreno')
+                        return true; 
+                    }
+        }
     }
+    
 
 
 
-    if((eliminarNumeros(sPieza) === "caballero" || eliminarNumeros(sPieza) === "castillo") && lagos.includes(sPosicion)){
+    if((eliminarNumeros(sPieza) === "caballero") && lagos.includes(sPosicion)){
         alert('Esta pieza no puede invadir un lago');
         return true;
     }
@@ -388,50 +327,6 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
     }
 }
 
-const validaPosicionCastillo = (sPieza,sPosicion) =>{
-    const nValor = eliminarLetras(sPosicion)
-    //Evaluaremos si la pieza esta invadiendo terreno
-    //Este escenaro pasa si imaginamos que la pieza esta en modo vertical
-    switch (cantidadJugadores){
-        case 2:
-            if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2-1)) ||
-            (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo-1))){
-                alert('Esta pieza esta invadiendo terreno')
-                return true;
-            }
-            break;
-    //     case 3:
-    //         if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
-    //         (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
-    //         (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
-    //                 alert('Esta pieza esta invadiendo terreno')
-    //                 return true; 
-    //         }
-    //     break;
-    //     case 4:
-    //             //eliminacion de numeros para el lado vertical
-    //             const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
-    //             if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-    //                 (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
-    //                 (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
-    //                 (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
-    //                     alert('Esta pieza esta invadiendo terreno')
-    //                 return true; 
-    //             }
-    }
-
-
-
-    // if((eliminarNumeros(sPieza) === "caballero" || eliminarNumeros(sPieza) === "castillo") && lagos.includes(sPosicion)){
-    //     alert('Esta pieza no puede invadir un lago');
-    //     return true;
-    // }
-    // if(montanas.includes(sPosicion)){
-    //     alert('Esta pieza no puede invadir una montana');
-    //     return true;
-    // }
-}
-
 // Moving the element
 document.querySelectorAll('.box').forEach(hathiTest => {
     hathiTest.addEventListener('click', function () {
@@ -439,52 +334,36 @@ document.querySelectorAll('.box').forEach(hathiTest => {
         if(sPiezaAColocar === '' || piezaSeleccionada === '' || piezaSeleccionada === null){
             return
         }
-        
-        if(!sPiezaAColocar.includes('castillo')){
-            //Validamos que la pieza no este invadiendo otro terreno que no le pertenece
-            if(validaPosicionPieza(sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ),hathiTest.id)){
-                return
-            }
-            //detectamos que la pieza es o no un castillo
-            //En este segmento detectamos si hay otra pieza en ese lugar
-            let nValor = arregloPiezas.findIndex(obj => obj.posicion===hathiTest.id && !obj.nombre.includes("castillo"));
-            console.log(arregloPiezas)
-            if(nValor !== -1 ){
-                alert('Ya se enceuntra una pieza en esta posicion');
-                return
-            }
-
-            //En este segmento detectaremos que si la pieza ya fue colocada, esta se eliminara del mapa para ponerla de nuevo
-            nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
-            if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
-                document.getElementById(arregloPiezas[nValor].posicion).innerHTML = '';
-                if(lagos.includes(arregloPiezas[nValor].posicion)){
-                    document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
-                }else{
-                    document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorTablero;
-                }
-            }
-
-            hathiTest.style.backgroundColor = colorSeleccionado
-            //agrega el escrito de la pieza a color
-            hathiTest.innerHTML = sPiezaAColocar
-            //se le asigna la nueva posicion
-            arregloPiezas[nValor].posicion = hathiTest.id;
-
-            insertImage();
-
-        }else{
-
-            //Validamos que la pieza no este invadiendo otro terreno que no le pertenece
-            if(validaPosicionCastillo(sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ),hathiTest.id)){
-                return
-            }
-
-            let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
-            hathiTest.style.backgroundColor = colorCasstilloEntrada
-            //se le asigna la nueva posicion
-            arregloPiezas[nValor].posicion.sala = hathiTest.id;
+        //Validamos que la pieza no este invadiendo otro terreno que no le pertenece
+        if(validaPosicionPieza(sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ),hathiTest.id)){
+            return
         }
+        //En este segmento detectamos si hay otra pieza en ese lugar
+        let nValor = arregloPiezas.findIndex(obj => obj.posicion===hathiTest.id);
+        console.log(arregloPiezas)
+        if(nValor !== -1 ){
+            alert('Ya se enceuntra una pieza en esta posicion');
+            return
+        }
+
+        //En este segmento detectaremos que si la pieza ya fue colocada, esta se eliminara del mapa para ponerla de nuevo
+        nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
+        if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
+            document.getElementById(arregloPiezas[nValor].posicion).innerHTML = '';
+            if(lagos.includes(arregloPiezas[nValor].posicion)){
+                document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
+            }else{
+                document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorTablero;
+            }
+        }
+
+        hathiTest.style.backgroundColor = colorSeleccionado
+        //agrega el escrito de la pieza a color
+        hathiTest.innerHTML = sPiezaAColocar
+        //se le asigna la nueva posicion
+        arregloPiezas[nValor].posicion = hathiTest.id;
+
+        insertImage();
     })
 })
 
