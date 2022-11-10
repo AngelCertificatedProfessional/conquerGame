@@ -4,7 +4,7 @@ import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, posicionPiezasJuego} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, posicionPiezasJuego,setPartida} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -66,6 +66,11 @@ const ConquerGame = ({socket}) => {
                     dispatchPiezasTableroRes(payload);
                     dispatchPartidas(payload)
                     setAccion(3);
+                    if(payload.hasOwnProperty("posicionPiezasGlobal")){
+                        console.log('esta el proceso de posicionPiezasGlobal')
+                        console.log(payload)
+                        posicionPiezasJuego(payload)
+                    }
                 break;
             }
         })
@@ -237,6 +242,7 @@ const ConquerGame = ({socket}) => {
             )}
              {(accion === 3) && (
                 <>
+                <h2 id="tog" className='fw-300 centrar-texto'>White's Turn</h2>
                 <section className="menu-juego">
                     <div className='listado-opciones'>
                         <Suspense fallback={<div>Loading...</div>}>
@@ -255,6 +261,7 @@ const ConquerGame = ({socket}) => {
                             agregarDivsTablero = {agregarDivsTableroJuego}
                             coloring = {coloringJuego}
                             posicionPiezasJuego = {posicionPiezasJuego}
+                            setPartida = {setPartida}
                         />
                     </Suspense>
                 </section>

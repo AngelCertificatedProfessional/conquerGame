@@ -1,16 +1,13 @@
 import React,{useEffect} from 'react';
-
-import { agregar } from '../../utils/ConexionAPI';
-const Tablero = ({ partida,setCantidadJugadores,agregarDivsTablero,coloring,accion,posicionPiezasJuego}) => {  
+const Tablero = ({ partida,setCantidadJugadores,agregarDivsTablero,coloring,accion,posicionPiezasJuego,setPartida}) => {  
   useEffect(() => {
-    setCantidadJugadores(partida.cantidadJugadores),
-    agregarDivsTablero(),
+    setCantidadJugadores(partida.cantidadJugadores)
+    agregarDivsTablero()
     coloring()
-
     if(accion === 3){
       posicionPiezasJuego(partida)
+      setPartida(partida)
     }
-
   }, []);
   
   return (  
