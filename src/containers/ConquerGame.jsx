@@ -4,7 +4,7 @@ import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, posicionPiezasJuego,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, evaluarResultadoPartida, posicionPiezasJuego,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -72,6 +72,12 @@ const ConquerGame = ({socket}) => {
                         payload.hasOwnProperty("turno") ? setTurno(payload.turno) : setTurno(0)
                         posicionPiezasJuego(payload)
                     }
+                break
+                case 4:
+                    dispatchPiezasTableroRes(payload);
+                    dispatchPartidas(payload)
+                    posicionPiezasJuego(payload)
+                    evaluarResultadoPartida(payload)
                 break;
             }
         })

@@ -5,7 +5,7 @@ import {  movimientoLancero } from './piezas/lancero.js';
 import { movimientoCaballero } from './piezas/caballero.js';
 import { movimientoAsesino } from './piezas/asesino.js';
 import { movimientoArcher } from './piezas/archer.js';
-import { colorDisparoArcher, colorLago, colorMontana, colorOpciones, colorSeleccionadoListado, colorSeleccionadoTablero, colorTablero, lagos, montanas, tamanoTableroAncho, tamanoTableroLargo } from "./ConfiguracionTableroConquerGame.js";
+import { colorDisparoArcher, colorLago, colorMontana, colorOpciones, colorSeleccionadoListado, colorSeleccionadoTablero, colorTablero, lagos, montanas, tamanoTableroAncho, tamanoTableroLargo,arregloPiezas } from "./ConfiguracionTableroConquerGame.js";
 import { eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
 import { actualizarEspecifico } from '../ConexionAPI.js';
 let pinkId = "";
@@ -17,61 +17,7 @@ let arrReyes = []
 let sJugador = ''
 let z = 0;
 let partida = {};
-
 let posicionPiezasGlobal = {} 
-
-let arregloPiezas = [{
-    nombre:"hachero1",
-    icono:"hachero",
-},{
-    nombre:"hachero2",
-    icono:"hachero",
-},
-{
-    nombre:"lancero1",
-    icono:"lancero",
-},
-{
-    nombre:"lancero2",
-    icono:"lancero",
-},
-{
-    nombre:"lancero3",
-    icono:"lancero",
-},
-{
-    nombre:"lancero4",
-    icono:"lancero",
-},
-{
-    nombre:"archer",
-    icono:"archer",
-},
-{
-    nombre:"asesino",
-    icono:"asesino",
-},
-{
-    nombre:"caballero1",
-    icono:"caballero",
-},
-{
-    nombre:"caballero2",
-    icono:"caballero",
-},
-{
-    nombre:"caballero3",
-    icono:"caballero",
-},
-{
-    nombre:"caballero4",
-    icono:"caballero",
-},
-{
-    nombre:"rey",
-    icono:"rey",
-}
-]
 
 export const agregarDivsTableroJuego = () => {
     for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
@@ -158,37 +104,38 @@ export const agregarDivsTableroJuego = () => {
                         }
                     }
                 })
-            }
-            //else if (item.style.backgroundColor == colorDisparoArcher && item.innerText.length !== 0) {
-            //     //este segmento de codigo sirve para validar que se este eliminando la pieza
-            //     document.querySelectorAll('.box').forEach(i => {
-            //         if (i.style.backgroundColor == colorSeleccionadoTablero) {
-            //             item.innerText = '';
-            //             coloringJuego()
-            //             insertImage()
-            //             if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
-            //                 bMovioAsesino = true;
-            //             }else{
-            //                 nTurno ++
-            //                 bMovioAsesino = false;
-            //             }
-            //             if(piezaAnterior.includes('rey')){
-            //                 //detectamos la posicion del rey que estan atacando
-            //                 const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
-            //                 //detectamos la posicion del rey que esta ordenando el ataque.
-            //                 const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
-            //                 if(indexReyMuerto < indexReyOrden){
-            //                     nTurno--
-            //                 }
+            }else if (item.style.backgroundColor == colorDisparoArcher && item.innerText.length !== 0) {
+                //este segmento de codigo sirve para validar que se este eliminando la pieza
+                document.querySelectorAll('.box').forEach(i => {
+                    if (i.style.backgroundColor == colorSeleccionadoTablero) {
+                        let piezaAnterior = item.innerText;
+                        posicionPiezasGlobal[piezaAnterior] = ''
+                        item.innerText = '';
+                        coloringJuego()
+                        insertImage()
+                        if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
+                            bMovioAsesino = true;
+                        }else{
+                            nTurno ++
+                            bMovioAsesino = false;
+                        }
+                        if(piezaAnterior.includes('rey')){
+                            //detectamos la posicion del rey que estan atacando
+                            const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
+                            //detectamos la posicion del rey que esta ordenando el ataque.
+                            const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
+                            if(indexReyMuerto < indexReyOrden){
+                                nTurno--
+                            }
     
-            //                 if (indexReyMuerto > -1) { // only splice array when item is found
-            //                     arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
-            //                     //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
-            //                 }
-            //             }
-            //         }
-            //     })
-            // }
+                            if (indexReyMuerto > -1) { // only splice array when item is found
+                                arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
+                                //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
+                            }
+                        }
+                    }
+                })
+            }
     
             const col= eliminarNumeros(item.id)
             const row = eliminarLetras(item.id)
@@ -303,7 +250,6 @@ export const posicionPiezasJuego = (partida) => {
     console.log('posicionPiezasGlobal')
     console.log(posicionPiezasGlobal)
     insertImage()
-    evaluarResultadoPartida()
 }
 
 const insertImage = () => {
@@ -429,32 +375,27 @@ const actualizarPiezasPosicionJuego = () => {
     });
 }
 
-const evaluarResultadoPartida = () => {
-    if(arrReyes.length === 1){
-        //detectamos que jugador gano
-        let sMensaje = ''
-        switch(arrReyes[0][0]){
-            case "W":
-                sMensaje = 'White Wins !!'
-            break;
-            case "B":
-                sMensaje = 'Black Wins !!'
-                alert('Black Wins !!')
-            break;
-            case "R":
-                sMensaje = 'Red Wins !!'
-            break;
-            case "P":
-                sMensaje = 'Purple Wins !!'
-            break;
-        }
-        swal({
-            title: sMensaje,
-            text: 'Fin de la partida',
-            icon: 'success',
-            button: 'OK',
-          });
-        //AGREGAR METODO PARA GUARDAR LA INFORMACION DEL ULTIMO MOVIMIENTO Y DEL GANADOR
-        //TODO
+export const evaluarResultadoPartida = (partida) => {
+    //detectamos que jugador gano
+    let sMensaje = ''
+    switch(partida.ganador){
+        case "W":
+            sMensaje = 'Blancos Ganan !!'
+        break;
+        case "B":
+            sMensaje = 'Negros Ganan !!'
+        break;
+        case "R":
+            sMensaje = 'Rojos Ganan!!'
+        break;
+        case "P":
+            sMensaje = 'Morados Wins !!'
+        break;
     }
+    swal({
+        title: sMensaje,
+        text: 'Fin de la partida '+sMensaje,
+        icon: 'success',
+        button: 'OK',
+        });
 }

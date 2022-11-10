@@ -116,3 +116,56 @@ export const lagos = [
     "6O",
     "11T"
 ]
+
+export const arregloPiezas = [{
+    nombre:"hachero1",
+    icono:"hachero",
+},{
+    nombre:"hachero2",
+    icono:"hachero",
+},
+{
+    nombre:"lancero1",
+    icono:"lancero",
+},
+{
+    nombre:"lancero2",
+    icono:"lancero",
+},
+{
+    nombre:"lancero3",
+    icono:"lancero",
+},
+{
+    nombre:"lancero4",
+    icono:"lancero",
+},
+{
+    nombre:"archer",
+    icono:"archer",
+},
+{
+    nombre:"asesino",
+    icono:"asesino",
+},
+{
+    nombre:"caballero1",
+    icono:"caballero",
+},
+{
+    nombre:"caballero2",
+    icono:"caballero",
+},
+{
+    nombre:"caballero3",
+    icono:"caballero",
+},
+{
+    nombre:"caballero4",
+    icono:"caballero",
+},
+{
+    nombre:"rey",
+    icono:"rey",
+}
+]
