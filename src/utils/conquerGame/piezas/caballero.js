@@ -1,5 +1,5 @@
 import { alfabetoANumero, numeroAAlfabeto } from "../../UtileriasPagina.js"
-import { colorOpciones, colorSeleccionadoTablero, tamanoTableroAncho, tamanoTableroLargo, validaPiezaMontana } from "../ConfiguracionTableroConquerGame.js"
+import { colorOpciones, colorSeleccionadoTablero, tamanoTableroAncho, tamanoTableroLargo, validaPiezaLago, validaPiezaMontana } from "../ConfiguracionTableroConquerGame.js"
 
 
 export const movimientoCaballero = (row,col,item) =>{
