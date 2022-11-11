@@ -10,13 +10,14 @@ const schema = yup.object({
   });
 
 const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
-  const [tipoJuegoOp, setTipoJuegoOp] = useState(1); //Este metodo se utiliza para obtener la info del usuario
    
   const actualizarSelectOption = (nValor) => {
-    setTipoJuegoOp(nValor)
     const selectobject = document.getElementById("cantidadJugadores");
+    console.log(selectobject)
     for (let i=1; i<selectobject.length; i++) {
+      console.log(i)
       selectobject.remove(i);
+      i--
     }
 
     if(nValor === 1) {
@@ -24,7 +25,7 @@ const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
       opt.value = 2;
       opt.innerHTML = 2;
       selectobject.appendChild(opt);
-      const opt2 = document.createElement('option');
+     const opt2 = document.createElement('option');
       opt2.value = 3;
       opt2.innerHTML = 3;
       selectobject.appendChild(opt2);
@@ -37,11 +38,11 @@ const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
       opt.value = 4;
       opt.innerHTML = 4;
       selectobject.appendChild(opt);
-      opt.value = 6;
-      opt.innerHTML = 6;
-      selectobject.appendChild(opt);
+      const opt2 = document.createElement('option');
+      opt2.value = 6;
+      opt2.innerHTML = 6;
+      selectobject.appendChild(opt2);
     }
-
   }
 
   return (
@@ -92,13 +93,12 @@ const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
             >
                     
                 <h2 className="tituloCentrado">Creacion de partida ConquerGame</h2>
-                {tipoJuegoOp}
                 <p className='fw-700 seccion'>Tipo de juego</p>
                 <div className='campo-input'>
                     <label htmlFor="individual">Individual</label>
-                    <input type="radio" name="tipoJuego" value="1" id="individual" onChange={e => {handleChange(e);actualizarSelectOption(1) }}  onBlur={e => {handleBlur(e); actualizarSelectOption(1)}} />
+                    <input type="radio" name="tipoJuego" value="1" id="individual" onChange={e => {handleChange(e);actualizarSelectOption(1) }}  onBlur={e => {handleBlur(e);}} />
                     <label htmlFor="equipo">Equipo</label>
-                    <input type="radio" name="tipoJuego" value="2" id="equipo" onChange={e => {handleChange(e); actualizarSelectOption(2)}}  onBlur={e => {handleBlur(e); actualizarSelectOption(2)}} />
+                    <input type="radio" name="tipoJuego" value="2" id="equipo" onChange={e => {handleChange(e); actualizarSelectOption(2)}}  onBlur={e => {handleBlur(e);}} />
                     {(!!touched.tipoJuego && !!errors.tipoJuego) && (
                       <span className='mensaje-error'>{errors.tipoJuego}</span>
                     )}
