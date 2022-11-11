@@ -225,7 +225,10 @@ const ConquerGame = ({socket}) => {
             {/* Seccion para la configuracion del juego */}
             {(accion === 2) && (
                 <>
-                <section className="menu-juego">
+                 {(bloquearBotonConfirmar === 3) && (
+                    <h2>En espera de los otros jugadores</h2>
+                 )}
+                <section className={`menu-juego ${bloquearBotonConfirmar ? 'opa-50 disable-ele': ''}`}>
                     <div className='listado-opciones'>
                         <Suspense fallback={<div>Loading...</div>}>
                             <ListadoPiezas 
@@ -233,7 +236,7 @@ const ConquerGame = ({socket}) => {
                                 agregarImagenesListado = {agregarImagenesListado}
                                 />
                         </Suspense>
-                        <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Confirmar</button>  
+                        <button className = {`boton blue w-100`} onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Confirmar</button>  
                     </div>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Tablero

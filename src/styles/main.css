@@ -52,6 +52,14 @@ img{ /**esta sentencia esta haciendo las imagenes responsibas*/
     max-width: 100%;
 }
 
+.opa-50{
+    opacity: 0.5;
+}
+
+.disable-ele{
+    pointer-events:none;
+}
+
 /*otros*/
 
 .header-login{
