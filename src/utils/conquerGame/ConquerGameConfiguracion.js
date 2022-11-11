@@ -5,7 +5,7 @@ import { colorLago, colorMontana, colorSeleccionadoListado, colorSeleccionadoTab
 import { eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
 import swal from 'sweetalert';
 
-let sTurno = 'W';
+let sTurno = 'O';
 let nCantidadJugadores = 0;
 let sPiezaAColocar = ''
 let piezaSeleccionada = null;
@@ -222,7 +222,7 @@ export const coloring = () => {
         const nValor = eliminarLetras(colorNegro.id)
         switch (nCantidadJugadores){
             case 2:
-                if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+                if((sTurno === "O" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
                 (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
                     colorNegro.style.opacity = 0.3; 
                 }else{
@@ -230,7 +230,7 @@ export const coloring = () => {
                 }
                 break;
             case 3:
-                if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+                if((sTurno === "O" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
                 (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/nCantidadJugadores)*2))||
                 (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
                     colorNegro.style.opacity = 0.3; 
@@ -241,7 +241,7 @@ export const coloring = () => {
             case 4:
                 //eliminacion de numeros para el lado vertical
                 const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
-                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                if((sTurno === "O" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
                 (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
                 (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
                 (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
@@ -297,14 +297,14 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
 
     switch (nCantidadJugadores){
         case 2:
-            if((sTurno === "W" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
+            if((sTurno === "O" && (nValor >= 1 && nValor <=tamanoTableroLargo/2)) ||
             (sTurno === "B" && (nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo))){
                 alert('Esta pieza esta invadiendo terreno')
                 return true;
             }
             break;
         case 3:
-            if((sTurno === "W" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+            if((sTurno === "O" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
             (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
             (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
                     alert('Esta pieza esta invadiendo terreno')
@@ -314,7 +314,7 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
         case 4:
                 //eliminacion de numeros para el lado vertical
                 const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
-                if((sTurno === "W" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                if((sTurno === "O" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
                     (sTurno === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
                     (sTurno === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
                     (sTurno === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){

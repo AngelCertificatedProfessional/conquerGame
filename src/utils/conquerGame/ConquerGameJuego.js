@@ -288,7 +288,7 @@ function reddish() {
                         let pinkText3 = i1.innerText;
                         let pinkColor = ((Array.from(pinkText3)).shift()).toString()
                         let greenColor = ((Array.from(greenText)).shift()).toString()
-                        //En esta validacion se pregunta si la pieza es del mismo valor (B,W) a otra del mismo
+                        //En esta validacion se pregunta si la pieza es del mismo valor (B,O) a otra del mismo
                         //team, aparte de condicionar si es un lago o una montana
                         if (pinkColor == greenColor) {
                             i2.style.backgroundColor = colorTablero
@@ -316,8 +316,8 @@ const evaluartTurnoJugador = () => {
     console.log(arrReyes)
     actualizarPiezasPosicionJuego()
     switch(arrReyes[nTurno][0]){
-        case "W":
-            document.getElementById('tog').innerText = "White's Turn"
+        case "O":
+            document.getElementById('tog').innerText = "Orange's Turn"
         break;
         case "B":
             document.getElementById('tog').innerText = "Black's Turn"
@@ -379,8 +379,8 @@ export const evaluarResultadoPartida = (partida) => {
     //detectamos que jugador gano
     let sMensaje = ''
     switch(partida.ganador){
-        case "W":
-            sMensaje = 'Blancos Ganan !!'
+        case "O":
+            sMensaje = 'Naranjas Ganan !!'
         break;
         case "B":
             sMensaje = 'Negros Ganan !!'

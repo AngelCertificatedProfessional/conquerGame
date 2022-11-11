@@ -166,7 +166,7 @@ const ConquerGame = ({socket}) => {
         });
         switch (nResultado){
             case 0: 
-                return 'W'
+                return 'O'
             case 1:
                 return 'B'
         }
@@ -203,7 +203,7 @@ const ConquerGame = ({socket}) => {
                 <>
                     <div className="contenedor-contenido">
                         {jugadores.map((jugador, index) => (
-                            <div className="contenido-menu-opciones w-100" key={index}> 
+                            <div className={`contenido-menu-opciones w-100 targetaJugador${index}`} key={index}> 
                                 <Suspense fallback={<div>Loading...</div>}>
                                     <ListaEspera
                                         key={index}
