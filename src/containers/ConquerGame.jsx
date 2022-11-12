@@ -262,6 +262,10 @@ const ConquerGame = ({socket}) => {
                                 />
                         </Suspense>
                         <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Saltar Turno</button>  
+                        {jugadores.map((jugador, index) => (
+                            <div className={`contenido-menu-opciones tamanoCubos w-100 targetaJugador${index}`} key={index}> 
+                            </div>
+                        ))}
                     </div>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Tablero

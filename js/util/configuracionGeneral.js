@@ -11,8 +11,8 @@ export const tamanoTableroLargo = 24
 export const tamanoTableroAncho = 24
 export const cantidadJugadores = 2
 export const bMultiJugador= false
-export const arregloJugadores = ['W','B','R','P','G','Y']
-
+export const arregloJugadores = ['O','B','R','P','G','Y']
+//ORANGE,BLACK,RED,PURPLE,GREEN,YELLOW
 
 export const validaPiezaMontana = (idDiv) => {
     if(montanas.includes(idDiv)){

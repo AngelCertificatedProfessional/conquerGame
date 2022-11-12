@@ -242,8 +242,14 @@ li {
 }
 
 /*Listado usuarios*/
+
+.tamanoCubos{
+    width:10rem;
+    height: 10rem;
+}
+
 .targetaJugador0{
-    background-color: rgb(157, 63, 20);
+    background-color: rgb(255, 183, 75);
     color:#ebe5e5
 }
 
