@@ -3,7 +3,7 @@ import { useParams,useNavigate } from 'react-router-dom';
 import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
-import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
+import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
 import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, evaluarResultadoPartida, posicionPiezasJuego,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
@@ -26,7 +26,7 @@ const ConquerGame = ({socket}) => {
     // // const [opcionesJuego, setOpcionesJuego] = useState({});
     const [usuario, setUsuario] = useState(JSON.parse(b64_to_utf8(sessionStorage.getItem('usuario'))) || {}); //Este metodo se utiliza para obtener la info del usuario
     const [accion, setAccion] = useState(1); //Este metodo se utiliza para ver que accion esta realizando el usuario
-    const [bloquearBotonConfirmar, setbloquearBotonConfirmar] = useState(false); //Este metodo se utiliza para ver que accion esta realizando el usuario
+    const [bloquearOpciones, setBloquearOpciones] = useState(false); //Este metodo se utiliza para ver que accion esta realizando el usuario
     const [mostrarIniciar,setMostrarIniciar] = useState(false)
 
     const partidaInitial = {};
@@ -181,7 +181,7 @@ const ConquerGame = ({socket}) => {
         if(vPeticion.piezas === null) return; 
         actualizarEspecifico('conquerGame/agregarPiezasTablero/',vPeticion )
         .then((resultado) => {
-            setbloquearBotonConfirmar(true)
+            setBloquearOpciones(true)
         })
         .catch((error) => {
           swal({
@@ -225,10 +225,10 @@ const ConquerGame = ({socket}) => {
             {/* Seccion para la configuracion del juego */}
             {(accion === 2) && (
                 <>
-                 {(bloquearBotonConfirmar === 3) && (
+                 {(bloquearOpciones) && (
                     <h2>En espera de los otros jugadores</h2>
                  )}
-                <section className={`menu-juego ${bloquearBotonConfirmar ? 'opa-50 disable-ele': ''}`}>
+                <section className={`menu-juego ${bloquearOpciones ? 'opa-50 disable-ele': ''}`}>
                     <div className='listado-opciones'>
                         <Suspense fallback={<div>Loading...</div>}>
                             <ListadoPiezas 
@@ -236,7 +236,7 @@ const ConquerGame = ({socket}) => {
                                 agregarImagenesListado = {agregarImagenesListado}
                                 />
                         </Suspense>
-                        <button className = {`boton blue w-100`} onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Confirmar</button>  
+                        <button className = {`boton blue w-100`} onClick={() => guardarConfiguracion()} disabled={bloquearOpciones ? true : false}>Confirmar</button>  
                     </div>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Tablero
@@ -245,6 +245,9 @@ const ConquerGame = ({socket}) => {
                             setCantidadJugadores = {setCantidadJugadores}
                             agregarDivsTablero = {agregarDivsTablero}
                             coloring = {coloring}
+                            posicionPiezaJugador={posicionPiezaJugador}
+                            usuario = {usuario}
+                            setBloquearOpciones = {setBloquearOpciones}
                         />
                     </Suspense>   
                 </section>
@@ -261,7 +264,7 @@ const ConquerGame = ({socket}) => {
                                 agregarImagenesListado = {agregarImagenesListadoJuego}
                                 />
                         </Suspense>
-                        <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Saltar Turno</button>  
+                        {/* <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Saltar Turno</button>   */}
                         {jugadores.map((jugador, index) => (
                             <div className={`contenido-menu-opciones tamanoCubos w-100 targetaJugador${index}`} key={index}> 
                             </div>

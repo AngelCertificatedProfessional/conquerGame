@@ -278,13 +278,12 @@ export const guardarConfiguracionPiezas = () => {
 
 
 const insertImage = () => {
-    document.querySelectorAll('.box').forEach(image => {
+    document.querySelectorAll('.box').forEach(async(image) => {
         //Validamos que contenga texto los elementos del div
         if (image.innerText.length !== 0) {
-            console.log(eliminarNumeros(image.innerText))
-            const direccionImagen = arregloPiezas.find(piezas => sTurno+piezas.icono ===  eliminarNumeros(image.innerText))
-            console.log(direccionImagen)
-            image.innerHTML = `${image.innerText} <img class='allimg' src="${direccionImagen.direccion}" alt="">`
+            const response  = await import(`@images/${eliminarNumeros(image.innerText)}.png`)  
+            image.innerHTML = `${image.innerText} <img class='allimg' src="${response.default}" alt="">`
+            image.style.cursor = 'pointer'
         }
     })
 }
@@ -337,4 +336,13 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
 
 export const setCantidadJugadores = (cantidadJugadoresT) =>{
     nCantidadJugadores = cantidadJugadoresT;
+}
+
+export const posicionPiezaJugador = (partidaJugador) => {
+    for ( const piecePosition in partidaJugador.posicionPiezasJugador ) {
+        console.log(partidaJugador.posicionPiezasJugador[piecePosition])
+        var div = document.getElementById(partidaJugador.posicionPiezasJugador[piecePosition]);
+        div.innerHTML = piecePosition.replace(' ','');
+    }
+    insertImage()
 }
