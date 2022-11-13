@@ -1,6 +1,7 @@
 import React,{useEffect} from 'react';
-const Tablero = ({ partida,setCantidadJugadores,agregarDivsTablero,coloring,accion,posicionPiezasJuego,setPartida,posicionPiezaJugador,usuario,setBloquearOpciones}) => {  
+const Tablero = ({ partida,setCantidadJugadores,agregarDivsTablero,coloring,accion,posicionPiezasJuego,setPartida,posicionPiezaJugador,usuario,setBloquearOpciones,limpiarVariables}) => {  
   useEffect(() => {
+    limpiarVariables()
     setCantidadJugadores(partida.cantidadJugadores)
     agregarDivsTablero()
     coloring()

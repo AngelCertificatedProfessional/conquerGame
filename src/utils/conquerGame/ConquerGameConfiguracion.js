@@ -88,6 +88,13 @@ const arregloPiezas = [{
     direccion:""
 }]
 
+export const limpiarVariables = () => {
+    for ( const piecePosition in arregloPiezas ) {
+        arregloPiezas[piecePosition].direccion = ""
+        arregloPiezas[piecePosition].posicion = ""
+    }
+}
+
 export const agregarImagenesListado = async(turnoUsuario) => {
     sTurno = turnoUsuario
     for ( const piecePosition in arregloPiezas ) {

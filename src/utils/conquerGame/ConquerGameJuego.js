@@ -19,6 +19,19 @@ let z = 0;
 let partida = {};
 let posicionPiezasGlobal = {} 
 
+export const limpiarVariablesJuego = () => {
+    let pinkId = "";
+    let pinkText = "";
+    let nTurno = 0;
+    let bMovioAsesino = false;
+    let sPiezaMovimiento = "";
+    let arrReyes = []
+    let sJugador = ''
+    let z = 0;
+    let partida = {};
+    posicionPiezasGlobal = {}
+}
+
 export const agregarDivsTableroJuego = () => {
     for(let nContRow=tamanoTableroLargo;nContRow>0;nContRow--){
         let divElement = document.createElement("div");

@@ -3,8 +3,8 @@ import { useParams,useNavigate } from 'react-router-dom';
 import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
-import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, evaluarResultadoPartida, posicionPiezasJuego,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, limpiarVariables, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, evaluarResultadoPartida, limpiarVariablesJuego, posicionPiezasJuego,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -17,7 +17,8 @@ const Tablero = React.lazy(() =>
 const ListadoPiezas = React.lazy(() =>
     import('../components/conquerGame/ListadoPiezas')
 );
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ConquerGame = ({socket}) => {
     let { numeroPartida } = useParams(); 
@@ -29,11 +30,8 @@ const ConquerGame = ({socket}) => {
     const [bloquearOpciones, setBloquearOpciones] = useState(false); //Este metodo se utiliza para ver que accion esta realizando el usuario
     const [mostrarIniciar,setMostrarIniciar] = useState(false)
 
-    const partidaInitial = {};
+    const partidaInitial = null;
     const [partida,dispatchPartidas] = useReducer(agregarPartidaRes, partidaInitial);
-
-    const jugadoresInitial = [] //Este metodo se usa para mostrar todos los jugadores en la lista de espera
-    const [jugadores, dispatchJugadores] = useReducer(agregarJugadoresArreglo, jugadoresInitial);
 
     const turnoUsuarioInitial = '' //Este metodo se usa para mostrar todos los jugadores en la lista de espera
     const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroTableroRes, turnoUsuarioInitial);
@@ -54,13 +52,22 @@ const ConquerGame = ({socket}) => {
             console.log(payload)
             switch(payload.estatus){
                 case 1:
-                    dispatchJugadores(payload.jugadores) 
+                    if(usuario.usuario == payload.jugadores[0].usuario){
+                        setMostrarIniciar(true)
+                    }
+                    dispatchPartidas(payload)
                     setAccion(1)
                 break;
                 case 2:
-                    dispatchPiezasTableroRes(payload);
                     dispatchPartidas(payload)
-                    setAccion(2);
+                    if(!payload.hasOwnProperty('notificarUsuarioListo')){
+                        dispatchPiezasTableroRes(payload);
+                        setAccion(2);
+                    }else{
+                        if(payload.usuarioListo !== usuario.usuario){
+                            toast("El jugador "+payload.usuarioListo+" esta listo para jugar")
+                        }
+                    }
                 break;
                 case 3:
                     dispatchPiezasTableroRes(payload);
@@ -72,7 +79,7 @@ const ConquerGame = ({socket}) => {
                         payload.hasOwnProperty("turno") ? setTurno(payload.turno) : setTurno(0)
                         posicionPiezasJuego(payload)
                     }
-                break
+                break;
                 case 4:
                     dispatchPiezasTableroRes(payload);
                     dispatchPartidas(payload)
@@ -112,13 +119,6 @@ const ConquerGame = ({socket}) => {
             button: 'OK',
           });
         });
-    }
-
-    function agregarJugadoresArreglo(state, action)  {
-        if(usuario.usuario == action[0].usuario){
-            setMostrarIniciar(true)
-        }
-        return action;
     }
 
     function agregarPartidaRes(state, action){
@@ -199,18 +199,22 @@ const ConquerGame = ({socket}) => {
                 Lista de espera {numeroPartida}
             </h2>
             {/* Seccion para la lista de espera del juego */}
-            {(accion === 1) && (
+            {(accion === 1 && partida !== null) && (
                 <>
                     <div className="contenedor-contenido">
-                        {jugadores.map((jugador, index) => (
-                            <div className={`contenido-menu-opciones w-100 targetaJugador${index}`} key={index}> 
-                                <Suspense fallback={<div>Loading...</div>}>
-                                    <ListaEspera
-                                        key={index}
-                                        jugador = {jugador}
-                                    />
-                                </Suspense>     
-                            </div>
+                        {partida !== null &&  partida.hasOwnProperty('jugadores') && partida.jugadores.map((jugador, index) => (
+                            <>
+                                <div className={`contenido-menu-opciones w-100 targetaJugador${index}`} key={index}> 
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <ListaEspera
+                                            key={index}
+                                            jugador = {jugador}
+                                        />
+                                    </Suspense>     
+                                </div>
+                                
+                            </>
+                           
                         ))}
 
                     </div>
@@ -222,8 +226,8 @@ const ConquerGame = ({socket}) => {
                 </>
                
             )}
-            {/* Seccion para la configuracion del juego */}
-            {(accion === 2) && (
+            {/* Seccion para la configuracion del tablero */}
+            {(accion === 2 && partida !== null) && (
                 <>
                  {(bloquearOpciones) && (
                     <h2>En espera de los otros jugadores</h2>
@@ -238,22 +242,38 @@ const ConquerGame = ({socket}) => {
                         </Suspense>
                         <button className = {`boton blue w-100`} onClick={() => guardarConfiguracion()} disabled={bloquearOpciones ? true : false}>Confirmar</button>  
                     </div>
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <Tablero
-                            partida = {partida}
-                            accion = {accion}
-                            setCantidadJugadores = {setCantidadJugadores}
-                            agregarDivsTablero = {agregarDivsTablero}
-                            coloring = {coloring}
-                            posicionPiezaJugador={posicionPiezaJugador}
-                            usuario = {usuario}
-                            setBloquearOpciones = {setBloquearOpciones}
-                        />
-                    </Suspense>   
+                    <div className="contenedor-contenido-row">
+                        <div className="contenedor-contenido-column">
+                            {partida !== null && partida.hasOwnProperty('jugadores') && partida.jugadores.map((jugador, index) => (
+                                <div className={`w-100 targetaJugador${index} ma-bottom2`} key={index}> 
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <ListaEspera
+                                            key={index}
+                                            jugador = {jugador}
+                                            mostrarMensajeListo = {true}
+                                        />
+                                    </Suspense>     
+                                </div>
+                            ))}
+                        </div>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <Tablero
+                                partida = {partida}
+                                accion = {accion}
+                                setCantidadJugadores = {setCantidadJugadores}
+                                agregarDivsTablero = {agregarDivsTablero}
+                                coloring = {coloring}
+                                posicionPiezaJugador={posicionPiezaJugador}
+                                usuario = {usuario}
+                                setBloquearOpciones = {setBloquearOpciones}
+                                limpiarVariables = {limpiarVariables}
+                            />
+                        </Suspense>  
+                    </div>
                 </section>
                 </>
             )}
-             {(accion === 3) && (
+             {(accion === 3 && partida !== null) && (
                 <>
                 <h2 id="tog" className='fw-300 centrar-texto'>White's Turn</h2>
                 <section className="menu-juego">
@@ -265,10 +285,6 @@ const ConquerGame = ({socket}) => {
                                 />
                         </Suspense>
                         {/* <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Saltar Turno</button>   */}
-                        {jugadores.map((jugador, index) => (
-                            <div className={`contenido-menu-opciones tamanoCubos w-100 targetaJugador${index}`} key={index}> 
-                            </div>
-                        ))}
                     </div>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Tablero
@@ -279,12 +295,24 @@ const ConquerGame = ({socket}) => {
                             coloring = {coloringJuego}
                             posicionPiezasJuego = {posicionPiezasJuego}
                             setPartida = {setPartida}
+                            limpiarVariables = {limpiarVariablesJuego}
                         />
                     </Suspense>
                 </section>
                 </>
             )}
-           
+           <ToastContainer 
+           position="bottom-left"
+           autoClose={5000}
+           hideProgressBar={false}
+           newestOnTop={false}
+           closeOnClick
+           rtl={false}
+           pauseOnFocusLoss
+           draggable={false}
+           pauseOnHover
+           theme="dark"
+           />
         </main>
    );
 };

@@ -139,6 +139,10 @@ select {
     text-align: center;
 }
 
+.ma-bottom2{
+    margin-bottom: 2rem;
+}
+
 .w-100{
     width: 100%;
 }
@@ -150,11 +154,14 @@ select {
     flex-wrap:wrap;/**genera que lo que se ponga en anuncio se cumpla, por ejemplo el 33%*/
 }
 
-.contenedor-contenido-row{
+.contenedor-contenido-column{
     display:flex;    
     flex-direction: column;
-    justify-content: space-between;
-    flex-wrap:wrap;/**genera que lo que se ponga en anuncio se cumpla, por ejemplo el 33%*/
+}
+
+.contenedor-contenido-row{
+    display:flex;    
+    flex-direction: row;
 }
 
 .contenido{
