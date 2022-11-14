@@ -4,7 +4,7 @@ import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, limpiarVariables, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, posicionPiezasJuego,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, posicionPiezasJuego,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -285,7 +285,7 @@ const ConquerGame = ({socket}) => {
                                 agregarImagenesListado = {agregarImagenesListadoJuego}
                                 />
                         </Suspense>
-                        {/* <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Saltar Turno</button>   */}
+                        <button className = "boton blue w-100" onClick={() => saltarTurno()}>Saltar Turno</button>  
                     </div>
                     <div className="contenedor-contenido-row">
                         <div className="contenedor-contenido-column">

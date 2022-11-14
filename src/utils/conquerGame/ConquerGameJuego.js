@@ -316,6 +316,9 @@ function reddish() {
 }
 
 export const saltarTurno = () =>{
+    if(!esJugadorTurno()){
+        return;
+    }
     // Toggling the turn
     nTurno ++;
     bMovioAsesino = false;
