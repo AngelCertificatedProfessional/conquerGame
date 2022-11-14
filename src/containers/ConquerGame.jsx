@@ -4,7 +4,7 @@ import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, limpiarVariables, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, evaluarResultadoPartida, limpiarVariablesJuego, posicionPiezasJuego,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, posicionPiezasJuego,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -60,6 +60,7 @@ const ConquerGame = ({socket}) => {
                 break;
                 case 2:
                     dispatchPartidas(payload)
+                    limpiarVariables()
                     if(!payload.hasOwnProperty('notificarUsuarioListo')){
                         dispatchPiezasTableroRes(payload);
                         setAccion(2);
@@ -78,6 +79,7 @@ const ConquerGame = ({socket}) => {
                         console.log(payload)
                         payload.hasOwnProperty("turno") ? setTurno(payload.turno) : setTurno(0)
                         posicionPiezasJuego(payload)
+                        indicarSiguienteJugador()
                     }
                 break;
                 case 4:
@@ -178,6 +180,7 @@ const ConquerGame = ({socket}) => {
         const vPeticion = {};
         vPeticion.numeroPartida = numeroPartida;
         vPeticion.piezas = guardarConfiguracionPiezas();
+        limpiarVariablesJuego();
         if(vPeticion.piezas === null) return; 
         actualizarEspecifico('conquerGame/agregarPiezasTablero/',vPeticion )
         .then((resultado) => {
@@ -266,7 +269,6 @@ const ConquerGame = ({socket}) => {
                                 posicionPiezaJugador={posicionPiezaJugador}
                                 usuario = {usuario}
                                 setBloquearOpciones = {setBloquearOpciones}
-                                limpiarVariables = {limpiarVariables}
                             />
                         </Suspense>  
                     </div>
@@ -275,7 +277,6 @@ const ConquerGame = ({socket}) => {
             )}
              {(accion === 3 && partida !== null) && (
                 <>
-                <h2 id="tog" className='fw-300 centrar-texto'>White's Turn</h2>
                 <section className="menu-juego">
                     <div className='listado-opciones'>
                         <Suspense fallback={<div>Loading...</div>}>
@@ -286,18 +287,33 @@ const ConquerGame = ({socket}) => {
                         </Suspense>
                         {/* <button className = "boton blue w-100" onClick={() => guardarConfiguracion()} disabled={bloquearBotonConfirmar ? true : false}>Saltar Turno</button>   */}
                     </div>
-                    <Suspense fallback={<div>Loading...</div>}>
-                        <Tablero
-                            partida = {partida}
-                            accion = {accion}
-                            setCantidadJugadores = {setCantidadJugadores}
-                            agregarDivsTablero = {agregarDivsTableroJuego}
-                            coloring = {coloringJuego}
-                            posicionPiezasJuego = {posicionPiezasJuego}
-                            setPartida = {setPartida}
-                            limpiarVariables = {limpiarVariablesJuego}
-                        />
-                    </Suspense>
+                    <div className="contenedor-contenido-row">
+                        <div className="contenedor-contenido-column">
+                            {partida !== null && partida.hasOwnProperty('jugadores') && partida.jugadores.map((jugador, index) => (
+                                <div className={`w-100 targetaJugador${index} ma-bottom2 opa-50`} key={index} id={`targetaJugador${index}`}> 
+                                    <Suspense fallback={<div>Loading...</div>}>
+                                        <ListaEspera
+                                            key={index}
+                                            jugador = {jugador}
+                                        />
+                                    </Suspense>     
+                                </div>
+                            ))}
+                        </div>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <Tablero
+                                partida = {partida}
+                                accion = {accion}
+                                setCantidadJugadores = {setCantidadJugadores}
+                                agregarDivsTablero = {agregarDivsTableroJuego}
+                                coloring = {coloringJuego}
+                                posicionPiezasJuego = {posicionPiezasJuego}
+                                setPartida = {setPartida}
+                                indicarSiguienteJugador = {indicarSiguienteJugador}
+                            />
+                        </Suspense>
+                    </div>
+                    
                 </section>
                 </>
             )}

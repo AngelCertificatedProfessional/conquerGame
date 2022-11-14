@@ -11,6 +11,7 @@ import { actualizarEspecifico } from '../ConexionAPI.js';
 let pinkId = "";
 let pinkText = "";
 let nTurno = 0;
+let nTurnoAnterior = -1;
 let bMovioAsesino = false;
 let sPiezaMovimiento = "";
 let arrReyes = []
@@ -20,15 +21,16 @@ let partida = {};
 let posicionPiezasGlobal = {} 
 
 export const limpiarVariablesJuego = () => {
-    let pinkId = "";
-    let pinkText = "";
-    let nTurno = 0;
-    let bMovioAsesino = false;
-    let sPiezaMovimiento = "";
-    let arrReyes = []
-    let sJugador = ''
-    let z = 0;
-    let partida = {};
+    pinkId = "";
+    pinkText = "";
+    nTurno = 0;
+    bMovioAsesino = false;
+    sPiezaMovimiento = "";
+    arrReyes = []
+    sJugador = ''
+    z = 0;
+    nTurnoAnterior = 0;
+    partida = {};
     posicionPiezasGlobal = {}
 }
 
@@ -327,19 +329,31 @@ const evaluartTurnoJugador = () => {
     console.log('evaluartTurnoJugador')
     console.log(nTurno)
     console.log(arrReyes)
+    indicarSiguienteJugador();
     actualizarPiezasPosicionJuego()
+}
+
+export const indicarSiguienteJugador = () =>{
+    if(arrReyes.length <= 0){
+        return;
+    }
+    console.log('entre indicarSiguienteJugador')
+    if(nTurnoAnterior != -1){
+        document.getElementById(`targetaJugador${nTurnoAnterior}`).classList.add("opa-50")
+    }
+    nTurnoAnterior = nTurno;
     switch(arrReyes[nTurno][0]){
         case "O":
-            document.getElementById('tog').innerText = "Orange's Turn"
+            document.getElementById(`targetaJugador0`).classList.remove("opa-50");
         break;
         case "B":
-            document.getElementById('tog').innerText = "Black's Turn"
+            document.getElementById(`targetaJugador1`).classList.remove("opa-50");
         break;
         case "R":
-            document.getElementById('tog').innerText = "Red's Turn"
+            document.getElementById(`targetaJugador2`).classList.remove("opa-50");
         break;
         case "P":
-            document.getElementById('tog').innerText = "Purple's Turn"
+            document.getElementById(`targetaJugador3`).classList.remove("opa-50");
         break;
     } 
 }
@@ -365,6 +379,7 @@ const esJugadorTurno = () => {
         console.log('es tu turno')
         return true
     }
+    console.log(sJugador)
     console.log('no es tu turno')
     return false;
 }
