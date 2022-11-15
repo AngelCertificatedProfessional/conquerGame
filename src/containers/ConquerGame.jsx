@@ -4,7 +4,7 @@ import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, limpiarVariables, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, posicionPiezasJuego,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, conometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, posicionPiezasJuego,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -49,7 +49,6 @@ const ConquerGame = ({socket}) => {
         })
 
         socket.on('partida'+numeroPartida,(payload)=> {
-            console.log(payload)
             switch(payload.estatus){
                 case 1:
                     if(usuario.usuario == payload.jugadores[0].usuario){
@@ -75,11 +74,10 @@ const ConquerGame = ({socket}) => {
                     dispatchPartidas(payload)
                     setAccion(3);
                     if(payload.hasOwnProperty("posicionPiezasGlobal")){
-                        console.log('esta el proceso de posicionPiezasGlobal')
-                        console.log(payload)
                         payload.hasOwnProperty("turno") ? setTurno(payload.turno) : setTurno(0)
                         posicionPiezasJuego(payload)
                         indicarSiguienteJugador()
+                        conometro(payload);
                     }
                 break;
                 case 4:
@@ -124,8 +122,6 @@ const ConquerGame = ({socket}) => {
     }
 
     function agregarPartidaRes(state, action){
-        console.log('action')
-        console.log(action)
         return action;
     }
 
@@ -299,6 +295,8 @@ const ConquerGame = ({socket}) => {
                                     </Suspense>     
                                 </div>
                             ))}
+                            <h2>Tiempo:</h2>
+                            <h3 id="temporizador">01:00:00</h3>
                         </div>
                         <Suspense fallback={<div>Loading...</div>}>
                             <Tablero

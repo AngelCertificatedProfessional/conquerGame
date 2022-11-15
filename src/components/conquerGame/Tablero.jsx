@@ -6,7 +6,6 @@ const Tablero = ({ partida,setCantidadJugadores,agregarDivsTablero,coloring,acci
     coloring()
     if(accion === 2){
       const nValor = partida.jugadores.findIndex(obj => obj.usuario===usuario.usuario && obj.hasOwnProperty('posicionPiezasJugador'));
-      console.log(nValor)
       if(nValor !== -1){
           posicionPiezaJugador(partida.jugadores[nValor])
           setBloquearOpciones(true)

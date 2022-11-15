@@ -6,7 +6,6 @@ export const movimientoHachero = (row,col,item) =>{
     let nCol = alfabetoANumero(col) 
     if (nCol < tamanoTableroAncho) {
         if(!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol+1)}`)){
-            console.log(row+numeroAAlfabeto(nCol+1))
             document.getElementById(`${row}${numeroAAlfabeto(nCol+1)}`).style.backgroundColor = colorOpciones
         }
     }

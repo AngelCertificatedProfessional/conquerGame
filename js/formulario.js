@@ -88,7 +88,6 @@ const agregarImagenesListado = () => {
         hathiTest.addEventListener('click', function () {
             //guardamos la pieza
             sPiezaAColocar = hathiTest.innerText;
-            console.log(hathiTest.innerText)
 
             //Segmento para deselecconar las opciones tanto del tablero como del listado
             if(piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id){
@@ -96,7 +95,6 @@ const agregarImagenesListado = () => {
                 piezaSeleccionada.style.backgroundColor = 'rgb(255, 255, 255)';
                 let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, '').substring(1,piezaSeleccionada.innerText.length));
                 //Segmento para limpiar el tablero
-                console.log(piezaSeleccionada)
                 if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
                     if(lagos.includes(arregloPiezas[nValor].posicion)){
                         document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
@@ -340,7 +338,6 @@ document.querySelectorAll('.box').forEach(hathiTest => {
         }
         //En este segmento detectamos si hay otra pieza en ese lugar
         let nValor = arregloPiezas.findIndex(obj => obj.posicion===hathiTest.id);
-        console.log(arregloPiezas)
         if(nValor !== -1 ){
             alert('Ya se enceuntra una pieza en esta posicion');
             return

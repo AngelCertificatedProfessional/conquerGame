@@ -112,7 +112,6 @@ export const agregarImagenesListado = async(turnoUsuario) => {
         hathiTest.addEventListener('click', function () {
             //guardamos la pieza
             sPiezaAColocar = hathiTest.innerText;
-            console.log(hathiTest.innerText)
             //Segmento para deselecconar las opciones tanto del tablero como del listado
             if(piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id){
                 piezaSeleccionada.style.backgroundColor = 'rgb(255, 255, 255)';
@@ -144,7 +143,6 @@ export const agregarImagenesListado = async(turnoUsuario) => {
                 //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
                 let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
                 if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
-                    console.log('entre a seleccionar');
                     document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionadoTablero;
                 }
             }
@@ -176,7 +174,6 @@ export const agregarDivsTablero = () => {
     // Moving the element
     document.querySelectorAll('.box').forEach(hathiTest => {
         hathiTest.addEventListener('click', function () {
-            console.log(sPiezaAColocar)
             if(sPiezaAColocar === '' || piezaSeleccionada === '' || piezaSeleccionada === null){
                 return
             }
@@ -347,7 +344,6 @@ export const setCantidadJugadores = (cantidadJugadoresT) =>{
 
 export const posicionPiezaJugador = (partidaJugador) => {
     for ( const piecePosition in partidaJugador.posicionPiezasJugador ) {
-        console.log(partidaJugador.posicionPiezasJugador[piecePosition])
         var div = document.getElementById(partidaJugador.posicionPiezasJugador[piecePosition]);
         div.innerHTML = piecePosition.replace(' ','');
     }

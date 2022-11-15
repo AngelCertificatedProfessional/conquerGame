@@ -26,7 +26,6 @@ const Login = () => {
     }, []);
 
     const ingresarSesion = async () => {
-        console.log('entre')
         navigate('/');
         window.location.href = window.location.href;
     };

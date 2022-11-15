@@ -408,9 +408,6 @@ document.querySelectorAll('.box').forEach(item => {
 
         const col= eliminarNumeros(item.id)
         const row = eliminarLetras(item.id)
-
-        console.log(col)
-        console.log(row)
         // Function to display the available paths for all pieces
 
         function whosTurn(toggle) {
@@ -505,8 +502,6 @@ const evaluartTurnoJugador = () => {
     if(turno +1 > arrReyes.length ){
         turno = 0
     }
-    console.log(turno)
-    console.log(arrReyes)
     switch(arrReyes[turno][0]){
         case "W":
             document.getElementById('tog').innerText = "White's Turn"

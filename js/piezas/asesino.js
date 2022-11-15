@@ -6,7 +6,6 @@ export const movimientoAsesino = (row,col,item,bMovioAsesino)  =>{
     if(!bMovioAsesino){
         if (nCol < tamanoTableroAncho) {
             if(!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol+1)}`)){
-                console.log(row+numeroAAlfabeto(nCol+1))
                 document.getElementById(`${row}${numeroAAlfabeto(nCol+1)}`).style.backgroundColor = colorOpciones
             }
         }
@@ -18,7 +17,6 @@ export const movimientoAsesino = (row,col,item,bMovioAsesino)  =>{
         }
         //Norte
         if (row < tamanoTableroLargo) {
-            console.log(`${ row+1}${numeroAAlfabeto(nCol)}`)
             if(!validaPiezaMontana(`${row+1}${numeroAAlfabeto(nCol)}`)){
                 document.getElementById(`${row+1}${numeroAAlfabeto(nCol)}`).style.backgroundColor = colorOpciones
             }

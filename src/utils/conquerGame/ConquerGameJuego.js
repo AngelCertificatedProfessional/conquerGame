@@ -19,6 +19,7 @@ let sJugador = ''
 let z = 0;
 let partida = {};
 let posicionPiezasGlobal = {} 
+let nIntervalo = null;
 
 export const limpiarVariablesJuego = () => {
     pinkId = "";
@@ -32,6 +33,7 @@ export const limpiarVariablesJuego = () => {
     nTurnoAnterior = 0;
     partida = {};
     posicionPiezasGlobal = {}
+    nIntervalo = null;
 }
 
 export const agregarDivsTableroJuego = () => {
@@ -69,14 +71,7 @@ export const agregarDivsTableroJuego = () => {
                     nTurno ++
                     bMovioAsesino = false;
                 }
-                console.log('entre al proceso que tiene')
-                console.log('pieza')
-                console.log(sPiezaMovimiento)
                 posicionPiezasGlobal[sPiezaMovimiento] = item.id
-                console.log('item.id')
-                console.log(item.id)
-                console.log('posicionPiezasGlobal[sPiezaMovimiento]')
-                console.log(posicionPiezasGlobal)
                 //en este segmento enviaremos la peticion de la posicion de las unidades
             }else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
                 //este segmento de codigo sirve para validar que se este eliminando la pieza
@@ -155,9 +150,6 @@ export const agregarDivsTableroJuego = () => {
             const col= eliminarNumeros(item.id)
             const row = eliminarLetras(item.id)
     
-            console.log(col)
-            console.log(row) 
-    
             // // Toggling the turn
             evaluartTurnoJugador();
 
@@ -230,8 +222,6 @@ export const agregarImagenesListadoJuego = async(turnoUsuario) => {
 }
 
 export const posicionPiezasJuego = (partida) => {
-    console.log('partida')
-    console.log(partida)
     arrReyes = [];
     posicionPiezasGlobal = {};
     if(partida.hasOwnProperty("posicionPiezasGlobal")){
@@ -253,7 +243,6 @@ export const posicionPiezasJuego = (partida) => {
         for (const jugador of partida.jugadores) {
             for ( const piecePosition in jugador.posicionPiezasJugador ) {
                 posicionPiezasGlobal[piecePosition] = jugador.posicionPiezasJugador[piecePosition];
-                console.log(piecePosition)
                 var div = document.getElementById(jugador.posicionPiezasJugador[piecePosition]);
                 div.innerHTML = piecePosition.replace(' ','');
                 if(piecePosition.replace(/[0-9]/g, '').includes('rey')){
@@ -262,8 +251,6 @@ export const posicionPiezasJuego = (partida) => {
             }
         }
     }
-    console.log('posicionPiezasGlobal')
-    console.log(posicionPiezasGlobal)
     insertImage()
 }
 
@@ -326,12 +313,13 @@ export const saltarTurno = () =>{
 }
 
 const evaluartTurnoJugador = () => {
+    if(nIntervalo !=null){
+        clearInterval(nIntervalo)
+        nIntervalo=null;
+    }
     if(nTurno +1 > arrReyes.length ){
         nTurno = 0
     }
-    console.log('evaluartTurnoJugador')
-    console.log(nTurno)
-    console.log(arrReyes)
     indicarSiguienteJugador();
     actualizarPiezasPosicionJuego()
 }
@@ -340,7 +328,6 @@ export const indicarSiguienteJugador = () =>{
     if(arrReyes.length <= 0){
         return;
     }
-    console.log('entre indicarSiguienteJugador')
     if(nTurnoAnterior != -1){
         document.getElementById(`targetaJugador${nTurnoAnterior}`).classList.add("opa-50")
     }
@@ -370,20 +357,13 @@ export const setPartida = (partidaT) =>{
 }
 
 export const setTurno = (turno) => {
-    console.log('turno')
-    console.log(turno)
     nTurno = turno;
 }
 
 const esJugadorTurno = () => {
-    console.log(arrReyes)
-    console.log(nTurno)
     if(sJugador === arrReyes[nTurno][0]){
-        console.log('es tu turno')
         return true
     }
-    console.log(sJugador)
-    console.log('no es tu turno')
     return false;
 }
 
@@ -406,10 +386,10 @@ const actualizarPiezasPosicionJuego = () => {
     });
 }
 
-export const evaluarResultadoPartida = (partida) => {
+export const evaluarResultadoPartida = (partidaT) => {
     //detectamos que jugador gano
     let sMensaje = ''
-    switch(partida.ganador){
+    switch(partidaT.ganador){
         case "O":
             sMensaje = 'Naranjas Ganan !!'
         break;
@@ -429,4 +409,40 @@ export const evaluarResultadoPartida = (partida) => {
         icon: 'success',
         button: 'OK',
         });
+}
+
+export const conometro =(partidaT) =>{
+
+    if(!partidaT.hasOwnProperty('fechaTurno')){
+        return;
+    }
+
+    if(nIntervalo !=null){
+        clearInterval(nIntervalo)
+        nIntervalo=null;
+    }
+    var countDownDate = new Date(partidaT.fechaTurno).getTime() + 1*60000;
+    console.log(countDownDate)
+    // Update the count down every 1 second
+    nIntervalo = setInterval(function() {
+        // Get today's date and time
+        var now = Date.now(partidaT.fechaTurno);
+            
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+            
+        // Time calculations for days, hours, minutes and seconds
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+        // Output the result in an element with id="demo"
+        document.getElementById("temporizador").innerHTML = minutes + "m " + seconds + "s ";
+            
+        // If the count down is over, write some text 
+        if (distance < 0) {
+            saltarTurno()
+            document.getElementById("temporizador").innerHTML = 0 + "m " + 0 + "s ";
+        }
+    }, 1000);
+
 }

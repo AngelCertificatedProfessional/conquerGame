@@ -13,9 +13,7 @@ const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
    
   const actualizarSelectOption = (nValor) => {
     const selectobject = document.getElementById("cantidadJugadores");
-    console.log(selectobject)
     for (let i=1; i<selectobject.length; i++) {
-      console.log(i)
       selectobject.remove(i);
       i--
     }
