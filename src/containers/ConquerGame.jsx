@@ -23,7 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const ConquerGame = ({socket}) => {
     let { numeroPartida } = useParams(); 
     
-    // let navigate  = useNavigate();
+    let navigate  = useNavigate();
     // // const [opcionesJuego, setOpcionesJuego] = useState({});
     const [usuario, setUsuario] = useState(JSON.parse(b64_to_utf8(sessionStorage.getItem('usuario'))) || {}); //Este metodo se utiliza para obtener la info del usuario
     const [accion, setAccion] = useState(1); //Este metodo se utiliza para ver que accion esta realizando el usuario
@@ -86,6 +86,7 @@ const ConquerGame = ({socket}) => {
                     posicionPiezasJuego(payload)
                     evaluarResultadoPartida(payload)
                     detenerCronometro()
+                    setTimeout(()=>{navigate('/ConquerGameOpciones')}, 10000)
                 break;
             }
         })
@@ -309,6 +310,7 @@ const ConquerGame = ({socket}) => {
                                 posicionPiezasJuego = {posicionPiezasJuego}
                                 setPartida = {setPartida}
                                 indicarSiguienteJugador = {indicarSiguienteJugador}
+                                conometro = {conometro}
                             />
                         </Suspense>
                     </div>

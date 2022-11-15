@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-const Tablero = ({ partida,setCantidadJugadores,agregarDivsTablero,coloring,accion,posicionPiezasJuego,setPartida,posicionPiezaJugador,usuario,setBloquearOpciones,indicarSiguienteJugador}) => {  
+const Tablero = ({ partida,setCantidadJugadores,agregarDivsTablero,coloring,accion,posicionPiezasJuego,setPartida,posicionPiezaJugador,usuario,setBloquearOpciones,indicarSiguienteJugador,conometro}) => {  
   useEffect(() => {
     setCantidadJugadores(partida.cantidadJugadores)
     agregarDivsTablero()
@@ -15,6 +15,7 @@ const Tablero = ({ partida,setCantidadJugadores,agregarDivsTablero,coloring,acci
       posicionPiezasJuego(partida)
       setPartida(partida)
       indicarSiguienteJugador()
+      conometro(partida)
     }
   }, []);
   
