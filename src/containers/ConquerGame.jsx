@@ -17,6 +17,11 @@ const Tablero = React.lazy(() =>
 const ListadoPiezas = React.lazy(() =>
     import('../components/conquerGame/ListadoPiezas')
 );
+
+const Popup = React.lazy(() =>
+    import('../components/conquerGame/Popup')
+);
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -29,6 +34,7 @@ const ConquerGame = ({socket}) => {
     const [accion, setAccion] = useState(1); //Este metodo se utiliza para ver que accion esta realizando el usuario
     const [bloquearOpciones, setBloquearOpciones] = useState(false); //Este metodo se utiliza para ver que accion esta realizando el usuario
     const [mostrarIniciar,setMostrarIniciar] = useState(false)
+    const [mostrarPopup,setmostrarPopup] = useState(false)
 
     const partidaInitial = null;
     const [partida,dispatchPartidas] = useReducer(agregarPartidaRes, partidaInitial);
@@ -194,8 +200,13 @@ const ConquerGame = ({socket}) => {
         });
     }
 
+    const ayuda = () =>{
+        setmostrarPopup(!mostrarPopup)
+        console.log('entre a la ayuda')
+    }
+
     return (
-        <main className="contenedor seccion">
+        <main className="contenedor-juegoF seccion">
             <h2 className='fw-300 centrar-texto'>
                 Lista de espera {numeroPartida}
             </h2>
@@ -241,10 +252,15 @@ const ConquerGame = ({socket}) => {
                                 agregarImagenesListado = {agregarImagenesListado}
                                 />
                         </Suspense>
-                        <button className = {`boton blue w-100`} onClick={() => guardarConfiguracion()} disabled={bloquearOpciones ? true : false}>Confirmar</button>  
+                        
+                        <div className="contenedor-contenido-row">
+                            <button className = {`boton blue w-100 m-right`} onClick={() => guardarConfiguracion()} disabled={bloquearOpciones ? true : false}>Confirmar</button>  
+                            <button className = {`boton blue w-100`} onClick={() => ayuda()} disabled={bloquearOpciones ? true : false}>Ayuda</button>  
+                        </div>
+                    
                     </div>
                     <div className="contenedor-contenido-row">
-                        <div className="contenedor-contenido-column">
+                        <div className="contenedor-contenido-column m-right">
                             {partida !== null && partida.hasOwnProperty('jugadores') && partida.jugadores.map((jugador, index) => (
                                 <div className={`w-100 targetaJugador${index} ma-bottom2`} key={index}> 
                                     <Suspense fallback={<div>Loading...</div>}>
@@ -318,6 +334,15 @@ const ConquerGame = ({socket}) => {
                 </section>
                 </>
             )}
+            {mostrarPopup ? 
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Popup  
+                        turno = {turnoUsuario}
+                        ayuda = {ayuda}
+                    />  
+                </Suspense>  
+              : null  
+            }
            <ToastContainer 
            position="bottom-left"
            autoClose={5000}

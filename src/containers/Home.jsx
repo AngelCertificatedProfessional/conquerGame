@@ -9,8 +9,9 @@ const Home = () => {
     let navigate  = useNavigate();
     const [contenidoListado, setContenidoListado] = useState([{
         tipo:1, //juego
-        titulo: 'ConquerGame',
-        img: 'conquerGame.jpg'
+        titulo: 'Conquer Game',
+        img: 'conquerGame.jpg',
+        descripcion:'Juego de estrategia basado en conquistas y ajedrez, de 2 a 6 jugadores'
     }]);
     useEffect(() => {
         const usuarioSesionT = JSON.parse(b64_to_utf8(sessionStorage.getItem('usuario')))

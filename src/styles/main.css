@@ -15,7 +15,9 @@ body{
 }
 
 /* Generales*/
-
+.bc-white{
+    background-color: white;
+}
 .blue{
     background-color:rgb(69, 100, 201);
 }
@@ -58,6 +60,10 @@ img{ /**esta sentencia esta haciendo las imagenes responsibas*/
 
 .disable-ele{
     pointer-events:none;
+}
+
+.m-right{
+    margin-right:1rem;
 }
 
 /*otros*/
@@ -264,6 +270,25 @@ li {
     background-color: rgb(14, 13, 13);
     color:#ebe5e5
 }
+
+.contenedor-juegoF{
+    margin: 0 auto;
+}
+
+.popup {  
+    position: fixed;  
+    width: 100%;  
+    height: 100%;  
+    top: 0;  
+    left: 0;  
+    right: 0;  
+    bottom: 0;  
+    margin: auto;  
+    background-color: rgba(0,0,0, 0.5);  
+    z-index: 15;
+    overflow: auto;
+  } 
+
 /*
 
 
