@@ -1,9 +1,4 @@
 import React,{useEffect} from 'react';
-
-import { agregar } from '../../utils/ConexionAPI';
-import swal from 'sweetalert';
-
-
 const Tablero = ({turnoUsuario,agregarImagenesListado}) => {
   
   useEffect(() => {

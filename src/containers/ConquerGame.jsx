@@ -299,10 +299,13 @@ const ConquerGame = ({socket}) => {
                                 agregarImagenesListado = {agregarImagenesListadoJuego}
                                 />
                         </Suspense>
-                        <button className = "boton blue w-100" onClick={() => saltarTurno()}>Saltar Turno</button>  
+                        <div className="contenedor-contenido-row">
+                            <button className = "boton blue w-100 m-right" onClick={() => saltarTurno()}>Saltar Turno</button>  
+                            <button className = {`boton blue w-100`} onClick={() => ayuda()}>Ayuda</button>  
+                        </div>
                     </div>
                     <div className="contenedor-contenido-row">
-                        <div className="contenedor-contenido-column">
+                        <div className="contenedor-contenido-column m-right">
                             {partida !== null && partida.hasOwnProperty('jugadores') && partida.jugadores.map((jugador, index) => (
                                 <div className={`w-100 targetaJugador${index} ma-bottom2 opa-50`} key={index} id={`targetaJugador${index}`}> 
                                     <Suspense fallback={<div>Loading...</div>}>
