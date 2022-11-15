@@ -4,7 +4,7 @@ import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, limpiarVariables, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, conometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, posicionPiezasJuego,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, conometro, detenerCronometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, posicionPiezasJuego,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -85,6 +85,7 @@ const ConquerGame = ({socket}) => {
                     dispatchPartidas(payload)
                     posicionPiezasJuego(payload)
                     evaluarResultadoPartida(payload)
+                    detenerCronometro()
                 break;
             }
         })

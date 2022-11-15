@@ -307,16 +307,14 @@ export const saltarTurno = () =>{
         return;
     }
     // Toggling the turn
+    coloringJuego()
     nTurno ++;
     bMovioAsesino = false;
     evaluartTurnoJugador()
 }
 
 const evaluartTurnoJugador = () => {
-    if(nIntervalo !=null){
-        clearInterval(nIntervalo)
-        nIntervalo=null;
-    }
+    detenerCronometro()
     if(nTurno +1 > arrReyes.length ){
         nTurno = 0
     }
@@ -416,11 +414,11 @@ export const conometro =(partidaT) =>{
     if(!partidaT.hasOwnProperty('fechaTurno')){
         return;
     }
-
-    if(nIntervalo !=null){
-        clearInterval(nIntervalo)
-        nIntervalo=null;
-    }
+    detenerCronometro()
+    
+    console.log('partida.fechaTurno');
+    console.log(partidaT.fechaTurno);
+    console.log(partidaT)
     var countDownDate = new Date(partidaT.fechaTurno).getTime() + 1*60000;
     console.log(countDownDate)
     // Update the count down every 1 second
@@ -445,4 +443,11 @@ export const conometro =(partidaT) =>{
         }
     }, 1000);
 
+}
+
+export const detenerCronometro = () =>{
+    if(nIntervalo !=null){
+        clearInterval(nIntervalo)
+        nIntervalo=null;
+    }
 }
