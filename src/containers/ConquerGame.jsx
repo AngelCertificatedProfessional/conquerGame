@@ -51,7 +51,7 @@ const ConquerGame = ({socket}) => {
         })
         
         socket.on('disconnect',() => {
-            console.log('desconectado del servidor');
+            socket.emit('juego-desconectado', partida); 
         })
 
         socket.on('partida'+numeroPartida,(payload)=> {
@@ -128,6 +128,11 @@ const ConquerGame = ({socket}) => {
           });
         });
     }
+
+    // usePrompt(
+    //     "Hello from usePrompt -- Are you sure you want to leave?",
+    //     true
+    //   );
 
     function agregarPartidaRes(state, action){
         return action;
