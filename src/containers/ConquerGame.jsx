@@ -1,10 +1,9 @@
 import React,{ useState, useEffect, Suspense,useReducer   } from 'react';
-import { useParams,useNavigate,usePrompt  } from 'react-router-dom';
+import { useParams,useNavigate  } from 'react-router-dom';
 import {b64_to_utf8} from '../utils/UtileriasPagina';
-//import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, limpiarVariables, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, conometro, detenerCronometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, posicionPiezasJuego,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, conometro, detenerCronometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, posicionPiezasJuego,rendirseJugador,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -43,7 +42,7 @@ const ConquerGame = ({socket}) => {
     const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroTableroRes, turnoUsuarioInitial);
 
     useEffect(() => {
-        window.addEventListener('beforeunload', desconectarUsuarioPartida)
+        //window.addEventListener('beforeunload', desconectarUsuarioPartida)
         socket.disconnect();
         socket.connect();
         socket.on('connect',() => {
@@ -118,8 +117,8 @@ const ConquerGame = ({socket}) => {
         }
 
         return () => {
-            window.removeEventListener('beforeunload', desconectarUsuarioPartida)
-            desconectarUsuarioPartida()
+            //window.removeEventListener('beforeunload', desconectarUsuarioPartida)
+            //desconectarUsuarioPartida()
             socket.off('connect');
             socket.off('disconnect');
             socket.off('partida'+numeroPartida);
@@ -243,6 +242,23 @@ const ConquerGame = ({socket}) => {
         });
     }
 
+    const rendirse = () =>{
+        swal({
+            title: "Estas seguro?",
+            text: "Estas seguro de rendirte!",
+            icon: "warning",
+            buttons: [
+              'No',
+              'Si'
+            ],
+            dangerMode: true,
+          }).then(function(isConfirm) {
+            if (isConfirm) {
+                rendirseJugador()
+            }
+          })
+    }
+
     return (
         <main className="contenedor-juegoF seccion">
             <h2 className='fw-300 centrar-texto'>
@@ -340,7 +356,8 @@ const ConquerGame = ({socket}) => {
                         </Suspense>
                         <div className="contenedor-contenido-row">
                             <button className = "boton blue w-100 m-right" onClick={() => saltarTurno()}>Saltar Turno</button>  
-                            <button className = {`boton blue w-100`} onClick={() => ayuda()}>Ayuda</button>  
+                            <button className = {`boton blue w-100 m-right`} onClick={() => ayuda()}>Ayuda</button>  
+                            <button className = {`boton blue w-100`} onClick={() => rendirse()}>Rendirse</button>  
                         </div>
                     </div>
                     <div className="contenedor-contenido-row">

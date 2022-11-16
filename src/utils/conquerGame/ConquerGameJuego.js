@@ -359,17 +359,22 @@ export const setTurno = (turno) => {
 }
 
 const esJugadorTurno = () => {
+    if(arrReyes === null || arrReyes.length <= 0){
+        return;
+    }
     if(sJugador === arrReyes[nTurno][0]){
         return true
     }
     return false;
 }
 
-const actualizarPiezasPosicionJuego = () => {
+const actualizarPiezasPosicionJuego = (bRendirse) => {
     let vResultado = {}
     vResultado.numeroPartida = partida.numeroPartida
     vResultado.posicionPiezasGlobal = posicionPiezasGlobal;
-    vResultado.turno = nTurno;
+    if(!bRendirse){
+        vResultado.turno = nTurno;
+    }
 
     actualizarEspecifico('conquerGame/actualizarPiezasPosicionJuego',vResultado)
     .then((resultado) => {
@@ -415,12 +420,7 @@ export const conometro =(partidaT) =>{
         return;
     }
     detenerCronometro()
-    
-    console.log('partida.fechaTurno');
-    console.log(partidaT.fechaTurno);
-    console.log(partidaT)
     var countDownDate = new Date(partidaT.fechaTurno).getTime() + 1*60000;
-    console.log(countDownDate)
     // Update the count down every 1 second
     nIntervalo = setInterval(function() {
         // Get today's date and time
@@ -450,4 +450,9 @@ export const detenerCronometro = () =>{
         clearInterval(nIntervalo)
         nIntervalo=null;
     }
+}
+
+export const rendirseJugador = () => {
+    posicionPiezasGlobal[sJugador+"rey"] = ''
+    actualizarPiezasPosicionJuego(false)
 }

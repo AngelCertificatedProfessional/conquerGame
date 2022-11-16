@@ -33,7 +33,8 @@ const Popup = ({ turno,ayuda }) => {
         tipo:2, //Ayuda
         titulo: 'Caballero',
         img: turno+'caballero.png',
-        descripcion:'Esta unidad puede moverse hacia cualquier direccion sin restriccion de movimientos'
+        descripcion:`Esta unidad puede moverse hacia cualquier direccion sin restriccion de la cantidad de casillas 
+        que pueda moverse, pero no puede atravesar rios`
     },
     {
         tipo:2, //Ayuda
