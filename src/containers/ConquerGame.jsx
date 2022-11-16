@@ -1,5 +1,5 @@
 import React,{ useState, useEffect, Suspense,useReducer   } from 'react';
-import { useParams,useNavigate } from 'react-router-dom';
+import { useParams,useNavigate,usePrompt  } from 'react-router-dom';
 import {b64_to_utf8} from '../utils/UtileriasPagina';
 //import {generarConexion} from '../utils/SocketClient';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
@@ -43,6 +43,7 @@ const ConquerGame = ({socket}) => {
     const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroTableroRes, turnoUsuarioInitial);
 
     useEffect(() => {
+        window.addEventListener('beforeunload', desconectarUsuarioPartida)
         socket.disconnect();
         socket.connect();
         socket.on('connect',() => {
@@ -51,7 +52,6 @@ const ConquerGame = ({socket}) => {
         })
         
         socket.on('disconnect',() => {
-            socket.emit('juego-desconectado', partida); 
         })
 
         socket.on('partida'+numeroPartida,(payload)=> {
@@ -94,6 +94,17 @@ const ConquerGame = ({socket}) => {
                     detenerCronometro()
                     setTimeout(()=>{navigate('/ConquerGameOpciones')}, 10000)
                 break;
+                case 5:
+                    if(payload.hasOwnProperty('alfitrion') && payload.nombreUsuario !==usuario.usuario){
+                        swal({
+                            title: 'Partida cancelada',
+                            text: 'La partida fue cancelada por el alfitrion',
+                            icon: 'warning',
+                            button: 'OK',
+                            });
+                    }
+                    navigate('/ConquerGameOpciones')
+                break;
             }
         })
 
@@ -107,6 +118,8 @@ const ConquerGame = ({socket}) => {
         }
 
         return () => {
+            window.removeEventListener('beforeunload', desconectarUsuarioPartida)
+            desconectarUsuarioPartida()
             socket.off('connect');
             socket.off('disconnect');
             socket.off('partida'+numeroPartida);
@@ -138,19 +151,22 @@ const ConquerGame = ({socket}) => {
         return action;
     }
 
-    // const desconectarUsuarioPartida = (jugador) => {
-    //     consultaById('conquerGame/desconectarUsuarioPartida/',numeroPartida )
-    //     .then((resultado) => {
-    //     })
-    //     .catch((error) => {
-    //       swal({
-    //         title: 'Error',
-    //         text: error.toString(),
-    //         icon: 'error',
-    //         button: 'OK',
-    //       });
-    //     });
-    // }
+    const desconectarUsuarioPartida = () => {
+        console.log('entre')
+        let vPartida = {};
+        vPartida.numeroPartida = numeroPartida;
+        actualizarEspecifico('conquerGame/desconectarUsuarioPartida/',vPartida )
+        .then((resultado) => {
+        })
+        .catch((error) => {
+          swal({
+            title: 'Error',
+            text: error.toString(),
+            icon: 'error',
+            button: 'OK',
+          });
+        });
+    }
 
     const mostrarTablero = () => {
         let vEnviar = {};
@@ -210,6 +226,23 @@ const ConquerGame = ({socket}) => {
         console.log('entre a la ayuda')
     }
 
+    const salirLobby = () => {
+        let vPeticion = {};
+        vPeticion.numeroPartida = numeroPartida
+        actualizarEspecifico('conquerGame/salirPartida',vPeticion )
+        .then((resultado) => {
+            navigate('/ConquerGameOpciones');
+        })
+        .catch((error) => {
+          swal({
+            title: 'Error',
+            text: error.toString(),
+            icon: 'error',
+            button: 'OK',
+          });
+        });
+    }
+
     return (
         <main className="contenedor-juegoF seccion">
             <h2 className='fw-300 centrar-texto'>
@@ -218,7 +251,7 @@ const ConquerGame = ({socket}) => {
             {/* Seccion para la lista de espera del juego */}
             {(accion === 1 && partida !== null) && (
                 <>
-                    <div className="contenedor-contenido">
+                    <div className="contenedor-contenido contenido-anuncio">
                         {partida !== null &&  partida.hasOwnProperty('jugadores') && partida.jugadores.map((jugador, index) => (
                             <>
                                 <div className={`contenido-menu-opciones w-100 targetaJugador${index}`} key={index}> 
@@ -235,11 +268,12 @@ const ConquerGame = ({socket}) => {
                         ))}
 
                     </div>
-                    {(mostrarIniciar === true) && (
-                        <div className="contenido-anuncio">
-                            <button className = "boton blue w-100" onClick={() => mostrarTablero()}>Iniciar</button>
-                        </div>
-                    )}
+                    <div className="contenido-anuncio contenedor-contenido-row">
+                        {(mostrarIniciar === true) && (
+                            <button className = "boton blue w-100 m-right" onClick={() => mostrarTablero()}>Iniciar</button>
+                        )}
+                        <button className = "boton blue w-100" onClick={() => salirLobby()}>Salir</button>
+                    </div>
                 </>
                
             )}
