@@ -50,10 +50,10 @@ const FormularioConfiguracion = ({ abrirPartidaJuego,rendirseJugador}) => {
       if(resultado.data.hasOwnProperty('existe')){
         swal({
           title: "En Partida",
-          text: "Usted tiene una partida en curso, desea salir de ella para generar una nueva?, o ingresar a esta?",
+          text: "Usted tiene una partida en curso, desea salir de ella para generar una nueva?, o desea regresar a la anterior?",
           icon: "warning",
           buttons: [
-            'Ingresar',
+            'Regresar a la anterior',
             'Generar Nueva'
           ],
           dangerMode: true,

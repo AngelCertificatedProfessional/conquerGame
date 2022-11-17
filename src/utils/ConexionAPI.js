@@ -161,11 +161,12 @@ export const actualizarEspecifico = async (sRuta, data) => {
 
     let json = await res.json();
 
-    if (res.status !== 200 && json.data !== undefined) {
+    if (res.status !== 200 && json.data !== undefined ) {
       throw json.data;
-    } else if (res.status !== 200) {
+    } else if (res.status !== 200 || json.hasOwnProperty('error')) {
       throw 'Hubo un error al ingresar la informacion';
     }
+    return json;
 
     // if (json.data.hasOwnProperty('_id')) {
     //   return;
