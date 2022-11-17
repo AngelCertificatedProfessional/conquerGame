@@ -9,7 +9,7 @@ const schema = yup.object({
     tipoJuego: yup.string().required("Seleccione un tipo de juego")
   });
 
-const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
+const FormularioConfiguracion = ({ abrirPartidaJuego,rendirseJugador}) => {
    
   const actualizarSelectOption = (nValor) => {
     const selectobject = document.getElementById("cantidadJugadores");
@@ -43,6 +43,48 @@ const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
     }
   }
 
+  const agregarSala = (partida,bRepetir) => {
+    partida.eliminarUsuarioPartidaActual = bRepetir;
+    agregar('conquerGame/crearPartida', partida)
+    .then((resultado) => {
+      if(resultado.data.hasOwnProperty('existe')){
+        swal({
+          title: "En Partida",
+          text: "Usted tiene una partida en curso, desea salir de ella para generar una nueva?, o ingresar a esta?",
+          icon: "warning",
+          buttons: [
+            'Ingresar',
+            'Generar Nueva'
+          ],
+          dangerMode: true,
+        }).then(function(isConfirm) {
+          if (isConfirm) {
+              agregarSala(partida,true)
+          }else{
+              abrirPartidaJuego(resultado.data.numeroPartida);
+          }
+        })
+      }else{
+        swal({
+          title: 'Partida Creada',
+          text: 'Su partida se a creado exitosamente',
+          icon: 'success',
+          button: 'OK',
+        });
+        abrirPartidaJuego(resultado.data.random);
+      }
+    })
+    .catch((error) => {
+      swal({
+        title: 'Error',
+        text: error.toString(),
+        icon: 'error',
+        button: 'OK',
+      });
+    });
+  }
+
+
   return (
     <Formik
       initialValues={{
@@ -54,24 +96,7 @@ const FormularioConfiguracion = ({ abrirPartidaJuego}) => {
         const partida = {};
         partida.cantidadJugadores = values.cantidadJugadores;
         partida.tipoJuego = values.tipoJuego;
-          agregar('conquerGame/crearPartida', partida)
-            .then((resultado) => {
-              swal({
-                title: 'Partida Creada',
-                text: 'Su partida se a creado exitosamente',
-                icon: 'success',
-                button: 'OK',
-              });
-              abrirPartidaJuego(resultado.data.random);
-            })
-            .catch((error) => {
-              swal({
-                title: 'Error',
-                text: error.toString(),
-                icon: 'error',
-                button: 'OK',
-              });
-            });
+        agregarSala(partida,false)
       }}
       enableReinitialize
     >
