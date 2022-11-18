@@ -13,7 +13,6 @@ const FormularioUsuario = lazy(() =>
 const Login = () => {
     const navigate  = useNavigate();
     const [accion, setAccion] = useState(1);
-    const [usuarioTemp, setUsuario] = useState({});
     useEffect(() => {
         const usuarioSesionT = JSON.parse(b64_to_utf8(sessionStorage.getItem('usuario')));
         if (
@@ -35,7 +34,6 @@ const Login = () => {
                 {accion === 1 && (
                     <Suspense fallback={<div>Loading...</div>}>
                         <LoginFormulario
-                            usuario={usuarioTemp}
                             ingresarSesion={ingresarSesion}
                             setAccion={setAccion}
                         />
@@ -44,7 +42,6 @@ const Login = () => {
                 {(accion === 2) && (
                     <Suspense fallback={<div>Loading...</div>}>
                         <FormularioUsuario
-                            usuario={usuarioTemp}
                             setAccion={setAccion}
                             accion={accion}
                         />

@@ -12,18 +12,16 @@ const schema = yup.object({
   contrasena: yup.string().required('La contraseña es requerida'),
 });
 
-const LoginFormulario = ({ usuario, ingresarSesion,setAccion }) => {
-
-  usuario = {};
-
+const LoginFormulario = ({ ingresarSesion,setAccion }) => {
   return (
     <Formik
       initialValues={{
-        correo: usuario.correo || '',
-        contrasena: usuario.contrasena || '',
+        correo: '',
+        contrasena: '',
       }}
       validationSchema={schema}
       onSubmit={(values, e) => {
+        let usuario = {}
         usuario.correo = values.correo;
         usuario.contrasena = values.contrasena;
         iniciarSesion('usuarios/iniciarSecion', usuario)

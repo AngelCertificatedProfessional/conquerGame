@@ -9,11 +9,16 @@ const schema = yup.object({
     .string()
     .required('El correo es un campo requerido')
     .email('Escriba un correo valido'),
-    usuario: yup.string().required('El usuario es requerido'),
+    usuario: yup.string().required('El usuario es requerido')
+    .min(5, 'El usuario deber contener minimo 5 caracteres.'),
     contrasena: yup
       .string()
       .required('La contraseña es requerido')
-      .min(8, 'La Contraseña debe contener minimo 8 caracteres.'),
+      .min(8, 'La Contraseña debe contener minimo 8 caracteres.')
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+        "La contrasena debe contener 8 caracteres, Una mayuscula,Una minuscula, Un numero y un caracter especial"
+      ),
     validaContrasena: yup
       .string()
       .required('El valor de valida Contraseña es obligatorio')
@@ -22,19 +27,20 @@ const schema = yup.object({
     apellido: yup.string().required('El apellido es un campo obligatorio')
   });
 
-const FormularioUsuario = ({ usuario,setAccion,accion }) => {
+const FormularioUsuario = ({ setAccion,accion }) => {
   return (
     <Formik
     initialValues={{
-        usuario: usuario.usuario || '',
-        contrasena: usuario.contrasena || '',
-        validaContrasena:usuario.contrasena || '',
-        nombre: usuario.nombre || '',
-        apellido: usuario.apellido || '',
-        correo: usuario.correo || ''
+        usuario: '',
+        contrasena: '',
+        validaContrasena:'',
+        nombre: '',
+        apellido: '',
+        correo: ''
       }}
       validationSchema={schema}
       onSubmit={(values, e) => {
+        let usuario = {}
         usuario.usuario = values.usuario;
         usuario.contrasena = values.contrasena;
         usuario.nombre = values.nombre;
