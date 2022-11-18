@@ -40,7 +40,21 @@ const FormularioUsuario = ({ setAccion,accion }) => {
       }}
       validationSchema={schema}
       onSubmit={(values, e) => {
+        console.log(values.aceptoTerminosYCondiciones)
         let usuario = {}
+        if(values.aceptoTerminosYCondiciones === undefined  || values.aceptoTerminosYCondiciones.length <= 0  || !values.aceptoTerminosYCondiciones[0] === 'on'){
+          swal({
+            title: 'Terminos Y Condiciones',
+            text: 'Es necesario aceptar los terminos y condiciones para loguearse en el sistema',
+            icon: 'warning',
+            button: 'OK',
+          });
+          return
+        }else{
+          usuario.aceptoTerminosYCondiciones = true
+        }
+
+        
         usuario.usuario = values.usuario;
         usuario.contrasena = values.contrasena;
         usuario.nombre = values.nombre;
@@ -131,6 +145,12 @@ const FormularioUsuario = ({ setAccion,accion }) => {
                     <span className='mensaje-error'>{errors.apellido}</span>
                 )}
             </div>
+            
+            <div className='campo-input-row'>
+              <label htmlFor="aceptoTerminosYCondiciones"> Acepto Terminos Y condiciones: </label>
+              <input type="checkbox" name="aceptoTerminosYCondiciones" id="aceptoTerminosYCondiciones" onChange={e => {handleChange(e) }}  onBlur={e => {handleBlur(e);}} />
+            </div>
+                
           <div className='flex-orientation-button'>
             <button className="boton blue" onClick={() => setAccion(1)} type="button">
               Loguearse
