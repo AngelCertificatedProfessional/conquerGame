@@ -13,6 +13,7 @@ const FormularioUsuario = lazy(() =>
 const Login = () => {
     const navigate  = useNavigate();
     const [accion, setAccion] = useState(1);
+    const [mostrarPopup,setmostrarPopup] = useState(false)
     useEffect(() => {
         const usuarioSesionT = JSON.parse(b64_to_utf8(sessionStorage.getItem('usuario')));
         if (
@@ -28,6 +29,12 @@ const Login = () => {
         navigate('/');
         window.location.href = window.location.href;
     };
+
+    const ayuda = () =>{
+        setmostrarPopup(!mostrarPopup)
+        console.log('entre a la ayuda')
+    }
+    
     return (
         <main className=" header-login">
             <section className='formularioSeccion'>
@@ -44,11 +51,20 @@ const Login = () => {
                         <FormularioUsuario
                             setAccion={setAccion}
                             accion={accion}
+                            ayuda = {ayuda}
                         />
                     </Suspense>
                 )}
             </section>
-                
+            {mostrarPopup ? 
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Popup  
+                        turno = {turnoUsuario}
+                        ayuda = {ayuda}
+                    />  
+                </Suspense>  
+              : null  
+            }
         </main>
      );
 };

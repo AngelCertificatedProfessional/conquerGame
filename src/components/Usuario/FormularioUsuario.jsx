@@ -27,7 +27,7 @@ const schema = yup.object({
     apellido: yup.string().required('El apellido es un campo obligatorio')
   });
 
-const FormularioUsuario = ({ setAccion,accion }) => {
+const FormularioUsuario = ({ setAccion,accion,ayuda }) => {
   return (
     <Formik
     initialValues={{
@@ -147,7 +147,7 @@ const FormularioUsuario = ({ setAccion,accion }) => {
             </div>
             
             <div className='campo-input-row'>
-              <label htmlFor="aceptoTerminosYCondiciones"> Acepto Terminos Y condiciones: </label>
+              <a href="#" onClick={() => ayuda()}> Acepto Terminos Y condiciones:</a>
               <input type="checkbox" name="aceptoTerminosYCondiciones" id="aceptoTerminosYCondiciones" onChange={e => {handleChange(e) }}  onBlur={e => {handleBlur(e);}} />
             </div>
                 
