@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { iniciarSesion } from '../../utils/ConexionAPI';
+import { agregar, iniciarSesion } from '../../utils/ConexionAPI';
 import swal from 'sweetalert';
 
 const schema = yup.object({
@@ -13,6 +13,35 @@ const schema = yup.object({
 });
 
 const LoginFormulario = ({ ingresarSesion,setAccion }) => {
+
+  const generarUsuarioInvitado = () => {
+    let vAgregar = {}
+    vAgregar.invitado = true
+    agregar('usuarios/agregarUsuarioInvitado',vAgregar)
+    .then((jsonUsuario) => {
+      iniciarSesion('usuarios/iniciarSecion', jsonUsuario.data)
+          .then((jsonUsuario2) => {
+            ingresarSesion(jsonUsuario2);
+          })
+          .catch((error) => {
+            swal({
+              title: 'Error',
+              text: error.toString(),
+              icon: 'error',
+              button: 'OK',
+            });
+          });
+    })
+    .catch((error) => {
+      swal({
+        title: 'Error',
+        text: error.toString(),
+        icon: 'error',
+        button: 'OK',
+      });
+    });
+  }
+
   return (
     <Formik
       initialValues={{
@@ -72,6 +101,9 @@ const LoginFormulario = ({ ingresarSesion,setAccion }) => {
           <div className='flex-orientation-button'>
             <button className="boton blue" onClick={() => setAccion(2)} type="button">
               Crear Usuario
+            </button>
+            <button className="boton blue" type="button" onClick={() => generarUsuarioInvitado()}>
+              Invitado
             </button>
             <button className="boton blue" type="submit">
               Ingresar

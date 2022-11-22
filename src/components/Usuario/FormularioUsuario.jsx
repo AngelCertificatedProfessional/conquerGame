@@ -40,7 +40,6 @@ const FormularioUsuario = ({ setAccion,accion,ayuda }) => {
       }}
       validationSchema={schema}
       onSubmit={(values, e) => {
-        console.log(values.aceptoTerminosYCondiciones)
         let usuario = {}
         if(values.aceptoTerminosYCondiciones === undefined  || values.aceptoTerminosYCondiciones.length <= 0  || !values.aceptoTerminosYCondiciones[0] === 'on'){
           swal({

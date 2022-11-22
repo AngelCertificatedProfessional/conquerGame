@@ -4,7 +4,8 @@ let usuario = JSON.parse(UtileriasPagina.b64_to_utf8(sessionStorage.getItem('usu
 
 export const agregar = async (sRuta, data) => {
   try {
-    if (!validaUsuario() && sRuta !== 'usuarios/agregarUsuario') {
+    console.log(sRuta);
+    if (!validaUsuario() && (sRuta !== 'usuarios/agregarUsuario' && sRuta !== 'usuarios/agregarUsuarioInvitado')) {
       throw 'No se a iniciado sesion';
     }
 
@@ -14,7 +15,7 @@ export const agregar = async (sRuta, data) => {
     configuracion.headers.Accept = 'application/json';
     configuracion.headers['Content-Type'] = 'application/json';
     configuracion.body= JSON.stringify(data);
-    if(sRuta !== 'usuarios/agregarUsuario'){
+    if(sRuta !== 'usuarios/agregarUsuario' && sRuta !== 'usuarios/agregarUsuarioInvitado'){
         configuracion.headers.Authorization = usuario.token;
     }
     let res = await fetch(
