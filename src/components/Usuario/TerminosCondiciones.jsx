@@ -18,7 +18,7 @@ const TerminosCondiciones = ({ ayuda }) => {
                    Conquer Game es un juego creado de demostracion como portafolio de trabajo, por lo que los servicios que se proporcionan son realmente limitados por contar con servidores de pruebas, por lo que el servicio solo 
                    puede acaparar hasta 20 jugadores activos. Tambien como servicio de portafolio los esquemas de seguridad pueden estar hasta cierto punto ser debiles, cuestion por la que se pide no utilizar sus contrasenas "cotidianas"
                    y utilizar otro tipo de contrasena, aun asi la informacion se encripta para poder mantener su seguridad lo mejor posible. Aun asi conquer game no proporcionara cuentas a todos los usuarios por lo que se realizara 
-                   una evaluacion para que los mismos servicion no se saturen, por lo que se puede utilizar cuentas invitado para poder disfrutar los servicios. 
+                   una evaluacion para que los mismos servicion no se saturen, por lo que se puede utilizar cuentas invitado para poder disfrutar los servicios, estas cuentas usuario tienen una duracion de 24 horas a partir de su creacion. 
                 </h5>
                 <h3 className='fw-700  seccion'>
                     2. Aceptación de estos Términos de uso

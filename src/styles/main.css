@@ -4,6 +4,19 @@
     box-sizing: border-box;
 }
 
+:root{
+    /*Colores*/
+    --bitcoin-orange:#F7931A;
+    --solft-orange:#FFE9D5;
+    --secondary-blue:#1A9AF7;
+    --soft-blue:#E7F5FF;
+    --warm-black:#201E1C;
+    --black:#282623;
+    --grey:#585454;
+    --off-white:#443e3b;
+    --just-white:#fff;
+}
+
 html{
     font-size: 62.5%;
 }
@@ -312,6 +325,60 @@ li {
 .liga{
     color:rgb(28, 121, 184)
 }
+
+.main-tables-container{
+    display:flex;
+    width: 93rem;
+    margin: 0 auto;
+}
+
+.main-currency-table{
+    min-width: 23.5rem;
+    height:36rem;
+    margin:0 auto;
+    font-family: "Inter",sans-serif;
+}
+
+.main-currency-table .currency-table--title{
+    margin-bottom: 1.5rem;
+    font-size:1.8rem;
+    font-weight: bold;
+    line-height: 2.3rem;
+    color:var(--bitcoin-orange);
+}
+
+.currency-table--container{
+    width:90%;
+    min-width:23rem;
+    margin:0 auto;
+}
+
+.currency-table--container table {
+    width:100%;
+    height:100%;
+}
+
+.currency-table--container td{
+    width:50%;
+    font-size:1.6rem;
+    font-weight: 500;
+    line-height: 1.9rem;
+}
+
+.currency-table--container td{
+    padding:1rem;
+}
+
+.tablaSeleccionada {
+    background-color:#007BFF;
+    color:white;
+}
+  
+.tablaNoSeleccionada {
+    background-color:var(--just-white);
+    color:black;
+}
+
 /*
 
 
