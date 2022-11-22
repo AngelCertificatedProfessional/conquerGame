@@ -147,7 +147,7 @@ const FormularioUsuario = ({ setAccion,accion,ayuda }) => {
             </div>
             
             <div className='campo-input-row'>
-              <a href="#" onClick={() => ayuda()}> Acepto Terminos Y condiciones:</a>
+              <a className="liga" onClick={() => ayuda()}> Acepto Terminos Y condiciones:</a>
               <input type="checkbox" name="aceptoTerminosYCondiciones" id="aceptoTerminosYCondiciones" onChange={e => {handleChange(e) }}  onBlur={e => {handleBlur(e);}} />
             </div>
                 

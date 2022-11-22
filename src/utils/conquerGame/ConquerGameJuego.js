@@ -72,6 +72,8 @@ export const agregarDivsTableroJuego = () => {
                     bMovioAsesino = false;
                 }
                 posicionPiezasGlobal[sPiezaMovimiento] = item.id
+                
+                evaluartTurnoJugador();
                 //en este segmento enviaremos la peticion de la posicion de las unidades
             }else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
                 //este segmento de codigo sirve para validar que se este eliminando la pieza
@@ -114,6 +116,7 @@ export const agregarDivsTableroJuego = () => {
                         }
                     }
                 })
+                evaluartTurnoJugador();
             }else if (item.style.backgroundColor == colorDisparoArcher && item.innerText.length !== 0) {
                 //este segmento de codigo sirve para validar que se este eliminando la pieza
                 document.querySelectorAll('.box').forEach(i => {
@@ -145,13 +148,14 @@ export const agregarDivsTableroJuego = () => {
                         }
                     }
                 })
+                evaluartTurnoJugador();
             }
     
             const col= eliminarNumeros(item.id)
             const row = eliminarLetras(item.id)
     
             // // Toggling the turn
-            evaluartTurnoJugador();
+            // evaluartTurnoJugador();
 
             sPiezaMovimiento = item.innerText;
             if (item.innerText.includes(`${sJugador}archer`) && !bMovioAsesino) {
@@ -403,7 +407,7 @@ export const evaluarResultadoPartida = (partidaT) => {
             sMensaje = 'Rojos Ganan!!'
         break;
         case "P":
-            sMensaje = 'Morados Wins !!'
+            sMensaje = 'Morados Ganan !!'
         break;
     }
     swal({

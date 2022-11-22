@@ -46,10 +46,18 @@ body{
 .centrar-texto{
     text-align: center;
 }
+h2{
+    font-size:3.5rem;
+}
 h3{
     font-size:3rem;
 }
-
+h4{
+    font-size:2.5rem;
+}
+h5{
+    font-size:2rem;
+}
 img{ /**esta sentencia esta haciendo las imagenes responsibas*/
     max-width: 100%;
 }
@@ -289,18 +297,21 @@ li {
     overflow: auto;
   } 
 
-    .campo-input{
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-    }
+.campo-input{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
 
-    .campo-input-row{
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-    }
+.campo-input-row{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
 
+.liga{
+    color:rgb(28, 121, 184)
+}
 /*
 
 

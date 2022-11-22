@@ -10,6 +10,11 @@ const FormularioUsuario = lazy(() =>
   import('./../components/Usuario/FormularioUsuario')
 );
 
+const TerminosCondiciones = lazy(() =>
+  import('./../components/Usuario/TerminosCondiciones')
+);
+
+
 const Login = () => {
     const navigate  = useNavigate();
     const [accion, setAccion] = useState(1);
@@ -32,7 +37,6 @@ const Login = () => {
 
     const ayuda = () =>{
         setmostrarPopup(!mostrarPopup)
-        console.log('entre a la ayuda')
     }
     
     return (
@@ -58,8 +62,7 @@ const Login = () => {
             </section>
             {mostrarPopup ? 
                 <Suspense fallback={<div>Loading...</div>}>
-                    <Popup  
-                        turno = {turnoUsuario}
+                    <TerminosCondiciones  
                         ayuda = {ayuda}
                     />  
                 </Suspense>  
