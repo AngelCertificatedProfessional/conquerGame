@@ -2,7 +2,7 @@ import React,{ useState, useEffect,Suspense} from 'react';
 const CardContenido = React.lazy(() =>
     import('../generales/CardContenido')
 );
-const Popup = ({ turno,ayuda }) => {
+const Ayuda = ({ turno,ayuda }) => {
     const [contenidoListado, setContenidoListado] = useState([{
         tipo:2, //Ayuda
         titulo: 'Lancero',
@@ -70,4 +70,4 @@ const Popup = ({ turno,ayuda }) => {
 };
 
 
-export default Popup;
+export default Ayuda;

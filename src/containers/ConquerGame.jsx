@@ -17,8 +17,8 @@ const ListadoPiezas = React.lazy(() =>
     import('../components/conquerGame/ListadoPiezas')
 );
 
-const Popup = React.lazy(() =>
-    import('../components/conquerGame/Popup')
+const Ayuda = React.lazy(() =>
+    import('../components/conquerGame/Ayuda')
 );
 
 import { ToastContainer, toast } from 'react-toastify';
@@ -33,7 +33,7 @@ const ConquerGame = ({socket}) => {
     const [accion, setAccion] = useState(1); //Este metodo se utiliza para ver que accion esta realizando el usuario
     const [bloquearOpciones, setBloquearOpciones] = useState(false); //Este metodo se utiliza para ver que accion esta realizando el usuario
     const [mostrarIniciar,setMostrarIniciar] = useState(false)
-    const [mostrarPopup,setmostrarPopup] = useState(false)
+    const [mostrarAyuda,setmostrarAyuda] = useState(false)
 
     const partidaInitial = null;
     const [partida,dispatchPartidas] = useReducer(agregarPartidaRes, partidaInitial);
@@ -225,7 +225,7 @@ const ConquerGame = ({socket}) => {
     }
 
     const ayuda = () =>{
-        setmostrarPopup(!mostrarPopup)
+        setmostrarAyuda(!mostrarAyuda)
         console.log('entre a la ayuda')
     }
 
@@ -399,7 +399,16 @@ const ConquerGame = ({socket}) => {
             )}
             {mostrarPopup ? 
                 <Suspense fallback={<div>Loading...</div>}>
-                    <Popup  
+                    <Ayuda  
+                        turno = {turnoUsuario}
+                        ayuda = {ayuda}
+                    />  
+                </Suspense>  
+              : null  
+            }
+            {mostrarMenuUnidadEspecial ? 
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Ayuda  
                         turno = {turnoUsuario}
                         ayuda = {ayuda}
                     />  
