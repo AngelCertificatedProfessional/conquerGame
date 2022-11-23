@@ -11,7 +11,6 @@ import { actualizarEspecifico } from '../ConexionAPI.js';
 let pinkId = "";
 let pinkText = "";
 let nTurno = 0;
-let nTurnoAnterior = -1;
 let bMovioAsesino = false;
 let sPiezaMovimiento = "";
 let arrReyes = []
@@ -30,7 +29,6 @@ export const limpiarVariablesJuego = () => {
     arrReyes = []
     sJugador = ''
     z = 0;
-    nTurnoAnterior = 0;
     partida = {};
     posicionPiezasGlobal = {}
     nIntervalo = null;
@@ -330,29 +328,21 @@ export const indicarSiguienteJugador = () =>{
         return;
     }
 
-    if(nTurnoAnterior != -1){
-        //document.getElementById(`targetaJugador${nTurnoAnterior}`).classList.add("opa-50")
-        switch(arrReyes[nTurnoAnterior][0]){
-            case "O":
-                document.getElementById(`targetaJugador0`).classList.add("opa-50")
-            break;
-            case "B":
-                document.getElementById(`targetaJugador1`).classList.add("opa-50")
-            break;
-            case "R":
-                document.getElementById(`targetaJugador2`).classList.add("opa-50")
-            break;
-            case "P":
-                document.getElementById(`targetaJugador3`).classList.add("opa-50")
-            break;
-        } 
+    if(document.getElementById(`targetaJugador0`)!==null && !document.getElementById(`targetaJugador0`).classList.contains("opa-50")){
+        document.getElementById(`targetaJugador0`).classList.add("opa-50")
     }
-    console.log('nTurnoAnterior')
-    console.log(nTurnoAnterior)
-    nTurnoAnterior = nTurno;
-    console.log(arrReyes)
-    console.log(nTurno)
-    console.log(arrReyes[nTurno][0])
+
+    if(document.getElementById(`targetaJugador1`)!==null && !document.getElementById(`targetaJugador1`).classList.contains("opa-50")){
+        document.getElementById(`targetaJugador1`).classList.add("opa-50")
+    }
+    
+    if(document.getElementById(`targetaJugador2`)!==null && !document.getElementById(`targetaJugador2`).classList.contains("opa-50")){
+        document.getElementById(`targetaJugador2`).classList.add("opa-50")
+    }
+    
+    if(document.getElementById(`targetaJugador3`)!==null && !document.getElementById(`targetaJugador3`).classList.contains("opa-50")){
+        document.getElementById(`targetaJugador3`).classList.add("opa-50")
+    }
     switch(arrReyes[nTurno][0]){
         case "O":
             document.getElementById(`targetaJugador0`).classList.remove("opa-50");
