@@ -2,7 +2,7 @@
 // import { cantidadJugadores, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
 
 import { colorLago, colorMontana, colorSeleccionadoListado, colorSeleccionadoTablero, colorTablero, lagos, montanas, tamanoTableroAncho, tamanoTableroLargo } from "./ConfiguracionTableroConquerGame.js";
-import { eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
+import { alfabetoANumero, eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
 import swal from 'sweetalert';
 
 let sTurno = 'O';
