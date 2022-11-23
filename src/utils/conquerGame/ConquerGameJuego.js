@@ -322,7 +322,6 @@ const evaluartTurnoJugador = () => {
     if(nTurno +1 > arrReyes.length ){
         nTurno = 0
     }
-    indicarSiguienteJugador();
     actualizarPiezasPosicionJuego()
 }
 
@@ -330,10 +329,30 @@ export const indicarSiguienteJugador = () =>{
     if(arrReyes.length <= 0){
         return;
     }
+
     if(nTurnoAnterior != -1){
-        document.getElementById(`targetaJugador${nTurnoAnterior}`).classList.add("opa-50")
+        //document.getElementById(`targetaJugador${nTurnoAnterior}`).classList.add("opa-50")
+        switch(arrReyes[nTurnoAnterior][0]){
+            case "O":
+                document.getElementById(`targetaJugador0`).classList.add("opa-50")
+            break;
+            case "B":
+                document.getElementById(`targetaJugador1`).classList.add("opa-50")
+            break;
+            case "R":
+                document.getElementById(`targetaJugador2`).classList.add("opa-50")
+            break;
+            case "P":
+                document.getElementById(`targetaJugador3`).classList.add("opa-50")
+            break;
+        } 
     }
+    console.log('nTurnoAnterior')
+    console.log(nTurnoAnterior)
     nTurnoAnterior = nTurno;
+    console.log(arrReyes)
+    console.log(nTurno)
+    console.log(arrReyes[nTurno][0])
     switch(arrReyes[nTurno][0]){
         case "O":
             document.getElementById(`targetaJugador0`).classList.remove("opa-50");

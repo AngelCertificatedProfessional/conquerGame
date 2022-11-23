@@ -308,7 +308,7 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
             break;
         case 3:
             if((sTurno === "O" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
-            (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/cantidadJugadores)*2))||
+            (sTurno === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/nCantidadJugadores)*2))||
             (sTurno === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
                     alert('Esta pieza esta invadiendo terreno')
                     return true; 

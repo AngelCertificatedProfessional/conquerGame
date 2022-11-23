@@ -195,6 +195,8 @@ const ConquerGame = ({socket}) => {
                 return 'O'
             case 1:
                 return 'B'
+            case 2:
+                return 'R'
         }
     }
 
