@@ -19,6 +19,10 @@ let z = 0;
 let partida = {};
 let posicionPiezasGlobal = {} 
 let nIntervalo = null;
+let mostrarMenuUnidadEspecial = null;
+export const mostrarMenuUnidadEspecialM = (vMetodo) => {
+    mostrarMenuUnidadEspecial = vMetodo;
+}
 
 export const limpiarVariablesJuego = () => {
     pinkId = "";
@@ -59,118 +63,125 @@ export const agregarDivsTableroJuego = () => {
         item.addEventListener('click', function () {
 
             //hacemos respetar el turno del usuario
-            if(!esJugadorTurno()) return
+            // if(!esJugadorTurno()) return
 
-            // To delete the opposite element
-            if (item.style.backgroundColor == colorOpciones && item.innerText.length == 0) {
-                if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
-                    bMovioAsesino = true;
-                }else{
-                    nTurno ++
-                    bMovioAsesino = false;
-                }
-                posicionPiezasGlobal[sPiezaMovimiento] = item.id
+            // // To delete the opposite element
+            // if (item.style.backgroundColor == colorOpciones && item.innerText.length == 0) {
+            //     if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
+            //         bMovioAsesino = true;
+            //     }else{
+            //         nTurno ++
+            //         bMovioAsesino = false;
+            //     }
+            //     posicionPiezasGlobal[sPiezaMovimiento] = item.id
                 
-                evaluartTurnoJugador();
-                //en este segmento enviaremos la peticion de la posicion de las unidades
-            }else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
-                //este segmento de codigo sirve para validar que se este eliminando la pieza
-                document.querySelectorAll('.box').forEach(i => {
-                    if (i.style.backgroundColor == colorSeleccionadoTablero) {
-                        let pinkId2 = i.id
-                        let pinkText2 = i.innerText
+            //     evaluartTurnoJugador();
+            //     return;
+            //     //en este segmento enviaremos la peticion de la posicion de las unidades
+            // }else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
+            //     //este segmento de codigo sirve para validar que se este eliminando la pieza
+            //     document.querySelectorAll('.box').forEach(i => {
+            //         if (i.style.backgroundColor == colorSeleccionadoTablero) {
+            //             let pinkId2 = i.id
+            //             let pinkText2 = i.innerText
                         
-                        document.getElementById(pinkId2).innerText = '';
-                        let piezaAnterior = item.innerText;
-                        //Sirve para indicar si una pieza esta muerta o no
-                        //document.getElementById(piezaAnterior).style.opacity = 0.5;
+            //             document.getElementById(pinkId2).innerText = '';
+            //             let piezaAnterior = item.innerText;
+            //             //Sirve para indicar si una pieza esta muerta o no
+            //             //document.getElementById(piezaAnterior).style.opacity = 0.5;
     
-                        item.innerText = pinkText2
-                        coloringJuego()
-                        insertImage()
-                        if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
-                            bMovioAsesino = true;
-                        }else{
-                            nTurno ++
-                            bMovioAsesino = false;
-                        }
+            //             item.innerText = pinkText2
+            //             coloringJuego()
+            //             insertImage()
+            //             if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
+            //                 bMovioAsesino = true;
+            //             }else{
+            //                 nTurno ++
+            //                 bMovioAsesino = false;
+            //             }
 
-                        posicionPiezasGlobal[piezaAnterior] = ''
-                        posicionPiezasGlobal[sPiezaMovimiento] = item.id
+            //             posicionPiezasGlobal[piezaAnterior] = ''
+            //             posicionPiezasGlobal[sPiezaMovimiento] = item.id
 
-                        if(piezaAnterior.includes('rey')){
-                            //detectamos la posicion del rey que estan atacando
-                            const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
-                            //detectamos la posicion del rey que esta ordenando el ataque.
-                            const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
-                            if(indexReyMuerto < indexReyOrden){
-                                nTurno--
-                            }
+            //             if(piezaAnterior.includes('rey')){
+            //                 //detectamos la posicion del rey que estan atacando
+            //                 const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
+            //                 //detectamos la posicion del rey que esta ordenando el ataque.
+            //                 const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
+            //                 if(indexReyMuerto < indexReyOrden){
+            //                     nTurno--
+            //                 }
     
-                            if (indexReyMuerto > -1) { // only splice array when item is found
-                                arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
-                                //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
-                            }
-                        }
-                    }
-                })
-                evaluartTurnoJugador();
-            }else if (item.style.backgroundColor == colorDisparoArcher && item.innerText.length !== 0) {
-                //este segmento de codigo sirve para validar que se este eliminando la pieza
-                document.querySelectorAll('.box').forEach(i => {
-                    if (i.style.backgroundColor == colorSeleccionadoTablero) {
-                        let piezaAnterior = item.innerText;
-                        posicionPiezasGlobal[piezaAnterior] = ''
-                        item.innerText = '';
-                        coloringJuego()
-                        insertImage()
-                        if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
-                            bMovioAsesino = true;
-                        }else{
-                            nTurno ++
-                            bMovioAsesino = false;
-                        }
-                        if(piezaAnterior.includes('rey')){
-                            //detectamos la posicion del rey que estan atacando
-                            const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
-                            //detectamos la posicion del rey que esta ordenando el ataque.
-                            const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
-                            if(indexReyMuerto < indexReyOrden){
-                                nTurno--
-                            }
-    
-                            if (indexReyMuerto > -1) { // only splice array when item is found
-                                arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
-                                //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
-                            }
-                        }
-                    }
-                })
-                evaluartTurnoJugador();
-            }
-    
-            const col= eliminarNumeros(item.id)
-            const row = eliminarLetras(item.id)
-    
-            // // Toggling the turn
-            // evaluartTurnoJugador();
+            //                 if (indexReyMuerto > -1) { // only splice array when item is found
+            //                     arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
+            //                     //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
+            //                 }
 
-            sPiezaMovimiento = item.innerText;
-            if (item.innerText.includes(`${sJugador}archer`) && !bMovioAsesino) {
-                movimientoArcher(parseInt(row),col,item)
-            }else if (item.innerText.includes(`${sJugador}rey`) && !bMovioAsesino) {
-                movimientoRey(parseInt(row),col,item)
-            }else if (item.innerText.includes(`${sJugador}hachero`) && !bMovioAsesino) {
-                movimientoHachero(parseInt(row),col,item)
-            }else if(item.innerText.includes(`${sJugador}lancero`) && !bMovioAsesino) {
-                movimientoLancero(parseInt(row),col,item)
-            }else if(item.innerText.includes(`${sJugador}caballero`) && !bMovioAsesino) {
-                movimientoCaballero(parseInt(row),col,item)
-            }else if(item.innerText.includes(`${sJugador}asesino`)) {
-                movimientoAsesino(parseInt(row),col,item,bMovioAsesino)
-            }
+
+
+            //             }
+            //         }
+            //     })
+            //     evaluartTurnoJugador();
+            //     return;
+            // }else if (item.style.backgroundColor == colorDisparoArcher && item.innerText.length !== 0) {
+            //     //este segmento de codigo sirve para validar que se este eliminando la pieza
+            //     document.querySelectorAll('.box').forEach(i => {
+            //         if (i.style.backgroundColor == colorSeleccionadoTablero) {
+            //             let piezaAnterior = item.innerText;
+            //             posicionPiezasGlobal[piezaAnterior] = ''
+            //             item.innerText = '';
+            //             coloringJuego()
+            //             insertImage()
+            //             if(sPiezaMovimiento.includes('asesino') && !bMovioAsesino){
+            //                 bMovioAsesino = true;
+            //             }else{
+            //                 nTurno ++
+            //                 bMovioAsesino = false;
+            //             }
+            //             if(piezaAnterior.includes('rey')){
+            //                 //detectamos la posicion del rey que estan atacando
+            //                 const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
+            //                 //detectamos la posicion del rey que esta ordenando el ataque.
+            //                 const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
+            //                 if(indexReyMuerto < indexReyOrden){
+            //                     nTurno--
+            //                 }
+    
+            //                 if (indexReyMuerto > -1) { // only splice array when item is found
+            //                     arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
+            //                     //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
+            //                 }
+            //             }
+            //         }
+            //     })
+            //     evaluartTurnoJugador();
+            //     return;
+            // }
+    
+            // const col= eliminarNumeros(item.id)
+            // const row = eliminarLetras(item.id)
+    
+            // // // Toggling the turn
+            // // evaluartTurnoJugador();
+            console.log('test')
+            mostrarMenuUnidadEspecial()
+            // sPiezaMovimiento = item.innerText;
+            // if (item.innerText.includes(`${sJugador}archer`) && !bMovioAsesino) {
+            //     movimientoArcher(parseInt(row),col,item)
+            // }else if (item.innerText.includes(`${sJugador}rey`) && !bMovioAsesino) {
+            //     movimientoRey(parseInt(row),col,item)
+            // }else if (item.innerText.includes(`${sJugador}hachero`) && !bMovioAsesino) {
+            //     movimientoHachero(parseInt(row),col,item)
+            // }else if(item.innerText.includes(`${sJugador}lancero`) && !bMovioAsesino) {
+            //     movimientoLancero(parseInt(row),col,item)
+            // }else if(item.innerText.includes(`${sJugador}caballero`) && !bMovioAsesino) {
+            //     movimientoCaballero(parseInt(row),col,item)
+            // }else if(item.innerText.includes(`${sJugador}asesino`)) {
+            //     movimientoAsesino(parseInt(row),col,item,bMovioAsesino)
+            // }
             
-            reddish(item.innerText)
+            // reddish(item.innerText)
         })
     
     })
@@ -293,7 +304,6 @@ function reddish() {
                         let pinkColor = ((Array.from(pinkText3)).shift()).toString()
                         let greenColor = ((Array.from(greenText)).shift()).toString()
                         //En esta validacion se pregunta si la pieza es del mismo valor (B,O) a otra del mismo
-                        //team, aparte de condicionar si es un lago o una montana
                         if (pinkColor == greenColor) {
                             i2.style.backgroundColor = colorTablero
                         }

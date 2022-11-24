@@ -2,7 +2,7 @@ import React,{ useState, useEffect,Suspense} from 'react';
 const CardContenido = React.lazy(() =>
     import('../generales/CardContenido')
 );
-const SeleccionarUnidadEspecial = ({ turno,ayuda }) => {
+const SeleccionarUnidadEspecial = ({ turno,setmostrarMenuUnidadEspecial,mostrarMenuUnidadEspecial }) => {
     const [contenidoListado, setContenidoListado] = useState([        
     {
         tipo:3, //Ayuda
@@ -71,7 +71,7 @@ const SeleccionarUnidadEspecial = ({ turno,ayuda }) => {
                         </Suspense>
                     ))}
                 </div>
-                <button className = {`boton blue w-100 m-right`} onClick={() => ayuda()}>Salir</button>                 
+                <button className = {`boton blue w-100 m-right`} onClick={() => setmostrarMenuUnidadEspecial(!mostrarMenuUnidadEspecial)}>Salir</button>                 
             </div>
         </div>
     );

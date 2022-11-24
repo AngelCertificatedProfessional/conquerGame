@@ -3,7 +3,7 @@ import { useParams,useNavigate  } from 'react-router-dom';
 import {b64_to_utf8} from '../utils/UtileriasPagina';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, limpiarVariables, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, conometro, detenerCronometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, posicionPiezasJuego,rendirseJugador,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, conometro, detenerCronometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, mostrarMenuUnidadEspecialM, posicionPiezasJuego,rendirseJugador,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -21,6 +21,10 @@ const Ayuda = React.lazy(() =>
     import('../components/conquerGame/Ayuda')
 );
 
+const SeleccionarUnidadEspecial = React.lazy(() =>
+    import('../components/conquerGame/SeleccionarUnidadEspecial')
+);
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -34,6 +38,7 @@ const ConquerGame = ({socket}) => {
     const [bloquearOpciones, setBloquearOpciones] = useState(false); //Este metodo se utiliza para ver que accion esta realizando el usuario
     const [mostrarIniciar,setMostrarIniciar] = useState(false)
     const [mostrarAyuda,setmostrarAyuda] = useState(false)
+    const [mostrarMenuUnidadEspecial,setmostrarMenuUnidadEspecial] = useState(false)
 
     const partidaInitial = null;
     const [partida,dispatchPartidas] = useReducer(agregarPartidaRes, partidaInitial);
@@ -115,7 +120,7 @@ const ConquerGame = ({socket}) => {
         ) {
             navigate('/login');
         }
-
+        mostrarMenuUnidadEspecialM(mostrarVentanaUnidadEspecial)
         return () => {
             //window.removeEventListener('beforeunload', desconectarUsuarioPartida)
             //desconectarUsuarioPartida()
@@ -224,11 +229,6 @@ const ConquerGame = ({socket}) => {
         });
     }
 
-    const ayuda = () =>{
-        setmostrarAyuda(!mostrarAyuda)
-        console.log('entre a la ayuda')
-    }
-
     const salirLobby = () => {
         let vPeticion = {};
         vPeticion.numeroPartida = numeroPartida
@@ -262,6 +262,11 @@ const ConquerGame = ({socket}) => {
             }
           })
     }
+
+    const mostrarVentanaUnidadEspecial = () => {
+        console.log('Me llamaron');
+        setmostrarMenuUnidadEspecial(true)
+    } 
 
     return (
         <main className="contenedor-juegoF seccion">
@@ -397,20 +402,22 @@ const ConquerGame = ({socket}) => {
                 </section>
                 </>
             )}
-            {mostrarPopup ? 
+            {mostrarAyuda ? 
                 <Suspense fallback={<div>Loading...</div>}>
                     <Ayuda  
                         turno = {turnoUsuario}
-                        ayuda = {ayuda}
+                        setmostrarAyuda = {setmostrarAyuda}
+                        mostrarAyuda = {mostrarAyuda}
                     />  
                 </Suspense>  
               : null  
             }
             {mostrarMenuUnidadEspecial ? 
                 <Suspense fallback={<div>Loading...</div>}>
-                    <Ayuda  
+                    <SeleccionarUnidadEspecial  
                         turno = {turnoUsuario}
-                        ayuda = {ayuda}
+                        setmostrarMenuUnidadEspecial = {setmostrarMenuUnidadEspecial}
+                        mostrarMenuUnidadEspecial = {mostrarMenuUnidadEspecial}
                     />  
                 </Suspense>  
               : null  

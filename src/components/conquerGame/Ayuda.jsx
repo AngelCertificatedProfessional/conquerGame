@@ -2,7 +2,7 @@ import React,{ useState, useEffect,Suspense} from 'react';
 const CardContenido = React.lazy(() =>
     import('../generales/CardContenido')
 );
-const Ayuda = ({ turno,ayuda }) => {
+const Ayuda = ({ turno,setmostrarAyuda,mostrarAyuda }) => {
     const [contenidoListado, setContenidoListado] = useState([{
         tipo:2, //Ayuda
         titulo: 'Lancero',
@@ -63,7 +63,7 @@ const Ayuda = ({ turno,ayuda }) => {
                         </Suspense>
                     ))}
                 </div>
-                <button className = {`boton blue w-100 m-right`} onClick={() => ayuda()}>Salir</button>                 
+                <button className = {`boton blue w-100 m-right`} onClick={() => setmostrarAyuda(!mostrarAyuda)}>Salir</button>                 
             </div>
         </div>
     );
