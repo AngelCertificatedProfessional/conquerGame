@@ -9,7 +9,6 @@ const ListaPartidas = ({partidas,abrirPartidaJuego}) => {
         partida.numeroPartida = seleccionado;
         actualizarEspecifico('conquerGame/buscarPartida/', partida)
         .then((resultado) => {
-          console.log(resultado)
           if(resultado.data.hasOwnProperty('existe')){
             swal({
               title: "En Partida",

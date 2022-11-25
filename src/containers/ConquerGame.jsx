@@ -3,7 +3,7 @@ import { useParams,useNavigate  } from 'react-router-dom';
 import {b64_to_utf8} from '../utils/UtileriasPagina';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, limpiarVariables, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, coloringJuego, conometro, detenerCronometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, mostrarMenuUnidadEspecialM, posicionPiezasJuego,rendirseJugador,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, colocarPiezaEspecial, coloringJuego, conometro, detenerCronometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, mostrarMenuUnidadEspecialM, posicionPiezasJuego,rendirseJugador,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -82,6 +82,7 @@ const ConquerGame = ({socket}) => {
                 case 3:
                     dispatchPiezasTableroRes(payload);
                     dispatchPartidas(payload)
+                    setPartida(payload)
                     setAccion(3);
                     if(payload.hasOwnProperty("posicionPiezasGlobal")){
                         payload.hasOwnProperty("turno") ? setTurno(payload.turno) : setTurno(0)
@@ -156,7 +157,6 @@ const ConquerGame = ({socket}) => {
     }
 
     const desconectarUsuarioPartida = () => {
-        console.log('entre')
         let vPartida = {};
         vPartida.numeroPartida = numeroPartida;
         actualizarEspecifico('conquerGame/desconectarUsuarioPartida/',vPartida )
@@ -264,13 +264,12 @@ const ConquerGame = ({socket}) => {
     }
 
     const mostrarVentanaUnidadEspecial = () => {
-        console.log('Me llamaron');
         setmostrarMenuUnidadEspecial(true)
     } 
 
     const agregarUnidadMapa = (sPieza) => {
-        console.log(sPieza)
         setmostrarMenuUnidadEspecial(false)
+        colocarPiezaEspecial(sPieza)
     }
 
     return (

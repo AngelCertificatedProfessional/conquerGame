@@ -8,14 +8,14 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa }) => {
         tipo:4, //Unidad especial
         titulo: 'Asesino Elite',
         img: turno+'asesinoE.png',
-        tipoPieza:'asesinoElite',
+        tipoPieza:'asesinoE',
         descripcion:`Esta unidad puede puede hacer dos movimientos en el mismo turno, esta unidad puede moverse tanto vertical como horizantalmente o diagonal un espacio por los dos turnos`
     },  
     {
         tipo:4, //Unidad especial
         titulo: 'Arquero Elite',
         img: turno+'archerE.png',
-        tipoPieza:'arqueroElite',
+        tipoPieza:'arqueroE',
         descripcion:`Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
         atacar a distancia en la tercera casilla o cuarta casilla sin requerir mover la unidad`
     },
@@ -23,7 +23,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa }) => {
         tipo:4, //Unidad especial
         titulo: 'Hechicero',
         img: turno+'hechicero.png',
-        tipoPieza:'hechiceroElite',
+        tipoPieza:'hechiceroE',
         descripcion:`Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
         atacar a distancia en la tercera casilla o quinta casilla sin requerir mover la unidad`
     },
@@ -31,7 +31,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa }) => {
         tipo:4, //Unidad especial
         titulo: 'Cañon',
         img: turno+'canon.png',
-        tipoPieza:'canonElite',
+        tipoPieza:'canonE',
         descripcion:`Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
         atacar a distancia en la octava y novena casilla sin requerir mover la unidad`
     },
@@ -39,7 +39,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa }) => {
         tipo:4, //Unidad especial
         titulo: 'Lancero Elite',
         img: turno+'lanceroE.png',
-        tipoPieza:'lanceroElite',
+        tipoPieza:'lanceroE',
         descripcion:'Esta unidad puede moverse hasta 13 espacios en vertical o horizontal o un espacio en diagonal y puede matar dos unidades en linea recta'
     },
     {

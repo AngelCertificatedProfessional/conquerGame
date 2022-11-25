@@ -4,7 +4,6 @@ let usuario = JSON.parse(UtileriasPagina.b64_to_utf8(sessionStorage.getItem('usu
 
 export const agregar = async (sRuta, data) => {
   try {
-    console.log(sRuta);
     if (!validaUsuario() && (sRuta !== 'usuarios/agregarUsuario' && sRuta !== 'usuarios/agregarUsuarioInvitado')) {
       throw 'No se a iniciado sesion';
     }
