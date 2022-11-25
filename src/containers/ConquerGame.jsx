@@ -268,6 +268,11 @@ const ConquerGame = ({socket}) => {
         setmostrarMenuUnidadEspecial(true)
     } 
 
+    const agregarUnidadMapa = (sPieza) => {
+        console.log(sPieza)
+        setmostrarMenuUnidadEspecial(false)
+    }
+
     return (
         <main className="contenedor-juegoF seccion">
             <h2 className='fw-300 centrar-texto'>
@@ -416,8 +421,7 @@ const ConquerGame = ({socket}) => {
                 <Suspense fallback={<div>Loading...</div>}>
                     <SeleccionarUnidadEspecial  
                         turno = {turnoUsuario}
-                        setmostrarMenuUnidadEspecial = {setmostrarMenuUnidadEspecial}
-                        mostrarMenuUnidadEspecial = {mostrarMenuUnidadEspecial}
+                        agregarUnidadMapa = {agregarUnidadMapa}
                     />  
                 </Suspense>  
               : null  

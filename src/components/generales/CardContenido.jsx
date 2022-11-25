@@ -1,6 +1,6 @@
 import React,{ useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
-const CardContenido = ({ contenido }) => {
+const CardContenido = ({ contenido,agregarUnidadMapa }) => {
     const [imagen, setImagen] = useState([]);
     useEffect(() => {
         const fetchImage = async () => {
@@ -20,10 +20,12 @@ const CardContenido = ({ contenido }) => {
             <div className="contenido-anuncio">
                 <h3>{contenido.titulo}</h3>
                 <p>{contenido.descripcion}</p>
-                {(contenido.tipo ===1) && (
+                {(contenido.tipo === 1) && (
                     <Link className = "boton blue d-block" to="ConquerGameOpciones">Ingresa</Link>
                  )}
-                
+                {(contenido.tipo === 4) && (
+                    <button className = 'boton blue w-100 m-right' onClick={() => agregarUnidadMapa(contenido.tipoPieza)}>Seleccionar</button>
+                 )}
             </div>
         </div>
     );

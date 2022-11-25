@@ -479,3 +479,7 @@ export const rendirseJugador = () => {
     posicionPiezasGlobal[sJugador+"rey"] = ''
     actualizarPiezasPosicionJuego(false)
 }
+
+export const colocarPiezaEspecial = () => {
+    
+}
