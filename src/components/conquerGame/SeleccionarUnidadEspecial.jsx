@@ -15,7 +15,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa }) => {
         tipo:4, //Unidad especial
         titulo: 'Arquero Elite',
         img: turno+'archerE.png',
-        tipoPieza:'arqueroE',
+        tipoPieza:'archerE',
         descripcion:`Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
         atacar a distancia en la tercera casilla o cuarta casilla sin requerir mover la unidad`
     },

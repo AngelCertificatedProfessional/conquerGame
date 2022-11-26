@@ -9,6 +9,7 @@ import { colorDisparoArcher, colorLago, colorMontana, colorOpciones, colorSelecc
 import { eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
 import { actualizarEspecifico } from '../ConexionAPI.js';
 import { movimientoAsesinoElite } from './piezas/asesinoElite.js';
+import { movimientoArcherE } from './piezas/archerE.js';
 let pinkId = "";
 let pinkText = "";
 let nTurno = 0;
@@ -197,7 +198,9 @@ export const agregarDivsTableroJuego = () => {
     
             // // Toggling the turn
             sPiezaMovimiento = item.innerText;
-            if (item.innerText.includes(`${sJugador}archer`) && !bMovioAsesino && !bMovioAsesinoElite) {
+            if (item.innerText.includes(`${sJugador}archerE`) && !bMovioAsesino && !bMovioAsesinoElite) {
+                movimientoArcherE(parseInt(row),col,item)
+            }else if (item.innerText.includes(`${sJugador}archer`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoArcher(parseInt(row),col,item)
             }else if (item.innerText.includes(`${sJugador}rey`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoRey(parseInt(row),col,item)
