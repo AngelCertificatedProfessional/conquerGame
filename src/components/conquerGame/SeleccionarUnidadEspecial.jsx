@@ -17,15 +17,15 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa }) => {
         img: turno+'archerE.png',
         tipoPieza:'archerE',
         descripcion:`Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
-        atacar a distancia en la tercera casilla o cuarta casilla sin requerir mover la unidad`
+        atacar a distancia en la tercera casilla o cuarta casilla (solo linealmente) sin requerir mover la unidad`
     },
     {
         tipo:4, //Unidad especial
         titulo: 'Hechicero',
         img: turno+'hechicero.png',
-        tipoPieza:'hechiceroE',
+        tipoPieza:'hechicero',
         descripcion:`Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
-        atacar a distancia en la tercera casilla o quinta casilla sin requerir mover la unidad`
+        atacar a distancia en la tercera casilla o cuarta casilla (solo diagonalmente) sin requerir mover la unidad`
     },
     {
         tipo:4, //Unidad especial

@@ -9,7 +9,8 @@ import { colorDisparoArcher, colorLago, colorMontana, colorOpciones, colorSelecc
 import { eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
 import { actualizarEspecifico } from '../ConexionAPI.js';
 import { movimientoAsesinoElite } from './piezas/asesinoElite.js';
-import { movimientoArcherE } from './piezas/archerE.js';
+import { movimientoHechicero } from './piezas/hechicero.js';
+import { movimientoArcherElite } from './piezas/archerElite.js';
 let pinkId = "";
 let pinkText = "";
 let nTurno = 0;
@@ -152,6 +153,7 @@ export const agregarDivsTableroJuego = () => {
                 document.querySelectorAll('.box').forEach(i => {
                     if (i.style.backgroundColor == colorSeleccionadoTablero) {
                         let piezaAnterior = item.innerText;
+                        let pinkText2 = i.innerText
                         posicionPiezasGlobal[piezaAnterior] = ''
                         item.innerText = '';
                         coloringJuego()
@@ -178,6 +180,7 @@ export const agregarDivsTableroJuego = () => {
                                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
                             }
+                            console.log(arrReyes)
                             if(arrReyes.length > 1){
                                 mostrarMenuUnidadEspecial()
                                 return;
@@ -199,7 +202,7 @@ export const agregarDivsTableroJuego = () => {
             // // Toggling the turn
             sPiezaMovimiento = item.innerText;
             if (item.innerText.includes(`${sJugador}archerE`) && !bMovioAsesino && !bMovioAsesinoElite) {
-                movimientoArcherE(parseInt(row),col,item)
+                movimientoArcherElite(parseInt(row),col,item)
             }else if (item.innerText.includes(`${sJugador}archer`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoArcher(parseInt(row),col,item)
             }else if (item.innerText.includes(`${sJugador}rey`) && !bMovioAsesino && !bMovioAsesinoElite) {
@@ -215,6 +218,8 @@ export const agregarDivsTableroJuego = () => {
                 movimientoAsesinoElite(parseInt(row),col,item)
             }else if(item.innerText.includes(`${sJugador}asesino`) && !bMovioAsesinoElite) {
                 movimientoAsesino(parseInt(row),col,item,bMovioAsesino)
+            }else if(item.innerText.includes(`${sJugador}hechicero`)&& !bMovioAsesino && !bMovioAsesinoElite) {
+                movimientoHechicero(parseInt(row),col,item)
             }
             
             reddish(item.innerText)

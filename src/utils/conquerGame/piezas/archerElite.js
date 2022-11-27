@@ -1,7 +1,7 @@
 import { alfabetoANumero, numeroAAlfabeto } from "../../UtileriasPagina.js"
 import { colorOpciones, colorSeleccionadoTablero, tamanoTableroAncho, tamanoTableroLargo, validaPiezaMontana,colorDisparoArcher } from "../ConfiguracionTableroConquerGame.js"
 
-export const movimientoArcherE= (row,col,item) =>{
+export const movimientoArcherElite= (row,col,item) =>{
     let nCol = alfabetoANumero(col) 
     for (let i = 1; i < 3; i++) {
         if(validaPiezaMontana(`${row+i}${numeroAAlfabeto(nCol+i)}`)){
@@ -103,26 +103,21 @@ export const movimientoArcherE= (row,col,item) =>{
         }
     }
     //Este segmento es para los disparos de archer
-    //Este
     for(let i = 3; i<5;i++){
+        //Este
         if (nCol < tamanoTableroAncho- i) {
             document.getElementById(`${row}${numeroAAlfabeto(nCol+i)}`).style.backgroundColor = colorDisparoArcher
         }
-    }
-    //Oeste
-    for(let i = 3; i<5;i++){
+        
+        //Oeste
         if (nCol > i) {
             document.getElementById(`${row}${numeroAAlfabeto(nCol-i)}`).style.backgroundColor = colorDisparoArcher
         }
-    }
-    //Norte
-    for(let i = 3; i<5;i++){
+        //Norte
         if (row < tamanoTableroLargo - i) {
             document.getElementById(`${row+i}${numeroAAlfabeto(nCol)}`).style.backgroundColor = colorDisparoArcher
         }
-    }
-    //Sur
-    for(let i = 3; i<5;i++){
+        //Sur
         if (row > i) {
             document.getElementById(`${row-i}${numeroAAlfabeto(nCol)}`).style.backgroundColor = colorDisparoArcher
         }
