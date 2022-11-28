@@ -139,7 +139,8 @@ export const agregarDivsTableroJuego = () => {
                                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
                             }
                             if(arrReyes.length > 1){
-                                mostrarMenuUnidadEspecial()
+                                mostrarMenuUnidadEspecial(true)
+                                sAgregarPiezaEspecial = "pieza"
                                 return;
                             }else{
                                 evaluartTurnoJugador();
@@ -185,7 +186,8 @@ export const agregarDivsTableroJuego = () => {
                             }
                             console.log(arrReyes)
                             if(arrReyes.length > 1){
-                                mostrarMenuUnidadEspecial()
+                                mostrarMenuUnidadEspecial(true)
+                                sAgregarPiezaEspecial = "pieza"
                                 return;
                             }else{
                                 evaluartTurnoJugador();
@@ -367,12 +369,20 @@ const reddish = () => {
 }
 
 export const saltarTurno = () =>{
-    if(!esJugadorTurno()){
-        return;
+    
+    if(sAgregarPiezaEspecial === ""){
+        if(!esJugadorTurno()){
+            return;
+        }
+        nTurno ++;
+    }else{
+        mostrarMenuUnidadEspecial(false)
+        pintarMapaOpacity(false)
+        sAgregarPiezaEspecial = ""
     }
+    
     // Toggling the turn
     coloringJuego()
-    nTurno ++;
     bMovioAsesino = false;
     bMovioAsesinoElite = false;
     evaluartTurnoJugador()
@@ -616,20 +626,20 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
             if((sJugador === "O" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
             (sJugador === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/partida.cantidadJugadores)*2))||
             (sJugador === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
-                    alert('Esta pieza esta invadiendo terreno')
-                    return true; 
+                alert('Esta pieza esta invadiendo terreno')
+                return true; 
             }
         break;
         case 4:
-                //eliminacion de numeros para el lado vertical
-                const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
-                if((sJugador === "O" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                    (sJugador === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
-                    (sJugador === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
-                    (sJugador === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
-                    alert('Esta pieza esta invadiendo terreno')
-                    return true; 
-                }
+            //eliminacion de numeros para el lado vertical
+            const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
+            if((sJugador === "O" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                (sJugador === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                (sJugador === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
+                (sJugador === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                alert('Esta pieza esta invadiendo terreno')
+                return true; 
+            }
     }
 
     if((eliminarNumeros(sPieza) === "caballero" || eliminarNumeros(sPieza) === "castillo") && lagos.includes(sPosicion)){

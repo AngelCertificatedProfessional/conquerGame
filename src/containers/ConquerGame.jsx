@@ -263,8 +263,8 @@ const ConquerGame = ({socket}) => {
           })
     }
 
-    const mostrarVentanaUnidadEspecial = () => {
-        setmostrarMenuUnidadEspecial(true)
+    const mostrarVentanaUnidadEspecial = (bMostrar) => {
+        setmostrarMenuUnidadEspecial(bMostrar)
     } 
 
     const agregarUnidadMapa = (sPieza) => {
