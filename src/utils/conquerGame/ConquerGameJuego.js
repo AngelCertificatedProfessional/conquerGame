@@ -6,7 +6,7 @@ import { movimientoCaballero } from './piezas/caballero.js';
 import { movimientoAsesino } from './piezas/asesino.js';
 import { movimientoArcher } from './piezas/archer.js';
 import { colorDisparoArcher, colorLago, colorMontana, colorOpciones, colorSeleccionadoListado, colorSeleccionadoTablero, colorTablero, lagos, montanas, tamanoTableroAncho, tamanoTableroLargo,arregloPiezas } from "./ConfiguracionTableroConquerGame.js";
-import { eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
+import { alfabetoANumero, eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
 import { actualizarEspecifico } from '../ConexionAPI.js';
 import { movimientoAsesinoElite } from './piezas/asesinoElite.js';
 import { movimientoHechicero } from './piezas/hechicero.js';
@@ -408,16 +408,25 @@ export const indicarSiguienteJugador = () =>{
     }
     switch(arrReyes[nTurno][0]){
         case "O":
-            document.getElementById(`targetaJugador0`).classList.remove("opa-50");
+            if(document.getElementById(`targetaJugador0`)!==null && document.getElementById(`targetaJugador0`).classList.contains("opa-50")){
+                document.getElementById(`targetaJugador0`).classList.remove("opa-50");
+            }
         break;
         case "B":
-            document.getElementById(`targetaJugador1`).classList.remove("opa-50");
+            if(document.getElementById(`targetaJugador1`)!==null && document.getElementById(`targetaJugador1`).classList.contains("opa-50")){
+                document.getElementById(`targetaJugador1`).classList.remove("opa-50");
+            }
         break;
         case "R":
-            document.getElementById(`targetaJugador2`).classList.remove("opa-50");
+            if(document.getElementById(`targetaJugador2`)!==null && document.getElementById(`targetaJugador2`).classList.contains("opa-50")){
+                document.getElementById(`targetaJugador2`).classList.remove("opa-50");
+            }
         break;
         case "P":
-            document.getElementById(`targetaJugador3`).classList.remove("opa-50");
+            
+            if(document.getElementById(`targetaJugador3`)!==null && document.getElementById(`targetaJugador3`).classList.contains("opa-50")){
+                document.getElementById(`targetaJugador3`).classList.remove("opa-50");
+            }
         break;
     } 
 }

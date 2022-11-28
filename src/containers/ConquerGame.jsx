@@ -421,6 +421,7 @@ const ConquerGame = ({socket}) => {
                     <SeleccionarUnidadEspecial  
                         turno = {turnoUsuario}
                         agregarUnidadMapa = {agregarUnidadMapa}
+                        partida = {partida}
                     />  
                 </Suspense>  
               : null  

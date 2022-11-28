@@ -24,7 +24,7 @@ const CardContenido = ({ contenido,agregarUnidadMapa }) => {
                     <Link className = "boton blue d-block" to="ConquerGameOpciones">Ingresa</Link>
                  )}
                 {(contenido.tipo === 4) && (
-                    <button className = 'boton blue w-100 m-right' onClick={() => agregarUnidadMapa(contenido.tipoPieza)}>Seleccionar</button>
+                    <button className = {`boton blue w-100 m-right ${contenido.yaSelecconado ? 'opa-50' : ''}`} onClick={() => agregarUnidadMapa(contenido.tipoPieza)} disabled={contenido.yaSelecconado ? 'disabled' : ''}>Seleccionar</button>
                  )}
             </div>
         </div>
