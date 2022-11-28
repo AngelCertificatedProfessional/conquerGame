@@ -323,7 +323,7 @@ const ConquerGame = ({socket}) => {
                         
                         <div className="contenedor-contenido-row">
                             <button className = {`boton blue w-100 m-right`} onClick={() => guardarConfiguracion()} disabled={bloquearOpciones ? true : false}>Confirmar</button>  
-                            <button className = {`boton blue w-100`} onClick={() => ayuda()} disabled={bloquearOpciones ? true : false}>Ayuda</button>  
+                            <button className = {`boton blue w-100`} onClick={() => setmostrarAyuda(true)} disabled={bloquearOpciones ? true : false}>Ayuda</button>  
                         </div>
                     
                     </div>
@@ -369,7 +369,7 @@ const ConquerGame = ({socket}) => {
                         </Suspense>
                         <div className="contenedor-contenido-row">
                             <button className = "boton blue w-100 m-right" onClick={() => saltarTurno()}>Saltar Turno</button>  
-                            <button className = {`boton blue w-100 m-right`} onClick={() => ayuda()}>Ayuda</button>  
+                            <button className = {`boton blue w-100 m-right`} onClick={() => setmostrarAyuda(true)}>Ayuda</button>  
                             <button className = {`boton blue w-100`} onClick={() => rendirse()}>Rendirse</button>  
                         </div>
                     </div>
