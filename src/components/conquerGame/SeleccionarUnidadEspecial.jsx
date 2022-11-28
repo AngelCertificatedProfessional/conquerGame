@@ -10,7 +10,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa,partida }) => {
         img: turno+'asesinoE.png',
         tipoPieza:'asesinoE',
         descripcion:`Esta unidad puede puede hacer dos movimientos en el mismo turno, esta unidad puede moverse tanto vertical como horizantalmente o diagonal un espacio por los dos turnos`,
-        existe:partida.posicionPiezasGlobal.hasOwnProperty(turno+"asesinoE")
+        yaSelecconado:partida.posicionPiezasGlobal.hasOwnProperty(turno+"asesinoE")
     },  
     {
         tipo:4, //Unidad especial
@@ -19,7 +19,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa,partida }) => {
         tipoPieza:'archerE',
         descripcion:`Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
         atacar a distancia en la tercera casilla o cuarta casilla (solo linealmente) sin requerir mover la unidad`,
-        existe:partida.posicionPiezasGlobal.hasOwnProperty(turno+"archerE")
+        yaSelecconado:partida.posicionPiezasGlobal.hasOwnProperty(turno+"archerE")
     },
     {
         tipo:4, //Unidad especial
@@ -28,7 +28,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa,partida }) => {
         tipoPieza:'hechicero',
         descripcion:`Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
         atacar a distancia en la tercera casilla o cuarta casilla (solo diagonalmente) sin requerir mover la unidad`,
-        existe:partida.posicionPiezasGlobal.hasOwnProperty(turno+"hechicero")
+        yaSelecconado:partida.posicionPiezasGlobal.hasOwnProperty(turno+"hechicero")
     },
     {
         tipo:4, //Unidad especial
@@ -37,7 +37,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa,partida }) => {
         tipoPieza:'canon',
         descripcion:`Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
         atacar a distancia en la octava casilla sin requerir mover la unidad`,
-        existe:partida.posicionPiezasGlobal.hasOwnProperty(turno+"canon")
+        yaSelecconado:partida.posicionPiezasGlobal.hasOwnProperty(turno+"canon")
     },
     {
         tipo:4, //Unidad especial
@@ -45,7 +45,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa,partida }) => {
         img: turno+'lanceroE.png',
         tipoPieza:'lanceroE',
         descripcion:'Esta unidad puede moverse hasta 13 espacios en vertical/horizontal o 2 espacios en diagonal',
-        existe:partida.posicionPiezasGlobal.hasOwnProperty(turno+"lanceroE")
+        yaSelecconado:partida.posicionPiezasGlobal.hasOwnProperty(turno+"lanceroE")
     },
     {
         tipo:4, //Unidad especial
