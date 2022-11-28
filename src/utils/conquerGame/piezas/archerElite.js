@@ -31,6 +31,7 @@ export const movimientoArcherElite= (row,col,item) =>{
         if(validaPiezaMontana(`${row+i}${numeroAAlfabeto(nCol-i)}`)){
             break
         }
+        //Se pregunta que si se cumple el tamano del mapa y si la posicion de la pieza no existe otra, en caso de haber una se pone el color y se limpiar el mapa
         if ((row+i) < tamanoTableroLargo+1 && (nCol-i) >= 1 && document.getElementById(`${row+i}${numeroAAlfabeto(nCol-i)}`).innerText == 0) {
             document.getElementById(`${row+i}${numeroAAlfabeto(nCol-i)}`).style.backgroundColor = colorOpciones
         }else if ((row+i) < tamanoTableroLargo+1 && (nCol-i) >= 1 && document.getElementById(`${row+i}${numeroAAlfabeto(nCol-i)}`).innerText !== 0) {

@@ -11,6 +11,9 @@ import { actualizarEspecifico } from '../ConexionAPI.js';
 import { movimientoAsesinoElite } from './piezas/asesinoElite.js';
 import { movimientoHechicero } from './piezas/hechicero.js';
 import { movimientoArcherElite } from './piezas/archerElite.js';
+import { movimientoCanon } from './piezas/canon.js';
+import { movimientoLanceroElite } from './piezas/lanceroElite.js';
+import { movimientoHacheroElite } from './piezas/hacheroElite.js';
 let pinkId = "";
 let pinkText = "";
 let nTurno = 0;
@@ -207,8 +210,12 @@ export const agregarDivsTableroJuego = () => {
                 movimientoArcher(parseInt(row),col,item)
             }else if (item.innerText.includes(`${sJugador}rey`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoRey(parseInt(row),col,item)
+            }else if (item.innerText.includes(`${sJugador}hacheroE`) && !bMovioAsesino && !bMovioAsesinoElite) {
+                movimientoHacheroElite(parseInt(row),col,item)
             }else if (item.innerText.includes(`${sJugador}hachero`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoHachero(parseInt(row),col,item)
+            }else if(item.innerText.includes(`${sJugador}lanceroE`) && !bMovioAsesino && !bMovioAsesinoElite) {
+                movimientoLanceroElite(parseInt(row),col,item)
             }else if(item.innerText.includes(`${sJugador}lancero`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoLancero(parseInt(row),col,item)
             }else if(item.innerText.includes(`${sJugador}caballero`) && !bMovioAsesino && !bMovioAsesinoElite) {
@@ -220,8 +227,12 @@ export const agregarDivsTableroJuego = () => {
                 movimientoAsesino(parseInt(row),col,item,bMovioAsesino)
             }else if(item.innerText.includes(`${sJugador}hechicero`)&& !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoHechicero(parseInt(row),col,item)
+            }else if(item.innerText.includes(`${sJugador}canon`)&& !bMovioAsesino && !bMovioAsesinoElite) {
+                movimientoCanon(parseInt(row),col,item)
             }
             
+            
+
             reddish(item.innerText)
         })
     
@@ -334,7 +345,7 @@ export const coloringJuego  = () => {
 }
 
 //function to not remove the same team element
-function reddish() {
+const reddish = () => {
     document.querySelectorAll('.box').forEach(i1 => {
         if (i1.style.backgroundColor == colorSeleccionadoTablero) {
             document.querySelectorAll('.box').forEach(i2 => {

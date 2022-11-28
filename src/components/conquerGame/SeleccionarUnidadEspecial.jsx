@@ -31,24 +31,23 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa }) => {
         tipo:4, //Unidad especial
         titulo: 'Cañon',
         img: turno+'canon.png',
-        tipoPieza:'canonE',
+        tipoPieza:'canon',
         descripcion:`Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
-        atacar a distancia en la octava y novena casilla sin requerir mover la unidad`
+        atacar a distancia en la octava casilla sin requerir mover la unidad`
     },
     {
         tipo:4, //Unidad especial
         titulo: 'Lancero Elite',
         img: turno+'lanceroE.png',
         tipoPieza:'lanceroE',
-        descripcion:'Esta unidad puede moverse hasta 13 espacios en vertical o horizontal o un espacio en diagonal y puede matar dos unidades en linea recta'
+        descripcion:'Esta unidad puede moverse hasta 13 espacios en vertical/horizontal o 2 espacios en diagonal'
     },
     {
         tipo:4, //Unidad especial
-        titulo: 'Rey',
-        img: turno+'rey.png',
-        tipoPieza:'rey',
-        descripcion:`Mismas caracteristicas que el rey, Al tener dos piezas de rey puede ser mas dificil que te eliminen, solo ten cuidado de no descuidar a tus reyes, ya que al elimiarte una pieza de rey  
-        estas permitiendo que el enemigo pueda hacerde de una pieza especial`
+        titulo: 'Hachero Elite',
+        img: turno+'hacheroE.png',
+        tipoPieza:'hacheroE',
+        descripcion:'Esta unidad puede moverse hasta 13 horizontal o 2 espacios en vertical/horizontal'
     },
     ]);
     useEffect(() => {
