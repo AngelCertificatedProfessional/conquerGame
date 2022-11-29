@@ -5,7 +5,7 @@ import Home from './../containers/Home';
 import Login from './../containers/Login';
 import ConquerGameOpciones from '../containers/ConquerGameOpciones';
 import ConquerGame from '../containers/ConquerGame';
-// import Usuario from './../containers/Usuario';
+import Usuario from './../containers/Usuario';
 // import Observacion from './../containers/Observacion';
 
 import {env} from "../config/config";
@@ -39,7 +39,8 @@ const App = () => {
           <Route exact path="/login" element={<Login/>} />
           <Route exact path="/ConquerGameOpciones" element={<ConquerGameOpciones/>} />
           <Route exact path="/ConquerGame/:numeroPartida" element={<ConquerGame socket={socket}/>} />
-          {/* <Route exact path="/usuario" component={Usuario} />
+          <Route exact path="/usuario" element={<Usuario/>} />
+          {/* 
           <Route exact path="/observacion" component={Observacion} />
           <Route exact path="/actualizacion" component={Actualizacion} />
           <Route exact path="/generarWord" component={GenerarWord} />

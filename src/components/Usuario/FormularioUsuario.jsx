@@ -95,7 +95,7 @@ const FormularioUsuario = ({ setAccion,accion,ayuda }) => {
           onSubmit={handleSubmit}
           noValidate
         >
-            <h2 className="tituloCentrado">INICIO DE SESIÓN</h2>
+            <h2 className="tituloCentrado">CREACIÓN DE USUARIO</h2>
             <div className='campo-input'>
                 <label htmlFor="correo"> Correo: </label>
                 <input type="email" placeholder="Correo" name="correo" id="correo" onChange={handleChange}  onBlur={handleBlur} value={values.correo} 
