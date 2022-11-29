@@ -27,21 +27,21 @@ const schema = yup.object({
     apellido: yup.string().required('El apellido es un campo obligatorio')
   });
 
-const FormularioUsuario = ({ setAccion,accion,ayuda }) => {
+const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
   return (
     <Formik
     initialValues={{
-        usuario: '',
+        usuario: usuario.usuario || '',
         contrasena: '',
         validaContrasena:'',
-        nombre: '',
-        apellido: '',
-        correo: ''
+        nombre: usuario.nombre || '',
+        apellido: usuario.apellido ||'',
+        correo: usuario.correo ||''
       }}
       validationSchema={schema}
       onSubmit={(values, e) => {
-        let usuario = {}
-        if(values.aceptoTerminosYCondiciones === undefined  || values.aceptoTerminosYCondiciones.length <= 0  || !values.aceptoTerminosYCondiciones[0] === 'on'){
+        let usuarioT = {}
+        if(!usuario.hasOwnProperty('usuario') && (values.aceptoTerminosYCondiciones === undefined  || values.aceptoTerminosYCondiciones.length <= 0  || !values.aceptoTerminosYCondiciones[0] === 'on')){
           swal({
             title: 'Terminos Y Condiciones',
             text: 'Es necesario aceptar los terminos y condiciones para loguearse en el sistema',
@@ -50,17 +50,17 @@ const FormularioUsuario = ({ setAccion,accion,ayuda }) => {
           });
           return
         }else{
-          usuario.aceptoTerminosYCondiciones = true
+          usuarioT.aceptoTerminosYCondiciones = true
         }
 
         
-        usuario.usuario = values.usuario;
-        usuario.contrasena = values.contrasena;
-        usuario.nombre = values.nombre;
-        usuario.apellido = values.apellido;
-        usuario.correo = values.correo;
+        usuarioT.usuario = values.usuario;
+        usuarioT.contrasena = values.contrasena;
+        usuarioT.nombre = values.nombre;
+        usuarioT.apellido = values.apellido;
+        usuarioT.correo = values.correo;
         if (accion === 2) {
-          agregar('usuarios/agregarUsuario', usuario)
+          agregar('usuarios/agregarUsuario', usuarioT)
             .then(() => {
               swal({
                 title: 'Usuario Agregado',
@@ -78,7 +78,27 @@ const FormularioUsuario = ({ setAccion,accion,ayuda }) => {
                 button: 'OK',
               });
             });
-        } 
+        } else {
+          actualizar('usuarios/actualizarUsuario', usuarioT)
+            .then(() => {
+              swal({
+                title: 'Usuario Modificado',
+                text: 'Su usuario se a modificado exitosamente',
+                icon: 'success',
+                button: 'OK',
+              });
+              //aqui va el regreso
+              //actualizarListado();
+            })
+            .catch((error) => {
+              swal({
+                title: 'Error',
+                text: error,
+                icon: 'error',
+                button: 'OK',
+              });
+            });
+        }
       }}
       enableReinitialize
     >
@@ -144,19 +164,29 @@ const FormularioUsuario = ({ setAccion,accion,ayuda }) => {
                     <span className='mensaje-error'>{errors.apellido}</span>
                 )}
             </div>
-            
-            <div className='campo-input-row'>
-              <a className="liga" onClick={() => ayuda()}> Acepto Terminos Y condiciones:</a>
-              <input type="checkbox" name="aceptoTerminosYCondiciones" id="aceptoTerminosYCondiciones" onChange={e => {handleChange(e) }}  onBlur={e => {handleBlur(e);}} />
-            </div>
+            {!usuario.hasOwnProperty('usuario') && (
+              
+              <div className='campo-input-row'>
+                <a className="liga" onClick={() => ayuda()}> Acepto Terminos Y condiciones:</a>
+                <input type="checkbox" name="aceptoTerminosYCondiciones" id="aceptoTerminosYCondiciones" onChange={e => {handleChange(e) }}  onBlur={e => {handleBlur(e);}} />
+              </div>
+            )}
                 
           <div className='flex-orientation-button'>
-            <button className="boton blue" onClick={() => setAccion(1)} type="button">
-              Loguearse
-            </button>
-            <button className="boton blue" type="submit">
-              Registrar
-            </button>
+            {!usuario.hasOwnProperty('usuario') ? (
+              <>
+                <button className="boton blue" onClick={() => setAccion(1)} type="button">
+                  Loguearse
+                </button>
+                <button className="boton blue" type="submit">
+                  Registrar
+                </button>
+              </>
+            ):(
+              <button className="boton blue" type="submit">
+                Actualizar
+              </button>
+            )}
           </div>
           
         </form>

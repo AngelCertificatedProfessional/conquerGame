@@ -1,59 +1,54 @@
 //Material UI
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { consultaById } from '../utils/ConexionAPI';
 import {b64_to_utf8} from '../utils/UtileriasPagina';
 const FormularioUsuario = lazy(() =>
   import('../components/Usuario/FormularioUsuario')
 );
 
-const TerminosCondiciones = lazy(() =>
-  import('../components/Usuario/TerminosCondiciones')
-);
-
 
 const Usuario = () => {
     const navigate  = useNavigate();
-    const [accion, setAccion] = useState(1);
-    const [mostrarPopup,setmostrarPopup] = useState(false)
+    const [accion, setAccion] = useState(3);
+    const [usuario, setUsuario] = useState({});
     useEffect(() => {
-        const usuarioSesionT = JSON.parse(b64_to_utf8(sessionStorage.getItem('usuario')));
+        const usuarioSesionT = JSON.parse(b64_to_utf8(sessionStorage.getItem('usuario')))
         if (
-            usuarioSesionT !== null &&
-            usuarioSesionT !== undefined &&
-            usuarioSesionT.usuario !== ''
+            (usuarioSesionT === null ||
+            usuarioSesionT === undefined ||
+            usuarioSesionT.usuario === '') &&
+            location.pathname !== '/login'
         ) {
-            ingresarSesion();
+            navigate('/login');
         }
+        buscarRegistro(usuarioSesionT.token)
     }, []);
+
+    const buscarRegistro = (sToken) => {
+        consultaById('usuarios/consultaById/', sToken)
+        .then((jsUsuario) => {
+            setUsuario(jsUsuario);
+            setAccion(1);
+        });
+    };
 
     const ingresarSesion = async () => {
         navigate('/');
         window.location.href = window.location.href;
     };
-
-    const ayuda = () =>{
-        setmostrarPopup(!mostrarPopup)
-    }
     
     return (
-        <main className=" header-login">
+        <main className="main-actualizacion">
             <section className='formularioSeccion'>
                 <Suspense fallback={<div>Loading...</div>}>
                     <FormularioUsuario
                         setAccion={setAccion}
                         accion={accion}
-                        ayuda = {ayuda}
+                        usuario = {usuario}
                     />
                 </Suspense>
             </section>
-            {mostrarPopup ? 
-                <Suspense fallback={<div>Loading...</div>}>
-                    <TerminosCondiciones  
-                        ayuda = {ayuda}
-                    />  
-                </Suspense>  
-              : null  
-            }
         </main>
      );
 };

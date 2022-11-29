@@ -18,11 +18,10 @@ const Navigation = () => {
       setUsuario(usuarioT)
     }, []);
 
-    const cerrarSesion = () => {
-        sessionStorage.setItem(
-            'usuario',
-            utf8_to_b64(JSON.stringify({ ...initialState.usuario }))
-        );
+    const cerrarSesion = (e) => {
+        e.preventDefault();
+        sessionStorage.removeItem('usuario');
+        setUsuario(null)
         navigate('/login');
     };
 
@@ -65,33 +64,18 @@ const Navigation = () => {
     <>
       {usuario !== null && usuario !== undefined && usuario.usuario !== '' && (
         <header>
-          {/* <img id="logo" src="https://cdn.freecodecamp.org/platform/universal/fcc_primary.svg"> */}
           <h1>Liuts Company Platform</h1>
           <nav>
           <ul>
-              <li><Link className = "ligaT" to="usuario">Configuracion</Link></li>
-              <li><Link className = "ligaT" onClick={() => cerrarSesion()}>Cerrar Sersion</Link></li>
+              {!usuario.invitado && (
+                <li><Link className = "ligaT" to="usuario">Configuracion</Link></li>
+              )}
+              <li><Link to="/login" className = "ligaT" onClick={cerrarSesion}>Cerrar Sersion</Link></li>
             </ul>
           </nav>
         </header>
       )}
     </>
-
-    // <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
-    //   {/* <Navbar.Brand as={Link} to="/">
-    //             <img src={logo} width="150" height="30" alt="Hemolife"/>
-    //         </Navbar.Brand> */}
-    //   {usuario === null || usuario === undefined || usuario.usuario === '' ? (
-    //     <Navbar.Brand as={Link} to="/login">
-    //       Liuts Video
-    //     </Navbar.Brand>
-    //   ) : (
-    //     <Navbar.Brand as={Link} to="/">
-    //       Liuts Video
-    //     </Navbar.Brand>
-    //   )}
-    //   {opcionNavBar()}
-    // </Navbar>
   );
 };
 

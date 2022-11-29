@@ -95,6 +95,12 @@ img{ /**esta sentencia esta haciendo las imagenes responsibas*/
     justify-content: flex-end;
 }
 
+.main-actualizacion{
+    margin-top:6rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
 label{
     font-weight: 700;
     margin:2rem 0 1rem 0;
@@ -155,7 +161,7 @@ select {
 
 .contenedor{
     max-width: 120rem; /*1200 px*/
-    margin: 0 auto 0 auto;
+    margin: 6rem auto 0;
 }
 
 .contenido-centrado{
@@ -192,7 +198,6 @@ select {
 }
 
 .contenido{
-
     flex-shrink: 0; /**toma en consideracion solo lo que se ponen el flex-basis para no recrear un mal porcentaje*/
     flex-basis:calc(33.33% - 1rem);
     border:1px solid #b5b5b5;
@@ -303,7 +308,7 @@ li {
 }
 
 .contenedor-juegoF{
-    margin: 0 auto;
+    margin: 6rem auto 0;
 }
 
 .popup {  

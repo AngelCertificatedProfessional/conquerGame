@@ -56,6 +56,7 @@ const Login = () => {
                             setAccion={setAccion}
                             accion={accion}
                             ayuda = {ayuda}
+                            usuario = {{}}
                         />
                     </Suspense>
                 )}

@@ -5,7 +5,7 @@ import Home from './../containers/Home';
 import Login from './../containers/Login';
 import ConquerGameOpciones from '../containers/ConquerGameOpciones';
 import ConquerGame from '../containers/ConquerGame';
-import Usuario from './../containers/Usuario';
+import Usuario from '../containers/Usuario';
 // import Observacion from './../containers/Observacion';
 
 import {env} from "../config/config";
