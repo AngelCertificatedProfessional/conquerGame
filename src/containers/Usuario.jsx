@@ -29,13 +29,8 @@ const Usuario = () => {
         consultaById('usuarios/consultaById/', sToken)
         .then((jsUsuario) => {
             setUsuario(jsUsuario);
-            setAccion(1);
+            setAccion(3);
         });
-    };
-
-    const ingresarSesion = async () => {
-        navigate('/');
-        window.location.href = window.location.href;
     };
     
     return (
@@ -45,7 +40,16 @@ const Usuario = () => {
                     <FormularioUsuario
                         setAccion={setAccion}
                         accion={accion}
-                        usuario = {usuario}
+                        usuario = {4}
+                    />
+                </Suspense>
+            </section>
+            <section className='formularioSeccion'>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <FormularioUsuario
+                        setAccion={setAccion}
+                        accion={accion}
+                        usuario = {3}
                     />
                 </Suspense>
             </section>

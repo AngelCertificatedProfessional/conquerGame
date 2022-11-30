@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { agregar } from '../../utils/ConexionAPI';
+import { actualizar, agregar } from '../../utils/ConexionAPI';
 import swal from 'sweetalert';
 
 const schema = yup.object({
@@ -32,8 +32,8 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
     <Formik
     initialValues={{
         usuario: usuario.usuario || '',
-        contrasena: '',
-        validaContrasena:'',
+        contrasena: usuario.contrasena||'',
+        validaContrasena:usuario.contrasena ||'',
         nombre: usuario.nombre || '',
         apellido: usuario.apellido ||'',
         correo: usuario.correo ||''
@@ -52,8 +52,7 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
         }else{
           usuarioT.aceptoTerminosYCondiciones = true
         }
-
-        
+        usuarioT._id = usuario._id;
         usuarioT.usuario = values.usuario;
         usuarioT.contrasena = values.contrasena;
         usuarioT.nombre = values.nombre;
@@ -78,7 +77,27 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
                 button: 'OK',
               });
             });
-        } else {
+        } else if(accion === 3){
+          actualizar('usuarios/actualizarUsuario', usuarioT)
+            .then(() => {
+              swal({
+                title: 'Usuario Modificado',
+                text: 'Su usuario se a modificado exitosamente',
+                icon: 'success',
+                button: 'OK',
+              });
+              //aqui va el regreso
+              //actualizarListado();
+            })
+            .catch((error) => {
+              swal({
+                title: 'Error',
+                text: error,
+                icon: 'error',
+                button: 'OK',
+              });
+            });
+        }else if(accion === 4){
           actualizar('usuarios/actualizarUsuario', usuarioT)
             .then(() => {
               swal({
@@ -115,56 +134,77 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
           onSubmit={handleSubmit}
           noValidate
         >
-            <h2 className="tituloCentrado">CREACIÓN DE USUARIO</h2>
-            <div className='campo-input'>
+            <h2 className="tituloCentrado">
+            {accion === 2? (
+              `CREACIÓN DE USUARIO`
+            ):accion === 3 ? (
+              `MODIFICAR USUARIO`
+            ):(
+              `CAMBIAR CONTRASEÑA DE USUARIO`
+            )}
+            </h2>
+            {accion !== 4 && (
+              <>
+              <div className='campo-input'>
                 <label htmlFor="correo"> Correo: </label>
                 <input type="email" placeholder="Correo" name="correo" id="correo" onChange={handleChange}  onBlur={handleBlur} value={values.correo} 
                     className = {(!!touched.correo && !!errors.correo) ? 'border-mensaje-error' : ''} />
                 {(!!touched.correo && !!errors.correo) && (
                     <span className='mensaje-error'>{errors.correo}</span>
                 )}
-            </div>
-            <div className='campo-input'>
-                <label htmlFor="usuario"> Usuario: </label>
-                <input type="text" placeholder="Usuario" name="usuario" id="usuario" onChange={handleChange} onBlur={handleBlur} value={values.usuario}
-                    className = {(!!touched.usuario && !!errors.usuario) ? 'border-mensaje-error' : ''} />
-                {(!!touched.usuario && !!errors.usuario) && (
-                    <span className='mensaje-error'>{errors.usuario}</span>
-                )}
-            </div>
-            <div className='campo-input'>
-                <label htmlFor="contrasena"> Contraseña: </label>
-                <input type="password" placeholder="contraseña" name="contrasena" id="contrasena" onChange={handleChange} onBlur={handleBlur} value={values.contrasena}
-                    className = {(!!touched.contrasena && !!errors.contrasena) ? 'border-mensaje-error' : ''} />
-                {(!!touched.contrasena && !!errors.contrasena) && (
-                    <span className='mensaje-error'>{errors.contrasena}</span>
-                )}
-            </div>
-            <div className='campo-input'>
-                <label htmlFor="validaContrasena"> Validar Contraseña: </label>
-                <input type="password" placeholder="validar contraseña" name="validaContrasena" id="validaContrasena" onChange={handleChange} onBlur={handleBlur} value={values.validaContrasena}
-                    className = {(!!touched.validaContrasena && !!errors.validaContrasena) ? 'border-mensaje-error' : ''} />
-                {(!!touched.validaContrasena && !!errors.validaContrasena) && (
-                    <span className='mensaje-error'>{errors.validaContrasena}</span>
-                )}
-            </div>
-            <div className='campo-input'>
-                <label htmlFor="nombre"> Nombre: </label>
-                <input type="text" placeholder="Nombre" name="nombre" id="nombre" onChange={handleChange} onBlur={handleBlur} value={values.nombre}
-                    className = {(!!touched.nombre && !!errors.nombre) ? 'border-mensaje-error' : ''} />
-                {(!!touched.nombre && !!errors.nombre) && (
-                    <span className='mensaje-error'>{errors.nombre}</span>
-                )}
-            </div>
-            <div className='campo-input'>
-                <label htmlFor="apellido"> Apellido: </label>
-                <input type="text" placeholder="Apellido" name="apellido" id="apellido" onChange={handleChange} onBlur={handleBlur} value={values.apellido}
-                    className = {(!!touched.apellido && !!errors.apellido) ? 'border-mensaje-error' : ''} />
-                {(!!touched.apellido && !!errors.apellido) && (
-                    <span className='mensaje-error'>{errors.apellido}</span>
-                )}
-            </div>
-            {!usuario.hasOwnProperty('usuario') && (
+                </div>
+                <div className='campo-input'>
+                    <label htmlFor="usuario"> Usuario: </label>
+                    <input type="text" placeholder="Usuario" name="usuario" id="usuario" onChange={handleChange} onBlur={handleBlur} value={values.usuario}
+                        className = {(!!touched.usuario && !!errors.usuario) ? 'border-mensaje-error' : ''} />
+                    {(!!touched.usuario && !!errors.usuario) && (
+                        <span className='mensaje-error'>{errors.usuario}</span>
+                    )}
+                </div>
+              </>
+            )}
+            
+            {accion === 2 || accion === 4 && (
+              <>
+                <div className='campo-input'>
+                    <label htmlFor="contrasena"> Contraseña: </label>
+                    <input type="password" placeholder="contraseña" name="contrasena" id="contrasena" onChange={handleChange} onBlur={handleBlur} value={values.contrasena}
+                        className = {(!!touched.contrasena && !!errors.contrasena) ? 'border-mensaje-error' : ''} />
+                    {(!!touched.contrasena && !!errors.contrasena) && (
+                        <span className='mensaje-error'>{errors.contrasena}</span>
+                    )}
+                </div>
+                <div className='campo-input'>
+                    <label htmlFor="validaContrasena"> Validar Contraseña: </label>
+                    <input type="password" placeholder="validar contraseña" name="validaContrasena" id="validaContrasena" onChange={handleChange} onBlur={handleBlur} value={values.validaContrasena}
+                        className = {(!!touched.validaContrasena && !!errors.validaContrasena) ? 'border-mensaje-error' : ''} />
+                    {(!!touched.validaContrasena && !!errors.validaContrasena) && (
+                        <span className='mensaje-error'>{errors.validaContrasena}</span>
+                    )}
+                </div>
+              </>
+            )} 
+            {accion !== 4 && (
+              <>
+                <div className='campo-input'>
+                  <label htmlFor="nombre"> Nombre: </label>
+                  <input type="text" placeholder="Nombre" name="nombre" id="nombre" onChange={handleChange} onBlur={handleBlur} value={values.nombre}
+                      className = {(!!touched.nombre && !!errors.nombre) ? 'border-mensaje-error' : ''} />
+                  {(!!touched.nombre && !!errors.nombre) && (
+                      <span className='mensaje-error'>{errors.nombre}</span>
+                  )}
+                </div>
+                <div className='campo-input'>
+                  <label htmlFor="apellido"> Apellido: </label>
+                  <input type="text" placeholder="Apellido" name="apellido" id="apellido" onChange={handleChange} onBlur={handleBlur} value={values.apellido}
+                      className = {(!!touched.apellido && !!errors.apellido) ? 'border-mensaje-error' : ''} />
+                  {(!!touched.apellido && !!errors.apellido) && (
+                      <span className='mensaje-error'>{errors.apellido}</span>
+                  )}
+                </div>
+              </>
+            )}
+            {accion !== 4 && (
               
               <div className='campo-input-row'>
                 <a className="liga" onClick={() => ayuda()}> Acepto Terminos Y condiciones:</a>
@@ -173,7 +213,7 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
             )}
                 
           <div className='flex-orientation-button'>
-            {!usuario.hasOwnProperty('usuario') ? (
+            {accion !== 4 ? (
               <>
                 <button className="boton blue" onClick={() => setAccion(1)} type="button">
                   Loguearse
