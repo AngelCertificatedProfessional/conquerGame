@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { actualizar, agregar } from '../../utils/ConexionAPI';
+import { actualizar, actualizarEspecifico, agregar } from '../../utils/ConexionAPI';
 import swal from 'sweetalert';
 
 const schema = yup.object({
@@ -32,8 +32,8 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
     <Formik
     initialValues={{
         usuario: usuario.usuario || '',
-        contrasena: usuario.contrasena||'',
-        validaContrasena:usuario.contrasena ||'',
+        contrasena: accion !== 4 ? usuario.contrasena||'' : '',
+        validaContrasena: accion !== 4 ? usuario.contrasena||'' : '',
         nombre: usuario.nombre || '',
         apellido: usuario.apellido ||'',
         correo: usuario.correo ||''
@@ -98,11 +98,11 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
               });
             });
         }else if(accion === 4){
-          actualizar('usuarios/actualizarUsuario', usuarioT)
+          actualizarEspecifico('usuarios/actualizarContrasena', usuarioT)
             .then(() => {
               swal({
-                title: 'Usuario Modificado',
-                text: 'Su usuario se a modificado exitosamente',
+                title: 'Contraseña Modificada',
+                text: 'La contraseña de su usuario se a modificado exitosamente',
                 icon: 'success',
                 button: 'OK',
               });
@@ -143,6 +143,9 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
               `CAMBIAR CONTRASEÑA DE USUARIO`
             )}
             </h2>
+            {accion === 4 && (
+              <h3>Si no quieres cambiar tu contraseña, no escribas nada.</h3>
+            )}
             {accion !== 4 && (
               <>
               <div className='campo-input'>
@@ -164,7 +167,7 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
               </>
             )}
             
-            {accion === 2 || accion === 4 && (
+            {(accion === 2 || accion === 4) && (
               <>
                 <div className='campo-input'>
                     <label htmlFor="contrasena"> Contraseña: </label>
@@ -204,7 +207,7 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
                 </div>
               </>
             )}
-            {accion !== 4 && (
+            {accion === 2 && (
               
               <div className='campo-input-row'>
                 <a className="liga" onClick={() => ayuda()}> Acepto Terminos Y condiciones:</a>
@@ -213,7 +216,7 @@ const FormularioUsuario = ({ setAccion,accion,ayuda,usuario }) => {
             )}
                 
           <div className='flex-orientation-button'>
-            {accion !== 4 ? (
+            {accion === 2 ? (
               <>
                 <button className="boton blue" onClick={() => setAccion(1)} type="button">
                   Loguearse

@@ -36,22 +36,24 @@ const Usuario = () => {
     return (
         <main className="main-actualizacion">
             <section className='formularioSeccion'>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <FormularioUsuario
-                        setAccion={setAccion}
-                        accion={accion}
-                        usuario = {4}
-                    />
-                </Suspense>
-            </section>
-            <section className='formularioSeccion'>
-                <Suspense fallback={<div>Loading...</div>}>
-                    <FormularioUsuario
-                        setAccion={setAccion}
-                        accion={accion}
-                        usuario = {3}
-                    />
-                </Suspense>
+                <div className="seccion">
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <FormularioUsuario
+                            setAccion={setAccion}
+                            accion={3}
+                            usuario = {usuario}
+                        />
+                    </Suspense>
+                </div>
+                <div className="seccion">
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <FormularioUsuario
+                            setAccion={setAccion}
+                            accion={4}
+                            usuario = {usuario}
+                        />
+                    </Suspense>
+                </div>
             </section>
         </main>
      );
