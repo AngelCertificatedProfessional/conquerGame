@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Layout from '../components/generales/Layout';
 import Home from './../containers/Home';
 import Login from './../containers/Login';
@@ -33,24 +33,26 @@ const socket = io.connect(env.apiLiutsVideoURL,{
 const App = () => {
 
   return (
-      <Layout>
-        <Routes>
-          <Route exact path="/" element={<Home/>} />
-          <Route exact path="/login" element={<Login/>} />
-          <Route exact path="/ConquerGameOpciones" element={<ConquerGameOpciones/>} />
-          <Route exact path="/ConquerGame/:numeroPartida" element={<ConquerGame socket={socket}/>} />
-          <Route exact path="/usuario" element={<Usuario/>} />
-          {/* 
-          <Route exact path="/observacion" component={Observacion} />
-          <Route exact path="/actualizacion" component={Actualizacion} />
-          <Route exact path="/generarWord" component={GenerarWord} />
-          <Route exact path="/generarVariant" component={GenerarVariant} />
-          <Route exact path="/eventos" component={Eventos} />
-          <Route exact path="/generarEquipoModelo" component={GenerarEquipoModelo} />
-          <Route exact path="/estructuraJSON" component={EstructuraJSON} /> */}
-          <Route element={Error404} />
-        </Routes>
+      <BrowserRouter>
+        <Layout>
+          <Routes>
+            <Route exact path="/" element={<Home/>} />
+            <Route exact path="/login" element={<Login/>} />
+            <Route exact path="/ConquerGameOpciones" element={<ConquerGameOpciones/>} />
+            <Route exact path="/ConquerGame/:numeroPartida" element={<ConquerGame socket={socket}/>} />
+            <Route exact path="/usuario" element={<Usuario/>} />
+            {/* 
+            <Route exact path="/observacion" component={Observacion} />
+            <Route exact path="/actualizacion" component={Actualizacion} />
+            <Route exact path="/generarWord" component={GenerarWord} />
+            <Route exact path="/generarVariant" component={GenerarVariant} />
+            <Route exact path="/eventos" component={Eventos} />
+            <Route exact path="/generarEquipoModelo" component={GenerarEquipoModelo} />
+            <Route exact path="/estructuraJSON" component={EstructuraJSON} /> */}
+            <Route element={Error404} />
+          </Routes>
       </Layout>
+    </BrowserRouter>
   );
 };
 
