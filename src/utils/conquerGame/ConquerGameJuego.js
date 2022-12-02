@@ -487,27 +487,16 @@ const actualizarPiezasPosicionJuego = (bRendirse) => {
 
 export const evaluarResultadoPartida = (partidaT) => {
     //detectamos que jugador gano
-    let sMensaje = ''
     switch(partidaT.ganador){
         case "O":
-            sMensaje = 'Naranjas Ganan !!'
-        break;
+            return 'Naranjas Ganan !!'
         case "B":
-            sMensaje = 'Negros Ganan !!'
-        break;
+            return 'Negros Ganan !!'
         case "R":
-            sMensaje = 'Rojos Ganan!!'
-        break;
+            return 'Rojos Ganan!!'
         case "P":
-            sMensaje = 'Morados Ganan !!'
-        break;
+            return 'Morados Ganan !!'
     }
-    swal({
-        title: sMensaje,
-        text: 'Fin de la partida '+sMensaje,
-        icon: 'success',
-        button: 'OK',
-        });
 }
 
 export const conometro =(partidaT) =>{

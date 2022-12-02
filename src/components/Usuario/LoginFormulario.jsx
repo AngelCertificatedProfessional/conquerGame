@@ -19,7 +19,7 @@ const LoginFormulario = ({ ingresarSesion,setAccion,terminosCondiciones }) => {
   const generarUsuarioInvitado = () => {
 
     swal({
-      title: "Creacion de usuario invitado?",
+      title: "Creación de usuario invitado",
       text: eliminarSaltosLinea(`Querido jugador, Al entrar como usuario invitado usted esta accediendo a los términos y 
       condiciones de la plataforma como también es consciente que su usuario durara solo 24 horas, 
       ¿está seguro de continuar?.`),

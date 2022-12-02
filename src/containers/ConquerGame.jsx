@@ -97,9 +97,20 @@ const ConquerGame = ({socket}) => {
                     dispatchPiezasTableroRes(payload);
                     dispatchPartidas(payload)
                     posicionPiezasJuego(payload)
-                    evaluarResultadoPartida(payload)
                     detenerCronometro()
-                    setTimeout(()=>{navigate('/ConquerGameOpciones')}, 10000)
+                    const myTimeout = setTimeout(()=>{navigate('/ConquerGameOpciones')}, 10000)
+                    const sResultado = evaluarResultadoPartida(payload)
+                    swal({
+                        title: sResultado,
+                        text: 'Fin de la partida '+sResultado,
+                        icon: 'success',
+                        button: 'OK',
+                    }).then(function() {
+                        clearTimeout(myTimeout);
+                        navigate('/ConquerGameOpciones')
+                    });
+                    
+                    
                 break;
                 case 5:
                     if(payload.hasOwnProperty('alfitrion') && payload.nombreUsuario !==usuario.usuario){
@@ -251,7 +262,7 @@ const ConquerGame = ({socket}) => {
     const rendirse = () =>{
         swal({
             title: "Estas seguro?",
-            text: "Estas seguro de rendirte!",
+            text: "Estas seguro de rendirte!?",
             icon: "warning",
             buttons: [
               'No',
