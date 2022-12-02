@@ -6,8 +6,7 @@ import Login from './../containers/Login';
 import ConquerGameOpciones from '../containers/ConquerGameOpciones';
 import ConquerGame from '../containers/ConquerGame';
 import Usuario from '../containers/Usuario';
-// import Observacion from './../containers/Observacion';
-
+import Mejoras from './../containers/Mejoras';
 import {env} from "../config/config";
 import Error404 from './../containers/Error404';
 import { io } from "socket.io-client";
@@ -41,14 +40,7 @@ const App = () => {
             <Route exact path="/ConquerGameOpciones" element={<ConquerGameOpciones/>} />
             <Route exact path="/ConquerGame/:numeroPartida" element={<ConquerGame socket={socket}/>} />
             <Route exact path="/usuario" element={<Usuario/>} />
-            {/* 
-            <Route exact path="/observacion" component={Observacion} />
-            <Route exact path="/actualizacion" component={Actualizacion} />
-            <Route exact path="/generarWord" component={GenerarWord} />
-            <Route exact path="/generarVariant" component={GenerarVariant} />
-            <Route exact path="/eventos" component={Eventos} />
-            <Route exact path="/generarEquipoModelo" component={GenerarEquipoModelo} />
-            <Route exact path="/estructuraJSON" component={EstructuraJSON} /> */}
+            <Route exact path="/mejoras" element={<Mejoras/>} />
             <Route element={Error404} />
           </Routes>
       </Layout>

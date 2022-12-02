@@ -70,6 +70,7 @@ const Navigation = () => {
               {!usuario.invitado && (
                 <li><Link className = "ligaT" to="usuario">Configuracion</Link></li>
               )}
+              <li><Link to="/mejoras" className = "ligaT">Mejoras</Link></li>
               <li><Link to="/login" className = "ligaT" onClick={cerrarSesion}>Cerrar Sersion</Link></li>
             </ul>
           </nav>
