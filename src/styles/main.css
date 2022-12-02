@@ -225,7 +225,12 @@ select {
 .col-gray{
     color:#8b8484;
 }
-
+.col-orange{
+    color:#e28b19;
+}
+.col-red{
+    color:#e21919;
+}
 
 /*Listado Piezas*/
 
@@ -262,9 +267,9 @@ li {
     font-size: 0px;
 }
 .box {
-    margin: .5px;
-    width: 75px;
-    height: 75px;
+    margin: .15rem;
+    width: 7.5rem;
+    height: 7.5rem;
 }
 
 .row {

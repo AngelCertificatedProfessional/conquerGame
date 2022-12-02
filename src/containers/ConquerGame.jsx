@@ -87,7 +87,9 @@ const ConquerGame = ({socket}) => {
                     if(payload.hasOwnProperty("posicionPiezasGlobal")){
                         payload.hasOwnProperty("turno") ? setTurno(payload.turno) : setTurno(0)
                         posicionPiezasJuego(payload)
-                        indicarSiguienteJugador()
+                        if(indicarSiguienteJugador()){
+                            toast("Es tu turno "+usuario.usuario)
+                        }
                         conometro(payload);
                     }
                 break;

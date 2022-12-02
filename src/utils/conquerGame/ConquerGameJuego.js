@@ -395,7 +395,7 @@ const evaluartTurnoJugador = () => {
     }
     actualizarPiezasPosicionJuego()
 }
-
+//toast representa el metodo para mostrar mensaje del jugador en turno
 export const indicarSiguienteJugador = () =>{
     if(arrReyes.length <= 0){
         return;
@@ -439,6 +439,7 @@ export const indicarSiguienteJugador = () =>{
             }
         break;
     } 
+    return esJugadorTurno();
 }
 
 export const setCantidadJugadores = (cantidadJugadoresT) =>{
@@ -533,11 +534,22 @@ export const conometro =(partidaT) =>{
         if(esJugadorTurno()){
             document.getElementById("temporizador").classList.remove("col-gray")
             document.getElementById("tiempo").classList.remove("col-gray")
-            
+            if(seconds === 20){
+                document.getElementById("temporizador").classList.add("col-orange")
+                document.getElementById("tiempo").classList.add("col-orange")        
+            }else if(seconds === 10){
+                document.getElementById("temporizador").classList.remove("col-orange")
+                document.getElementById("tiempo").classList.remove("col-orange")
+                document.getElementById("temporizador").classList.add("col-red")
+                document.getElementById("tiempo").classList.add("col-red")
+            }
         }else{
+            document.getElementById("temporizador").classList.remove("col-orange")
+            document.getElementById("tiempo").classList.remove("col-orange")
+            document.getElementById("temporizador").classList.remove("col-red")
+            document.getElementById("tiempo").classList.remove("col-red")
             document.getElementById("temporizador").classList.add("col-gray")
             document.getElementById("tiempo").classList.add("col-gray")
-            
         }
             
         // If the count down is over, write some text 
