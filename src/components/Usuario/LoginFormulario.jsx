@@ -5,7 +5,7 @@ import { agregar, iniciarSesion } from '../../utils/ConexionAPI';
 import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
 import { eliminarSaltosLinea } from '../../utils/UtileriasPagina';
-
+const pjson = require('../../../package.json');
 const schema = yup.object({
   correo: yup
   .string()
@@ -116,8 +116,11 @@ const LoginFormulario = ({ ingresarSesion,setAccion,terminosCondiciones }) => {
                     <span className='mensaje-error'>{errors.contrasena}</span>
                 )}
             </div>
-            
-          <Link to="/login" className="liga seccion" onClick={terminosCondiciones}>Terminos y Condiciones</Link>
+            <div className='flex-orientation-button seccion'>
+              <Link to="/login" className="liga" onClick={terminosCondiciones}>Terminos y Condiciones</Link>
+              <h6> Versión {pjson.version}</h6>
+            </div>
+          
           <div className='flex-orientation-button'>
             <button className="boton blue" onClick={() => setAccion(2)} type="button">
               Crear Usuario

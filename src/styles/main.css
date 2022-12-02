@@ -71,6 +71,9 @@ h4{
 h5{
     font-size:2rem;
 }
+h6{
+    font-size:1.6rem;
+}
 img{ /**esta sentencia esta haciendo las imagenes responsibas*/
     max-width: 100%;
 }
