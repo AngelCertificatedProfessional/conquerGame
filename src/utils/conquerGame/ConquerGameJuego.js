@@ -455,7 +455,7 @@ export const setTurno = (turno) => {
 
 const esJugadorTurno = () => {
     if(arrReyes === null || arrReyes.length <= 0){
-        return;
+        return false;
     }
     if(sJugador === arrReyes[nTurno][0]){
         return true
@@ -530,6 +530,15 @@ export const conometro =(partidaT) =>{
             
         // Output the result in an element with id="demo"
         document.getElementById("temporizador").innerHTML = minutes + "m " + seconds + "s ";
+        if(esJugadorTurno()){
+            document.getElementById("temporizador").classList.remove("col-gray")
+            document.getElementById("tiempo").classList.remove("col-gray")
+            
+        }else{
+            document.getElementById("temporizador").classList.add("col-gray")
+            document.getElementById("tiempo").classList.add("col-gray")
+            
+        }
             
         // If the count down is over, write some text 
         if (distance < 0) {

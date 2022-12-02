@@ -385,7 +385,7 @@ const ConquerGame = ({socket}) => {
                                     </Suspense>     
                                 </div>
                             ))}
-                            <h2>Tiempo:</h2>
+                            <h2 id ="tiempo">Tiempo:</h2>
                             <h3 id="temporizador">01:00:00</h3>
                         </div>
                         <Suspense fallback={<div>Loading...</div>}>
