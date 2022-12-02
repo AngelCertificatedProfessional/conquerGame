@@ -7,13 +7,13 @@ const Ayuda = ({ turno,setmostrarAyuda,mostrarAyuda }) => {
         tipo:2, //Ayuda
         titulo: 'Lancero',
         img: turno+'lancero.png',
-        descripcion:'Esta unidad puede moverse hasta 13 espacios en vertical o horizontal o un espacio en diagonal'
+        descripcion:'Esta unidad puede moverse hasta 13 espacios en vertical u horizontal o un espacio en diagonal'
     },
     {
         tipo:2, //Ayuda
         titulo: 'Hachero',
         img: turno+'hachero.png',
-        descripcion:'Esta unidad puede moverse hasta 13 espacios en diagonal o un espacio en vertical o horizontal'
+        descripcion:'Esta unidad puede moverse hasta 13 espacios en diagonal o un espacio en vertical u horizontal'
     },
     {
         tipo:2, //Ayuda
@@ -76,13 +76,13 @@ const Ayuda = ({ turno,setmostrarAyuda,mostrarAyuda }) => {
         tipo:2, //Unidad especial
         titulo: 'Lancero Elite',
         img: turno+'lanceroE.png',
-        descripcion:'Esta unidad puede moverse hasta 13 espacios en vertical/horizontal o 2 espacios en diagonal',
+        descripcion:'Esta unidad puede moverse hasta 14 espacios en vertical/horizontal o 2 espacios en diagonal',
     },
     {
         tipo:2, //Unidad especial
         titulo: 'Hachero Elite',
         img: turno+'hacheroE.png',
-        descripcion:'Esta unidad puede moverse hasta 13 horizontal o 2 espacios en vertical/horizontal'
+        descripcion:'Esta unidad puede moverse hasta 14 horizontal o 2 espacios en vertical/horizontal'
     }])
 
     useEffect(() => {

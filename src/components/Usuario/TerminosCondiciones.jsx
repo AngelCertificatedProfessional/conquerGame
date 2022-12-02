@@ -1,5 +1,5 @@
 import React,{ useState, useEffect} from 'react';
-const TerminosCondiciones = ({ ayuda }) => {
+const TerminosCondiciones = ({ terminosCondiciones }) => {
     useEffect(() => {
     }, []);
     return (
@@ -130,7 +130,7 @@ const TerminosCondiciones = ({ ayuda }) => {
                         consideremos que cualquier actividad al usar los Juegos es objetable o en violación de estos Términos de uso. Tenemos el derecho de investigar violaciones a estos Términos de uso o la conducta que afecte los Juegos, 
                         incluyendo mediante la consulta a y la cooperación de autoridades encargadas del cumplimiento de la ley para iniciar acciones legales contra usuarios que violen la ley.
                 </h5>
-                <button className = {`boton blue w-100 m-right`} onClick={() => ayuda()}>Regresar</button>                 
+                <button className = {`boton blue w-100 m-right`} onClick={() => terminosCondiciones()}>Regresar</button>                 
             </div>
         </div>
     );

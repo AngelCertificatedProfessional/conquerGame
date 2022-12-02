@@ -50,12 +50,12 @@ const ListaPartidas = ({partidas,abrirPartidaJuego}) => {
     <>
         <div className="contenido-menu-opciones w-100">
             <h2 className='fw-300 centrar-texto'>
-                    Lista de partidas
+              Lista de partidas
             </h2>
             
             <div className='flex-orientation-button contenido-anuncio'>
                 <button className="boton blue w-100" type="button" onClick={() => buscarPartida()}>
-                Buscar
+                  Entrar
                 </button>
             </div>
             <div className="main-currency-table">

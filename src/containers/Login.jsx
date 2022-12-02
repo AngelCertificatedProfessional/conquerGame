@@ -35,7 +35,7 @@ const Login = () => {
         window.location.href = window.location.href;
     };
 
-    const ayuda = () =>{
+    const terminosCondiciones = () =>{
         setmostrarPopup(!mostrarPopup)
     }
     
@@ -47,6 +47,7 @@ const Login = () => {
                         <LoginFormulario
                             ingresarSesion={ingresarSesion}
                             setAccion={setAccion}
+                            terminosCondiciones = {terminosCondiciones}
                         />
                     </Suspense>
                 )}
@@ -55,7 +56,7 @@ const Login = () => {
                         <FormularioUsuario
                             setAccion={setAccion}
                             accion={accion}
-                            ayuda = {ayuda}
+                            terminosCondiciones = {terminosCondiciones}
                             usuario = {{}}
                         />
                     </Suspense>
@@ -64,7 +65,7 @@ const Login = () => {
             {mostrarPopup ? 
                 <Suspense fallback={<div>Loading...</div>}>
                     <TerminosCondiciones  
-                        ayuda = {ayuda}
+                        terminosCondiciones = {terminosCondiciones}
                     />  
                 </Suspense>  
               : null  

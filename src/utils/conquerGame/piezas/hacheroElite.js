@@ -56,7 +56,7 @@ export const movimientoHacheroElite = (row,col,item) =>{
     }
     
     //Noreste
-    for (let i = 1; i < 14; i++) {
+    for (let i = 1; i < 15; i++) {
         if(validaPiezaMontana(`${row+i}${numeroAAlfabeto(nCol+i)}`)){
             break
         }
@@ -68,7 +68,7 @@ export const movimientoHacheroElite = (row,col,item) =>{
         }
     }
     //sureste
-    for (let i = 1; i < 14; i++) {
+    for (let i = 1; i < 15; i++) {
         if(validaPiezaMontana(`${row-i}${numeroAAlfabeto(nCol+i)}`)){
             break
         }
@@ -80,7 +80,7 @@ export const movimientoHacheroElite = (row,col,item) =>{
         }
     }
     //noroeste
-    for (let i = 1; i < 14; i++) {
+    for (let i = 1; i < 15; i++) {
         if(validaPiezaMontana(`${row+i}${numeroAAlfabeto(nCol-i)}`)){
             break
         }
@@ -92,7 +92,7 @@ export const movimientoHacheroElite = (row,col,item) =>{
         }
     }
     //suroeste
-    for (let i = 1; i < 14; i++) {
+    for (let i = 1; i < 15; i++) {
         if(validaPiezaMontana(`${row-i}${numeroAAlfabeto(nCol-i)}`)){
             break
         }

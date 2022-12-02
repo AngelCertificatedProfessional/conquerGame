@@ -28,3 +28,7 @@ export const eliminarLetras = (sValor) => {
 export const eliminarNumeros = (sValor) => {
   return sValor.replace(/[0-9]/g, '')
 }
+
+export const eliminarSaltosLinea = (sValor) => {
+  return sValor.replace(/\s+/g, ' ')
+}

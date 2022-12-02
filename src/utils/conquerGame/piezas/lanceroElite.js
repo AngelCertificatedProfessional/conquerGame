@@ -53,7 +53,7 @@ export const movimientoLanceroElite = (row,col,item)  =>{
     }
 
      //Norte
-    for (let i = 1; i < 14; i++) {
+    for (let i = 1; i < 15; i++) {
         if(validaPiezaMontana(`${row+i}${numeroAAlfabeto(nCol)}`)){
             break
         }
@@ -65,7 +65,7 @@ export const movimientoLanceroElite = (row,col,item)  =>{
         }
     }
     //sur
-    for (let i = 1; i < 14; i++) {
+    for (let i = 1; i < 15; i++) {
         if(validaPiezaMontana(`${row-i}${numeroAAlfabeto(nCol)}`)){
             break
         }
@@ -78,7 +78,7 @@ export const movimientoLanceroElite = (row,col,item)  =>{
     }
 
     //Este
-    for (let i = 1; i < 14; i++) {
+    for (let i = 1; i < 15; i++) {
         if(validaPiezaMontana(`${row}${numeroAAlfabeto(nCol+i)}`)){
             break
         }
@@ -91,7 +91,7 @@ export const movimientoLanceroElite = (row,col,item)  =>{
     }
 
     //Oeste
-    for (let i = 1; i < 14; i++) {
+    for (let i = 1; i < 15; i++) {
         if(validaPiezaMontana(`${row}${numeroAAlfabeto(nCol-i)}`)){
             break
         }

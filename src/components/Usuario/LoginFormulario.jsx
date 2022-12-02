@@ -2,7 +2,9 @@ import React from 'react';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { agregar, iniciarSesion } from '../../utils/ConexionAPI';
+import { Link } from 'react-router-dom';
 import swal from 'sweetalert';
+import { eliminarSaltosLinea } from '../../utils/UtileriasPagina';
 
 const schema = yup.object({
   correo: yup
@@ -12,34 +14,50 @@ const schema = yup.object({
   contrasena: yup.string().required('La contraseña es requerida'),
 });
 
-const LoginFormulario = ({ ingresarSesion,setAccion }) => {
+const LoginFormulario = ({ ingresarSesion,setAccion,terminosCondiciones }) => {
 
   const generarUsuarioInvitado = () => {
-    let vAgregar = {}
-    vAgregar.invitado = true
-    agregar('usuarios/agregarUsuarioInvitado',vAgregar)
-    .then((jsonUsuario) => {
-      iniciarSesion('usuarios/iniciarSecion', jsonUsuario.data)
-          .then((jsonUsuario2) => {
-            ingresarSesion(jsonUsuario2);
-          })
-          .catch((error) => {
-            swal({
-              title: 'Error',
-              text: error.toString(),
-              icon: 'error',
-              button: 'OK',
-            });
+
+    swal({
+      title: "Creacion de usuario invitado?",
+      text: eliminarSaltosLinea(`Querido jugador, Al entrar como usuario invitado usted esta accediendo a los términos y 
+      condiciones de la plataforma como también es consciente que su usuario durara solo 24 horas, 
+      ¿está seguro de continuar?.`),
+      icon: "warning",
+      buttons: [
+        'No',
+        'Si'
+      ],
+      dangerMode: true,
+    }).then(function(isConfirm) {
+      if (isConfirm) {
+        let vAgregar = {}
+        vAgregar.invitado = true
+        agregar('usuarios/agregarUsuarioInvitado',vAgregar)
+        .then((jsonUsuario) => {
+          iniciarSesion('usuarios/iniciarSecion', jsonUsuario.data)
+              .then((jsonUsuario2) => {
+                ingresarSesion(jsonUsuario2);
+              })
+              .catch((error) => {
+                swal({
+                  title: 'Error',
+                  text: error.toString(),
+                  icon: 'error',
+                  button: 'OK',
+                });
+              });
+        })
+        .catch((error) => {
+          swal({
+            title: 'Error',
+            text: error.toString(),
+            icon: 'error',
+            button: 'OK',
           });
+        });
+      }
     })
-    .catch((error) => {
-      swal({
-        title: 'Error',
-        text: error.toString(),
-        icon: 'error',
-        button: 'OK',
-      });
-    });
   }
 
   return (
@@ -98,6 +116,8 @@ const LoginFormulario = ({ ingresarSesion,setAccion }) => {
                     <span className='mensaje-error'>{errors.contrasena}</span>
                 )}
             </div>
+            
+          <Link to="/login" className="liga seccion" onClick={terminosCondiciones}>Terminos y Condiciones</Link>
           <div className='flex-orientation-button'>
             <button className="boton blue" onClick={() => setAccion(2)} type="button">
               Crear Usuario

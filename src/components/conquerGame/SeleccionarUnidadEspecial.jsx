@@ -44,7 +44,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa,partida }) => {
         titulo: 'Lancero Elite',
         img: turno+'lanceroE.png',
         tipoPieza:'lanceroE',
-        descripcion:'Esta unidad puede moverse hasta 13 espacios en vertical/horizontal o 2 espacios en diagonal',
+        descripcion:'Esta unidad puede moverse hasta 14 espacios en vertical/horizontal o 2 espacios en diagonal',
         yaSelecconado:partida.posicionPiezasGlobal.hasOwnProperty(turno+"lanceroE")
     },
     {
@@ -52,7 +52,7 @@ const SeleccionarUnidadEspecial = ({ turno,agregarUnidadMapa,partida }) => {
         titulo: 'Hachero Elite',
         img: turno+'hacheroE.png',
         tipoPieza:'hacheroE',
-        descripcion:'Esta unidad puede moverse hasta 13 horizontal o 2 espacios en vertical/horizontal',
+        descripcion:'Esta unidad puede moverse hasta 14 horizontal o 2 espacios en vertical/horizontal',
         yaSelecconado:partida.posicionPiezasGlobal.hasOwnProperty(turno+"hacheroE")
     },
     ]);
