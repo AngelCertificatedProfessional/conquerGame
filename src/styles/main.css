@@ -455,7 +455,7 @@ nav {
     cursor: pointer;
   }
 
-  li > .ligaT {
+  .ligaT {
     font-size: 2rem;
     color: inherit;
     text-decoration: none;

@@ -181,7 +181,7 @@ export const agregarDivsTablero = () => {
             //En este segmento detectamos si hay otra pieza en ese lugar
             let nValor = arregloPiezas.findIndex(obj => obj.posicion===hathiTest.id);
             if(nValor !== -1){
-                alert('Ya se enceuntra una pieza en esta posicion');
+                alert('Ya se encuentra una pieza en esta posición');
                 return
             }
             
@@ -333,7 +333,7 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
         return true;
     }
     if(montanas.includes(sPosicion)){
-        alert('Esta pieza no puede invadir una montana');
+        alert('Esta pieza no puede invadir una montaña');
         return true;
     }
 }

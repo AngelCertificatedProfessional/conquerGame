@@ -1,14 +1,19 @@
 import React,{useEffect} from 'react';
-const Actualizacion = ({turnoUsuario,agregarImagenesListado}) => {
+const Actualizacion = ({actualizacion}) => {
   
   useEffect(() => {
-    agregarImagenesListado(turnoUsuario)
   }, []);
   
   return (  
     <>
-        <div className= "listado_piezas" id="lista_personajes">
-        </div>
+      <div className="seccion">
+        <h5 className='fw-700'>
+          {actualizacion.titulo}
+        </h5>
+        <h5 className='fw-300'>
+          {actualizacion.descripcion}
+        </h5>
+      </div>
     </>
   );
 };

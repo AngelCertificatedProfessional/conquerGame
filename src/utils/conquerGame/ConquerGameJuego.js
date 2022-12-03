@@ -612,7 +612,7 @@ export const agregarPiezaEspecialClick = (sId) =>{
     });
 
     if(bVarible){
-        alert('Ya se enceuntra una pieza en esta posicion');
+        alert('Ya se encuentra una pieza en esta posición');
         return;
     }
 
@@ -657,7 +657,7 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
         return true;
     }
     if(montanas.includes(sPosicion)){
-        alert('Esta pieza no puede invadir una montana');
+        alert('Esta pieza no puede invadir una montaña');
         return true;
     }
 
