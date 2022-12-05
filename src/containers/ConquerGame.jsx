@@ -44,7 +44,7 @@ const ConquerGame = ({socket}) => {
     const [partida,dispatchPartidas] = useReducer(agregarPartidaRes, partidaInitial);
 
     const turnoUsuarioInitial = '' //Este metodo se usa para mostrar todos los jugadores en la lista de espera
-    const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroTableroRes, turnoUsuarioInitial);
+    const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroRes, turnoUsuarioInitial);
 
     useEffect(() => {
         //window.addEventListener('beforeunload', desconectarUsuarioPartida)
@@ -69,8 +69,9 @@ const ConquerGame = ({socket}) => {
                 break;
                 case 2:
                     dispatchPartidas(payload)
-                    limpiarVariables()
+                    //Esta seccion indica que si la pagina se esta refrescando al presionar f5 o se salio y volvio a ingresar
                     if(!payload.hasOwnProperty('notificarUsuarioListo')){
+                        limpiarVariables()
                         dispatchPiezasTableroRes(payload);
                         setAccion(2);
                     }else{
@@ -201,7 +202,7 @@ const ConquerGame = ({socket}) => {
         });
     }
 
-    function mostrarTableroTableroRes(state, action){
+    function mostrarTableroRes(state, action){
         if(state !== ''){
             return state;
         }
