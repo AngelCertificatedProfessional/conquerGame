@@ -295,13 +295,15 @@ export const posicionPiezasJuego = (partida) => {
         //limpiamos las piezas del mapa para volverlas a colocar
         document.querySelectorAll('.box').forEach(ee => {
             ee.innerHTML = ''
+            ee.title = ''
+            ee.style.cursor = 'default'
         })
         for ( const piecePosition in partida.posicionPiezasGlobal ) {
             posicionPiezasGlobal[piecePosition] = partida.posicionPiezasGlobal[piecePosition];
             const div = document.getElementById(partida.posicionPiezasGlobal[piecePosition]);
             if (typeof(div) != 'undefined' && div != null){
                 div.innerHTML = piecePosition.replace(' ','')
-                console.log(piecePosition)    
+                div.title = eliminarNumeros(piecePosition.substring(1)) +"\nPieza " + getColorPorLetra(piecePosition[0])   
                 if(piecePosition.replace(/[0-9]/g, '').includes('rey')){
                     arrReyes.push(piecePosition.replace(/[0-9]/g, ''))
                 }
@@ -477,16 +479,7 @@ const actualizarPiezasPosicionJuego = (bRendirse) => {
 
 export const evaluarResultadoPartida = (partidaT) => {
     //detectamos que jugador gano
-    switch(partidaT.ganador){
-        case "O":
-            return 'Naranjas Ganan !!'
-        case "B":
-            return 'Negros Ganan !!'
-        case "R":
-            return 'Rojos Ganan!!'
-        case "P":
-            return 'Morados Ganan !!'
-    }
+    return getColorPorLetra(partidaT.ganador) + " Ganan !!"
 }
 
 export const conometro =(partidaT) =>{
@@ -651,4 +644,20 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
         return true;
     }
 
+}
+
+export const getColorPorLetra = (sLetra) => {
+    //detectamos que jugador gano
+    switch(sLetra){
+        case "O":
+            return 'Naranjas'
+        case "B":
+            return 'Negros'
+        case "R":
+            return 'Rojos'
+        case "P":
+            return 'Morados'
+        default:
+            return "";
+    }
 }
