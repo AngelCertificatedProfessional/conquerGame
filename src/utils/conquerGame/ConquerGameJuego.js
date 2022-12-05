@@ -273,7 +273,7 @@ export const agregarDivsTableroJuego = () => {
     })
 }
 
-
+//indica el listado de las piesas del usuario
 export const agregarImagenesListadoJuego = async(turnoUsuario) => {
     sJugador = turnoUsuario
     for ( const piecePosition in arregloPiezas ) {  
@@ -300,20 +300,10 @@ export const posicionPiezasJuego = (partida) => {
             posicionPiezasGlobal[piecePosition] = partida.posicionPiezasGlobal[piecePosition];
             const div = document.getElementById(partida.posicionPiezasGlobal[piecePosition]);
             if (typeof(div) != 'undefined' && div != null){
-                div.innerHTML = piecePosition.replace(' ','')    
+                div.innerHTML = piecePosition.replace(' ','')
+                console.log(piecePosition)    
                 if(piecePosition.replace(/[0-9]/g, '').includes('rey')){
                     arrReyes.push(piecePosition.replace(/[0-9]/g, ''))
-                }
-            }
-        }
-    }else{
-        for (const jugador of partida.jugadores) {
-            for ( const piecePosition in jugador.posicionPiezasJugador ) {
-                posicionPiezasGlobal[piecePosition] = jugador.posicionPiezasJugador[piecePosition];
-                var div = document.getElementById(jugador.posicionPiezasJugador[piecePosition]);
-                div.innerHTML = piecePosition.replace(' ','');
-                if(piecePosition.replace(/[0-9]/g, '').includes('rey')){
-                    arrReyes.push(piecePosition.replace(' ',''))
                 }
             }
         }
