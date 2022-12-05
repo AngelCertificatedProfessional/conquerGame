@@ -282,7 +282,7 @@ export const agregarImagenesListadoJuego = async(turnoUsuario) => {
         let divElement = document.createElement("div");
         divElement.className = 'iconoMenu'
         divElement.id = arregloPiezas[piecePosition].nombre
-        divElement.innerHTML = sJugador+arregloPiezas[piecePosition].nombre+`<img class='allimg' src="${arregloPiezas[piecePosition].direccion}" alt="">`
+        divElement.innerHTML = arregloPiezas[piecePosition].nombre+`<img class='allimg' src="${arregloPiezas[piecePosition].direccion}" alt="">`
         divElement.style.cursor = 'pointer'
         document.getElementById("lista_personajes").appendChild(divElement);
     }

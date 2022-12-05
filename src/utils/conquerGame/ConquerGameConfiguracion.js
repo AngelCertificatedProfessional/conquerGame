@@ -95,6 +95,7 @@ export const limpiarVariables = () => {
     }
 }
 
+//indica el listado de las piesas del usuario
 export const agregarImagenesListado = async(turnoUsuario) => {
     sTurno = turnoUsuario
     for ( const piecePosition in arregloPiezas ) {
@@ -103,7 +104,7 @@ export const agregarImagenesListado = async(turnoUsuario) => {
         let divElement = document.createElement("div");
         divElement.className = 'iconoMenu'
         divElement.id = arregloPiezas[piecePosition].nombre
-        divElement.innerHTML = sTurno+arregloPiezas[piecePosition].nombre+`<img class='allimg' src="${arregloPiezas[piecePosition].direccion}" alt="">`
+        divElement.innerHTML = arregloPiezas[piecePosition].nombre+`<img class='allimg' src="${arregloPiezas[piecePosition].direccion}" alt="">`
         divElement.style.cursor = 'pointer'
         document.getElementById("lista_personajes").appendChild(divElement);
     }
@@ -111,11 +112,11 @@ export const agregarImagenesListado = async(turnoUsuario) => {
     document.querySelectorAll('.iconoMenu').forEach(hathiTest => {
         hathiTest.addEventListener('click', function () {
             //guardamos la pieza
-            sPiezaAColocar = hathiTest.innerText;
+            sPiezaAColocar = sTurno+hathiTest.innerText;
             //Segmento para deselecconar las opciones tanto del tablero como del listado
             if(piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id){
                 piezaSeleccionada.style.backgroundColor = 'rgb(255, 255, 255)';
-                let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, '').substring(1,piezaSeleccionada.innerText.length));
+                let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, ''));
                 if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
                     if(lagos.includes(arregloPiezas[nValor].posicion)){
                         document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
@@ -128,7 +129,7 @@ export const agregarImagenesListado = async(turnoUsuario) => {
     //         //pintar el seleccionado normal o gris sobre la misma pieza
             if(hathiTest.style.backgroundColor === colorSeleccionadoListado){
                 hathiTest.style.backgroundColor = 'rgb(255, 255, 255)'; 
-                let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, '').substring(1,piezaSeleccionada.innerText.length));
+                let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, ''));
                 if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
                     if(lagos.includes(arregloPiezas[nValor].posicion)){
                         document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
@@ -141,7 +142,7 @@ export const agregarImagenesListado = async(turnoUsuario) => {
                 hathiTest.style.backgroundColor = colorSeleccionadoListado;
                 piezaSeleccionada = hathiTest;
                 //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
-                let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, '').substring(1,sPiezaAColocar.length ));
+                let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, ''));
                 if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
                     document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionadoTablero;
                 }
