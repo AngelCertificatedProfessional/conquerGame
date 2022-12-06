@@ -126,10 +126,10 @@ export const agregarImagenesListado = async(turnoUsuario) => {
                 }
                 piezaSeleccionada = null;
             }
-    //         //pintar el seleccionado normal o gris sobre la misma pieza
+            //pintar el seleccionado normal o gris sobre la misma pieza
             if(hathiTest.style.backgroundColor === colorSeleccionadoListado){
                 hathiTest.style.backgroundColor = 'rgb(255, 255, 255)'; 
-                let nValor = arregloPiezas.findIndex(obj => obj.nombre===piezaSeleccionada.innerText.replace(/\s/g, ''));
+                let nValor = arregloPiezas.findIndex(obj => obj.nombre===sTurno+hathiTest.innerText.replace(/\s/g, ''));
                 if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
                     if(lagos.includes(arregloPiezas[nValor].posicion)){
                         document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorLago;
@@ -142,7 +142,7 @@ export const agregarImagenesListado = async(turnoUsuario) => {
                 hathiTest.style.backgroundColor = colorSeleccionadoListado;
                 piezaSeleccionada = hathiTest;
                 //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
-                let nValor = arregloPiezas.findIndex(obj => obj.nombre===sPiezaAColocar.replace(/\s/g, ''));
+                let nValor = arregloPiezas.findIndex(obj => obj.nombre===hathiTest.innerText.replace(/\s/g, ''));
                 if(nValor !== -1 && arregloPiezas[nValor].posicion !== ''){
                     document.getElementById(arregloPiezas[nValor].posicion).style.backgroundColor = colorSeleccionadoTablero;
                 }

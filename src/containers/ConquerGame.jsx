@@ -3,7 +3,7 @@ import { useParams,useNavigate  } from 'react-router-dom';
 import {b64_to_utf8} from '../utils/UtileriasPagina';
 import { actualizarEspecifico, consultaById } from '../utils/ConexionAPI';
 import { agregarDivsTablero, agregarImagenesListado, coloring, guardarConfiguracionPiezas, limpiarVariables, posicionPiezaJugador, setCantidadJugadores } from '../utils/conquerGame/ConquerGameConfiguracion';
-import { agregarDivsTableroJuego, agregarImagenesListadoJuego, colocarPiezaEspecial, coloringJuego, conometro, detenerCronometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, mostrarMenuUnidadEspecialM, posicionPiezasJuego,rendirseJugador,saltarTurno,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
+import { agregarDivsTableroJuego, agregarImagenesListadoJuego, colocarPiezaEspecial, coloringJuego, conometro, detenerCronometro, evaluarResultadoPartida, indicarSiguienteJugador, limpiarVariablesJuego, mostrarMenuUnidadEspecialM, posicionPiezasJuego,rendirseJugador,saltarTurno,setJugador,setPartida, setTurno} from '../utils/conquerGame/ConquerGameJuego';
 import swal from 'sweetalert';
 const ListaEspera = React.lazy(() =>
     import('../components/conquerGame/ListaEspera')
@@ -25,6 +25,10 @@ const SeleccionarUnidadEspecial = React.lazy(() =>
     import('../components/conquerGame/SeleccionarUnidadEspecial')
 );
 
+const HistorialJugadores = React.lazy(() =>
+    import('../components/conquerGame/HistorialJugadores')
+);
+
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -42,7 +46,6 @@ const ConquerGame = ({socket}) => {
 
     const partidaInitial = null;
     const [partida,dispatchPartidas] = useReducer(agregarPartidaRes, partidaInitial);
-
     const turnoUsuarioInitial = '' //Este metodo se usa para mostrar todos los jugadores en la lista de espera
     const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroRes, turnoUsuarioInitial);
 
@@ -86,6 +89,7 @@ const ConquerGame = ({socket}) => {
                     setPartida(payload)
                     setAccion(3);
                     if(payload.hasOwnProperty("posicionPiezasGlobal")){
+                        setJugador(usuario.usuario)
                         payload.hasOwnProperty("turno") ? setTurno(payload.turno) : setTurno(0)
                         posicionPiezasJuego(payload)
                         if(indicarSiguienteJugador()){
@@ -389,18 +393,31 @@ const ConquerGame = ({socket}) => {
                     </div>
                     <div className="contenedor-contenido-row">
                         <div className="contenedor-contenido-column m-right">
-                            {partida !== null && partida.hasOwnProperty('jugadores') && partida.jugadores.map((jugador, index) => (
-                                <div className={`w-100 targetaJugador${index} ma-bottom2 opa-50`} key={index} id={`targetaJugador${index}`}> 
+                            {partida !== null && partida.hasOwnProperty('jugadores') && (
+                                partida.jugadores.map((jugador, index) => (
+                                    <div className={`w-100 targetaJugador${index} ma-bottom2 opa-50`} key={index} id={`targetaJugador${index}`}> 
+                                        <Suspense fallback={<div>Loading...</div>}>
+                                            <ListaEspera
+                                                key={index}
+                                                jugador = {jugador}
+                                            />
+                                        </Suspense>     
+                                    </div>
+                                )))
+                            }
+                            <h2 id ="tiempo">Tiempo:</h2>
+                            <h3 id="temporizador">01:00:00</h3>
+                            <h2>Historial:</h2>
+                            {partida !== null && partida.hasOwnProperty('historialJugadores') && partida.historialJugadores.slice(0).reverse().map((historial, index) => (
+                                <div className={`w-100 historialJugador ma-bottom2`} key={index} id={`historialJugador${index}`}> 
                                     <Suspense fallback={<div>Loading...</div>}>
-                                        <ListaEspera
+                                        <HistorialJugadores
                                             key={index}
-                                            jugador = {jugador}
+                                            historial = {historial}
                                         />
                                     </Suspense>     
                                 </div>
                             ))}
-                            <h2 id ="tiempo">Tiempo:</h2>
-                            <h3 id="temporizador">01:00:00</h3>
                         </div>
                         <Suspense fallback={<div>Loading...</div>}>
                             <Tablero

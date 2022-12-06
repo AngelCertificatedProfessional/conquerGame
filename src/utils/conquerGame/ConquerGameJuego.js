@@ -21,6 +21,7 @@ let bMovioAsesino = false;
 let bMovioAsesinoElite = false;
 let sPiezaMovimiento = "";
 let arrReyes = []
+let sTurnoJugador = ''
 let sJugador = ''
 let z = 0;
 let partida = {};
@@ -40,7 +41,7 @@ export const limpiarVariablesJuego = () => {
     bMovioAsesino = false;
     sPiezaMovimiento = "";
     arrReyes = []
-    sJugador = ''
+    sTurnoJugador = ''
     z = 0;
     partida = {};
     posicionPiezasGlobal = {}
@@ -77,7 +78,7 @@ export const agregarDivsTableroJuego = () => {
             }
 
             //hacemos respetar el turno del usuario
-            if(!esJugadorTurno()) return
+            if(!esTurnoJugadorTurno()) return
             
             // To delete the opposite element
             if (item.style.backgroundColor == colorOpciones && item.innerText.length == 0) {
@@ -93,7 +94,7 @@ export const agregarDivsTableroJuego = () => {
                 }
                 posicionPiezasGlobal[sPiezaMovimiento] = item.id
                 
-                evaluartTurnoJugador();
+                evaluartTurnoJugador(`Jugador ${sJugador} movio la pieza ${sPiezaMovimiento.substring(1)}`);
                 return;
                 //en este segmento enviaremos la peticion de la posicion de las unidades
             }else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
@@ -126,14 +127,18 @@ export const agregarDivsTableroJuego = () => {
                         posicionPiezasGlobal[sPiezaMovimiento] = item.id
 
                         if(piezaAnterior.includes('rey')){
+                            if(!bMovioAsesinoElite) {
+                                nTurno --
+                            }
                             //detectamos la posicion del rey que estan atacando
                             const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
                             //detectamos la posicion del rey que esta ordenando el ataque.
                             const indexReyOrden = arrReyes.indexOf(pinkText2[0]+'rey');
+                            console.log(nTurno)
                             if(indexReyMuerto < indexReyOrden){
                                 nTurno--
                             }
-    
+                            console.log(nTurno)
                             if (indexReyMuerto > -1) { // only splice array when item is found
                                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
@@ -143,11 +148,11 @@ export const agregarDivsTableroJuego = () => {
                                 sAgregarPiezaEspecial = "pieza"
                                 return;
                             }else{
-                                evaluartTurnoJugador();
+                                evaluartTurnoJugador(`Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} con ${sPiezaMovimiento.substring(1)}`);
                                 return;
                             }
                         }else{
-                            evaluartTurnoJugador();
+                            evaluartTurnoJugador(`Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} con ${sPiezaMovimiento.substring(1)}`);
                             return;
                         }
                     }
@@ -172,6 +177,9 @@ export const agregarDivsTableroJuego = () => {
                             bMovioAsesinoElite = false;
                         }
                         if(piezaAnterior.includes('rey')){
+                            if(!bMovioAsesinoElite) {
+                                nTurno --
+                            }
                             //detectamos la posicion del rey que estan atacando
                             const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
                             //detectamos la posicion del rey que esta ordenando el ataque.
@@ -190,11 +198,11 @@ export const agregarDivsTableroJuego = () => {
                                 sAgregarPiezaEspecial = "pieza"
                                 return;
                             }else{
-                                evaluartTurnoJugador();
+                                evaluartTurnoJugador(`Jugador ${sJugador} disparo al rey ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} usando ${sPiezaMovimiento.substring(1)}`);
                                 return;
                             }
                         }else{
-                            evaluartTurnoJugador();
+                            evaluartTurnoJugador(`Jugador ${sJugador} disparo a la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} usando ${sPiezaMovimiento.substring(1)} `);
                             return;
                         }
                     }
@@ -206,30 +214,30 @@ export const agregarDivsTableroJuego = () => {
     
             // // Toggling the turn
             sPiezaMovimiento = item.innerText;
-            if (item.innerText.includes(`${sJugador}archerE`) && !bMovioAsesino && !bMovioAsesinoElite) {
+            if (item.innerText.includes(`${sTurnoJugador}archerE`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoArcherElite(parseInt(row),col,item)
-            }else if (item.innerText.includes(`${sJugador}archer`) && !bMovioAsesino && !bMovioAsesinoElite) {
+            }else if (item.innerText.includes(`${sTurnoJugador}archer`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoArcher(parseInt(row),col,item)
-            }else if (item.innerText.includes(`${sJugador}rey`) && !bMovioAsesino && !bMovioAsesinoElite) {
+            }else if (item.innerText.includes(`${sTurnoJugador}rey`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoRey(parseInt(row),col,item)
-            }else if (item.innerText.includes(`${sJugador}hacheroE`) && !bMovioAsesino && !bMovioAsesinoElite) {
+            }else if (item.innerText.includes(`${sTurnoJugador}hacheroE`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoHacheroElite(parseInt(row),col,item)
-            }else if (item.innerText.includes(`${sJugador}hachero`) && !bMovioAsesino && !bMovioAsesinoElite) {
+            }else if (item.innerText.includes(`${sTurnoJugador}hachero`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoHachero(parseInt(row),col,item)
-            }else if(item.innerText.includes(`${sJugador}lanceroE`) && !bMovioAsesino && !bMovioAsesinoElite) {
+            }else if(item.innerText.includes(`${sTurnoJugador}lanceroE`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoLanceroElite(parseInt(row),col,item)
-            }else if(item.innerText.includes(`${sJugador}lancero`) && !bMovioAsesino && !bMovioAsesinoElite) {
+            }else if(item.innerText.includes(`${sTurnoJugador}lancero`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoLancero(parseInt(row),col,item)
-            }else if(item.innerText.includes(`${sJugador}caballero`) && !bMovioAsesino && !bMovioAsesinoElite) {
+            }else if(item.innerText.includes(`${sTurnoJugador}caballero`) && !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoCaballero(parseInt(row),col,item)
-            }else if(item.innerText.includes(`${sJugador}asesinoE`) && !bMovioAsesino) {
+            }else if(item.innerText.includes(`${sTurnoJugador}asesinoE`) && !bMovioAsesino) {
                 //Las unidades especiales que se llamen igual que el original deben ir primero para que el algoritno no lo confunda con la pieza normal
                 movimientoAsesinoElite(parseInt(row),col,item)
-            }else if(item.innerText.includes(`${sJugador}asesino`) && !bMovioAsesinoElite) {
+            }else if(item.innerText.includes(`${sTurnoJugador}asesino`) && !bMovioAsesinoElite) {
                 movimientoAsesino(parseInt(row),col,item,bMovioAsesino)
-            }else if(item.innerText.includes(`${sJugador}hechicero`)&& !bMovioAsesino && !bMovioAsesinoElite) {
+            }else if(item.innerText.includes(`${sTurnoJugador}hechicero`)&& !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoHechicero(parseInt(row),col,item)
-            }else if(item.innerText.includes(`${sJugador}canon`)&& !bMovioAsesino && !bMovioAsesinoElite) {
+            }else if(item.innerText.includes(`${sTurnoJugador}canon`)&& !bMovioAsesino && !bMovioAsesinoElite) {
                 movimientoCanon(parseInt(row),col,item)
             }
             
@@ -275,9 +283,9 @@ export const agregarDivsTableroJuego = () => {
 
 //indica el listado de las piesas del usuario
 export const agregarImagenesListadoJuego = async(turnoUsuario) => {
-    sJugador = turnoUsuario
+    sTurnoJugador = turnoUsuario
     for ( const piecePosition in arregloPiezas ) {  
-        const response  = await import(`@images/${sJugador+arregloPiezas[piecePosition].icono}.png`)  
+        const response  = await import(`@images/${sTurnoJugador+arregloPiezas[piecePosition].icono}.png`)  
         arregloPiezas[piecePosition].direccion = response.default
         let divElement = document.createElement("div");
         divElement.className = 'iconoMenu'
@@ -363,7 +371,7 @@ const reddish = () => {
 export const saltarTurno = () =>{
     
     if(sAgregarPiezaEspecial === ""){
-        if(!esJugadorTurno()){
+        if(!esTurnoJugadorTurno()){
             return;
         }
         nTurno ++;
@@ -377,15 +385,15 @@ export const saltarTurno = () =>{
     coloringJuego()
     bMovioAsesino = false;
     bMovioAsesinoElite = false;
-    evaluartTurnoJugador()
+    evaluartTurnoJugador(`Jugador ${sJugador} salto turno`)
 }
 
-const evaluartTurnoJugador = () => {
+const evaluartTurnoJugador = (sAccionJugador) => {
     detenerCronometro()
     if(nTurno +1 > arrReyes.length ){
         nTurno = 0
     }
-    actualizarPiezasPosicionJuego()
+    actualizarPiezasPosicionJuego(false,sAccionJugador)
 }
 //toast representa el metodo para mostrar mensaje del jugador en turno
 export const indicarSiguienteJugador = () =>{
@@ -431,7 +439,7 @@ export const indicarSiguienteJugador = () =>{
             }
         break;
     } 
-    return esJugadorTurno();
+    return esTurnoJugadorTurno();
 }
 
 export const setCantidadJugadores = (cantidadJugadoresT) =>{
@@ -446,23 +454,28 @@ export const setTurno = (turno) => {
     nTurno = turno;
 }
 
-const esJugadorTurno = () => {
+export const setJugador = (sJugadorT) => {
+    sJugador = sJugadorT;
+}
+
+const esTurnoJugadorTurno = () => {
     if(arrReyes === null || arrReyes.length <= 0){
         return false;
     }
-    if(sJugador === arrReyes[nTurno][0]){
+    if(sTurnoJugador === arrReyes[nTurno][0]){
         return true
     }
     return false;
 }
 
-const actualizarPiezasPosicionJuego = (bRendirse) => {
+const actualizarPiezasPosicionJuego = (bRendirse,sAccionUsuario) => {
     let vResultado = {}
     vResultado.numeroPartida = partida.numeroPartida
     vResultado.posicionPiezasGlobal = posicionPiezasGlobal;
-    if(!bRendirse){
+    vResultado.accionUsuario = sAccionUsuario;
+    //if(!bRendirse){
         vResultado.turno = nTurno;
-    }
+    //}
 
     actualizarEspecifico('conquerGame/actualizarPiezasPosicionJuego',vResultado)
     .then((resultado) => {
@@ -503,7 +516,7 @@ export const conometro =(partidaT) =>{
             
         // Output the result in an element with id="demo"
         document.getElementById("temporizador").innerHTML = minutes + "m " + seconds + "s ";
-        if(esJugadorTurno()){
+        if(esTurnoJugadorTurno()){
             document.getElementById("temporizador").classList.remove("col-gray")
             document.getElementById("tiempo").classList.remove("col-gray")
             if(seconds === 20){
@@ -541,8 +554,8 @@ export const detenerCronometro = () =>{
 }
 
 export const rendirseJugador = () => {
-    posicionPiezasGlobal[sJugador+"rey"] = ''
-    actualizarPiezasPosicionJuego(false)
+    posicionPiezasGlobal[sTurnoJugador+"rey"] = ''
+    actualizarPiezasPosicionJuego(true,`Jugador ${sJugador} se rindio`)
 }
 
 export const colocarPiezaEspecial = (sPieza) => {
@@ -556,9 +569,9 @@ export const pintarMapaOpacity = (bPintarOpacity) => {
             const nValor = eliminarLetras(colorNegro.id)
             switch (partida.cantidadJugadores){
                 case 3:
-                    if((sJugador === "O" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
-                    (sJugador === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/partida.cantidadJugadores)*2))||
-                    (sJugador === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+                    if((sTurnoJugador === "O" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+                    (sTurnoJugador === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/partida.cantidadJugadores)*2))||
+                    (sTurnoJugador === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
                         colorNegro.style.opacity = 0.3; 
                     }else{
                         colorNegro.style.opacity = 1;  
@@ -567,10 +580,10 @@ export const pintarMapaOpacity = (bPintarOpacity) => {
                 case 4:
                     //eliminacion de numeros para el lado vertical
                     const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id))
-                    if((sJugador === "O" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                    (sJugador === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
-                    (sJugador === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
-                    (sJugador === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+                    if((sTurnoJugador === "O" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                    (sTurnoJugador === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                    (sTurnoJugador === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
+                    (sTurnoJugador === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
                         colorNegro.style.opacity = 0.3; 
                     }else{
                         colorNegro.style.opacity = 1;  
@@ -603,10 +616,12 @@ export const agregarPiezaEspecialClick = (sId) =>{
     if(validaPosicionPieza(sAgregarPiezaEspecial.replace(/\s/g, '').substring(1,sAgregarPiezaEspecial.length ),sId)){
         return
     }
-    posicionPiezasGlobal[sJugador+sAgregarPiezaEspecial] = sId;
+    nTurno ++
+    posicionPiezasGlobal[sTurnoJugador+sAgregarPiezaEspecial] = sId;
+    let sPiezaEspecialTemp = sAgregarPiezaEspecial
     sAgregarPiezaEspecial = ""
     pintarMapaOpacity(false)
-    evaluartTurnoJugador();
+    evaluartTurnoJugador(`Jugador ${sJugador} Elimino a un rey y accedio a la pieza especial ${sPiezaEspecialTemp}`);
 }
 
 const validaPosicionPieza = (sPieza,sPosicion) =>{
@@ -616,9 +631,9 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
 
     switch (partida.cantidadJugadores){
         case 3:
-            if((sJugador === "O" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
-            (sJugador === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/partida.cantidadJugadores)*2))||
-            (sJugador === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
+            if((sTurnoJugador === "O" && (nValor <=parseInt(tamanoTableroLargo*.66)+1)) ||
+            (sTurnoJugador === "B" && (nValor <= parseInt(tamanoTableroLargo*.33)+1 || nValor >=1+(tamanoTableroLargo/partida.cantidadJugadores)*2))||
+            (sTurnoJugador === "R" && (nValor >= parseInt(tamanoTableroLargo*.33)+2 ))){
                 alert('Esta pieza esta invadiendo terreno')
                 return true; 
             }
@@ -626,10 +641,10 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
         case 4:
             //eliminacion de numeros para el lado vertical
             const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion))
-            if((sJugador === "O" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
-                (sJugador === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
-                (sJugador === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
-                (sJugador === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
+            if((sTurnoJugador === "O" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho))) || 
+                (sTurnoJugador === "B" && ((nValor >= 1 && nValor <=tamanoTableroLargo/2) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2))) ||
+                (sTurnoJugador === "R" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= tamanoTableroAncho/2+1 && nValorCol <=tamanoTableroAncho)))||
+                (sTurnoJugador === "P" && ((nValor >= (tamanoTableroLargo/2)+1 && nValor <=tamanoTableroLargo) || (nValorCol >= 1 && nValorCol <=tamanoTableroAncho/2)))){
                 alert('Esta pieza esta invadiendo terreno')
                 return true; 
             }
@@ -646,17 +661,17 @@ const validaPosicionPieza = (sPieza,sPosicion) =>{
 
 }
 
-export const getColorPorLetra = (sLetra) => {
+export const getColorPorLetra = (sLetra,bPlural = true) => {
     //detectamos que jugador gano
     switch(sLetra){
         case "O":
-            return 'Naranjas'
+            return bPlural ? 'Naranjas' : 'Naranjas'
         case "B":
-            return 'Negros'
+            return bPlural ?'Negros' : 'Negro'
         case "R":
-            return 'Rojos'
+            return bPlural ? 'Rojos' : 'Rojo'
         case "P":
-            return 'Morados'
+            return bPlural ? 'Morados' : 'Morado'
         default:
             return "";
     }

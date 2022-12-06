@@ -320,6 +320,12 @@ li {
     color:#ebe5e5
 }
 
+.historialJugador{
+    background-color: rgb(50, 109, 124);
+    color:#ebe5e5
+}
+
+
 .contenedor-juegoF{
     margin: 6rem auto 0;
 }
