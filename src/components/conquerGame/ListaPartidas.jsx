@@ -49,7 +49,7 @@ const ListaPartidas = ({partidas,abrirPartidaJuego}) => {
   return (  
     <>
         <div className="contenido-menu-opciones w-100">
-            <h2 className='fw-300 centrar-texto'>
+            <h2 className='centrar-texto'>
               Lista de partidas
             </h2>
             

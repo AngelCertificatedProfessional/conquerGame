@@ -14,6 +14,10 @@ const BuscarPartida = React.lazy(() =>
 const ListaPartidas = React.lazy(() =>
   import('../components/conquerGame/ListaPartidas')
 );
+
+const ListaMejores10 = React.lazy(() =>
+  import('../components/conquerGame/ListaMejores10')
+);
 const ConquerGame = () => {
     let navigate  = useNavigate();
     const [usuario, setUsuario] = useState({}); //Este metodo se utiliza para obtener la info del usuario
@@ -55,7 +59,7 @@ const ConquerGame = () => {
     const buscar10Mejores = () => {
         listado('usuarios/buscar10Mejores')
         .then((resultado) => {
-            setPartidas(resultado)
+            setUsuarios(resultado)
         })
         .catch((error) => {
           swal({
@@ -100,6 +104,13 @@ const ConquerGame = () => {
                         <ListaPartidas
                             partidas={partidas}
                             abrirPartidaJuego = {abrirPartidaJuego }
+                        />
+                    </Suspense>
+                )}
+                {(accion === 4) && (
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <ListaMejores10
+                            usuarios={usuarios}
                         />
                     </Suspense>
                 )}

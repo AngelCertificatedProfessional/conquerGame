@@ -368,7 +368,7 @@ li {
 
 .main-currency-table{
     min-width: 23.5rem;
-    height:36rem;
+    min-height:36rem;
     margin:0 auto;
     font-family: "Inter",sans-serif;
 }
