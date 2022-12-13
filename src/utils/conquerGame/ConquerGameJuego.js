@@ -1,19 +1,18 @@
-// import { movimientoPawn } from './piezas/pawn.js';
-import { movimientoRey } from './piezas/rey.js';
-import { movimientoHachero } from './piezas/hachero.js';
-import {  movimientoLancero } from './piezas/lancero.js';
-import { movimientoCaballero } from './piezas/caballero.js';
-import { movimientoAsesino } from './piezas/asesino.js';
-import { movimientoArcher } from './piezas/archer.js';
+import { movimientoRey,valorPuntos as valorPuntosRey} from './piezas/rey.js';
+import { movimientoHachero,valorPuntos as valorPuntosHachero} from './piezas/hachero.js';
+import {  movimientoLancero,valorPuntos as valorPuntosLancero} from './piezas/lancero.js';
+import { movimientoCaballero,valorPuntos as valorPuntosCaballero} from './piezas/caballero.js';
+import { movimientoAsesino,valorPuntos as valorPuntosAsesino} from './piezas/asesino.js';
+import { movimientoArcher,valorPuntos as valorPuntosArcher} from './piezas/archer.js';
 import { colorDisparoArcher, colorLago, colorMontana, colorOpciones, colorSeleccionadoListado, colorSeleccionadoTablero, colorTablero, lagos, montanas, tamanoTableroAncho, tamanoTableroLargo,arregloPiezas } from "./ConfiguracionTableroConquerGame.js";
 import { alfabetoANumero, eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
-import { actualizarEspecifico } from '../ConexionAPI.js';
-import { movimientoAsesinoElite } from './piezas/asesinoElite.js';
-import { movimientoHechicero } from './piezas/hechicero.js';
-import { movimientoArcherElite } from './piezas/archerElite.js';
-import { movimientoCanon } from './piezas/canon.js';
-import { movimientoLanceroElite } from './piezas/lanceroElite.js';
-import { movimientoHacheroElite } from './piezas/hacheroElite.js';
+import { actualizarEspecifico} from '../ConexionAPI.js';
+import { movimientoAsesinoElite,valorPuntos as valorPuntosAsesinoElite} from './piezas/asesinoElite.js';
+import { movimientoHechicero,valorPuntos as valorPuntosHechicero} from './piezas/hechicero.js';
+import { movimientoArcherElite,valorPuntos as valorPuntosArcherElite} from './piezas/archerElite.js';
+import { movimientoCanon,valorPuntos as valorPuntosCanon} from './piezas/canon.js';
+import { movimientoLanceroElite,valorPuntos as valorPuntosLanceroElite} from './piezas/lanceroElite.js';
+import { movimientoHacheroElite,valorPuntos as valorPuntosHacheroElite} from './piezas/hacheroElite.js';
 let pinkId = "";
 let pinkText = "";
 let nTurno = 0;
@@ -94,7 +93,7 @@ export const agregarDivsTableroJuego = () => {
                 }
                 posicionPiezasGlobal[sPiezaMovimiento] = item.id
                 
-                evaluartTurnoJugador(`Jugador ${sJugador} movio la pieza ${sPiezaMovimiento.substring(1)}`);
+                evaluartTurnoJugador(`Jugador ${sJugador} movio la pieza ${sPiezaMovimiento.substring(1)}`,0);
                 return;
                 //en este segmento enviaremos la peticion de la posicion de las unidades
             }else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
@@ -148,11 +147,11 @@ export const agregarDivsTableroJuego = () => {
                                 sAgregarPiezaEspecial = "pieza"
                                 return;
                             }else{
-                                evaluartTurnoJugador(`Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} con ${sPiezaMovimiento.substring(1)}`);
+                                evaluartTurnoJugador(`Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} con ${sPiezaMovimiento.substring(1)}`,getPuntuajePieza(piezaAnterior));
                                 return;
                             }
                         }else{
-                            evaluartTurnoJugador(`Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} con ${sPiezaMovimiento.substring(1)}`);
+                            evaluartTurnoJugador(`Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} con ${sPiezaMovimiento.substring(1)}`,getPuntuajePieza(piezaAnterior));
                             return;
                         }
                     }
@@ -198,11 +197,11 @@ export const agregarDivsTableroJuego = () => {
                                 sAgregarPiezaEspecial = "pieza"
                                 return;
                             }else{
-                                evaluartTurnoJugador(`Jugador ${sJugador} disparo al rey ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} usando ${sPiezaMovimiento.substring(1)}`);
+                                evaluartTurnoJugador(`Jugador ${sJugador} disparo al rey ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} usando ${sPiezaMovimiento.substring(1)}`,getPuntuajePieza(piezaAnterior));
                                 return;
                             }
                         }else{
-                            evaluartTurnoJugador(`Jugador ${sJugador} disparo a la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} usando ${sPiezaMovimiento.substring(1)} `);
+                            evaluartTurnoJugador(`Jugador ${sJugador} disparo a la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} usando ${sPiezaMovimiento.substring(1)} `,getPuntuajePieza(piezaAnterior));
                             return;
                         }
                     }
@@ -385,15 +384,16 @@ export const saltarTurno = () =>{
     coloringJuego()
     bMovioAsesino = false;
     bMovioAsesinoElite = false;
-    evaluartTurnoJugador(`Jugador ${sJugador} salto turno`)
+    evaluartTurnoJugador(`Jugador ${sJugador} salto turno`,0)
 }
 
-const evaluartTurnoJugador = (sAccionJugador) => {
+const evaluartTurnoJugador = (sAccionJugador,nPuntuaje) => {
+    console.log(nPuntuaje)
     detenerCronometro()
     if(nTurno +1 > arrReyes.length ){
         nTurno = 0
     }
-    actualizarPiezasPosicionJuego(false,sAccionJugador)
+    actualizarPiezasPosicionJuego(false,sAccionJugador,nPuntuaje)
 }
 //toast representa el metodo para mostrar mensaje del jugador en turno
 export const indicarSiguienteJugador = () =>{
@@ -468,11 +468,12 @@ const esTurnoJugadorTurno = () => {
     return false;
 }
 
-const actualizarPiezasPosicionJuego = (bRendirse,sAccionUsuario) => {
+const actualizarPiezasPosicionJuego = (bRendirse,sAccionUsuario,nPuntuaje) => {
     let vResultado = {}
     vResultado.numeroPartida = partida.numeroPartida
     vResultado.posicionPiezasGlobal = posicionPiezasGlobal;
     vResultado.accionUsuario = sAccionUsuario;
+    vResultado.puntuaje = nPuntuaje;
     //if(!bRendirse){
         vResultado.turno = nTurno;
     //}
@@ -555,7 +556,7 @@ export const detenerCronometro = () =>{
 
 export const rendirseJugador = () => {
     posicionPiezasGlobal[sTurnoJugador+"rey"] = ''
-    actualizarPiezasPosicionJuego(true,`Jugador ${sJugador} se rindio`)
+    actualizarPiezasPosicionJuego(true,`Jugador ${sJugador} se rindio`,0)
 }
 
 export const colocarPiezaEspecial = (sPieza) => {
@@ -621,7 +622,7 @@ export const agregarPiezaEspecialClick = (sId) =>{
     let sPiezaEspecialTemp = sAgregarPiezaEspecial
     sAgregarPiezaEspecial = ""
     pintarMapaOpacity(false)
-    evaluartTurnoJugador(`Jugador ${sJugador} Elimino a un rey y accedio a la pieza especial ${sPiezaEspecialTemp}`);
+    evaluartTurnoJugador(`Jugador ${sJugador} Elimino a un rey y accedio a la pieza especial ${sPiezaEspecialTemp}`,100);
 }
 
 const validaPosicionPieza = (sPieza,sPosicion) =>{
@@ -674,5 +675,34 @@ export const getColorPorLetra = (sLetra,bPlural = true) => {
             return bPlural ? 'Morados' : 'Morado'
         default:
             return "";
+    }
+}
+const getPuntuajePieza = (sPieza) => {
+    if (sPieza.includes(`archerE`) ) {
+        return valorPuntosArcherElite;
+    }else if (sPieza.includes(`archer`) ) {
+        return valorPuntosArcher;
+    }else if (sPieza.includes(`rey`) ) {
+        return valorPuntosRey;
+    }else if (sPieza.includes(`hacheroE`) ) {
+        return valorPuntosHacheroElite
+    }else if (sPieza.includes(`hachero`) ) {
+        return valorPuntosHachero
+    }else if(sPieza.includes(`lanceroE`) ) {
+        return valorPuntosLanceroElite
+    }else if(sPieza.includes(`lancero`) ) {
+        return valorPuntosLancero
+    }else if(sPieza.includes(`caballero`) ) {
+        return valorPuntosCaballero
+    }else if(sPieza.includes(`asesinoE`)) {
+        return valorPuntosAsesinoElite
+    }else if(sPieza.includes(`asesino`)) {
+        return valorPuntosAsesino
+    }else if(sPieza.includes(`hechicero`)) {
+        return valorPuntosHechicero
+    }else if(sPieza.includes(`canon`)) {
+        return valorPuntosCanon
+    }else{
+        return 0;
     }
 }

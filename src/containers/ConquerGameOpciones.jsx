@@ -19,6 +19,7 @@ const ConquerGame = () => {
     const [usuario, setUsuario] = useState({}); //Este metodo se utiliza para obtener la info del usuario
     const [accion, setAccion] = useState(0); //Este metodo se utiliza para ver que accion esta realizando el usuario
     const [partidas, setPartidas] = useState(null); //Este metodo se utiliza para ver que accion esta realizando el usuario
+    const [usuarios, setUsuarios] = useState(null); //Este metodo se utiliza para ver que accion esta realizando el usuario
     useEffect(() => {
         setUsuario(JSON.parse(b64_to_utf8(sessionStorage.getItem('usuario'))))
         if (
@@ -51,6 +52,21 @@ const ConquerGame = () => {
         });
     }
 
+    const buscar10Mejores = () => {
+        listado('usuarios/buscar10Mejores')
+        .then((resultado) => {
+            setPartidas(resultado)
+        })
+        .catch((error) => {
+          swal({
+            title: 'Error',
+            text: error.toString(),
+            icon: 'error',
+            button: 'OK',
+          });
+        });
+    }
+
    return (
         <main className="contenedor seccion">
             <h2 className='fw-300 centrar-texto'>
@@ -62,6 +78,7 @@ const ConquerGame = () => {
                         accion = {accion}
                         setAccion = {setAccion}
                         buscarPartidas = {buscarPartidas}
+                        buscar10Mejores = {buscar10Mejores}
                     />
                 </Suspense>
                 {accion === 1 && (

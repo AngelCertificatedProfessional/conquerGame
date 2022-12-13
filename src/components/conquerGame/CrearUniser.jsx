@@ -1,6 +1,6 @@
 import React,{ useState, useEffect} from 'react';
 import { Link } from "react-router-dom";
-const CrearUniser = ({ setAccion,buscarPartidas }) => {
+const CrearUniser = ({ setAccion,buscarPartidas,buscar10Mejores }) => {
     const [imagen, setImagen] = useState([]);
     useEffect(() => {
         
@@ -15,6 +15,9 @@ const CrearUniser = ({ setAccion,buscarPartidas }) => {
             </div>
             <div className="contenido-anuncio">
                 <button className = "boton blue w-100" onClick={() => {setAccion(3); buscarPartidas();}}>Lista Partida</button>
+            </div>
+            <div className="contenido-anuncio">
+                <button className = "boton blue w-100" onClick={() => {setAccion(4); buscar10Mejores();}}>Mejores 10 Jugadores</button>
             </div>
         </div>
     );

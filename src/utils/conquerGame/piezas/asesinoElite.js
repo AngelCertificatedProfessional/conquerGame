@@ -1,6 +1,6 @@
 import { alfabetoANumero, numeroAAlfabeto } from "../../UtileriasPagina.js"
 import { colorOpciones, colorSeleccionadoTablero, tamanoTableroAncho, tamanoTableroLargo, validaPiezaMontana } from "../ConfiguracionTableroConquerGame.js"
-
+export const valorPuntos = 40;
 export const movimientoAsesinoElite = (row,col,item)  =>{
     let nCol = alfabetoANumero(col) 
     //La funcionalidad del asesino es matar dos caminar dos veces, matar dos veces por eso 

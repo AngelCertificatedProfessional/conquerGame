@@ -1,6 +1,6 @@
 import { alfabetoANumero, numeroAAlfabeto } from "../../UtileriasPagina.js"
 import { colorOpciones, colorSeleccionadoTablero, tamanoTableroAncho, tamanoTableroLargo, validaPiezaMontana,colorDisparoArcher } from "../ConfiguracionTableroConquerGame.js"
-
+export const valorPuntos = 40;
 export const movimientoArcherElite= (row,col,item) =>{
     let nCol = alfabetoANumero(col) 
     for (let i = 1; i < 3; i++) {

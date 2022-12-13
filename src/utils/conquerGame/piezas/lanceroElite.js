@@ -1,5 +1,6 @@
 import { alfabetoANumero, numeroAAlfabeto } from "../../UtileriasPagina.js"
 import { colorOpciones, colorSeleccionadoTablero, tamanoTableroAncho, tamanoTableroLargo, validaPiezaMontana } from "../ConfiguracionTableroConquerGame.js"
+export const valorPuntos = 40;
 
 export const movimientoLanceroElite = (row,col,item)  =>{
     let nCol = alfabetoANumero(col) 
