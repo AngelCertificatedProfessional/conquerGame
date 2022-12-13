@@ -49,6 +49,7 @@ const ConquerGame = ({socket}) => {
     const turnoUsuarioInitial = '' //Este metodo se usa para mostrar todos los jugadores en la lista de espera
     const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroRes, turnoUsuarioInitial);
 
+    const [imagen, setImagen] = useState([]);
     useEffect(() => {
         //window.addEventListener('beforeunload', desconectarUsuarioPartida)
         socket.disconnect();
@@ -140,6 +141,15 @@ const ConquerGame = ({socket}) => {
             navigate('/login');
         }
         mostrarMenuUnidadEspecialM(mostrarVentanaUnidadEspecial)
+        const fetchImage = async () => {
+            try {
+                const response = await import(`@images/kaguya/medio1.gif`) // change relative path to suit your needs
+                setImagen(response.default)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        fetchImage()
         return () => {
             //window.removeEventListener('beforeunload', desconectarUsuarioPartida)
             //desconectarUsuarioPartida()
@@ -433,7 +443,8 @@ const ConquerGame = ({socket}) => {
                             />
                         </Suspense>
                     </div>
-                    
+                    <img className = "image-log" src={imagen} alt="Anuncio casa en el lago">
+                    </img>
                 </section>
                 </>
             )}
@@ -457,18 +468,18 @@ const ConquerGame = ({socket}) => {
                 </Suspense>  
               : null  
             }
-           <ToastContainer 
-           position="bottom-left"
-           autoClose={5000}
-           hideProgressBar={false}
-           newestOnTop={false}
-           closeOnClick
-           rtl={false}
-           pauseOnFocusLoss
-           draggable={false}
-           pauseOnHover
-           theme="dark"
-           />
+            <ToastContainer 
+            position="bottom-left"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable={false}
+            pauseOnHover
+            theme="dark"
+            />
         </main>
    );
 };
