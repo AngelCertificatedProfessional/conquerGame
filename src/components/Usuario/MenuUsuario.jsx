@@ -11,12 +11,9 @@ const MenuUsuario = ({ setAccion }) => {
             <div className="contenido-anuncio">
                 <button className = "boton blue w-100" onClick={() => setAccion(4)}>Modificar Contrasena</button>
             </div>
-            {/* <div className="contenido-anuncio">
-                <button className = "boton blue w-100" onClick={() => {setAccion(3); buscarPartidas();}}>Cambiar Iconos</button>
+             <div className="contenido-anuncio">
+                <button className = "boton blue w-100" onClick={() => {setAccion(5);}}>Cambiar Iconos</button>
             </div>
-            <div className="contenido-anuncio">
-                <button className = "boton blue w-100" onClick={() => {setAccion(4); buscar10Mejores();}}>Mejores 10 Jugadores</button>
-            </div> */}
         </div>
     );
 };
