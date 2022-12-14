@@ -469,9 +469,11 @@ nav > ul > li:hover {
 
 .image-logo{
     position: absolute;
-    width:50rem;
-    height:50rem;
+    max-width:50rem;
+    max-height:50rem;
     border: 3px solid #73AD21;
+    right: 0;
+    top: calc(0% + 22rem);
 }
 
 /*

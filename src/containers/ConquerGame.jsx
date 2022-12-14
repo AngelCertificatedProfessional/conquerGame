@@ -48,8 +48,19 @@ const ConquerGame = ({socket}) => {
     const [partida,dispatchPartidas] = useReducer(agregarPartidaRes, partidaInitial);
     const turnoUsuarioInitial = '' //Este metodo se usa para mostrar todos los jugadores en la lista de espera
     const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroRes, turnoUsuarioInitial);
+    const [mostrarImagen,dispatchMostrarImagen] = useReducer(mostrarImagenRes, false);
 
     const [imagen, setImagen] = useState([]);
+
+    async function fetchImage(sImagen){
+        try {
+            const response = await import(`@images/kaguya/${sImagen}.gif`) // change relative path to suit your needs
+            setImagen(response.default)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
         //window.addEventListener('beforeunload', desconectarUsuarioPartida)
         socket.disconnect();
@@ -87,6 +98,7 @@ const ConquerGame = ({socket}) => {
                 case 3:
                     dispatchPiezasTableroRes(payload);
                     dispatchPartidas(payload)
+                    dispatchMostrarImagen(payload)
                     setPartida(payload)
                     setAccion(3);
                     if(payload.hasOwnProperty("posicionPiezasGlobal")){
@@ -141,15 +153,7 @@ const ConquerGame = ({socket}) => {
             navigate('/login');
         }
         mostrarMenuUnidadEspecialM(mostrarVentanaUnidadEspecial)
-        const fetchImage = async () => {
-            try {
-                const response = await import(`@images/kaguya/medio1.gif`) // change relative path to suit your needs
-                setImagen(response.default)
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        fetchImage()
+        
         return () => {
             //window.removeEventListener('beforeunload', desconectarUsuarioPartida)
             //desconectarUsuarioPartida()
@@ -232,6 +236,24 @@ const ConquerGame = ({socket}) => {
                 return 'R'
             case 3:
                 return 'P'
+        }
+    }
+
+    function mostrarImagenRes(state, action){
+        if(!action.hasOwnProperty("detenerImagen")){
+            const payload = {}
+            payload.detenerImagen = true;
+            if(action.jugadorPiezaEliminada === turnoUsuario){
+                fetchImage("medio"+Math.floor(Math.random() * (8 - 1) + 1))
+                setTimeout(()=>{dispatchMostrarImagen(payload)}, 5000)
+                return true;
+            }else if(action.jugadorEliminoPieza === turnoUsuario){
+                fetchImage("kill"+Math.floor(Math.random() * (2 - 1) + 1) )
+                setTimeout(()=>{dispatchMostrarImagen(payload)}, 5000)
+                return true;
+            }
+        }else{
+            return false;
         }
     }
 
@@ -429,6 +451,10 @@ const ConquerGame = ({socket}) => {
                                 </div>
                             ))}
                         </div>
+                        {(mostrarImagen) && (
+                            <img className = "image-logo" src={imagen} alt="Anuncio casa en el lago">
+                            </img>
+                        )}
                         <Suspense fallback={<div>Loading...</div>}>
                             <Tablero
                                 partida = {partida}
@@ -443,8 +469,6 @@ const ConquerGame = ({socket}) => {
                             />
                         </Suspense>
                     </div>
-                    <img className = "image-log" src={imagen} alt="Anuncio casa en el lago">
-                    </img>
                 </section>
                 </>
             )}

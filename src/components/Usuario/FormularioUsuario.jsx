@@ -130,6 +130,7 @@ const FormularioUsuario = ({ setAccion,accion,terminosCondiciones,usuario }) => 
         isValid,
         errors,
       }) => (
+        <div className="contenido-menu-opciones ">
         <form
           onSubmit={handleSubmit}
           noValidate
@@ -233,6 +234,7 @@ const FormularioUsuario = ({ setAccion,accion,terminosCondiciones,usuario }) => 
           </div>
           
         </form>
+        </div>
       )}
     </Formik>
   );

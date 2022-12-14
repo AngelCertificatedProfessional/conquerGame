@@ -6,7 +6,9 @@ import {b64_to_utf8} from '../utils/UtileriasPagina';
 const FormularioUsuario = lazy(() =>
   import('../components/Usuario/FormularioUsuario')
 );
-
+const MenuUsuario = React.lazy(() =>
+  import('../components/Usuario/MenuUsuario')
+);
 
 const Usuario = () => {
     const navigate  = useNavigate();
@@ -34,9 +36,18 @@ const Usuario = () => {
     };
     
     return (
-        <main className="main-actualizacion">
-            <section className='formularioSeccion'>
-                <div className="seccion">
+        <main className="contenedor-juegoF seccion">
+            <h2 className='fw-300 centrar-texto'>
+                Opciones
+            </h2>
+            <div className="contenedor-contenido">
+                <Suspense fallback={<div>Loading...</div>}>
+                    <MenuUsuario
+                        accion = {accion}
+                        setAccion = {setAccion}
+                    />
+                </Suspense>
+                {accion === 3 && (
                     <Suspense fallback={<div>Loading...</div>}>
                         <FormularioUsuario
                             setAccion={setAccion}
@@ -44,17 +55,17 @@ const Usuario = () => {
                             usuario = {usuario}
                         />
                     </Suspense>
-                </div>
-                <div className="seccion">
-                    <Suspense fallback={<div>Loading...</div>}>
+                )}
+                {(accion === 4) && (
+                <Suspense fallback={<div>Loading...</div>}>
                         <FormularioUsuario
                             setAccion={setAccion}
                             accion={4}
                             usuario = {usuario}
                         />
                     </Suspense>
-                </div>
-            </section>
+                )}
+            </div>
         </main>
      );
 };

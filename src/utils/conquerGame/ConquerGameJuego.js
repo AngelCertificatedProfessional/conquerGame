@@ -28,6 +28,7 @@ let posicionPiezasGlobal = {}
 let nIntervalo = null;
 let mostrarMenuUnidadEspecial = null;
 let sAgregarPiezaEspecial = "";
+let sReyEliminoTemp = ""
 export const mostrarMenuUnidadEspecialM = (vMetodo) => {
     mostrarMenuUnidadEspecial = vMetodo;
     return;
@@ -46,6 +47,7 @@ export const limpiarVariablesJuego = () => {
     posicionPiezasGlobal = {}
     nIntervalo = null;
     bMovioAsesinoElite = false;
+    sReyEliminoTemp;
 }
 
 export const agregarDivsTableroJuego = () => {
@@ -93,7 +95,7 @@ export const agregarDivsTableroJuego = () => {
                 }
                 posicionPiezasGlobal[sPiezaMovimiento] = item.id
                 
-                evaluartTurnoJugador(`Jugador ${sJugador} movio la pieza ${sPiezaMovimiento.substring(1)}`,0);
+                evaluartTurnoJugador(`Jugador ${sJugador} movio la pieza ${sPiezaMovimiento.substring(1)}`,0,"","");
                 return;
                 //en este segmento enviaremos la peticion de la posicion de las unidades
             }else if (item.style.backgroundColor == colorOpciones && item.innerText.length !== 0) {
@@ -145,13 +147,14 @@ export const agregarDivsTableroJuego = () => {
                             if(arrReyes.length > 1){
                                 mostrarMenuUnidadEspecial(true)
                                 sAgregarPiezaEspecial = "pieza"
+                                sReyEliminoTemp = piezaAnterior[0];
                                 return;
                             }else{
-                                evaluartTurnoJugador(`Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} con ${sPiezaMovimiento.substring(1)}`,getPuntuajePieza(piezaAnterior));
+                                evaluartTurnoJugador(`Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} con ${sPiezaMovimiento.substring(1)}`,getPuntuajePieza(piezaAnterior),piezaAnterior[0],sTurnoJugador);
                                 return;
                             }
                         }else{
-                            evaluartTurnoJugador(`Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} con ${sPiezaMovimiento.substring(1)}`,getPuntuajePieza(piezaAnterior));
+                            evaluartTurnoJugador(`Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} con ${sPiezaMovimiento.substring(1)}`,getPuntuajePieza(piezaAnterior),piezaAnterior[0],sTurnoJugador);
                             return;
                         }
                     }
@@ -195,13 +198,14 @@ export const agregarDivsTableroJuego = () => {
                             if(arrReyes.length > 1){
                                 mostrarMenuUnidadEspecial(true)
                                 sAgregarPiezaEspecial = "pieza"
+                                sReyEliminoTemp = piezaAnterior[0];
                                 return;
                             }else{
-                                evaluartTurnoJugador(`Jugador ${sJugador} disparo al rey ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} usando ${sPiezaMovimiento.substring(1)}`,getPuntuajePieza(piezaAnterior));
+                                evaluartTurnoJugador(`Jugador ${sJugador} disparo al rey ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} usando ${sPiezaMovimiento.substring(1)}`,getPuntuajePieza(piezaAnterior),piezaAnterior[0],sTurnoJugador);
                                 return;
                             }
                         }else{
-                            evaluartTurnoJugador(`Jugador ${sJugador} disparo a la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} usando ${sPiezaMovimiento.substring(1)} `,getPuntuajePieza(piezaAnterior));
+                            evaluartTurnoJugador(`Jugador ${sJugador} disparo a la pieza ${piezaAnterior.substring(1)} ${getColorPorLetra(piezaAnterior[0],false)} usando ${sPiezaMovimiento.substring(1)} `,getPuntuajePieza(piezaAnterior),piezaAnterior[0],sTurnoJugador);
                             return;
                         }
                     }
@@ -378,22 +382,22 @@ export const saltarTurno = () =>{
         mostrarMenuUnidadEspecial(false)
         pintarMapaOpacity(false)
         sAgregarPiezaEspecial = ""
+        sReyEliminoTemp = "";
     }
     
     // Toggling the turn
     coloringJuego()
     bMovioAsesino = false;
     bMovioAsesinoElite = false;
-    evaluartTurnoJugador(`Jugador ${sJugador} salto turno`,0)
+    evaluartTurnoJugador(`Jugador ${sJugador} salto turno`,0,"","")
 }
 
-const evaluartTurnoJugador = (sAccionJugador,nPuntuaje) => {
-    console.log(nPuntuaje)
+const evaluartTurnoJugador = (sAccionJugador,nPuntuaje,sJugadorPiezaEliminada,sJugadorEliminoPieza) => {
     detenerCronometro()
     if(nTurno +1 > arrReyes.length ){
         nTurno = 0
     }
-    actualizarPiezasPosicionJuego(false,sAccionJugador,nPuntuaje)
+    actualizarPiezasPosicionJuego(false,sAccionJugador,nPuntuaje,sJugadorPiezaEliminada,sJugadorEliminoPieza)
 }
 //toast representa el metodo para mostrar mensaje del jugador en turno
 export const indicarSiguienteJugador = () =>{
@@ -468,12 +472,14 @@ const esTurnoJugadorTurno = () => {
     return false;
 }
 
-const actualizarPiezasPosicionJuego = (bRendirse,sAccionUsuario,nPuntuaje) => {
+const actualizarPiezasPosicionJuego = (bRendirse,sAccionUsuario,nPuntuaje,sJugadorPiezaEliminada,sJugadorEliminoPieza) => {
     let vResultado = {}
     vResultado.numeroPartida = partida.numeroPartida
     vResultado.posicionPiezasGlobal = posicionPiezasGlobal;
     vResultado.accionUsuario = sAccionUsuario;
     vResultado.puntuaje = nPuntuaje;
+    vResultado.jugadorPiezaEliminada = sJugadorPiezaEliminada;
+    vResultado.jugadorEliminoPieza = sJugadorEliminoPieza;
     //if(!bRendirse){
         vResultado.turno = nTurno;
     //}
@@ -556,7 +562,7 @@ export const detenerCronometro = () =>{
 
 export const rendirseJugador = () => {
     posicionPiezasGlobal[sTurnoJugador+"rey"] = ''
-    actualizarPiezasPosicionJuego(true,`Jugador ${sJugador} se rindio`,0)
+    actualizarPiezasPosicionJuego(true,`Jugador ${sJugador} se rindio`,0,sTurnoJugador,"")
 }
 
 export const colocarPiezaEspecial = (sPieza) => {
@@ -621,8 +627,12 @@ export const agregarPiezaEspecialClick = (sId) =>{
     posicionPiezasGlobal[sTurnoJugador+sAgregarPiezaEspecial] = sId;
     let sPiezaEspecialTemp = sAgregarPiezaEspecial
     sAgregarPiezaEspecial = ""
+    
+    let sReyEliminoTempT = sReyEliminoTemp;
+    sReyEliminoTemp = "";
+    
     pintarMapaOpacity(false)
-    evaluartTurnoJugador(`Jugador ${sJugador} Elimino a un rey y accedio a la pieza especial ${sPiezaEspecialTemp}`,100);
+    evaluartTurnoJugador(`Jugador ${sJugador} Elimino al rey ${getColorPorLetra(sReyEliminoTempT,false)} y accedio a la pieza especial ${sPiezaEspecialTemp}`,100,sReyEliminoTempT,sTurnoJugador);
 }
 
 const validaPosicionPieza = (sPieza,sPosicion) =>{
