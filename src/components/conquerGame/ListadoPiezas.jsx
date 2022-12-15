@@ -1,17 +1,14 @@
-import React,{useEffect} from 'react';
-const Tablero = ({turnoUsuario,agregarImagenesListado}) => {
-  
+import React, { useEffect } from "react";
+const Tablero = ({ turnoUsuario, agregarImagenesListado }) => {
   useEffect(() => {
-    agregarImagenesListado(turnoUsuario)
+    agregarImagenesListado(turnoUsuario);
   }, []);
-  
-  return (  
+
+  return (
     <>
-        <div className= "listado_piezas" id="lista_personajes">
-        </div>
+      <div className="listado_piezas" id="lista_personajes"></div>
     </>
   );
 };
-
 
 export default Tablero;

@@ -1,21 +1,30 @@
-const config = require('./../config/config');
-const UtileriasPagina = require('./UtileriasPagina');
-let usuario = JSON.parse(UtileriasPagina.b64_to_utf8(sessionStorage.getItem('usuario')));
+const config = require("./../config/config");
+const UtileriasPagina = require("./UtileriasPagina");
+let usuario = JSON.parse(
+  UtileriasPagina.b64_to_utf8(sessionStorage.getItem("usuario"))
+);
 
 export const agregar = async (sRuta, data) => {
   try {
-    if (!validaUsuario() && (sRuta !== 'usuarios/agregarUsuario' && sRuta !== 'usuarios/agregarUsuarioInvitado')) {
-      throw 'No se a iniciado sesion';
+    if (
+      !validaUsuario() &&
+      sRuta !== "usuarios/agregarUsuario" &&
+      sRuta !== "usuarios/agregarUsuarioInvitado"
+    ) {
+      throw "No se a iniciado sesion";
     }
 
     const configuracion = {};
-    configuracion.method = 'POST';
+    configuracion.method = "POST";
     configuracion.headers = {};
-    configuracion.headers.Accept = 'application/json';
-    configuracion.headers['Content-Type'] = 'application/json';
-    configuracion.body= JSON.stringify(data);
-    if(sRuta !== 'usuarios/agregarUsuario' && sRuta !== 'usuarios/agregarUsuarioInvitado'){
-        configuracion.headers.Authorization = usuario.token;
+    configuracion.headers.Accept = "application/json";
+    configuracion.headers["Content-Type"] = "application/json";
+    configuracion.body = JSON.stringify(data);
+    if (
+      sRuta !== "usuarios/agregarUsuario" &&
+      sRuta !== "usuarios/agregarUsuarioInvitado"
+    ) {
+      configuracion.headers.Authorization = usuario.token;
     }
     let res = await fetch(
       `${config.env.apiLiutsVideoURL}/api/${sRuta}`,
@@ -24,10 +33,10 @@ export const agregar = async (sRuta, data) => {
 
     let json = await res.json();
 
-    if (res.status !== 200 && json.data !== undefined ) {
+    if (res.status !== 200 && json.data !== undefined) {
       throw json.data;
-    } else if (res.status !== 200 || json.hasOwnProperty('error')) {
-      throw 'Hubo un error al ingresar la informacion';
+    } else if (res.status !== 200 || json.hasOwnProperty("error")) {
+      throw "Hubo un error al ingresar la informacion";
     }
     return json;
   } catch (error) {
@@ -38,14 +47,14 @@ export const agregar = async (sRuta, data) => {
 export const listado = async (sRuta) => {
   try {
     if (!validaUsuario()) {
-      throw 'No se a iniciado sesion';
+      throw "No se a iniciado sesion";
     }
 
     const configuracion = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: usuario.token,
       },
     };
@@ -56,7 +65,7 @@ export const listado = async (sRuta) => {
     );
 
     if (res.status !== 200) {
-      throw 'Hubo un error al ingresar la informacion';
+      throw "Hubo un error al ingresar la informacion";
     }
 
     let data = await res.json();
@@ -70,14 +79,14 @@ export const listado = async (sRuta) => {
 export const consultaById = async (sRuta, nIdRegistro) => {
   try {
     if (!validaUsuario()) {
-      throw 'No se a iniciado sesion';
+      throw "No se a iniciado sesion";
     }
 
     const configuracion = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: usuario.token,
       },
     };
@@ -87,11 +96,13 @@ export const consultaById = async (sRuta, nIdRegistro) => {
       configuracion
     );
     let data = await res.json();
-    
+
     if (res.status !== 200 && res.status === 503) {
       throw `${data.data}`;
-    }else if(res.status !== 200){
-      throw `Hubo un error al ingresar la informacion ${data.hasOwnProperty("data") ? data.data : ''}`;
+    } else if (res.status !== 200) {
+      throw `Hubo un error al ingresar la informacion ${
+        data.hasOwnProperty("data") ? data.data : ""
+      }`;
     }
     return data.data;
   } catch (error) {
@@ -102,14 +113,14 @@ export const consultaById = async (sRuta, nIdRegistro) => {
 export const actualizar = async (sRuta, data) => {
   try {
     if (!validaUsuario()) {
-      throw 'No se a iniciado sesion';
+      throw "No se a iniciado sesion";
     }
 
     const configuracion = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: usuario.token,
       },
       body: JSON.stringify(data),
@@ -125,13 +136,28 @@ export const actualizar = async (sRuta, data) => {
     if (res.status !== 200 && json.data !== undefined) {
       throw json.data;
     } else if (res.status !== 200) {
-      throw 'Hubo un error al ingresar la informacion';
+      throw "Hubo un error al ingresar la informacion";
     }
 
-    if (json.data.hasOwnProperty('_id')) {
+    if(sRuta === "usuarios/actualizarUsuario"){
+      
+      const jsonDescodificado = JSON.parse(
+        UtileriasPagina.b64_to_utf8(json.data)
+      );
+
+      if (jsonDescodificado.hasOwnProperty("token")) {
+        usuario = jsonDescodificado;
+        sessionStorage.setItem("usuario", json.data);
+        return;
+      } else {
+        throw "No se detecto el token";
+      }
+    }
+
+    if (json.data.hasOwnProperty("_id")) {
       return;
     } else {
-      throw 'Hubo un error al ingresar la informacion';
+      throw "Hubo un error al ingresar la informacion";
     }
   } catch (error) {
     throw error;
@@ -141,14 +167,14 @@ export const actualizar = async (sRuta, data) => {
 export const actualizarEspecifico = async (sRuta, data) => {
   try {
     if (!validaUsuario()) {
-      throw 'No se a iniciado sesion';
+      throw "No se a iniciado sesion";
     }
 
     const configuracion = {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
         Authorization: usuario.token,
       },
       body: JSON.stringify(data),
@@ -161,10 +187,10 @@ export const actualizarEspecifico = async (sRuta, data) => {
 
     let json = await res.json();
 
-    if (res.status !== 200 && json.data !== undefined ) {
+    if (res.status !== 200 && json.data !== undefined) {
       throw json.data;
-    } else if (res.status !== 200 || json.hasOwnProperty('error')) {
-      throw 'Hubo un error al ingresar la informacion';
+    } else if (res.status !== 200 || json.hasOwnProperty("error")) {
+      throw "Hubo un error al ingresar la informacion";
     }
     return json;
 
@@ -181,10 +207,10 @@ export const actualizarEspecifico = async (sRuta, data) => {
 export const iniciarSesion = async (sRuta, data) => {
   try {
     const configuracion = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     };
@@ -195,25 +221,27 @@ export const iniciarSesion = async (sRuta, data) => {
 
     const json = await res.json();
     if (res.status !== 200 && json.data !== undefined) {
-      throw json.data;s
+      throw json.data;
+      s;
     } else if (res.status !== 200) {
-      throw 'Hubo un error al ingresar la informacion';
+      throw "Hubo un error al ingresar la informacion";
     }
-    const jsonDescodificado = JSON.parse(UtileriasPagina.b64_to_utf8(json.data))
-    
-    if(jsonDescodificado.hasOwnProperty('meme')){
-      sessionStorage.setItem('meme', jsonDescodificado.meme);
-    }else{
-      sessionStorage.setItem('meme', 'sinImagen');
-      
+    const jsonDescodificado = JSON.parse(
+      UtileriasPagina.b64_to_utf8(json.data)
+    );
+
+    if (jsonDescodificado.hasOwnProperty("meme")) {
+      sessionStorage.setItem("meme", jsonDescodificado.meme);
+    } else {
+      sessionStorage.setItem("meme", "sinImagen");
     }
 
-    if (jsonDescodificado.hasOwnProperty('token')) {
+    if (jsonDescodificado.hasOwnProperty("token")) {
       usuario = jsonDescodificado;
-      sessionStorage.setItem('usuario', json.data);
+      sessionStorage.setItem("usuario", json.data);
       return jsonDescodificado;
     } else {
-      throw 'No se detecto el token';
+      throw "No se detecto el token";
     }
   } catch (error) {
     throw error;
@@ -221,7 +249,7 @@ export const iniciarSesion = async (sRuta, data) => {
 };
 
 const validaUsuario = () => {
-  if (usuario === null || usuario === undefined || usuario.usuario === '') {
+  if (usuario === null || usuario === undefined || usuario.usuario === "") {
     return false;
   }
   return true;
