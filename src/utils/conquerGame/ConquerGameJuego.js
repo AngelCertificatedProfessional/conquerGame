@@ -1,30 +1,10 @@
 import { movimientoRey, valorPuntos as valorPuntosRey } from "./piezas/rey.js";
-import {
-  movimientoHachero,
-  valorPuntos as valorPuntosHachero,
-} from "./piezas/hachero.js";
-import {
-  movimientoLancero,
-  valorPuntos as valorPuntosLancero,
-} from "./piezas/lancero.js";
-import {
-  movimientoCaballero,
-  valorPuntos as valorPuntosCaballero,
-} from "./piezas/caballero.js";
-import {
-  movimientoAsesino,
-  valorPuntos as valorPuntosAsesino,
-} from "./piezas/asesino.js";
-import {
-  movimientoArcher,
-  valorPuntos as valorPuntosArcher,
-} from "./piezas/archer.js";
+import { actualizarEspecifico } from "../ConexionAPI.js";
 import {
   colorDisparoArcher,
   colorLago,
   colorMontana,
   colorOpciones,
-  colorSeleccionadoListado,
   colorSeleccionadoTablero,
   colorTablero,
   lagos,
@@ -34,36 +14,47 @@ import {
   arregloPiezas,
 } from "./ConfiguracionTableroConquerGame.js";
 import {
+  movimientoHachero,
+  valorPuntos as valorPuntosHachero,
+  movimientoHacheroElite,
+  valorPuntos as valorPuntosHacheroElite,
+} from "./piezas/hachero.js";
+import {
+  movimientoLancero,
+  valorPuntos as valorPuntosLancero,
+  movimientoLanceroElite,
+  valorPuntos as valorPuntosLanceroElite,
+} from "./piezas/lancero.js";
+import {
+  movimientoCaballero,
+  valorPuntos as valorPuntosCaballero,
+} from "./piezas/caballero.js";
+import {
+  movimientoAsesino,
+  valorPuntos as valorPuntosAsesino,
+  movimientoAsesinoElite,
+  valorPuntosElite as valorPuntosAsesinoElite,
+} from "./piezas/asesino.js";
+import {
+  movimientoArcher,
+  valorPuntos as valorPuntosArcher,
+  movimientoArcherElite,
+  valorPuntosElite as valorPuntosArcherElite,
+} from "./piezas/archer.js";
+import {
   alfabetoANumero,
   eliminarLetras,
   eliminarNumeros,
   numeroAAlfabeto,
 } from "../UtileriasPagina";
-import { actualizarEspecifico } from "../ConexionAPI.js";
-import {
-  movimientoAsesinoElite,
-  valorPuntos as valorPuntosAsesinoElite,
-} from "./piezas/asesinoElite.js";
 import {
   movimientoHechicero,
   valorPuntos as valorPuntosHechicero,
 } from "./piezas/hechicero.js";
 import {
-  movimientoArcherElite,
-  valorPuntos as valorPuntosArcherElite,
-} from "./piezas/archerElite.js";
-import {
   movimientoCanon,
   valorPuntos as valorPuntosCanon,
 } from "./piezas/canon.js";
-import {
-  movimientoLanceroElite,
-  valorPuntos as valorPuntosLanceroElite,
-} from "./piezas/lanceroElite.js";
-import {
-  movimientoHacheroElite,
-  valorPuntos as valorPuntosHacheroElite,
-} from "./piezas/hacheroElite.js";
 let pinkId = "";
 let pinkText = "";
 let nTurno = 0;

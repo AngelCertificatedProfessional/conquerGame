@@ -1,6 +1,3 @@
-// import {montanas,lagos} from './config/configuracionTablero.js'
-// import { cantidadJugadores, colorLago, colorMontana, colorSeleccionado, colorTablero, eliminarLetras, eliminarNumeros, numeroAAlfabeto, tamanoTableroAncho, tamanoTableroLargo } from './util/configuracionGeneral.js';
-
 import {
   colorLago,
   colorMontana,
