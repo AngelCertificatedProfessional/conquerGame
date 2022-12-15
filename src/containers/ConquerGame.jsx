@@ -50,11 +50,9 @@ const ConquerGame = ({socket}) => {
     const [imagen, setImagen] = useState([]);
     const [memeUsuario, setMemeUsuario] = useState(sessionStorage.getItem('meme'));
 
-    async function fetchImage(sImagen){
+    async function fetchImage(sImagen,sCarpeta){
         try {
-            console.log(memeUsuario)
-            console.log(sessionStorage.getItem('meme'))
-            const response = await import(`@images/${memeUsuario}/${sImagen}.gif`) // change relative path to suit your needs
+            const response = await import(`@images/${sCarpeta}/${sImagen}.jpg`) // change relative path to suit your needs
             setImagen(response.default)
         } catch (err) {
             console.log(err)
@@ -99,6 +97,7 @@ const ConquerGame = ({socket}) => {
                 case 3:
                     dispatchPiezasTableroRes(payload);
                     dispatchPartidas(payload)
+                    payload.memeUsuario = memeUsuario;
                     dispatchMostrarImagen(payload)
                     setPartida(payload)
                     setAccion(3);
@@ -241,15 +240,15 @@ const ConquerGame = ({socket}) => {
     }
 
     function mostrarImagenRes(state, action){
-        if(memeUsuario != "" && !action.hasOwnProperty("detenerImagen")){
+        if((action.hasOwnProperty("memeUsuario") && action.memeUsuario != "") && !action.hasOwnProperty("detenerImagen")){
             const payload = {}
             payload.detenerImagen = true;
             if(action.jugadorPiezaEliminada === turnoUsuario){
-                fetchImage("medio"+Math.floor(Math.random() * (8 - 1) + 1))
+                fetchImage("medio"+Math.floor(Math.random() * (8 - 1) + 1),action.memeUsuario)
                 setTimeout(()=>{dispatchMostrarImagen(payload)}, 5000)
                 return true;
             }else if(action.jugadorEliminoPieza === turnoUsuario){
-                fetchImage("kill"+Math.floor(Math.random() * (2 - 1) + 1) )
+                fetchImage("kill"+Math.floor(Math.random() * (2 - 1) + 1),action.memeUsuario )
                 setTimeout(()=>{dispatchMostrarImagen(payload)}, 5000)
                 return true;
             }

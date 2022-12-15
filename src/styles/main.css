@@ -474,6 +474,7 @@ nav > ul > li:hover {
     border: 3px solid #73AD21;
     right: 0;
     top: calc(0% + 22rem);
+    z-index:200;
 }
 
 .image-icono-seleccion{
