@@ -188,6 +188,7 @@ select {
     display:flex;    
     justify-content: flex-start;
     flex-wrap:wrap;/**genera que lo que se ponga en anuncio se cumpla, por ejemplo el 33%*/
+    column-gap:1rem;
 }
 
 .contenedor-contenido-column{
