@@ -11,7 +11,7 @@ const TerminosCondiciones = ({ terminosCondiciones }) => {
                 <h2 className='fw-700 centrar-texto seccion'>
                     Fecha de vigencia: 21 de noviembre de 2022
                 </h2>
-                <h3 className='fw-700 centrar-texto seccion'>
+                <h3 className='fw-700 seccion'>
                     1. Sistema de portafolio de trabajo
                 </h3>
                 <h5 className='fw-300 seccion'>
