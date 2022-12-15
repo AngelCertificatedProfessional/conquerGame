@@ -186,7 +186,7 @@ select {
 
 .contenedor-contenido{
     display:flex;    
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap:wrap;/**genera que lo que se ponga en anuncio se cumpla, por ejemplo el 33%*/
 }
 

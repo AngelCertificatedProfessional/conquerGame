@@ -1,5 +1,5 @@
 import React,{ useState, useEffect,Suspense} from 'react';
-import {  } from '../../utils/ConexionAPI';
+import { actualizarEspecifico } from '../../utils/ConexionAPI';
 
 const Icono = React.lazy(() =>
     import('../Usuario/Icono')
@@ -7,10 +7,19 @@ const Icono = React.lazy(() =>
 
 const ListadoIconos = ({ agregarUnidadMapa }) => {
     
-    const actualizarIconoUsuario = (sIcono) => {
-        vResultado.icono = sIcono
-        actualizarEspecifico('usuarios/actualizarIconoUsuario',vResultado)
+    const actualizarMemeUsuario = (sMeme) => {
+        let vResultado = {}
+        vResultado.meme = sMeme
+        
+        actualizarEspecifico('usuarios/actualizarMemes',vResultado)
         .then((resultado) => {
+            sessionStorage.setItem('meme', sMeme);
+            swal({
+                title: 'Asignacion de Meme',
+                text: 'Su carpeta de meme se a asignado exitosamente',
+                icon: 'success',
+                button: 'OK',
+              });
         })
         .catch((error) => {
             swal({
@@ -22,21 +31,38 @@ const ListadoIconos = ({ agregarUnidadMapa }) => {
         });
     }
 
-    const contenidoListado = [{
-        nombre:'kaguya',
-        carpeta: 'kaguya',
-        img: 'kaguya.jpg',
-    }];
+    const contenidoListado = [
+        {
+            nombre:'',
+            titulo:'No mostrar Iconos',
+            carpeta: 'sinImagen',
+            img: 'sinImagen.jpg',
+        },
+        {
+            nombre:'kaguya',
+            titulo:'Kaguya',
+            carpeta: 'kaguya',
+            img: 'kaguya.jpg',
+        },{
+            nombre:'genshin',
+            titulo:'Genshin',
+            carpeta: 'genshin',
+            img: 'genshin.jpg',
+        }
+    ];
 
     return (
         <div className="contenido-menu-opciones ">
-              {contenidoListado.map((consultaSerieTemp, index) => (
+            <div className="contenedor-contenido">
+                {contenidoListado.map((consultaSerieTemp, index) => (
                     <Suspense fallback={<div>Loading...</div>}>
                         <Icono
                             contenido = {consultaSerieTemp}
+                            actualizarMemeUsuario = {actualizarMemeUsuario}
                         />
                     </Suspense>
                 ))}
+            </div>
         </div>
     );
 };

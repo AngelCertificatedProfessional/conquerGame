@@ -1,5 +1,5 @@
 import React,{ useState, useEffect} from 'react';
-const Icono = ({ contenido,agregarUnidadMapa }) => {
+const Icono = ({ contenido,actualizarMemeUsuario }) => {
     const [imagen, setImagen] = useState([]);
     useEffect(() => {
         const fetchImage = async () => {
@@ -18,7 +18,7 @@ const Icono = ({ contenido,agregarUnidadMapa }) => {
             </img>
             <div className="contenido-anuncio">
                 <h3>{contenido.titulo}</h3>
-                <button className = {`boton blue w-100 m-right ${contenido.yaSelecconado ? 'opa-50' : ''}`} onClick={() => agregarUnidadMapa(contenido.tipoPieza)} disabled={contenido.yaSelecconado ? 'disabled' : ''}>Seleccionar</button>
+                <button className = {`boton blue w-100 m-right ${contenido.yaSelecconado ? 'opa-50' : ''}`} onClick={() => actualizarMemeUsuario(contenido.nombre)} disabled={contenido.yaSelecconado ? 'disabled' : ''}>Seleccionar</button>
             </div>
         </div>
     );

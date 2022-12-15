@@ -43,18 +43,18 @@ const ConquerGame = ({socket}) => {
     const [mostrarIniciar,setMostrarIniciar] = useState(false)
     const [mostrarAyuda,setmostrarAyuda] = useState(false)
     const [mostrarMenuUnidadEspecial,setmostrarMenuUnidadEspecial] = useState(false)
-
-    const partidaInitial = null;
-    const [partida,dispatchPartidas] = useReducer(agregarPartidaRes, partidaInitial);
-    const turnoUsuarioInitial = '' //Este metodo se usa para mostrar todos los jugadores en la lista de espera
-    const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroRes, turnoUsuarioInitial);
+    const [partida,dispatchPartidas] = useReducer(agregarPartidaRes, null);
+    const [turnoUsuario,dispatchPiezasTableroRes] = useReducer(mostrarTableroRes, '');
     const [mostrarImagen,dispatchMostrarImagen] = useReducer(mostrarImagenRes, false);
 
     const [imagen, setImagen] = useState([]);
+    const [memeUsuario, setMemeUsuario] = useState(sessionStorage.getItem('meme'));
 
     async function fetchImage(sImagen){
         try {
-            const response = await import(`@images/kaguya/${sImagen}.gif`) // change relative path to suit your needs
+            console.log(memeUsuario)
+            console.log(sessionStorage.getItem('meme'))
+            const response = await import(`@images/${memeUsuario}/${sImagen}.gif`) // change relative path to suit your needs
             setImagen(response.default)
         } catch (err) {
             console.log(err)
@@ -63,6 +63,7 @@ const ConquerGame = ({socket}) => {
 
     useEffect(() => {
         //window.addEventListener('beforeunload', desconectarUsuarioPartida)
+        setMemeUsuario(sessionStorage.getItem('meme'));
         socket.disconnect();
         socket.connect();
         socket.on('connect',() => {
@@ -240,7 +241,7 @@ const ConquerGame = ({socket}) => {
     }
 
     function mostrarImagenRes(state, action){
-        if(!action.hasOwnProperty("detenerImagen")){
+        if(memeUsuario != "" && !action.hasOwnProperty("detenerImagen")){
             const payload = {}
             payload.detenerImagen = true;
             if(action.jugadorPiezaEliminada === turnoUsuario){
