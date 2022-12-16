@@ -1,34 +1,34 @@
-export const b64_to_utf8 = ( str ) => {
-  if(str ===null){
+export const b64_to_utf8 = (str) => {
+  if (str === null) {
     return null;
   }
-  return decodeURIComponent(escape(window.atob( str )));
-}
+  return decodeURIComponent(escape(window.atob(str)));
+};
 
-export const utf8_to_b64 = ( str ) => {
-  return window.btoa(unescape(encodeURIComponent( str )));
-}
+export const utf8_to_b64 = (str) => {
+  return window.btoa(unescape(encodeURIComponent(str)));
+};
 
-export const capitalizeFirstLetter =(cadena)=> {
+export const capitalizeFirstLetter = (cadena) => {
   return cadena.charAt(0).toUpperCase() + cadena.slice(1);
-}
+};
 
 export const numeroAAlfabeto = (nValor) => {
-  return String.fromCharCode(nValor + 64)
-}
+  return String.fromCharCode(nValor + 64);
+};
 
 export const alfabetoANumero = (sValor) => {
-  return (sValor.charCodeAt(0)) - 64;
-}
+  return sValor.charCodeAt(0) - 64;
+};
 
 export const eliminarLetras = (sValor) => {
-  return sValor.replace(/\D/g, "")
-}
+  return sValor.replace(/\D/g, "");
+};
 
 export const eliminarNumeros = (sValor) => {
-  return sValor.replace(/[0-9]/g, '')
-}
+  return sValor.replace(/[0-9]/g, "");
+};
 
 export const eliminarSaltosLinea = (sValor) => {
-  return sValor.replace(/\s+/g, ' ')
-}
+  return sValor.replace(/\s+/g, " ");
+};
