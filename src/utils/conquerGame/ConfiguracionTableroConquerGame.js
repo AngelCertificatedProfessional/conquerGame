@@ -161,6 +161,69 @@ export const insertImage = () => {
   });
 }
 
+export const seccionTableroJugador = (vDivTablero,sTurno,nCantidadJugadores,bPintarOpacity) => {
+  
+  if (bPintarOpacity) {
+    const nValor = eliminarLetras(vDivTablero.id);
+    switch (nCantidadJugadores) {
+      case 2:
+        if (
+          (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+          (sTurno === "B" &&
+            nValor >= tamanoTableroLargo / 2 + 1 &&
+            nValor <= tamanoTableroLargo)
+        ) {
+          vDivTablero.style.opacity = 0.3;
+        } else {
+          vDivTablero.style.opacity = 1;
+        }
+        break;
+      case 3:
+        if (
+          (sTurno === "O" &&
+            nValor <= parseInt(tamanoTableroLargo * 0.66) + 1) ||
+          (sTurno === "B" &&
+            (nValor <= parseInt(tamanoTableroLargo * 0.33) + 1 ||
+              nValor >= 1 + (tamanoTableroLargo / nCantidadJugadores) * 2)) ||
+          (sTurno === "R" && nValor >= parseInt(tamanoTableroLargo * 0.33) + 2)
+        ) {
+          vDivTablero.style.opacity = 0.3;
+        } else {
+          vDivTablero.style.opacity = 1;
+        }
+        break;
+      case 4:
+        //eliminacion de numeros para el lado vertical
+        const nValorCol = alfabetoANumero(eliminarNumeros(vDivTablero.id));
+        if (
+          (sTurno === "O" &&
+            ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+              (nValorCol >= tamanoTableroAncho / 2 + 1 &&
+                nValorCol <= tamanoTableroAncho))) ||
+          (sTurno === "B" &&
+            ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+              (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2))) ||
+          (sTurno === "R" &&
+            ((nValor >= tamanoTableroLargo / 2 + 1 &&
+              nValor <= tamanoTableroLargo) ||
+              (nValorCol >= tamanoTableroAncho / 2 + 1 &&
+                nValorCol <= tamanoTableroAncho))) ||
+          (sTurno === "P" &&
+            ((nValor >= tamanoTableroLargo / 2 + 1 &&
+              nValor <= tamanoTableroLargo) ||
+              (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2)))
+        ) {
+          vDivTablero.style.opacity = 0.3;
+        } else {
+          vDivTablero.style.opacity = 1;
+        }
+        break;
+    }
+  }else {
+    vDivTablero.style.opacity = 1;
+  }
+}
+
 export const montanas = [
   "1F",
   "1G",

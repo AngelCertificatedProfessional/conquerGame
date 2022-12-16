@@ -4,20 +4,13 @@ import {
   colorSeleccionadoTablero,
   colorTablero,
   lagos,
-  tamanoTableroAncho,
-  tamanoTableroLargo,
   validaPosicionPieza,
   agregarImagenesListado as agregarImagenesListadoTablero,
   agregarDivsTablero as agregarDivsTableroConfiguracion,
   coloring as coloringTablero,
-  insertImage
+  insertImage,
+  seccionTableroJugador
 } from "./ConfiguracionTableroConquerGame.js";
-import {
-  alfabetoANumero,
-  eliminarLetras,
-  eliminarNumeros,
-  numeroAAlfabeto,
-} from "../UtileriasPagina";
 import swal from "sweetalert";
 
 let sTurno = "O";
@@ -243,66 +236,11 @@ export const agregarDivsTablero = () => {
 };
 
 export const coloring = () => {
-  document.querySelectorAll(".box").forEach((colorNegro) => {
-    coloringTablero(colorNegro)
-
-    const nValor = eliminarLetras(colorNegro.id);
-    switch (nCantidadJugadores) {
-      case 2:
-        if (
-          (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-          (sTurno === "B" &&
-            nValor >= tamanoTableroLargo / 2 + 1 &&
-            nValor <= tamanoTableroLargo)
-        ) {
-          colorNegro.style.opacity = 0.3;
-        } else {
-          colorNegro.style.opacity = 1;
-        }
-        break;
-      case 3:
-        if (
-          (sTurno === "O" &&
-            nValor <= parseInt(tamanoTableroLargo * 0.66) + 1) ||
-          (sTurno === "B" &&
-            (nValor <= parseInt(tamanoTableroLargo * 0.33) + 1 ||
-              nValor >= 1 + (tamanoTableroLargo / nCantidadJugadores) * 2)) ||
-          (sTurno === "R" && nValor >= parseInt(tamanoTableroLargo * 0.33) + 2)
-        ) {
-          colorNegro.style.opacity = 0.3;
-        } else {
-          colorNegro.style.opacity = 1;
-        }
-        break;
-      case 4:
-        //eliminacion de numeros para el lado vertical
-        const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id));
-        if (
-          (sTurno === "O" &&
-            ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-              (nValorCol >= tamanoTableroAncho / 2 + 1 &&
-                nValorCol <= tamanoTableroAncho))) ||
-          (sTurno === "B" &&
-            ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-              (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2))) ||
-          (sTurno === "R" &&
-            ((nValor >= tamanoTableroLargo / 2 + 1 &&
-              nValor <= tamanoTableroLargo) ||
-              (nValorCol >= tamanoTableroAncho / 2 + 1 &&
-                nValorCol <= tamanoTableroAncho))) ||
-          (sTurno === "P" &&
-            ((nValor >= tamanoTableroLargo / 2 + 1 &&
-              nValor <= tamanoTableroLargo) ||
-              (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2)))
-        ) {
-          colorNegro.style.opacity = 0.3;
-        } else {
-          colorNegro.style.opacity = 1;
-        }
-        break;
-    }
+  document.querySelectorAll(".box").forEach((vDivTablero) => {
+    coloringTablero(vDivTablero)
+    seccionTableroJugador(vDivTablero,sTurno,nCantidadJugadores,true)
   });
-};
+}
 
 export const guardarConfiguracionPiezas = () => {
   //Validamos que no halla piezas vacias

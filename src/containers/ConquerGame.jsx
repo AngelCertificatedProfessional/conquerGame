@@ -113,11 +113,9 @@ const ConquerGame = ({ socket }) => {
           limpiarVariables();
           break;
         case 2:
-          console.log('entre parte 2')
           dispatchPartidas(payload);
           //Esta seccion indica que si la pagina se esta refrescando al presionar f5 o se salio y volvio a ingresar
           if (!payload.hasOwnProperty("notificarUsuarioListo")) {
-            console.log('entre notificarUsuarioListo')
             dispatchTurnoUsuarioRes(payload);
             setAccion(2);
           } else if(payload.usuarioListo !== usuario.usuario){

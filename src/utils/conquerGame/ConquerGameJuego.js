@@ -5,14 +5,13 @@ import {
   colorOpciones,
   colorSeleccionadoTablero,
   colorTablero,
-  tamanoTableroAncho,
-  tamanoTableroLargo,
   arregloPiezas,
   validaPosicionPieza,
   agregarImagenesListado as agregarImagenesListadoTablero,
   agregarDivsTablero as agregarDivsTableroConfiguracion,
   coloring as coloringTablero,
-  insertImage
+  insertImage,
+  seccionTableroJugador
 } from "./ConfiguracionTableroConquerGame.js";
 import {
   movimientoHachero,
@@ -43,10 +42,8 @@ import {
   valorPuntosElite as valorPuntosArcherElite,
 } from "./piezas/archer.js";
 import {
-  alfabetoANumero,
   eliminarLetras,
-  eliminarNumeros,
-  numeroAAlfabeto,
+  eliminarNumeros
 } from "../UtileriasPagina";
 import {
   movimientoHechicero,
@@ -731,56 +728,8 @@ export const colocarPiezaEspecial = (sPieza) => {
 };
 
 export const pintarMapaOpacity = (bPintarOpacity) => {
-  document.querySelectorAll(".box").forEach((colorNegro) => {
-    if (bPintarOpacity) {
-      const nValor = eliminarLetras(colorNegro.id);
-      switch (partida.cantidadJugadores) {
-        case 3:
-          if (
-            (sTurnoJugador === "O" &&
-              nValor <= parseInt(tamanoTableroLargo * 0.66) + 1) ||
-            (sTurnoJugador === "B" &&
-              (nValor <= parseInt(tamanoTableroLargo * 0.33) + 1 ||
-                nValor >=
-                  1 + (tamanoTableroLargo / partida.cantidadJugadores) * 2)) ||
-            (sTurnoJugador === "R" &&
-              nValor >= parseInt(tamanoTableroLargo * 0.33) + 2)
-          ) {
-            colorNegro.style.opacity = 0.3;
-          } else {
-            colorNegro.style.opacity = 1;
-          }
-          break;
-        case 4:
-          //eliminacion de numeros para el lado vertical
-          const nValorCol = alfabetoANumero(eliminarNumeros(colorNegro.id));
-          if (
-            (sTurnoJugador === "O" &&
-              ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-                (nValorCol >= tamanoTableroAncho / 2 + 1 &&
-                  nValorCol <= tamanoTableroAncho))) ||
-            (sTurnoJugador === "B" &&
-              ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-                (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2))) ||
-            (sTurnoJugador === "R" &&
-              ((nValor >= tamanoTableroLargo / 2 + 1 &&
-                nValor <= tamanoTableroLargo) ||
-                (nValorCol >= tamanoTableroAncho / 2 + 1 &&
-                  nValorCol <= tamanoTableroAncho))) ||
-            (sTurnoJugador === "P" &&
-              ((nValor >= tamanoTableroLargo / 2 + 1 &&
-                nValor <= tamanoTableroLargo) ||
-                (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2)))
-          ) {
-            colorNegro.style.opacity = 0.3;
-          } else {
-            colorNegro.style.opacity = 1;
-          }
-          break;
-      }
-    } else {
-      colorNegro.style.opacity = 1;
-    }
+  document.querySelectorAll(".box").forEach((vDivTablero) => {
+    seccionTableroJugador(vDivTablero,sTurnoJugador,partida.cantidadJugadores,bPintarOpacity)
   });
 };
 
