@@ -13,7 +13,7 @@ import {
 } from "../utils/conquerGame/ConquerGameConfiguracion";
 import {
   agregarDivsTableroJuego,
-  agregarImagenesListadoJuego,
+  agregarImagenesListado as agregarImagenesListadoJuego,
   colocarPiezaEspecial,
   coloringJuego,
   conometro,

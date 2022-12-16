@@ -13,6 +13,7 @@ import {
   tamanoTableroLargo,
   arregloPiezas,
   validaPosicionPieza,
+  agregarImagenesListado as agregarImagenesListadoTablero
 } from "./ConfiguracionTableroConquerGame.js";
 import {
   movimientoHachero,
@@ -442,22 +443,9 @@ export const agregarDivsTableroJuego = () => {
 };
 
 //indica el listado de las piesas del usuario
-export const agregarImagenesListadoJuego = async (turnoUsuario) => {
+export const agregarImagenesListado = async (turnoUsuario) => {
   sTurnoJugador = turnoUsuario;
-  for (const piecePosition in arregloPiezas) {
-    const response = await import(
-      `@images/${sTurnoJugador + arregloPiezas[piecePosition].icono}.png`
-    );
-    arregloPiezas[piecePosition].direccion = response.default;
-    let divElement = document.createElement("div");
-    divElement.className = "iconoMenu";
-    divElement.id = arregloPiezas[piecePosition].nombre;
-    divElement.innerHTML =
-      arregloPiezas[piecePosition].nombre +
-      `<img class='allimg' src="${arregloPiezas[piecePosition].direccion}" alt="">`;
-    divElement.style.cursor = "pointer";
-    document.getElementById("lista_personajes").appendChild(divElement);
-  }
+  await agregarImagenesListadoTablero(sTurnoJugador,arregloPiezas)
 };
 
 export const posicionPiezasJuego = (partida) => {
@@ -903,6 +891,7 @@ export const getColorPorLetra = (sLetra, bPlural = true) => {
       return "";
   }
 };
+
 const getPuntuajePieza = (sPieza) => {
   if (sPieza.includes(`archerE`)) {
     return valorPuntosArcherElite;

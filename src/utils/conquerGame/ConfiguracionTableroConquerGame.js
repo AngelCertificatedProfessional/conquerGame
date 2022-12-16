@@ -98,6 +98,25 @@ export const validaPosicionPieza = (sPieza, sPosicion,nCantidadJugadores,sTurno)
   }
 };
 
+export const agregarImagenesListado = async (sTurno,vArregloPiezas) => {
+  for (const piecePosition in vArregloPiezas) {
+    const response = await import(
+      `@images/${sTurno + vArregloPiezas[piecePosition].icono}.png`
+    );
+    vArregloPiezas[piecePosition].direccion = response.default;
+    let divElement = document.createElement("div");
+    divElement.className = "iconoMenu";
+    divElement.id = vArregloPiezas[piecePosition].nombre;
+    divElement.innerHTML =
+    vArregloPiezas[piecePosition].nombre +
+      `<img class='allimg' src="${vArregloPiezas[piecePosition].direccion}" alt="">`;
+    divElement.style.cursor = "pointer";
+    document.getElementById("lista_personajes").appendChild(divElement);
+  }
+  return vArregloPiezas;
+}
+
+
 
 export const montanas = [
   "1F",

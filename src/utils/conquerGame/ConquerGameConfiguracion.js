@@ -9,6 +9,7 @@ import {
   tamanoTableroAncho,
   tamanoTableroLargo,
   validaPosicionPieza,
+  agregarImagenesListado as agregarImagenesListadoTablero
 } from "./ConfiguracionTableroConquerGame.js";
 import {
   alfabetoANumero,
@@ -23,7 +24,7 @@ let nCantidadJugadores = 0;
 let sPiezaAColocar = "";
 let piezaSeleccionada = null;
 
-const arregloPiezas = [
+let arregloPiezas = [
   {
     nombre: "hachero1",
     posicion: "",
@@ -114,20 +115,7 @@ export const limpiarVariables = () => {
 //indica el listado de las piesas del usuario
 export const agregarImagenesListado = async (turnoUsuario) => {
   sTurno = turnoUsuario;
-  for (const piecePosition in arregloPiezas) {
-    const response = await import(
-      `@images/${sTurno + arregloPiezas[piecePosition].icono}.png`
-    );
-    arregloPiezas[piecePosition].direccion = response.default;
-    let divElement = document.createElement("div");
-    divElement.className = "iconoMenu";
-    divElement.id = arregloPiezas[piecePosition].nombre;
-    divElement.innerHTML =
-      arregloPiezas[piecePosition].nombre +
-      `<img class='allimg' src="${arregloPiezas[piecePosition].direccion}" alt="">`;
-    divElement.style.cursor = "pointer";
-    document.getElementById("lista_personajes").appendChild(divElement);
-  }
+  arregloPiezas = await agregarImagenesListadoTablero(sTurno,arregloPiezas);
 
   document.querySelectorAll(".iconoMenu").forEach((hathiTest) => {
     hathiTest.addEventListener("click", function () {
