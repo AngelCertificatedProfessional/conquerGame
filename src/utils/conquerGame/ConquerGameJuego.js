@@ -2,19 +2,16 @@ import { movimientoRey, valorPuntos as valorPuntosRey } from "./piezas/rey.js";
 import { actualizarEspecifico } from "../ConexionAPI.js";
 import {
   colorDisparoArcher,
-  colorLago,
-  colorMontana,
   colorOpciones,
   colorSeleccionadoTablero,
   colorTablero,
-  lagos,
-  montanas,
   tamanoTableroAncho,
   tamanoTableroLargo,
   arregloPiezas,
   validaPosicionPieza,
   agregarImagenesListado as agregarImagenesListadoTablero,
-  agregarDivsTablero as agregarDivsTableroConfiguracion
+  agregarDivsTablero as agregarDivsTableroConfiguracion,
+  coloring as coloringTablero
 } from "./ConfiguracionTableroConquerGame.js";
 import {
   movimientoHachero,
@@ -153,7 +150,7 @@ export const agregarDivsTableroJuego = () => {
             //document.getElementById(piezaAnterior).style.opacity = 0.5;
 
             item.innerText = pinkText2;
-            coloringJuego();
+            coloring();
             insertImage();
             //Se realiza la evaluacion con el asesino elite para poder evaluar primero con el caracter
             if (sPiezaMovimiento.includes("asesinoE") && !bMovioAsesinoElite) {
@@ -237,7 +234,7 @@ export const agregarDivsTableroJuego = () => {
             let pinkText2 = i.innerText;
             posicionPiezasGlobal[piezaAnterior] = "";
             item.innerText = "";
-            coloringJuego();
+            coloring();
             insertImage();
             if (
               sPiezaMovimiento.includes("asesinoE") &&
@@ -403,7 +400,7 @@ export const agregarDivsTableroJuego = () => {
             ) {
               document.getElementById(pinkId).innerText = "";
               hathiTest2.innerText = pinkText;
-              coloringJuego();
+              coloring();
               insertImage();
               pinkId = "";
               pinkText = "";
@@ -419,7 +416,7 @@ export const agregarDivsTableroJuego = () => {
     ee.addEventListener("click", function () {
       z = z + 1;
       if (z % 2 == 0 && ee.style.backgroundColor !== colorOpciones) {
-        coloringJuego();
+        coloring();
       }
     });
   });
@@ -475,18 +472,10 @@ const insertImage = () => {
   });
 };
 
-export const coloringJuego = () => {
-  document.querySelectorAll(".white-box").forEach((colorNegro) => {
-    colorNegro.style.backgroundColor = colorTablero;
-  });
-
-  document.querySelectorAll(".green-box").forEach((colorNegro) => {
-    colorNegro.style.backgroundColor = colorMontana;
-  });
-
-  document.querySelectorAll(".blue-box").forEach((colorNegro) => {
-    colorNegro.style.backgroundColor = colorLago;
-  });
+export const coloring = () => {
+  document.querySelectorAll(".box").forEach((colorNegro) => {
+    coloringTablero(colorNegro)
+  })
 };
 
 //function to not remove the same team element
@@ -528,7 +517,7 @@ export const saltarTurno = () => {
   }
 
   // Toggling the turn
-  coloringJuego();
+  coloring();
   bMovioAsesino = false;
   bMovioAsesinoElite = false;
   evaluartTurnoJugador(`Jugador ${sJugador} salto turno`, 0, "", "");

@@ -15,7 +15,7 @@ import {
   agregarDivsTableroJuego,
   agregarImagenesListado as agregarImagenesListadoJuego,
   colocarPiezaEspecial,
-  coloringJuego,
+  coloring as coloringJuego,
   conometro,
   detenerCronometro,
   evaluarResultadoPartida,

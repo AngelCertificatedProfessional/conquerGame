@@ -1,16 +1,15 @@
 import {
   colorLago,
-  colorMontana,
   colorSeleccionadoListado,
   colorSeleccionadoTablero,
   colorTablero,
   lagos,
-  montanas,
   tamanoTableroAncho,
   tamanoTableroLargo,
   validaPosicionPieza,
   agregarImagenesListado as agregarImagenesListadoTablero,
-  agregarDivsTablero as agregarDivsTableroConfiguracion
+  agregarDivsTablero as agregarDivsTableroConfiguracion,
+  coloring as coloringTablero
 } from "./ConfiguracionTableroConquerGame.js";
 import {
   alfabetoANumero,
@@ -244,13 +243,7 @@ export const agregarDivsTablero = () => {
 
 export const coloring = () => {
   document.querySelectorAll(".box").forEach((colorNegro) => {
-    if (colorNegro.classList.contains("white-box")) {
-      colorNegro.style.backgroundColor = colorTablero;
-    } else if (colorNegro.classList.contains("green-box")) {
-      colorNegro.style.backgroundColor = colorMontana;
-    } else if (colorNegro.classList.contains("blue-box")) {
-      colorNegro.style.backgroundColor = colorLago;
-    }
+    coloringTablero(colorNegro)
 
     const nValor = eliminarLetras(colorNegro.id);
     switch (nCantidadJugadores) {

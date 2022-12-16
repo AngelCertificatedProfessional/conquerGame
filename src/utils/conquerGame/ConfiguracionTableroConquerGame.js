@@ -138,6 +138,16 @@ export const agregarDivsTablero = () => {
   }
 }
 
+export const coloring = (colorDiv) => {
+  if (colorDiv.classList.contains("white-box")) {
+    colorDiv.style.backgroundColor = colorTablero;
+  } else if (colorDiv.classList.contains("green-box")) {
+    colorDiv.style.backgroundColor = colorMontana;
+  } else if (colorDiv.classList.contains("blue-box")) {
+    colorDiv.style.backgroundColor = colorLago;
+  }
+};
+
 export const montanas = [
   "1F",
   "1G",
