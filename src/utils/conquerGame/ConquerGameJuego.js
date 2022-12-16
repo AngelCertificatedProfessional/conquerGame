@@ -12,6 +12,7 @@ import {
   tamanoTableroAncho,
   tamanoTableroLargo,
   arregloPiezas,
+  validaPosicionPieza,
 } from "./ConfiguracionTableroConquerGame.js";
 import {
   movimientoHachero,
@@ -860,7 +861,9 @@ export const agregarPiezaEspecialClick = (sId) => {
       sAgregarPiezaEspecial
         .replace(/\s/g, "")
         .substring(1, sAgregarPiezaEspecial.length),
-      sId
+      sId,
+      partida.cantidadJugadores,
+      sTurnoJugador
     )
   ) {
     return;
@@ -883,67 +886,6 @@ export const agregarPiezaEspecialClick = (sId) => {
     sReyEliminoTempT,
     sTurnoJugador
   );
-};
-
-const validaPosicionPieza = (sPieza, sPosicion) => {
-  const nValor = eliminarLetras(sPosicion);
-
-  //Evaluaremos si la pieza esta invadiendo terreno
-
-  switch (partida.cantidadJugadores) {
-    case 3:
-      if (
-        (sTurnoJugador === "O" &&
-          nValor <= parseInt(tamanoTableroLargo * 0.66) + 1) ||
-        (sTurnoJugador === "B" &&
-          (nValor <= parseInt(tamanoTableroLargo * 0.33) + 1 ||
-            nValor >=
-              1 + (tamanoTableroLargo / partida.cantidadJugadores) * 2)) ||
-        (sTurnoJugador === "R" &&
-          nValor >= parseInt(tamanoTableroLargo * 0.33) + 2)
-      ) {
-        alert("Esta pieza esta invadiendo terreno");
-        return true;
-      }
-      break;
-    case 4:
-      //eliminacion de numeros para el lado vertical
-      const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion));
-      if (
-        (sTurnoJugador === "O" &&
-          ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-            (nValorCol >= tamanoTableroAncho / 2 + 1 &&
-              nValorCol <= tamanoTableroAncho))) ||
-        (sTurnoJugador === "B" &&
-          ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-            (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2))) ||
-        (sTurnoJugador === "R" &&
-          ((nValor >= tamanoTableroLargo / 2 + 1 &&
-            nValor <= tamanoTableroLargo) ||
-            (nValorCol >= tamanoTableroAncho / 2 + 1 &&
-              nValorCol <= tamanoTableroAncho))) ||
-        (sTurnoJugador === "P" &&
-          ((nValor >= tamanoTableroLargo / 2 + 1 &&
-            nValor <= tamanoTableroLargo) ||
-            (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2)))
-      ) {
-        alert("Esta pieza esta invadiendo terreno");
-        return true;
-      }
-  }
-
-  if (
-    (eliminarNumeros(sPieza) === "caballero" ||
-      eliminarNumeros(sPieza) === "castillo") &&
-    lagos.includes(sPosicion)
-  ) {
-    alert("Esta pieza no puede invadir un lago");
-    return true;
-  }
-  if (montanas.includes(sPosicion)) {
-    alert("Esta pieza no puede invadir una montaña");
-    return true;
-  }
 };
 
 export const getColorPorLetra = (sLetra, bPlural = true) => {

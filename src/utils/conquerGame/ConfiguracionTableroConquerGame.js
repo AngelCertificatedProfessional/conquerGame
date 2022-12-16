@@ -1,3 +1,5 @@
+import { alfabetoANumero, eliminarLetras, eliminarNumeros } from "../UtileriasPagina";
+
 export const colorTablero = "rgb(240, 201, 150)";
 export const colorMontana = "rgb(14, 155, 0)";
 export const colorLago = "rgb(63, 234, 229)";
@@ -25,6 +27,77 @@ export const validaPiezaLago = (idDiv) => {
   }
   return false;
 };
+
+//Este metodo evalua si la pieza la estan poniendo en cesped rio o esta invadiendo terreno
+export const validaPosicionPieza = (sPieza, sPosicion,nCantidadJugadores,sTurno) => {
+  const nValor = eliminarLetras(sPosicion);
+
+  //Evaluaremos si la pieza esta invadiendo terreno
+
+  switch (nCantidadJugadores) {
+    case 2:
+      if (
+        (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+        (sTurno === "B" &&
+          nValor >= tamanoTableroLargo / 2 + 1 &&
+          nValor <= tamanoTableroLargo)
+      ) {
+        alert("Esta pieza esta invadiendo terreno");
+        return true;
+      }
+      break;
+    case 3:
+      if (
+        (sTurno === "O" && nValor <= parseInt(tamanoTableroLargo * 0.66) + 1) ||
+        (sTurno === "B" &&
+          (nValor <= parseInt(tamanoTableroLargo * 0.33) + 1 ||
+            nValor >= 1 + (tamanoTableroLargo / nCantidadJugadores) * 2)) ||
+        (sTurno === "R" && nValor >= parseInt(tamanoTableroLargo * 0.33) + 2)
+      ) {
+        alert("Esta pieza esta invadiendo terreno");
+        return true;
+      }
+      break;
+    case 4:
+      //eliminacion de numeros para el lado vertical
+      const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion));
+      if (
+        (sTurno === "O" &&
+          ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+            (nValorCol >= tamanoTableroAncho / 2 + 1 &&
+              nValorCol <= tamanoTableroAncho))) ||
+        (sTurno === "B" &&
+          ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+            (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2))) ||
+        (sTurno === "R" &&
+          ((nValor >= tamanoTableroLargo / 2 + 1 &&
+            nValor <= tamanoTableroLargo) ||
+            (nValorCol >= tamanoTableroAncho / 2 + 1 &&
+              nValorCol <= tamanoTableroAncho))) ||
+        (sTurno === "P" &&
+          ((nValor >= tamanoTableroLargo / 2 + 1 &&
+            nValor <= tamanoTableroLargo) ||
+            (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2)))
+      ) {
+        alert("Esta pieza esta invadiendo terreno");
+        return true;
+      }
+  }
+
+  if (
+    (eliminarNumeros(sPieza) === "caballero" ||
+      eliminarNumeros(sPieza) === "castillo") &&
+    lagos.includes(sPosicion)
+  ) {
+    alert("Esta pieza no puede invadir un lago");
+    return true;
+  }
+  if (montanas.includes(sPosicion)) {
+    alert("Esta pieza no puede invadir una montaña");
+    return true;
+  }
+};
+
 
 export const montanas = [
   "1F",
