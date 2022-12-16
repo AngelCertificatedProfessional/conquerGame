@@ -67,8 +67,8 @@ const ConquerGame = ({ socket }) => {
   const [mostrarMenuUnidadEspecial, setmostrarMenuUnidadEspecial] =
     useState(false);
   const [partida, dispatchPartidas] = useReducer(agregarPartidaRes, null);
-  const [turnoUsuario, dispatchPiezasTableroRes] = useReducer(
-    mostrarTableroRes,
+  const [turnoUsuario, dispatchTurnoUsuarioRes] = useReducer(
+    turnoUsuarioRes,
     ""
   );
   const [mostrarImagen, dispatchMostrarImagen] = useReducer(
@@ -105,30 +105,29 @@ const ConquerGame = ({ socket }) => {
     socket.on("partida" + numeroPartida, (payload) => {
       switch (payload.estatus) {
         case 1:
-          console.log(usuario)
           if (usuario.usuario == payload.jugadores[0].usuario) {
             setMostrarIniciar(true);
           }
           dispatchPartidas(payload);
           setAccion(1);
+          limpiarVariables();
           break;
         case 2:
+          console.log('entre parte 2')
           dispatchPartidas(payload);
           //Esta seccion indica que si la pagina se esta refrescando al presionar f5 o se salio y volvio a ingresar
           if (!payload.hasOwnProperty("notificarUsuarioListo")) {
-            limpiarVariables();
-            dispatchPiezasTableroRes(payload);
+            console.log('entre notificarUsuarioListo')
+            dispatchTurnoUsuarioRes(payload);
             setAccion(2);
-          } else {
-            if (payload.usuarioListo !== usuario.usuario) {
-              toast(
+          } else if(payload.usuarioListo !== usuario.usuario){
+            toast(
                 "El jugador " + payload.usuarioListo + " esta listo para jugar"
               );
-            }
           }
           break;
         case 3:
-          dispatchPiezasTableroRes(payload);
+          dispatchTurnoUsuarioRes(payload);
           dispatchPartidas(payload);
           payload.memeUsuario = memeUsuario;
           dispatchMostrarImagen(payload);
@@ -147,7 +146,7 @@ const ConquerGame = ({ socket }) => {
           }
           break;
         case 4:
-          dispatchPiezasTableroRes(payload);
+          dispatchTurnoUsuarioRes(payload);
           dispatchPartidas(payload);
           posicionPiezasJuego(payload);
           detenerCronometro();
@@ -252,7 +251,7 @@ const ConquerGame = ({ socket }) => {
       });
   };
 
-  function mostrarTableroRes(state, action) {
+  function turnoUsuarioRes(state, action) {
     if (state !== "") {
       return state;
     }

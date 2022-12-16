@@ -148,6 +148,19 @@ export const coloring = (colorDiv) => {
   }
 };
 
+export const insertImage = () => {
+  document.querySelectorAll(".box").forEach(async (image) => {
+    //Validamos que contenga texto los elementos del div
+    if (image.innerText.length !== 0) {
+      const response = await import(
+        `@images/${eliminarNumeros(image.innerText)}.png`
+      );
+      image.innerHTML = `${image.innerText} <img class='allimg' src="${response.default}" alt="">`;
+      image.style.cursor = "pointer";
+    }
+  });
+}
+
 export const montanas = [
   "1F",
   "1G",

@@ -11,7 +11,8 @@ import {
   validaPosicionPieza,
   agregarImagenesListado as agregarImagenesListadoTablero,
   agregarDivsTablero as agregarDivsTableroConfiguracion,
-  coloring as coloringTablero
+  coloring as coloringTablero,
+  insertImage
 } from "./ConfiguracionTableroConquerGame.js";
 import {
   movimientoHachero,
@@ -178,11 +179,9 @@ export const agregarDivsTableroJuego = () => {
               const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
               //detectamos la posicion del rey que esta ordenando el ataque.
               const indexReyOrden = arrReyes.indexOf(pinkText2[0] + "rey");
-              console.log(nTurno);
               if (indexReyMuerto < indexReyOrden) {
                 nTurno--;
               }
-              console.log(nTurno);
               if (indexReyMuerto > -1) {
                 // only splice array when item is found
                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
@@ -266,7 +265,6 @@ export const agregarDivsTableroJuego = () => {
                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
-              console.log(arrReyes);
               if (arrReyes.length > 1) {
                 mostrarMenuUnidadEspecial(true);
                 sAgregarPiezaEspecial = "pieza";
@@ -457,19 +455,6 @@ export const posicionPiezasJuego = (partida) => {
     }
   }
   insertImage();
-};
-
-const insertImage = () => {
-  document.querySelectorAll(".box").forEach(async (image) => {
-    //Validamos que contenga texto los elementos del div
-    if (image.innerText.length !== 0) {
-      const response = await import(
-        `@images/${eliminarNumeros(image.innerText)}.png`
-      );
-      image.innerHTML = `${image.innerText} <img class='allimg' src="${response.default}" alt="">`;
-      image.style.cursor = "pointer";
-    }
-  });
 };
 
 export const coloring = () => {

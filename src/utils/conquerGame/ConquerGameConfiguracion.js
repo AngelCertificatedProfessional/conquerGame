@@ -9,7 +9,8 @@ import {
   validaPosicionPieza,
   agregarImagenesListado as agregarImagenesListadoTablero,
   agregarDivsTablero as agregarDivsTableroConfiguracion,
-  coloring as coloringTablero
+  coloring as coloringTablero,
+  insertImage
 } from "./ConfiguracionTableroConquerGame.js";
 import {
   alfabetoANumero,
@@ -325,21 +326,6 @@ export const guardarConfiguracionPiezas = () => {
   sPiezaAColocar = "";
   return piezasGame;
 };
-
-const insertImage = () => {
-  document.querySelectorAll(".box").forEach(async (image) => {
-    //Validamos que contenga texto los elementos del div
-    if (image.innerText.length !== 0) {
-      const response = await import(
-        `@images/${eliminarNumeros(image.innerText)}.png`
-      );
-      image.innerHTML = `${image.innerText} <img class='allimg' src="${response.default}" alt="">`;
-      image.style.cursor = "pointer";
-    }
-  });
-};
-
-
 
 export const setCantidadJugadores = (cantidadJugadoresT) => {
   nCantidadJugadores = cantidadJugadoresT;
