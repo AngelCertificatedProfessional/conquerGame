@@ -13,7 +13,8 @@ import {
   tamanoTableroLargo,
   arregloPiezas,
   validaPosicionPieza,
-  agregarImagenesListado as agregarImagenesListadoTablero
+  agregarImagenesListado as agregarImagenesListadoTablero,
+  agregarDivsTablero as agregarDivsTableroConfiguracion
 } from "./ConfiguracionTableroConquerGame.js";
 import {
   movimientoHachero,
@@ -95,25 +96,7 @@ export const limpiarVariablesJuego = () => {
 };
 
 export const agregarDivsTableroJuego = () => {
-  for (let nContRow = tamanoTableroLargo; nContRow > 0; nContRow--) {
-    let divElement = document.createElement("div");
-    divElement.id = "row" + nContRow;
-    divElement.className = "row";
-    document.getElementById("tablero_juego").appendChild(divElement);
-    for (let nContCol = 1; nContCol < tamanoTableroAncho + 1; nContCol++) {
-      let liElement2 = document.createElement("li");
-      liElement2.id = nContRow + numeroAAlfabeto(nContCol);
-      //Se toma la desicion de como se pintara el tablero
-      if (lagos.includes(liElement2.id)) {
-        liElement2.className = "box blue-box";
-      } else if (montanas.includes(liElement2.id)) {
-        liElement2.className = "box green-box";
-      } else {
-        liElement2.className = "box white-box";
-      }
-      document.getElementById("row" + nContRow).appendChild(liElement2);
-    }
-  }
+  agregarDivsTableroConfiguracion();
 
   document.querySelectorAll(".box").forEach((item) => {
     item.addEventListener("click", function () {

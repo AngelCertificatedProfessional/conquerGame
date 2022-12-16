@@ -1,4 +1,4 @@
-import { alfabetoANumero, eliminarLetras, eliminarNumeros } from "../UtileriasPagina";
+import { alfabetoANumero, eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
 
 export const colorTablero = "rgb(240, 201, 150)";
 export const colorMontana = "rgb(14, 155, 0)";
@@ -116,7 +116,27 @@ export const agregarImagenesListado = async (sTurno,vArregloPiezas) => {
   return vArregloPiezas;
 }
 
-
+export const agregarDivsTablero = () => {
+  for (let nContRow = tamanoTableroLargo; nContRow > 0; nContRow--) {
+    let divElement = document.createElement("div");
+    divElement.id = "row" + nContRow;
+    divElement.className = "row";
+    document.getElementById("tablero_juego").appendChild(divElement);
+    for (let nContCol = 1; nContCol < tamanoTableroAncho + 1; nContCol++) {
+      let liElement2 = document.createElement("li");
+      liElement2.id = nContRow + numeroAAlfabeto(nContCol);
+      //Se toma la desicion de como se pintara el tablero
+      if (lagos.includes(liElement2.id)) {
+        liElement2.className = "box blue-box";
+      } else if (montanas.includes(liElement2.id)) {
+        liElement2.className = "box green-box";
+      } else {
+        liElement2.className = "box white-box";
+      }
+      document.getElementById("row" + nContRow).appendChild(liElement2);
+    }
+  }
+}
 
 export const montanas = [
   "1F",
