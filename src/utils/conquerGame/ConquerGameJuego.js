@@ -87,7 +87,7 @@ export const limpiarVariablesJuego = () => {
   posicionPiezasGlobal = {};
   nIntervalo = null;
   bMovioAsesinoElite = false;
-  sReyEliminoTemp;
+  sReyEliminoTemp = "";
 };
 
 export const agregarDivsTableroJuego = () => {

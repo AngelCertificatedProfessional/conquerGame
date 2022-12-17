@@ -318,53 +318,79 @@ export const arregloPiezas = [
   {
     nombre: "hachero1",
     icono: "hachero",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "hachero2",
     icono: "hachero",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "lancero1",
     icono: "lancero",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "lancero2",
     icono: "lancero",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "lancero3",
     icono: "lancero",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "lancero4",
     icono: "lancero",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "archer",
     icono: "archer",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "asesino",
     icono: "asesino",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "caballero1",
     icono: "caballero",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "caballero2",
     icono: "caballero",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "caballero3",
     icono: "caballero",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "caballero4",
     icono: "caballero",
+    posicion: "",
+    direccion: ""
   },
   {
     nombre: "rey",
     icono: "rey",
+    posicion: "",
+    direccion: ""
   },
 ];

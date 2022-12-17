@@ -9,7 +9,8 @@ import {
   agregarDivsTablero as agregarDivsTableroConfiguracion,
   coloring as coloringTablero,
   insertImage,
-  seccionTableroJugador
+  seccionTableroJugador,
+  arregloPiezas
 } from "./ConfiguracionTableroConquerGame.js";
 import swal from "sweetalert";
 
@@ -18,98 +19,19 @@ let nCantidadJugadores = 0;
 let sPiezaAColocar = "";
 let piezaSeleccionada = null;
 
-let arregloPiezas = [
-  {
-    nombre: "hachero1",
-    posicion: "",
-    icono: "hachero",
-    direccion: "",
-  },
-  {
-    nombre: "hachero2",
-    posicion: "",
-    icono: "hachero",
-    direccion: "",
-  },
-  {
-    nombre: "lancero1",
-    posicion: "",
-    icono: "lancero",
-    direccion: "",
-  },
-  {
-    nombre: "lancero2",
-    posicion: "",
-    icono: "lancero",
-    direccion: "",
-  },
-  {
-    nombre: "lancero3",
-    posicion: "",
-    icono: "lancero",
-    direccion: "",
-  },
-  {
-    nombre: "lancero4",
-    posicion: "",
-    icono: "lancero",
-    direccion: "",
-  },
-  {
-    nombre: "archer",
-    posicion: "",
-    icono: "archer",
-    direccion: "",
-  },
-  {
-    nombre: "asesino",
-    posicion: "",
-    icono: "asesino",
-    direccion: "",
-  },
-  {
-    nombre: "caballero1",
-    posicion: "",
-    icono: "caballero",
-    direccion: "",
-  },
-  {
-    nombre: "caballero2",
-    posicion: "",
-    icono: "caballero",
-    direccion: "",
-  },
-  {
-    nombre: "caballero3",
-    posicion: "",
-    icono: "caballero",
-    direccion: "",
-  },
-  {
-    nombre: "caballero4",
-    posicion: "",
-    icono: "caballero",
-    direccion: "",
-  },
-  {
-    nombre: "rey",
-    posicion: "",
-    icono: "rey",
-    direccion: "",
-  },
-];
+let vArregloPiezas = arregloPiezas;
 
 export const limpiarVariables = () => {
-  for (const piecePosition in arregloPiezas) {
-    arregloPiezas[piecePosition].direccion = "";
-    arregloPiezas[piecePosition].posicion = "";
+  for (const piecePosition in vArregloPiezas) {
+    vArregloPiezas[piecePosition].direccion = "";
+    vArregloPiezas[piecePosition].posicion = "";
   }
 };
 
 //indica el listado de las piesas del usuario
 export const agregarImagenesListado = async (turnoUsuario) => {
   sTurno = turnoUsuario;
-  arregloPiezas = await agregarImagenesListadoTablero(sTurno,arregloPiezas);
+  vArregloPiezas = await agregarImagenesListadoTablero(sTurno,vArregloPiezas);
 
   document.querySelectorAll(".iconoMenu").forEach((hathiTest) => {
     hathiTest.addEventListener("click", function () {
@@ -118,17 +40,17 @@ export const agregarImagenesListado = async (turnoUsuario) => {
       //Segmento para deselecconar las opciones tanto del tablero como del listado
       if (piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id) {
         piezaSeleccionada.style.backgroundColor = "rgb(255, 255, 255)";
-        let nValor = arregloPiezas.findIndex(
+        let nValor = vArregloPiezas.findIndex(
           (obj) => obj.nombre === piezaSeleccionada.innerText.replace(/\s/g, "")
         );
-        if (nValor !== -1 && arregloPiezas[nValor].posicion !== "") {
-          if (lagos.includes(arregloPiezas[nValor].posicion)) {
+        if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
+          if (lagos.includes(vArregloPiezas[nValor].posicion)) {
             document.getElementById(
-              arregloPiezas[nValor].posicion
+              vArregloPiezas[nValor].posicion
             ).style.backgroundColor = colorLago;
           } else {
             document.getElementById(
-              arregloPiezas[nValor].posicion
+              vArregloPiezas[nValor].posicion
             ).style.backgroundColor = colorTablero;
           }
         }
@@ -137,18 +59,18 @@ export const agregarImagenesListado = async (turnoUsuario) => {
       //pintar el seleccionado normal o gris sobre la misma pieza
       if (hathiTest.style.backgroundColor === colorSeleccionadoListado) {
         hathiTest.style.backgroundColor = "rgb(255, 255, 255)";
-        let nValor = arregloPiezas.findIndex(
+        let nValor = vArregloPiezas.findIndex(
           (obj) =>
             obj.nombre === sTurno + hathiTest.innerText.replace(/\s/g, "")
         );
-        if (nValor !== -1 && arregloPiezas[nValor].posicion !== "") {
-          if (lagos.includes(arregloPiezas[nValor].posicion)) {
+        if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
+          if (lagos.includes(vArregloPiezas[nValor].posicion)) {
             document.getElementById(
-              arregloPiezas[nValor].posicion
+              vArregloPiezas[nValor].posicion
             ).style.backgroundColor = colorLago;
           } else {
             document.getElementById(
-              arregloPiezas[nValor].posicion
+              vArregloPiezas[nValor].posicion
             ).style.backgroundColor = colorTablero;
           }
         }
@@ -157,12 +79,12 @@ export const agregarImagenesListado = async (turnoUsuario) => {
         hathiTest.style.backgroundColor = colorSeleccionadoListado;
         piezaSeleccionada = hathiTest;
         //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
-        let nValor = arregloPiezas.findIndex(
+        let nValor = vArregloPiezas.findIndex(
           (obj) => obj.nombre === hathiTest.innerText.replace(/\s/g, "")
         );
-        if (nValor !== -1 && arregloPiezas[nValor].posicion !== "") {
+        if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
           document.getElementById(
-            arregloPiezas[nValor].posicion
+            vArregloPiezas[nValor].posicion
           ).style.backgroundColor = colorSeleccionadoTablero;
         }
       }
@@ -185,7 +107,7 @@ export const agregarDivsTablero = () => {
       }
 
       //En este segmento detectamos si hay otra pieza en ese lugar
-      let nValor = arregloPiezas.findIndex(
+      let nValor = vArregloPiezas.findIndex(
         (obj) => obj.posicion === hathiTest.id
       );
       if (nValor !== -1) {
@@ -206,20 +128,20 @@ export const agregarDivsTablero = () => {
       }
 
       //En este segmento detectaremos que si la pieza ya fue colocada, esta se eliminara del mapa para ponerla de nuevo
-      nValor = arregloPiezas.findIndex(
+      nValor = vArregloPiezas.findIndex(
         (obj) =>
           obj.nombre ===
           sPiezaAColocar.replace(/\s/g, "").substring(1, sPiezaAColocar.length)
       );
-      if (nValor !== -1 && arregloPiezas[nValor].posicion !== "") {
-        document.getElementById(arregloPiezas[nValor].posicion).innerHTML = "";
-        if (lagos.includes(arregloPiezas[nValor].posicion)) {
+      if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
+        document.getElementById(vArregloPiezas[nValor].posicion).innerHTML = "";
+        if (lagos.includes(vArregloPiezas[nValor].posicion)) {
           document.getElementById(
-            arregloPiezas[nValor].posicion
+            vArregloPiezas[nValor].posicion
           ).style.backgroundColor = colorLago;
         } else {
           document.getElementById(
-            arregloPiezas[nValor].posicion
+            vArregloPiezas[nValor].posicion
           ).style.backgroundColor = colorTablero;
         }
       }
@@ -228,7 +150,7 @@ export const agregarDivsTablero = () => {
       //agrega el escrito de la pieza a color
       hathiTest.innerHTML = sPiezaAColocar;
       //se le asigna la nueva posicion
-      arregloPiezas[nValor].posicion = hathiTest.id;
+      vArregloPiezas[nValor].posicion = hathiTest.id;
 
       insertImage();
     });
@@ -244,8 +166,8 @@ export const coloring = () => {
 
 export const guardarConfiguracionPiezas = () => {
   //Validamos que no halla piezas vacias
-  for (const piecePosition in arregloPiezas) {
-    if (arregloPiezas[piecePosition].posicion === "") {
+  for (const piecePosition in vArregloPiezas) {
+    if (vArregloPiezas[piecePosition].posicion === "") {
       swal({
         title: "Error",
         text: "Debe agregar todas las piezas al tablero primero",
@@ -257,9 +179,9 @@ export const guardarConfiguracionPiezas = () => {
   }
   //agregamos la informaicon a un arreglo para poderlo limpar la info despues
   const piezasGame = {};
-  for (const piecePosition in arregloPiezas) {
-    piezasGame[sTurno + arregloPiezas[piecePosition].nombre] =
-      arregloPiezas[piecePosition].posicion;
+  for (const piecePosition in vArregloPiezas) {
+    piezasGame[sTurno + vArregloPiezas[piecePosition].nombre] =
+      vArregloPiezas[piecePosition].posicion;
   }
   sPiezaAColocar = "";
   return piezasGame;
