@@ -61,7 +61,7 @@ export const agregarImagenesListado = async (turnoUsuario) => {
         hathiTest.style.backgroundColor = "rgb(255, 255, 255)";
         let nValor = vArregloPiezas.findIndex(
           (obj) =>
-            obj.nombre === sTurno + hathiTest.innerText.replace(/\s/g, "")
+            obj.nombre === hathiTest.innerText.replace(/\s/g, "")
         );
         if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
           if (lagos.includes(vArregloPiezas[nValor].posicion)) {
