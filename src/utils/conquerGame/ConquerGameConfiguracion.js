@@ -13,6 +13,7 @@ import {
   arregloPiezas
 } from "./ConfiguracionTableroConquerGame.js";
 import swal from "sweetalert";
+import { actualizarEspecifico } from "../ConexionAPI.js";
 
 let sTurno = "O";
 let vPartida = {};
@@ -155,6 +156,27 @@ export const agregarDivsTablero = () => {
       vArregloPiezas[nValor].posicion = hathiTest.id;
 
       insertImage();
+
+      if(vPartida.tipoJuego === 2){
+        const vPeticion = {};
+        vPeticion.numeroPartida = vPartida.numeroPartida;
+        vPeticion.piezasId = hathiTest.innerText;
+        vPeticion.posicion = hathiTest.id;
+        if (vPeticion.piezas === null) return;
+        actualizarEspecifico("conquerGame/agregarPiezaTablero/", vPeticion)
+        .then((resultado) => {
+          
+        })
+        .catch((error) => {
+          swal({
+            title: "Error",
+            text: error.toString(),
+            icon: "error",
+            button: "OK",
+          });
+        });
+      }
+
     });
   });
 };
