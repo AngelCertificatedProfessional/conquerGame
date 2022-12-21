@@ -15,7 +15,7 @@ import {
 import swal from "sweetalert";
 
 let sTurno = "O";
-let nCantidadJugadores = 0;
+let vPartida = {};
 let sPiezaAColocar = "";
 let piezaSeleccionada = null;
 
@@ -116,12 +116,14 @@ export const agregarDivsTablero = () => {
       }
 
       //Validamos que la pieza no este invadiendo otro terreno que no le pertenece
+      console.log(vPartida);
       if (
         validaPosicionPieza(
           sPiezaAColocar.replace(/\s/g, "").substring(1, sPiezaAColocar.length),
           hathiTest.id,
-          nCantidadJugadores,
-          sTurno
+          vPartida.cantidadJugadores,
+          sTurno,
+          vPartida.tipoJuego
         )
       ) {
         return;
@@ -157,10 +159,10 @@ export const agregarDivsTablero = () => {
   });
 };
 
-export const coloring = () => {
+export const coloring = (nTipoJuego) => {
   document.querySelectorAll(".box").forEach((vDivTablero) => {
     coloringTablero(vDivTablero)
-    seccionTableroJugador(vDivTablero,sTurno,nCantidadJugadores,true)
+    seccionTableroJugador(vDivTablero,sTurno,vPartida.cantidadJugadores,true,nTipoJuego)
   });
 }
 
@@ -187,8 +189,8 @@ export const guardarConfiguracionPiezas = () => {
   return piezasGame;
 };
 
-export const setCantidadJugadores = (cantidadJugadoresT) => {
-  nCantidadJugadores = cantidadJugadoresT;
+export const setPartida= (vPartidaT) => {
+  vPartida = vPartidaT;
 };
 
 export const posicionPiezaJugador = (partidaJugador) => {

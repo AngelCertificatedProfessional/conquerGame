@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 const Tablero = ({
   partida,
-  setCantidadJugadores,
   agregarDivsTablero,
   coloring,
   accion,
@@ -14,9 +13,9 @@ const Tablero = ({
   conometro,
 }) => {
   useEffect(() => {
-    setCantidadJugadores(partida.cantidadJugadores);
+    setPartida(partida);
     agregarDivsTablero();
-    coloring();
+    coloring(partida.tipoJuego);
     if (accion === 2) {
       const nValor = partida.jugadores.findIndex(
         (obj) =>
@@ -30,7 +29,6 @@ const Tablero = ({
     }
     if (accion === 3) {
       posicionPiezasJuego(partida);
-      setPartida(partida);
       indicarSiguienteJugador();
       conometro(partida);
     }

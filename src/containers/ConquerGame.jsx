@@ -9,7 +9,7 @@ import {
   guardarConfiguracionPiezas,
   limpiarVariables,
   posicionPiezaJugador,
-  setCantidadJugadores,
+  setPartida as setPartidaConfiguracion,
 } from "../utils/conquerGame/ConquerGameConfiguracion";
 import {
   agregarDivsTableroJuego,
@@ -114,6 +114,7 @@ const ConquerGame = ({ socket }) => {
           break;
         case 2:
           dispatchPartidas(payload);
+          setPartida(payload);
           //Esta seccion indica que si la pagina se esta refrescando al presionar f5 o se salio y volvio a ingresar
           if (!payload.hasOwnProperty("notificarUsuarioListo")) {
             dispatchTurnoUsuarioRes(payload);
@@ -456,10 +457,10 @@ const ConquerGame = ({ socket }) => {
                 <Tablero
                   partida={partida}
                   accion={accion}
-                  setCantidadJugadores={setCantidadJugadores}
                   agregarDivsTablero={agregarDivsTablero}
                   coloring={coloring}
                   posicionPiezaJugador={posicionPiezaJugador}
+                  setPartida={setPartidaConfiguracion}
                   usuario={usuario}
                   setBloquearOpciones={setBloquearOpciones}
                 />
@@ -548,7 +549,6 @@ const ConquerGame = ({ socket }) => {
                 <Tablero
                   partida={partida}
                   accion={accion}
-                  setCantidadJugadores={setCantidadJugadores}
                   agregarDivsTablero={agregarDivsTableroJuego}
                   coloring={coloringJuego}
                   posicionPiezasJuego={posicionPiezasJuego}

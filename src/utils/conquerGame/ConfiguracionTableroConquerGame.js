@@ -29,59 +29,86 @@ export const validaPiezaLago = (idDiv) => {
 };
 
 //Este metodo evalua si la pieza la estan poniendo en cesped rio o esta invadiendo terreno
-export const validaPosicionPieza = (sPieza, sPosicion,nCantidadJugadores,sTurno) => {
+export const validaPosicionPieza = (sPieza, sPosicion,nCantidadJugadores,sTurno,nTipoJuego) => {
   const nValor = eliminarLetras(sPosicion);
 
   //Evaluaremos si la pieza esta invadiendo terreno
+  if(nTipoJuego === 1){
 
-  switch (nCantidadJugadores) {
-    case 2:
-      if (
-        (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-        (sTurno === "B" &&
-          nValor >= tamanoTableroLargo / 2 + 1 &&
-          nValor <= tamanoTableroLargo)
-      ) {
-        alert("Esta pieza esta invadiendo terreno");
-        return true;
-      }
-      break;
-    case 3:
-      if (
-        (sTurno === "O" && nValor <= parseInt(tamanoTableroLargo * 0.66) + 1) ||
-        (sTurno === "B" &&
-          (nValor <= parseInt(tamanoTableroLargo * 0.33) + 1 ||
-            nValor >= 1 + (tamanoTableroLargo / nCantidadJugadores) * 2)) ||
-        (sTurno === "R" && nValor >= parseInt(tamanoTableroLargo * 0.33) + 2)
-      ) {
-        alert("Esta pieza esta invadiendo terreno");
-        return true;
-      }
-      break;
-    case 4:
-      //eliminacion de numeros para el lado vertical
-      const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion));
-      if (
-        (sTurno === "O" &&
-          ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-            (nValorCol >= tamanoTableroAncho / 2 + 1 &&
-              nValorCol <= tamanoTableroAncho))) ||
-        (sTurno === "B" &&
-          ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-            (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2))) ||
-        (sTurno === "R" &&
-          ((nValor >= tamanoTableroLargo / 2 + 1 &&
-            nValor <= tamanoTableroLargo) ||
-            (nValorCol >= tamanoTableroAncho / 2 + 1 &&
-              nValorCol <= tamanoTableroAncho))) ||
-        (sTurno === "P" &&
-          ((nValor >= tamanoTableroLargo / 2 + 1 &&
-            nValor <= tamanoTableroLargo) ||
-            (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2)))
-      ) {
-        alert("Esta pieza esta invadiendo terreno");
-        return true;
-      }
+    switch (nCantidadJugadores) {
+      case 2:
+        if (
+          (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+          (sTurno === "B" &&
+            nValor >= tamanoTableroLargo / 2 + 1 &&
+            nValor <= tamanoTableroLargo)
+        ) {
+          alert("Esta pieza esta invadiendo terreno");
+          return true;
+        }
+        break;
+      case 3:
+        if (
+          (sTurno === "O" && nValor <= parseInt(tamanoTableroLargo * 0.66) + 1) ||
+          (sTurno === "B" &&
+            (nValor <= parseInt(tamanoTableroLargo * 0.33) + 1 ||
+              nValor >= 1 + (tamanoTableroLargo / nCantidadJugadores) * 2)) ||
+          (sTurno === "R" && nValor >= parseInt(tamanoTableroLargo * 0.33) + 2)
+        ) {
+          alert("Esta pieza esta invadiendo terreno");
+          return true;
+        }
+        break;
+      case 4:
+        //eliminacion de numeros para el lado vertical
+        const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion));
+        if (
+          (sTurno === "O" &&
+            ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+              (nValorCol >= tamanoTableroAncho / 2 + 1 &&
+                nValorCol <= tamanoTableroAncho))) ||
+          (sTurno === "B" &&
+            ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+              (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2))) ||
+          (sTurno === "R" &&
+            ((nValor >= tamanoTableroLargo / 2 + 1 &&
+              nValor <= tamanoTableroLargo) ||
+              (nValorCol >= tamanoTableroAncho / 2 + 1 &&
+                nValorCol <= tamanoTableroAncho))) ||
+          (sTurno === "P" &&
+            ((nValor >= tamanoTableroLargo / 2 + 1 &&
+              nValor <= tamanoTableroLargo) ||
+              (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2)))
+        ) {
+          alert("Esta pieza esta invadiendo terreno");
+          return true;
+        }
+    }
+  }else if(nTipoJuego === 2){
+    switch (nCantidadJugadores) {
+      case 4:
+        if (
+          ((sTurno === "O" || sTurno === "B") && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+          ((sTurno === "R" || sTurno === "P") &&
+            nValor >= tamanoTableroLargo / 2 + 1 &&
+            nValor <= tamanoTableroLargo)
+        ) {
+          alert("Esta pieza esta invadiendo terreno");
+          return true;
+        }
+        break;
+      case 6:
+        if (
+          (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+          (sTurno === "B" &&
+            nValor >= tamanoTableroLargo / 2 + 1 &&
+            nValor <= tamanoTableroLargo)
+        ) {
+          alert("Esta pieza esta invadiendo terreno");
+          return true;
+        }
+        break;
+    }
   }
 
   if (
@@ -161,64 +188,96 @@ export const insertImage = () => {
   });
 }
 
-export const seccionTableroJugador = (vDivTablero,sTurno,nCantidadJugadores,bPintarOpacity) => {
+export const seccionTableroJugador = (vDivTablero,sTurno,nCantidadJugadores,bPintarOpacity,nTipoJuego) => {
   
   if (bPintarOpacity) {
     const nValor = eliminarLetras(vDivTablero.id);
-    switch (nCantidadJugadores) {
-      case 2:
-        if (
-          (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-          (sTurno === "B" &&
-            nValor >= tamanoTableroLargo / 2 + 1 &&
-            nValor <= tamanoTableroLargo)
-        ) {
-          vDivTablero.style.opacity = 0.3;
-        } else {
-          vDivTablero.style.opacity = 1;
-        }
-        break;
-      case 3:
-        if (
-          (sTurno === "O" &&
-            nValor <= parseInt(tamanoTableroLargo * 0.66) + 1) ||
-          (sTurno === "B" &&
-            (nValor <= parseInt(tamanoTableroLargo * 0.33) + 1 ||
-              nValor >= 1 + (tamanoTableroLargo / nCantidadJugadores) * 2)) ||
-          (sTurno === "R" && nValor >= parseInt(tamanoTableroLargo * 0.33) + 2)
-        ) {
-          vDivTablero.style.opacity = 0.3;
-        } else {
-          vDivTablero.style.opacity = 1;
-        }
-        break;
-      case 4:
-        //eliminacion de numeros para el lado vertical
-        const nValorCol = alfabetoANumero(eliminarNumeros(vDivTablero.id));
-        if (
-          (sTurno === "O" &&
-            ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-              (nValorCol >= tamanoTableroAncho / 2 + 1 &&
-                nValorCol <= tamanoTableroAncho))) ||
-          (sTurno === "B" &&
-            ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-              (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2))) ||
-          (sTurno === "R" &&
-            ((nValor >= tamanoTableroLargo / 2 + 1 &&
-              nValor <= tamanoTableroLargo) ||
-              (nValorCol >= tamanoTableroAncho / 2 + 1 &&
-                nValorCol <= tamanoTableroAncho))) ||
-          (sTurno === "P" &&
-            ((nValor >= tamanoTableroLargo / 2 + 1 &&
-              nValor <= tamanoTableroLargo) ||
-              (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2)))
-        ) {
-          vDivTablero.style.opacity = 0.3;
-        } else {
-          vDivTablero.style.opacity = 1;
-        }
-        break;
+
+    if(nTipoJuego === 1){
+      switch (nCantidadJugadores) {
+        case 2:
+          if (
+            (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+            (sTurno === "B" &&
+              nValor >= tamanoTableroLargo / 2 + 1 &&
+              nValor <= tamanoTableroLargo)
+          ) {
+            vDivTablero.style.opacity = 0.3;
+          } else {
+            vDivTablero.style.opacity = 1;
+          }
+          break;
+        case 3:
+          if (
+            (sTurno === "O" &&
+              nValor <= parseInt(tamanoTableroLargo * 0.66) + 1) ||
+            (sTurno === "B" &&
+              (nValor <= parseInt(tamanoTableroLargo * 0.33) + 1 ||
+                nValor >= 1 + (tamanoTableroLargo / nCantidadJugadores) * 2)) ||
+            (sTurno === "R" && nValor >= parseInt(tamanoTableroLargo * 0.33) + 2)
+          ) {
+            vDivTablero.style.opacity = 0.3;
+          } else {
+            vDivTablero.style.opacity = 1;
+          }
+          break;
+        case 4:
+          //eliminacion de numeros para el lado vertical
+          const nValorCol = alfabetoANumero(eliminarNumeros(vDivTablero.id));
+          if (
+            (sTurno === "O" &&
+              ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+                (nValorCol >= tamanoTableroAncho / 2 + 1 &&
+                  nValorCol <= tamanoTableroAncho))) ||
+            (sTurno === "B" &&
+              ((nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+                (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2))) ||
+            (sTurno === "R" &&
+              ((nValor >= tamanoTableroLargo / 2 + 1 &&
+                nValor <= tamanoTableroLargo) ||
+                (nValorCol >= tamanoTableroAncho / 2 + 1 &&
+                  nValorCol <= tamanoTableroAncho))) ||
+            (sTurno === "P" &&
+              ((nValor >= tamanoTableroLargo / 2 + 1 &&
+                nValor <= tamanoTableroLargo) ||
+                (nValorCol >= 1 && nValorCol <= tamanoTableroAncho / 2)))
+          ) {
+            vDivTablero.style.opacity = 0.3;
+          } else {
+            vDivTablero.style.opacity = 1;
+          }
+          break;
+      }
+    }else if(nTipoJuego === 2){
+      switch (nCantidadJugadores) {
+        case 4:
+          if (
+            ((sTurno === "O" || sTurno === "B") && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+            ((sTurno === "R" || sTurno === "P") &&
+              nValor >= tamanoTableroLargo / 2 + 1 &&
+              nValor <= tamanoTableroLargo)
+          ) {
+            vDivTablero.style.opacity = 0.3;
+          } else {
+            vDivTablero.style.opacity = 1;
+          }
+          break;
+        case 6:
+          if (
+            (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+            (sTurno === "B" &&
+              nValor >= tamanoTableroLargo / 2 + 1 &&
+              nValor <= tamanoTableroLargo)
+          ) {
+            vDivTablero.style.opacity = 0.3;
+          } else {
+            vDivTablero.style.opacity = 1;
+          }
+          break;
+      }
     }
+
+
   }else {
     vDivTablero.style.opacity = 1;
   }
