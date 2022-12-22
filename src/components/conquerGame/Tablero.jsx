@@ -23,7 +23,9 @@ const Tablero = ({
           obj.hasOwnProperty("posicionPiezasJugador")
       );
       if (nValor !== -1) {
-        posicionPiezaJugador(partida.jugadores[nValor]);
+        if(partida.tipoJuego == 1){
+          posicionPiezaJugador(partida.jugadores[nValor]);
+        }
         setBloquearOpciones(true);
       }
     }

@@ -116,8 +116,19 @@ export const agregarDivsTablero = () => {
         return;
       }
 
+      //Realizmaos la misma evaluacion pero ahora con todas las piezas de los jugadores
+      if(vPartida.tipoJuego === 2 && vPartida.hasOwnProperty("posicionPiezasGlobal")){
+        console.log(vPartida)  
+        for (const piecePosition in vPartida.posicionPiezasGlobal) {
+          console.log(vPartida.posicionPiezasGlobal[piecePosition]);
+          console.log(piecePosition);
+          if(vPartida.posicionPiezasGlobal[piecePosition] === hathiTest.id){
+            alert("Ya se encuentra una pieza de un compañero en esta posición");
+            return;
+          }
+        }
+      }
       //Validamos que la pieza no este invadiendo otro terreno que no le pertenece
-      console.log(vPartida);
       if (
         validaPosicionPieza(
           sPiezaAColocar.replace(/\s/g, "").substring(1, sPiezaAColocar.length),
@@ -221,6 +232,20 @@ export const posicionPiezaJugador = (partidaJugador) => {
       partidaJugador.posicionPiezasJugador[piecePosition]
     );
     div.innerHTML = piecePosition.replace(" ", "");
+  }
+  insertImage();
+};
+
+export const posicionPiezaJuego= (partidaJugador) => {
+  for (const piecePosition in partidaJugador.posicionPiezasGlobal) {
+    
+    console.log(vPartida);
+    var div = document.getElementById(
+      partidaJugador.posicionPiezasGlobal[piecePosition]
+    );
+    if (typeof div != "undefined" && div != null) {
+      div.innerHTML = piecePosition.replace(" ", "");
+    }
   }
   insertImage();
 };

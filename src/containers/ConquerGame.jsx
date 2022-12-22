@@ -9,6 +9,7 @@ import {
   guardarConfiguracionPiezas,
   limpiarVariables,
   posicionPiezaJugador,
+  posicionPiezaJuego as posicionPiezaJuegoConfiguracion,
   setPartida as setPartidaConfiguracion,
 } from "../utils/conquerGame/ConquerGameConfiguracion";
 import {
@@ -123,6 +124,9 @@ const ConquerGame = ({ socket }) => {
             toast(
                 "El jugador " + payload.usuarioListo + " esta listo para jugar"
               );
+          }
+          if(payload.tipoJuego === 2){
+            posicionPiezaJuegoConfiguracion(payload);
           }
           break;
         case 3:
