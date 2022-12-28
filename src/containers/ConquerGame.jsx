@@ -115,11 +115,13 @@ const ConquerGame = ({ socket }) => {
           break;
         case 2:
           dispatchPartidas(payload);
-          setPartida(payload);
+          setPartidaConfiguracion(payload);
           //Esta seccion indica que si la pagina se esta refrescando al presionar f5 o se salio y volvio a ingresar
           if (!payload.hasOwnProperty("notificarUsuarioListo")) {
             dispatchTurnoUsuarioRes(payload);
-            setAccion(2);
+            if(accion!= 2){
+              setAccion(2);
+            }
           } else if(payload.usuarioListo !== usuario.usuario){
             toast(
                 "El jugador " + payload.usuarioListo + " esta listo para jugar"
@@ -467,6 +469,7 @@ const ConquerGame = ({ socket }) => {
                   setPartida={setPartidaConfiguracion}
                   usuario={usuario}
                   setBloquearOpciones={setBloquearOpciones}
+                  posicionPiezaJuegoConfiguracion = {posicionPiezaJuegoConfiguracion}
                 />
               </Suspense>
             </div>
