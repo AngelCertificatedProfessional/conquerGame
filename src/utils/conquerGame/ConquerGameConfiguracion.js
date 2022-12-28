@@ -118,6 +118,7 @@ export const agregarDivsTablero = () => {
 
       //Realizmaos la misma evaluacion pero ahora con todas las piezas de los jugadores
       if(vPartida.tipoJuego === 2 && vPartida.hasOwnProperty("posicionPiezasGlobal")){
+        console.log('valida todas las piezas')  
         console.log(vPartida)  
         for (const piecePosition in vPartida.posicionPiezasGlobal) {
           console.log(vPartida.posicionPiezasGlobal[piecePosition]);
@@ -225,7 +226,7 @@ export const guardarConfiguracionPiezas = () => {
 export const setPartida= (vPartidaT) => {
   vPartida = vPartidaT;
 };
-
+//Este metodo se realiza al final para poder indicar que las piezas estaran ahio
 export const posicionPiezaJugador = (partidaJugador) => {
   for (const piecePosition in partidaJugador.posicionPiezasJugador) {
     var div = document.getElementById(
@@ -235,8 +236,13 @@ export const posicionPiezaJugador = (partidaJugador) => {
   }
   insertImage();
 };
-
+//Este metodo es para indicar que el jugador esta colocando las piezas en el mapa
 export const posicionPiezaJuego= (partidaJugador) => {
+  document.querySelectorAll(".box").forEach((ee) => {
+    ee.innerHTML = "";
+    ee.title = "";
+    ee.style.cursor = "default";
+  });
   for (const piecePosition in partidaJugador.posicionPiezasGlobal) {
     
     console.log(vPartida);
