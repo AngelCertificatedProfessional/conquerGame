@@ -11,7 +11,8 @@ const Tablero = ({
   setBloquearOpciones,
   indicarSiguienteJugador,
   conometro,
-  posicionPiezaJuegoConfiguracion
+  posicionPiezaJuegoConfiguracion,
+  turnoUsuario
 }) => {
   useEffect(() => {
     setPartida(partida);
@@ -24,6 +25,8 @@ const Tablero = ({
           obj.hasOwnProperty("posicionPiezasJugador")
       );
       //esta condicion es para pintar las piezas del jugador que ya dio aceptar
+      console.log('turnoUsuario')
+      console.log(turnoUsuario)
       if (nValor !== -1) {
         if(partida.tipoJuego === 1){
           posicionPiezaJugador(partida.jugadores[nValor]);
@@ -31,7 +34,7 @@ const Tablero = ({
         setBloquearOpciones(true);
       }else if (partida.tipoJuego === 2){
         //Este else es para indetificar las pieas del los juegadores en caso de que la partida sea en equipos
-        posicionPiezaJuegoConfiguracion(partida);
+        posicionPiezaJuegoConfiguracion(partida,turnoUsuario);
       }
     }
     if (accion === 3) {

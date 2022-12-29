@@ -128,6 +128,8 @@ const ConquerGame = ({ socket }) => {
               );
           }
           if(payload.tipoJuego === 2){
+            console.log('turnoUsuario')
+            console.log(turnoUsuario)
             posicionPiezaJuegoConfiguracion(payload);
           }
           break;
@@ -470,6 +472,7 @@ const ConquerGame = ({ socket }) => {
                   usuario={usuario}
                   setBloquearOpciones={setBloquearOpciones}
                   posicionPiezaJuegoConfiguracion = {posicionPiezaJuegoConfiguracion}
+                  turnoUsuario={turnoUsuario}
                 />
               </Suspense>
             </div>

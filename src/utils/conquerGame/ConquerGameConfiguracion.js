@@ -15,7 +15,7 @@ import {
 import swal from "sweetalert";
 import { actualizarEspecifico } from "../ConexionAPI.js";
 
-let sTurno = "O";
+let sTurno = "Z";
 let vPartida = {};
 let sPiezaAColocar = "";
 let piezaSeleccionada = null;
@@ -243,31 +243,43 @@ export const posicionPiezaJugador = (partidaJugador) => {
   insertImage();
 };
 //Este metodo es para indicar que el jugador esta colocando las piezas en el mapa
-export const posicionPiezaJuego= (partidaJugador) => {
+export const posicionPiezaJuego= (partidaJugador,turnoUsuario) => {
   document.querySelectorAll(".box").forEach((ee) => {
     ee.innerHTML = "";
     ee.title = "";
     ee.style.cursor = "default";
   });
+
+
+  if(turnoUsuario === undefined){
+    turnoUsuario = sTurno
+  }
+  console.log('---posicionPiezaJuego----');
+  console.log(vArregloPiezas);
+  console.log(turnoUsuario)
   for (const piecePosition in partidaJugador.posicionPiezasGlobal) {
-    console.log('---posicionPiezaJuego----');
-    console.log(vPartida);
+    if(partidaJugador.cantidadJugadores === 4 && ( ((turnoUsuario !== "R" && turnoUsuario !== "P") && (piecePosition[0] === "R" || piecePosition[0] === "P")) || 
+      ((turnoUsuario !== "O" && turnoUsuario !== "B") && (piecePosition[0] === "O" || piecePosition[0] === "B")))){
+      continue;
+    }
     var div = document.getElementById(
       partidaJugador.posicionPiezasGlobal[piecePosition]
     );
     if (typeof div != "undefined" && div != null) {
       div.innerHTML = piecePosition.replace(" ", "");
     }
-    console.log(vArregloPiezas);
     let nValor = vArregloPiezas.findIndex(
-      (obj) => obj.nombre === piecePosition.substring(1,piecePosition.length) &&  sTurno === piecePosition[0]
+      (obj) => obj.nombre === piecePosition.substring(1,piecePosition.length) &&  turnoUsuario === piecePosition[0]
     );
+    console.log(piecePosition)
     console.log(nValor)
     console.log(partidaJugador.posicionPiezasGlobal[piecePosition])
-    if(nValor >= 1){
+    if(nValor >= 0){
+      console.log('entre')
       vArregloPiezas[nValor].posicion = partidaJugador.posicionPiezasGlobal[piecePosition]
     }
-
   }
+  /*DESPUES*/
+  console.log(vArregloPiezas);
   insertImage();
 };
