@@ -77,12 +77,14 @@ export const agregarImagenesListado = async (turnoUsuario) => {
         }
         piezaSeleccionada = null;
       } else {
+        console.log('proceso del div')
         hathiTest.style.backgroundColor = colorSeleccionadoListado;
         piezaSeleccionada = hathiTest;
         //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
         let nValor = vArregloPiezas.findIndex(
           (obj) => obj.nombre === hathiTest.innerText.replace(/\s/g, "")
         );
+        console.log(vArregloPiezas)
         if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
           document.getElementById(
             vArregloPiezas[nValor].posicion
@@ -256,6 +258,16 @@ export const posicionPiezaJuego= (partidaJugador) => {
     if (typeof div != "undefined" && div != null) {
       div.innerHTML = piecePosition.replace(" ", "");
     }
+    console.log(vArregloPiezas);
+    let nValor = vArregloPiezas.findIndex(
+      (obj) => obj.nombre === piecePosition.substring(1,piecePosition.length) &&  sTurno === piecePosition[0]
+    );
+    console.log(nValor)
+    console.log(partidaJugador.posicionPiezasGlobal[piecePosition])
+    if(nValor >= 1){
+      vArregloPiezas[nValor].posicion = partidaJugador.posicionPiezasGlobal[piecePosition]
+    }
+
   }
   insertImage();
 };
