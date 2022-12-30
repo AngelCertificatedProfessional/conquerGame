@@ -30,6 +30,9 @@ const Tablero = ({
       if (nValor !== -1) {
         if(partida.tipoJuego === 1){
           posicionPiezaJugador(partida.jugadores[nValor]);
+        }else if (partida.tipoJuego === 2){
+          //Este else es para indetificar las pieas del los juegadores en caso de que la partida sea en equipos
+          posicionPiezaJuegoConfiguracion(partida,turnoUsuario);
         }
         setBloquearOpciones(true);
       }else if (partida.tipoJuego === 2){

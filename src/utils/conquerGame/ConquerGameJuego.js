@@ -472,11 +472,23 @@ const reddish = () => {
           if (i2.innerText.length !== 0) {
             let greenText = i2.innerText;
             let pinkText3 = i1.innerText;
+            console.log(greenText)
+            console.log(pinkText3)
             let pinkColor = Array.from(pinkText3).shift().toString();
             let greenColor = Array.from(greenText).shift().toString();
+            console.log(pinkColor)
+            console.log(greenColor)
             //En esta validacion se pregunta si la pieza es del mismo valor (B,O) a otra del mismo
-            if (pinkColor == greenColor) {
-              i2.style.backgroundColor = colorTablero;
+
+            if(partida.tipoJuego === 2){
+              if(partida.cantidadJugadores === 4 && ( ((greenText[0] === "R" || greenText[0] === "P") && (pinkText3[0] === "R" || pinkText3[0] === "P")) || 
+                ((greenText[0] === "O" || greenText[0] !== "B") && (pinkText3[0] === "O" || pinkText3[0] === "B")))){
+                  i2.style.backgroundColor = colorTablero;
+              }
+            }else{  
+              if (greenText[0] == pinkText3[0]) {
+                i2.style.backgroundColor = colorTablero;
+              }
             }
           }
         }
