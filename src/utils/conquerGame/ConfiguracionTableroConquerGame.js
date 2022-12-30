@@ -189,10 +189,11 @@ export const insertImage = () => {
 }
 
 export const seccionTableroJugador = (vDivTablero,sTurno,nCantidadJugadores,bPintarOpacity,nTipoJuego) => {
-  
+  console.log('texto')
   if (bPintarOpacity) {
     const nValor = eliminarLetras(vDivTablero.id);
-
+    console.log('texto 2')
+    console.log(nTipoJuego)
     if(nTipoJuego === 1){
       switch (nCantidadJugadores) {
         case 2:
@@ -249,6 +250,7 @@ export const seccionTableroJugador = (vDivTablero,sTurno,nCantidadJugadores,bPin
           break;
       }
     }else if(nTipoJuego === 2){
+      console.log('entre')
       switch (nCantidadJugadores) {
         case 4:
           if (

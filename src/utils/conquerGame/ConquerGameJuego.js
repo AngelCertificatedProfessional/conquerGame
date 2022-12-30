@@ -482,7 +482,7 @@ const reddish = () => {
 
             if(partida.tipoJuego === 2){
               if(partida.cantidadJugadores === 4 && ( ((greenText[0] === "R" || greenText[0] === "P") && (pinkText3[0] === "R" || pinkText3[0] === "P")) || 
-                ((greenText[0] === "O" || greenText[0] !== "B") && (pinkText3[0] === "O" || pinkText3[0] === "B")))){
+                ((greenText[0] === "O" || greenText[0] === "B") && (pinkText3[0] === "O" || pinkText3[0] === "B")))){
                   i2.style.backgroundColor = colorTablero;
               }
             }else{  
@@ -740,8 +740,9 @@ export const colocarPiezaEspecial = (sPieza) => {
 };
 
 export const pintarMapaOpacity = (bPintarOpacity) => {
+  console.log('enter')
   document.querySelectorAll(".box").forEach((vDivTablero) => {
-    seccionTableroJugador(vDivTablero,sTurnoJugador,partida.cantidadJugadores,bPintarOpacity)
+    seccionTableroJugador(vDivTablero,sTurnoJugador,partida.cantidadJugadores,bPintarOpacity,partida.tipoJuego)
   });
 };
 
