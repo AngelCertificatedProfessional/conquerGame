@@ -187,7 +187,7 @@ export const agregarDivsTableroJuego = () => {
               if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
                   (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
                   (arrReyes.length === 1  || 
-                  (arrReyes.length === 2 && ((arrReyes[0] === "O" && arrReyes[1] === "B") || (arrReyes[0] === "R" && arrReyes[1] === "P")))))) {
+                  (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P")))))) {
                   evaluartTurnoJugador(
                     `Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(
                       1
@@ -268,7 +268,7 @@ export const agregarDivsTableroJuego = () => {
               if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
                   (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
                   (arrReyes.length === 1  || 
-                  (arrReyes.length === 2 && ((arrReyes[0] === "O" && arrReyes[1] === "B") || (arrReyes[0] === "R" && arrReyes[1] === "P")))))) {
+                  (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P")))))) {
                 evaluartTurnoJugador(
                   `Jugador ${sJugador} disparo al rey ${piezaAnterior.substring(
                     1
