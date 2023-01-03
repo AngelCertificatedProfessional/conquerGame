@@ -184,23 +184,26 @@ export const agregarDivsTableroJuego = () => {
                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
-              if (arrReyes.length > 1) {
+              if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
+                  (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
+                  (arrReyes.length === 1  || 
+                  (arrReyes.length === 2 && ((arrReyes[0] === "O" && arrReyes[1] === "B") || (arrReyes[0] === "R" && arrReyes[1] === "P")))))) {
+                  evaluartTurnoJugador(
+                    `Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(
+                      1
+                    )} ${getColorPorLetra(
+                      piezaAnterior[0],
+                      false
+                    )} con ${sPiezaMovimiento.substring(1)}`,
+                    getPuntuajePieza(piezaAnterior),
+                    piezaAnterior[0],
+                    sTurnoJugador
+                  );
+                  return;
+              } else {
                 mostrarMenuUnidadEspecial(true);
                 sAgregarPiezaEspecial = "pieza";
                 sReyEliminoTemp = piezaAnterior[0];
-                return;
-              } else {
-                evaluartTurnoJugador(
-                  `Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(
-                    1
-                  )} ${getColorPorLetra(
-                    piezaAnterior[0],
-                    false
-                  )} con ${sPiezaMovimiento.substring(1)}`,
-                  getPuntuajePieza(piezaAnterior),
-                  piezaAnterior[0],
-                  sTurnoJugador
-                );
                 return;
               }
             } else {
@@ -262,12 +265,10 @@ export const agregarDivsTableroJuego = () => {
                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
-              if (arrReyes.length > 1) {
-                mostrarMenuUnidadEspecial(true);
-                sAgregarPiezaEspecial = "pieza";
-                sReyEliminoTemp = piezaAnterior[0];
-                return;
-              } else {
+              if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
+                  (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
+                  (arrReyes.length === 1  || 
+                  (arrReyes.length === 2 && ((arrReyes[0] === "O" && arrReyes[1] === "B") || (arrReyes[0] === "R" && arrReyes[1] === "P")))))) {
                 evaluartTurnoJugador(
                   `Jugador ${sJugador} disparo al rey ${piezaAnterior.substring(
                     1
@@ -279,6 +280,11 @@ export const agregarDivsTableroJuego = () => {
                   piezaAnterior[0],
                   sTurnoJugador
                 );
+                return;
+              } else {
+                mostrarMenuUnidadEspecial(true);
+                sAgregarPiezaEspecial = "pieza";
+                sReyEliminoTemp = piezaAnterior[0];
                 return;
               }
             } else {
@@ -480,15 +486,10 @@ const reddish = () => {
             console.log(greenColor)
             //En esta validacion se pregunta si la pieza es del mismo valor (B,O) a otra del mismo
 
-            if(partida.tipoJuego === 2){
-              if(partida.cantidadJugadores === 4 && ( ((greenText[0] === "R" || greenText[0] === "P") && (pinkText3[0] === "R" || pinkText3[0] === "P")) || 
-                ((greenText[0] === "O" || greenText[0] === "B") && (pinkText3[0] === "O" || pinkText3[0] === "B")))){
+            if((partida.tipoJuego === 1 && greenText[0] == pinkText3[0]) || (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
+                (((greenText[0] === "R" || greenText[0] === "P") && (pinkText3[0] === "R" || pinkText3[0] === "P")) || 
+                ((greenText[0] === "O" || greenText[0] === "B") && (pinkText3[0] === "O" || pinkText3[0] === "B"))))) {
                   i2.style.backgroundColor = colorTablero;
-              }
-            }else{  
-              if (greenText[0] == pinkText3[0]) {
-                i2.style.backgroundColor = colorTablero;
-              }
             }
           }
         }
@@ -806,6 +807,10 @@ export const getColorPorLetra = (sLetra, bPlural = true) => {
       return bPlural ? "Rojos" : "Rojo";
     case "P":
       return bPlural ? "Morados" : "Morado";
+    case "O B":
+      return bPlural ? "Naranjas y Negros" : "Naranja y Negro";
+    case "R P":
+      return bPlural ? "Rojos y Morados" : "Rojo y Morado";
     default:
       return "";
   }
