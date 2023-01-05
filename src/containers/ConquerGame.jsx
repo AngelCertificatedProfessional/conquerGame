@@ -274,6 +274,10 @@ const ConquerGame = ({ socket }) => {
         return "R";
       case 3:
         return "P";
+      case 3:
+        return "G";
+      case 3:
+        return "Y";
     }
   }
 

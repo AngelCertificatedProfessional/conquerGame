@@ -258,8 +258,12 @@ export const posicionPiezaJuego= (partidaJugador,turnoUsuario) => {
   console.log(vArregloPiezas);
   console.log(turnoUsuario)
   for (const piecePosition in partidaJugador.posicionPiezasGlobal) {
-    if(partidaJugador.cantidadJugadores === 4 && ( ((turnoUsuario !== "R" && turnoUsuario !== "P") && (piecePosition[0] === "R" || piecePosition[0] === "P")) || 
-      ((turnoUsuario !== "O" && turnoUsuario !== "B") && (piecePosition[0] === "O" || piecePosition[0] === "B")))){
+    if((partidaJugador.cantidadJugadores === 4 && 
+      (((turnoUsuario !== "R" && turnoUsuario !== "P") && (piecePosition[0] === "R" || piecePosition[0] === "P")) || 
+      ((turnoUsuario !== "O" && turnoUsuario !== "B") && (piecePosition[0] === "O" || piecePosition[0] === "B")))) || 
+      (partidaJugador.cantidadJugadores === 6 && 
+        (((turnoUsuario !== "P" && turnoUsuario !== "G" && turnoUsuario !== "Y") && (piecePosition[0] === "P" || piecePosition[0] === "G" || piecePosition[0] === "Y")) || 
+        ((turnoUsuario !== "O" && turnoUsuario !== "B" && turnoUsuario !== "R") && (piecePosition[0] === "O" || piecePosition[0] === "B" || piecePosition[0] === "R"))))){
       continue;
     }
     var div = document.getElementById(

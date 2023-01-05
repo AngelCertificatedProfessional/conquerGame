@@ -99,8 +99,8 @@ export const validaPosicionPieza = (sPieza, sPosicion,nCantidadJugadores,sTurno,
         break;
       case 6:
         if (
-          (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-          (sTurno === "B" &&
+          ((sTurno === "O" || sTurno === "B" || sTurno === "R") && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+          ((sTurno === "P" || sTurno === "G" || sTurno === "Y") &&
             nValor >= tamanoTableroLargo / 2 + 1 &&
             nValor <= tamanoTableroLargo)
         ) {
@@ -266,10 +266,10 @@ export const seccionTableroJugador = (vDivTablero,sTurno,nCantidadJugadores,bPin
           break;
         case 6:
           if (
-            (sTurno === "O" && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-            (sTurno === "B" &&
-              nValor >= tamanoTableroLargo / 2 + 1 &&
-              nValor <= tamanoTableroLargo)
+            ((sTurno === "O" || sTurno === "B" || sTurno === "R") && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
+            ((sTurno === "P" || sTurno === "G" || sTurno === "Y") &&
+            nValor >= tamanoTableroLargo / 2 + 1 &&
+            nValor <= tamanoTableroLargo)
           ) {
             vDivTablero.style.opacity = 0.3;
           } else {
