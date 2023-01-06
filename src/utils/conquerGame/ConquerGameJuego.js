@@ -184,16 +184,16 @@ export const agregarDivsTableroJuego = () => {
                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
-              if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
-              //Condicion para 4 jugadores
-              (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
-              (arrReyes.length === 1  || 
-              (arrReyes.length === 2 && 
-              ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P"))))) ||
-              //Condicion para 6 jugadores 
-              (partida.tipoJuego === 2 && partida.cantidadJugadores === 6 && 
-              (arrReyes.length === 1  || 
-              (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B" && arrReyes[2][0] === "R")) || (arrReyes[0][0] === "P" && arrReyes[2][0] === "G" && arrReyes[2][0] === "Y"))))) {
+              if (partida.tipoJuego === 1 || 
+                //Condicion para 4 jugadores
+                (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
+                (arrReyes.length === 2 && 
+                ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P")))) ||
+                //Condicion para 6 jugadores 
+                (partida.tipoJuego === 2 && partida.cantidadJugadores === 6 && 
+                ((arrReyes.length === 3 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B" && arrReyes[2][0] === "R") || (arrReyes[0][0] === "P" && arrReyes[1][0] === "G" && arrReyes[2][0] === "Y"))) ||
+                (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "O" && arrReyes[1][0] === "R") || (arrReyes[0][0] === "B" && arrReyes[1][0] === "R") || 
+                (arrReyes[0][0] === "P" && arrReyes[1][0] === "G") || (arrReyes[0][0] === "P" && arrReyes[1][0] === "Y") || (arrReyes[0][0] === "G" && arrReyes[1][0] === "Y")))))) {
                   evaluartTurnoJugador(
                     `Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(
                       1
@@ -271,16 +271,16 @@ export const agregarDivsTableroJuego = () => {
                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
-              if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
+              if (partida.tipoJuego === 1 || 
                   //Condicion para 4 jugadores
                   (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
-                  (arrReyes.length === 1  || 
                   (arrReyes.length === 2 && 
-                  ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P"))))) ||
+                  ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P")))) ||
                   //Condicion para 6 jugadores 
                   (partida.tipoJuego === 2 && partida.cantidadJugadores === 6 && 
-                  (arrReyes.length === 1  || 
-                  (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B" && arrReyes[2][0] === "R")) || (arrReyes[0][0] === "P" && arrReyes[2][0] === "G" && arrReyes[2][0] === "Y"))))) {
+                  ((arrReyes.length === 3 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B" && arrReyes[2][0] === "R") || (arrReyes[0][0] === "P" && arrReyes[1][0] === "G" && arrReyes[2][0] === "Y"))) ||
+                  (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "O" && arrReyes[1][0] === "R") || (arrReyes[0][0] === "B" && arrReyes[1][0] === "R") || 
+                  (arrReyes[0][0] === "P" && arrReyes[1][0] === "G") || (arrReyes[0][0] === "P" && arrReyes[1][0] === "Y") || (arrReyes[0][0] === "G" && arrReyes[1][0] === "Y")))))) {
                 evaluartTurnoJugador(
                   `Jugador ${sJugador} disparo al rey ${piezaAnterior.substring(
                     1
