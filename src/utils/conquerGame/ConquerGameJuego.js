@@ -185,9 +185,15 @@ export const agregarDivsTableroJuego = () => {
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
               if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
-                  (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
-                  (arrReyes.length === 1  || 
-                  (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P")))))) {
+              //Condicion para 4 jugadores
+              (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
+              (arrReyes.length === 1  || 
+              (arrReyes.length === 2 && 
+              ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P"))))) ||
+              //Condicion para 6 jugadores 
+              (partida.tipoJuego === 2 && partida.cantidadJugadores === 6 && 
+              (arrReyes.length === 1  || 
+              (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B" && arrReyes[2][0] === "R")) || (arrReyes[0][0] === "P" && arrReyes[2][0] === "G" && arrReyes[2][0] === "Y"))))) {
                   evaluartTurnoJugador(
                     `Jugador ${sJugador} ataco la pieza ${piezaAnterior.substring(
                       1
@@ -266,9 +272,15 @@ export const agregarDivsTableroJuego = () => {
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
               if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
+                  //Condicion para 4 jugadores
                   (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
                   (arrReyes.length === 1  || 
-                  (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P")))))) {
+                  (arrReyes.length === 2 && 
+                  ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P"))))) ||
+                  //Condicion para 6 jugadores 
+                  (partida.tipoJuego === 2 && partida.cantidadJugadores === 6 && 
+                  (arrReyes.length === 1  || 
+                  (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B" && arrReyes[2][0] === "R")) || (arrReyes[0][0] === "P" && arrReyes[2][0] === "G" && arrReyes[2][0] === "Y"))))) {
                 evaluartTurnoJugador(
                   `Jugador ${sJugador} disparo al rey ${piezaAnterior.substring(
                     1
@@ -488,7 +500,12 @@ const reddish = () => {
 
             if((partida.tipoJuego === 1 && greenText[0] == pinkText3[0]) || (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
                 (((greenText[0] === "R" || greenText[0] === "P") && (pinkText3[0] === "R" || pinkText3[0] === "P")) || 
-                ((greenText[0] === "O" || greenText[0] === "B") && (pinkText3[0] === "O" || pinkText3[0] === "B"))))) {
+                ((greenText[0] === "O" || greenText[0] === "B") && (pinkText3[0] === "O" || pinkText3[0] === "B"))))
+                || (partida.tipoJuego === 2 && partida.cantidadJugadores === 6 && 
+                  (((greenText[0] === "P" || greenText[0] === "G" || greenText[0] === "Y") && (pinkText3[0] === "P" || pinkText3[0] === "G" || pinkText3[0] === "Y")) || 
+                  ((greenText[0] === "O" || greenText[0] === "B" || greenText[0] === "R") && (pinkText3[0] === "O" || pinkText3[0] === "B" || pinkText3[0] === "R"))))
+                
+                ) {
                   i2.style.backgroundColor = colorTablero;
             }
           }
@@ -542,32 +559,13 @@ export const indicarSiguienteJugador = () => {
     return;
   }
 
-  if (
-    document.getElementById(`targetaJugador0`) !== null &&
-    !document.getElementById(`targetaJugador0`).classList.contains("opa-50")
-  ) {
-    document.getElementById(`targetaJugador0`).classList.add("opa-50");
-  }
-
-  if (
-    document.getElementById(`targetaJugador1`) !== null &&
-    !document.getElementById(`targetaJugador1`).classList.contains("opa-50")
-  ) {
-    document.getElementById(`targetaJugador1`).classList.add("opa-50");
-  }
-
-  if (
-    document.getElementById(`targetaJugador2`) !== null &&
-    !document.getElementById(`targetaJugador2`).classList.contains("opa-50")
-  ) {
-    document.getElementById(`targetaJugador2`).classList.add("opa-50");
-  }
-
-  if (
-    document.getElementById(`targetaJugador3`) !== null &&
-    !document.getElementById(`targetaJugador3`).classList.contains("opa-50")
-  ) {
-    document.getElementById(`targetaJugador3`).classList.add("opa-50");
+  for(let nCant=0;nCant<partida.cantidadJugadores;nCant++){  
+    if (
+      document.getElementById(`targetaJugador${nCant}`) !== null &&
+      !document.getElementById(`targetaJugador${nCant}`).classList.contains("opa-50")
+    ) {
+      document.getElementById(`targetaJugador${nCant}`).classList.add("opa-50");
+    }
   }
   switch (arrReyes[nTurno][0]) {
     case "O":
@@ -600,6 +598,22 @@ export const indicarSiguienteJugador = () => {
         document.getElementById(`targetaJugador3`).classList.contains("opa-50")
       ) {
         document.getElementById(`targetaJugador3`).classList.remove("opa-50");
+      }
+      break;
+      case "G":
+      if (
+        document.getElementById(`targetaJugador4`) !== null &&
+        document.getElementById(`targetaJugador4`).classList.contains("opa-50")
+      ) {
+        document.getElementById(`targetaJugador4`).classList.remove("opa-50");
+      }
+      break;
+      case "Y":
+      if (
+        document.getElementById(`targetaJugador5`) !== null &&
+        document.getElementById(`targetaJugador5`).classList.contains("opa-50")
+      ) {
+        document.getElementById(`targetaJugador5`).classList.remove("opa-50");
       }
       break;
   }
@@ -807,10 +821,18 @@ export const getColorPorLetra = (sLetra, bPlural = true) => {
       return bPlural ? "Rojos" : "Rojo";
     case "P":
       return bPlural ? "Morados" : "Morado";
+    case "G":
+      return bPlural ? "Verdes" : "Verde";
+    case "Y":
+      return bPlural ? "Amarillos" : "Amarillo";
     case "O B":
       return bPlural ? "Naranjas y Negros" : "Naranja y Negro";
     case "R P":
       return bPlural ? "Rojos y Morados" : "Rojo y Morado";
+    case "O B R":
+      return bPlural ? "Naranjas, Negros Y Rojos" : "Naranja, Negro Y Rojo";
+    case "P G Y":
+      return bPlural ? "Morados, Verdes Y Amarrilos" : "Morado, Verde Y Amarrilo";
     default:
       return "";
   }
