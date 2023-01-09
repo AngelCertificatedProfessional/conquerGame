@@ -77,14 +77,12 @@ export const agregarImagenesListado = async (turnoUsuario) => {
         }
         piezaSeleccionada = null;
       } else {
-        console.log('proceso del div')
         hathiTest.style.backgroundColor = colorSeleccionadoListado;
         piezaSeleccionada = hathiTest;
         //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
         let nValor = vArregloPiezas.findIndex(
           (obj) => obj.nombre === hathiTest.innerText.replace(/\s/g, "")
         );
-        console.log(vArregloPiezas)
         if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
           document.getElementById(
             vArregloPiezas[nValor].posicion
@@ -119,14 +117,8 @@ export const agregarDivsTablero = () => {
       }
 
       //Realizmaos la misma evaluacion pero ahora con todas las piezas de los jugadores
-      console.log(vPartida.tipoJuego)
-      console.log(vPartida.hasOwnProperty("posicionPiezasGlobal"))
       if(vPartida.tipoJuego === 2 && vPartida.hasOwnProperty("posicionPiezasGlobal")){
-        console.log('valida todas las piezas')  
-        console.log(vPartida)  
         for (const piecePosition in vPartida.posicionPiezasGlobal) {
-          console.log(vPartida.posicionPiezasGlobal[piecePosition]);
-          console.log(piecePosition);
           if(vPartida.posicionPiezasGlobal[piecePosition] === hathiTest.id){
             alert("Ya se encuentra una pieza de un compañero en esta posición");
             return;
@@ -229,8 +221,6 @@ export const guardarConfiguracionPiezas = () => {
 
 export const setPartida= (vPartidaT) => {
   vPartida = vPartidaT;
-  console.log('-vPartida-')
-  console.log(vPartida)
 };
 //Este metodo se realiza al final para poder indicar que las piezas estaran ahio
 export const posicionPiezaJugador = (partidaJugador) => {
@@ -254,9 +244,6 @@ export const posicionPiezaJuego= (partidaJugador,turnoUsuario) => {
   if(turnoUsuario === undefined){
     turnoUsuario = sTurno
   }
-  console.log('---posicionPiezaJuego----');
-  console.log(vArregloPiezas);
-  console.log(turnoUsuario)
   for (const piecePosition in partidaJugador.posicionPiezasGlobal) {
     if((partidaJugador.cantidadJugadores === 4 && 
       (((turnoUsuario !== "R" && turnoUsuario !== "P") && (piecePosition[0] === "R" || piecePosition[0] === "P")) || 
@@ -275,15 +262,10 @@ export const posicionPiezaJuego= (partidaJugador,turnoUsuario) => {
     let nValor = vArregloPiezas.findIndex(
       (obj) => obj.nombre === piecePosition.substring(1,piecePosition.length) &&  turnoUsuario === piecePosition[0]
     );
-    console.log(piecePosition)
-    console.log(nValor)
-    console.log(partidaJugador.posicionPiezasGlobal[piecePosition])
     if(nValor >= 0){
-      console.log('entre')
       vArregloPiezas[nValor].posicion = partidaJugador.posicionPiezasGlobal[piecePosition]
     }
   }
   /*DESPUES*/
-  console.log(vArregloPiezas);
   insertImage();
 };

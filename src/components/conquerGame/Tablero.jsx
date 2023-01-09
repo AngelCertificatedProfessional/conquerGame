@@ -25,8 +25,6 @@ const Tablero = ({
           obj.hasOwnProperty("posicionPiezasJugador")
       );
       //esta condicion es para pintar las piezas del jugador que ya dio aceptar
-      console.log('turnoUsuario')
-      console.log(turnoUsuario)
       if (nValor !== -1) {
         if(partida.tipoJuego === 1){
           posicionPiezaJugador(partida.jugadores[nValor]);

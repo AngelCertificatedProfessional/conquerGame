@@ -128,8 +128,6 @@ const ConquerGame = ({ socket }) => {
               );
           }
           if(payload.tipoJuego === 2){
-            console.log('turnoUsuario')
-            console.log(turnoUsuario)
             posicionPiezaJuegoConfiguracion(payload);
           }
           break;

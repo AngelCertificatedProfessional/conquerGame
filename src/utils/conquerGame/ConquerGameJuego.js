@@ -491,12 +491,8 @@ const reddish = () => {
           if (i2.innerText.length !== 0) {
             let greenText = i2.innerText;
             let pinkText3 = i1.innerText;
-            console.log(greenText)
-            console.log(pinkText3)
             let pinkColor = Array.from(pinkText3).shift().toString();
             let greenColor = Array.from(greenText).shift().toString();
-            console.log(pinkColor)
-            console.log(greenColor)
             //En esta validacion se pregunta si la pieza es del mismo valor (B,O) a otra del mismo
 
             if((partida.tipoJuego === 1 && greenText[0] == pinkText3[0]) || (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
@@ -715,7 +711,6 @@ export const colocarPiezaEspecial = (sPieza) => {
 };
 
 export const pintarMapaOpacity = (bPintarOpacity) => {
-  console.log('enter')
   document.querySelectorAll(".box").forEach((vDivTablero) => {
     seccionTableroJugador(vDivTablero,sTurnoJugador,partida.cantidadJugadores,bPintarOpacity,partida.tipoJuego)
   });
