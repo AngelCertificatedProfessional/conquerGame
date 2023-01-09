@@ -11,7 +11,8 @@ import {
   agregarDivsTablero as agregarDivsTableroConfiguracion,
   coloring as coloringTablero,
   insertImage,
-  seccionTableroJugador
+  seccionTableroJugador,
+  arregloJugadores
 } from "./ConfiguracionTableroConquerGame.js";
 import {
   movimientoHachero,
@@ -567,55 +568,14 @@ export const indicarSiguienteJugador = () => {
       document.getElementById(`targetaJugador${nCant}`).classList.add("opa-50");
     }
   }
-  switch (arrReyes[nTurno][0]) {
-    case "O":
-      if (
-        document.getElementById(`targetaJugador0`) !== null &&
-        document.getElementById(`targetaJugador0`).classList.contains("opa-50")
-      ) {
-        document.getElementById(`targetaJugador0`).classList.remove("opa-50");
-      }
-      break;
-    case "B":
-      if (
-        document.getElementById(`targetaJugador1`) !== null &&
-        document.getElementById(`targetaJugador1`).classList.contains("opa-50")
-      ) {
-        document.getElementById(`targetaJugador1`).classList.remove("opa-50");
-      }
-      break;
-    case "R":
-      if (
-        document.getElementById(`targetaJugador2`) !== null &&
-        document.getElementById(`targetaJugador2`).classList.contains("opa-50")
-      ) {
-        document.getElementById(`targetaJugador2`).classList.remove("opa-50");
-      }
-      break;
-    case "P":
-      if (
-        document.getElementById(`targetaJugador3`) !== null &&
-        document.getElementById(`targetaJugador3`).classList.contains("opa-50")
-      ) {
-        document.getElementById(`targetaJugador3`).classList.remove("opa-50");
-      }
-      break;
-      case "G":
-      if (
-        document.getElementById(`targetaJugador4`) !== null &&
-        document.getElementById(`targetaJugador4`).classList.contains("opa-50")
-      ) {
-        document.getElementById(`targetaJugador4`).classList.remove("opa-50");
-      }
-      break;
-      case "Y":
-      if (
-        document.getElementById(`targetaJugador5`) !== null &&
-        document.getElementById(`targetaJugador5`).classList.contains("opa-50")
-      ) {
-        document.getElementById(`targetaJugador5`).classList.remove("opa-50");
-      }
-      break;
+
+  let nPosicion = arregloJugadores.indexOf(arrReyes[nTurno][0])
+
+  if (
+    document.getElementById(`targetaJugador${nPosicion}`) !== null &&
+    document.getElementById(`targetaJugador${nPosicion}`).classList.contains("opa-50")
+  ) {
+    document.getElementById(`targetaJugador${nPosicion}`).classList.remove("opa-50");
   }
   return esTurnoJugadorTurno();
 };
@@ -833,6 +793,16 @@ export const getColorPorLetra = (sLetra, bPlural = true) => {
       return bPlural ? "Naranjas, Negros Y Rojos" : "Naranja, Negro Y Rojo";
     case "P G Y":
       return bPlural ? "Morados, Verdes Y Amarrilos" : "Morado, Verde Y Amarrilo";
+    case "O R":
+      return bPlural ? "Naranjas y Rojos" : "Naranja y Rojo";
+    case "B R":
+      return bPlural ? "Negros y Rojos" : "Negro y Rojo";
+    case "G Y":
+      return bPlural ? "Verdes y Amarillos" : "Amarrillo y Verde";
+    case "P Y":
+      return bPlural ? "Morados y Amarillos" : "Morado y Amarillo";
+    case "P G":
+      return bPlural ? "Morados y Verdes" : "Morado y Verde";
     default:
       return "";
   }
