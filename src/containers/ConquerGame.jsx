@@ -187,12 +187,6 @@ const ConquerGame = ({ socket }) => {
       }
     });
 
-    if (
-      (usuario === null || usuario === undefined || usuario.usuario === "") &&
-      location.pathname !== "/login"
-    ) {
-      navigate("/login");
-    }
     mostrarMenuUnidadEspecialM(mostrarVentanaUnidadEspecial);
 
     return () => {

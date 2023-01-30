@@ -51,7 +51,6 @@ const Login = () => {
     if(mesProximo >= 12){
       mesProximo = 0;
     }
-    console.log(mesProximo)
     switch(mesProximo){
       case 0:
         return "Enero"

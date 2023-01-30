@@ -1,6 +1,5 @@
 //Material UI
 import React, { useState, useEffect, lazy, Suspense } from "react";
-import { useNavigate } from "react-router-dom";
 import ListadoIconos from "../components/Usuario/ListadoIconos";
 import { consultaById } from "../utils/ConexionAPI";
 import { b64_to_utf8 } from "../utils/UtileriasPagina";
@@ -10,7 +9,6 @@ const FormularioUsuario = lazy(() =>
 const MenuUsuario = lazy(() => import("../components/Usuario/MenuUsuario"));
 
 const Usuario = () => {
-  const navigate = useNavigate();
   const [accion, setAccion] = useState(3);
   const [usuario, setUsuario] = useState({});
   useEffect(() => {
@@ -18,14 +16,12 @@ const Usuario = () => {
       b64_to_utf8(sessionStorage.getItem("usuario"))
     );
     if (
-      (usuarioSesionT === null ||
-        usuarioSesionT === undefined ||
-        usuarioSesionT.usuario === "") &&
-      location.pathname !== "/login"
+      (usuarioSesionT !== null &&
+        usuarioSesionT !== undefined &&
+        usuarioSesionT.usuario === "")
     ) {
-      navigate("/login");
+      buscarRegistro(usuarioSesionT.token);
     }
-    buscarRegistro(usuarioSesionT.token);
   }, []);
 
   const buscarRegistro = (sToken) => {

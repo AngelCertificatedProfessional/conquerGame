@@ -1,38 +1,27 @@
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState,lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { listado } from "../utils/ConexionAPI";
-import { b64_to_utf8 } from "../utils/UtileriasPagina";
-const CrearUniser = React.lazy(() =>
+const CrearUniser = lazy(() =>
   import("../components/conquerGame/CrearUniser")
 );
-const FormularioConfiguracion = React.lazy(() =>
+const FormularioConfiguracion = lazy(() =>
   import("../components/conquerGame/FormularioConfiguracion")
 );
-const BuscarPartida = React.lazy(() =>
+const BuscarPartida = lazy(() =>
   import("../components/conquerGame/BuscarPartida")
 );
-const ListaPartidas = React.lazy(() =>
+const ListaPartidas = lazy(() =>
   import("../components/conquerGame/ListaPartidas")
 );
 
-const ListaMejores10 = React.lazy(() =>
+const ListaMejores10 = lazy(() =>
   import("../components/conquerGame/ListaMejores10")
 );
 const ConquerGame = () => {
   let navigate = useNavigate();
-  const [usuario, setUsuario] = useState({}); //Este metodo se utiliza para obtener la info del usuario
   const [accion, setAccion] = useState(0); //Este metodo se utiliza para ver que accion esta realizando el usuario
   const [partidas, setPartidas] = useState(null); //Este metodo se utiliza para ver que accion esta realizando el usuario
   const [usuarios, setUsuarios] = useState(null); //Este metodo se utiliza para ver que accion esta realizando el usuario
-  useEffect(() => {
-    setUsuario(JSON.parse(b64_to_utf8(sessionStorage.getItem("usuario"))));
-    if (
-      (usuario === null || usuario === undefined || usuario.usuario === "") &&
-      location.pathname !== "/login"
-    ) {
-      navigate("/login");
-    }
-  }, []);
 
   const abrirPartidaJuego = (numeroPartida) => {
     navigate("/ConquerGame/" + numeroPartida);

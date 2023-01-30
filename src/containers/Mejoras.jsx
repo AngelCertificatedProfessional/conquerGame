@@ -1,11 +1,8 @@
-import React, { useEffect, lazy, Suspense } from "react";
-import { useNavigate } from "react-router-dom";
-import { b64_to_utf8 } from "./../utils/UtileriasPagina";
+import React, {lazy, Suspense } from "react";
 const Actualizacion = lazy(() =>
   import("./../components/Actualizacion/Actualizacion")
 );
 const Mejoras = () => {
-  let navigate = useNavigate();
   const actualizaciones = [
     {
       titulo: "Ortografía",
@@ -47,19 +44,6 @@ const Mejoras = () => {
         "Se creó un listado mostrando el puntaje de los 10 mejores jugadores de conquer game, estos puntos se obtienen al momento que los jugadores están eliminando piezas o ganando partidas. ",
     },
   ];
-  useEffect(() => {
-    const usuarioSesionT = JSON.parse(
-      b64_to_utf8(sessionStorage.getItem("usuario"))
-    );
-    if (
-      (usuarioSesionT === null ||
-        usuarioSesionT === undefined ||
-        usuarioSesionT.usuario === "") &&
-      location.pathname !== "/login"
-    ) {
-      navigate("/login");
-    }
-  }, []);
   return (
     <main className="contenedor seccion">
       <h2 className="fw-300 centrar-texto">Actualizaciones</h2>
