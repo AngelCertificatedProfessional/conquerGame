@@ -106,7 +106,7 @@ const FormularioConfiguracion = ({ abrirPartidaJuego, rendirseJugador }) => {
         isValid,
         errors,
       }) => (
-        <div className="contenido-menu-opciones w-100">
+        <div className="contenido-menu-opciones w-100 contenido-border">
           <form onSubmit={handleSubmit} noValidate>
             <h2 className="tituloCentrado">Creacion de partida ConquerGame</h2>
             <p className="fw-700 seccion">Tipo de juego</p>

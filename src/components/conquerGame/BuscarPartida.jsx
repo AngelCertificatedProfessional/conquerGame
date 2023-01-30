@@ -63,7 +63,7 @@ const BuscarPartida = ({ abrirPartidaJuego }) => {
         isValid,
         errors,
       }) => (
-        <div className="contenido-menu-opciones w-100">
+        <div className="contenido-menu-opciones w-100 contenido-border">
           <form onSubmit={handleSubmit} noValidate>
             <h2 className="tituloCentrado">Buscar partida de ConquerGame</h2>
             <div className="campo-input">

@@ -1,7 +1,7 @@
 import React from "react";
 const MenuUsuario = ({ setAccion }) => {
   return (
-    <div className="contenido-menu-opciones w-100">
+    <div className="contenido-menu-opciones contenido-border w-100">
       <div className="contenido-anuncio">
         <button className="boton blue w-100" onClick={() => setAccion(3)}>
           Modificar Usuario

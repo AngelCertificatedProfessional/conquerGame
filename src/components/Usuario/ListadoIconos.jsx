@@ -50,7 +50,7 @@ const ListadoIconos = ({ agregarUnidadMapa }) => {
   ];
 
   return (
-    <div className="contenido-menu-opciones ">
+    <div className="contenido-menu-opciones contenido-border">
       <div className="contenedor-contenido">
         {contenidoListado.map((consultaSerieTemp, index) => (
           <Suspense fallback={<div>Loading...</div>}>

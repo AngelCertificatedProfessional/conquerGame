@@ -15,7 +15,7 @@ const Icono = ({ contenido, actualizarMemeUsuario }) => {
     fetchImage();
   }, []);
   return (
-    <div className="contenido">
+    <div className="contenido contenido-border">
       <img
         src={imagen}
         alt="Anuncio casa en el lago"

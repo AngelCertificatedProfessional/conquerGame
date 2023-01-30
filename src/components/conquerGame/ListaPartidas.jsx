@@ -38,7 +38,7 @@ const ListaPartidas = ({ partidas, abrirPartidaJuego }) => {
 
   return (
     <>
-      <div className="contenido-menu-opciones w-100">
+      <div className="contenido-menu-opciones w-100 contenido-border">
         <h2 className="centrar-texto">Lista de partidas</h2>
 
         <div className="flex-orientation-button contenido-anuncio">

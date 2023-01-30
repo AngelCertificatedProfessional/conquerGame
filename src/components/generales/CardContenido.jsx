@@ -14,7 +14,7 @@ const CardContenido = ({ contenido, agregarUnidadMapa }) => {
     fetchImage();
   }, []);
   return (
-    <div className="contenido">
+    <div className="contenido contenido-border">
       <img src={imagen} alt="Anuncio casa en el lago"></img>
       <div className="contenido-anuncio">
         <h3>{contenido.titulo}</h3>

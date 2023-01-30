@@ -385,7 +385,7 @@ const ConquerGame = ({ socket }) => {
               partida.jugadores.map((jugador, index) => (
                 <>
                   <div
-                    className={`contenido-menu-opciones w-100 targetaJugador${index}`}
+                    className={`contenido-menu-opciones contenido-border w-100 targetaJugador${index}`}
                     key={index}
                   >
                     <Suspense fallback={<div>Loading...</div>}>

@@ -2,7 +2,7 @@ import React from "react";
 const ListaPartidas = ({ usuarios }) => {
   return (
     <>
-      <div className="contenido-menu-opciones w-100">
+      <div className="contenido-menu-opciones w-100 contenido-border">
         <h2 className="centrar-texto">Lista de mejores 10</h2>
 
         <div className="main-currency-table">

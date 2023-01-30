@@ -1,7 +1,7 @@
 import React from "react";
 const CrearUniser = ({ setAccion, buscarPartidas, buscar10Mejores }) => {
   return (
-    <div className="contenido-menu-opciones w-100">
+    <div className="contenido-menu-opciones w-100 contenido-border">
       <div className="contenido-anuncio">
         <button className="boton blue w-100" onClick={() => setAccion(1)}>
           Crear Partida

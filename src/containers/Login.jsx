@@ -18,6 +18,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [accion, setAccion] = useState(1);
   const [mostrarPopup, setmostrarPopup] = useState(false);
+  const [mesFinMantenimiento, setMesFinMantenimiento] = useState("");
   useEffect(() => {
     const usuarioSesionT = JSON.parse(
       b64_to_utf8(sessionStorage.getItem("usuario"))
@@ -29,8 +30,8 @@ const Login = () => {
     ) {
       ingresarSesion();
     }
+    setMesFinMantenimiento(evaluarFechaInicioMantenimiento())
   }, []);
-
   const ingresarSesion = async () => {
     navigate("/");
     window.location.href = window.location.href;
@@ -40,9 +41,51 @@ const Login = () => {
     setmostrarPopup(!mostrarPopup);
   };
 
+  const evaluarFechaInicioMantenimiento =() =>{
+    let fecha = new Date;
+    if(fecha.getDate() <= 20){
+      return "";
+    }
+    let mesProximo = fecha.getMonth();
+    mesProximo += 1;
+    if(mesProximo >= 12){
+      mesProximo = 0;
+    }
+    console.log(mesProximo)
+    switch(mesProximo){
+      case 0:
+        return "Enero"
+      case 1:
+        return "Febrero"
+      case 2:
+        return "Marzo"
+      case 3:
+        return "Abril"
+      case 4:
+        return "Mayo"
+      case 5:
+        return "Junio"
+      case 6:
+        return "Julio"
+      case 7:
+        return "Agosto"
+      case 8:
+        return "Septiembre"
+      case 9:
+        return "Octubre"
+      case 10:
+        return "Noviembre"
+      case 11:
+        return "Diciembre"
+    }
+  }
+
   return (
     <main className=" header-login">
       <section className="formularioSeccion">
+        {mesFinMantenimiento !== "" && (
+          <h3 className="mensaje-error ma-bottom2"> El servicio esta en mantenimiento hasta el primero de {mesFinMantenimiento}</h3>
+        )}
         {accion === 1 && (
           <Suspense fallback={<div>Loading...</div>}>
             <LoginFormulario
