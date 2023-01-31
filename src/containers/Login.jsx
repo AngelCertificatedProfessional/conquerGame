@@ -1,7 +1,6 @@
 //Material UI
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
-import { b64_to_utf8 } from "./../utils/UtileriasPagina";
 const LoginFormulario = lazy(() =>
   import("./../components/Usuario/LoginFormulario")
 );
@@ -20,16 +19,6 @@ const Login = () => {
   const [mostrarPopup, setmostrarPopup] = useState(false);
   const [mesFinMantenimiento, setMesFinMantenimiento] = useState("");
   useEffect(() => {
-    const usuarioSesionT = JSON.parse(
-      b64_to_utf8(sessionStorage.getItem("usuario"))
-    );
-    if (
-      usuarioSesionT !== null &&
-      usuarioSesionT !== undefined &&
-      usuarioSesionT.usuario !== ""
-    ) {
-      ingresarSesion();
-    }
     setMesFinMantenimiento(evaluarFechaInicioMantenimiento())
   }, []);
   const ingresarSesion = async () => {
