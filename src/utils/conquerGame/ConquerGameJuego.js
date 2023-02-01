@@ -491,8 +491,6 @@ const reddish = () => {
           if (i2.innerText.length !== 0) {
             let greenText = i2.innerText;
             let pinkText3 = i1.innerText;
-            let pinkColor = Array.from(pinkText3).shift().toString();
-            let greenColor = Array.from(greenText).shift().toString();
             //En esta validacion se pregunta si la pieza es del mismo valor (B,O) a otra del mismo
 
             if((partida.tipoJuego === 1 && greenText[0] == pinkText3[0]) || (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 

@@ -65,9 +65,8 @@ const FormularioUsuario = ({
             button: "OK",
           });
           return;
-        } else {
-          usuarioT.aceptoTerminosYCondiciones = true;
         }
+        usuarioT.aceptoTerminosYCondiciones = true;
         usuarioT._id = usuario._id;
         usuarioT.usuario = values.usuario;
         usuarioT.contrasena = values.contrasena;

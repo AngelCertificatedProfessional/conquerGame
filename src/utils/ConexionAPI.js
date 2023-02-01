@@ -193,12 +193,6 @@ export const actualizarEspecifico = async (sRuta, data) => {
       throw "Hubo un error al ingresar la informacion";
     }
     return json;
-
-    // if (json.data.hasOwnProperty('_id')) {
-    //   return;
-    // } else {
-    //   throw 'Hubo un error al ingresar la informacion';
-    // }
   } catch (error) {
     throw error;
   }
