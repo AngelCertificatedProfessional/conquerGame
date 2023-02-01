@@ -11,7 +11,7 @@ const schema = yup.object({
   tipoJuego: yup.string().required("Seleccione un tipo de juego"),
 });
 
-const FormularioConfiguracion = ({ abrirPartidaJuego, rendirseJugador }) => {
+const FormularioConfiguracion = ({ abrirPartidaJuego }) => {
   const actualizarSelectOption = (nValor) => {
     const selectobject = document.getElementById("cantidadJugadores");
     for (let i = 1; i < selectobject.length; i++) {
@@ -20,27 +20,19 @@ const FormularioConfiguracion = ({ abrirPartidaJuego, rendirseJugador }) => {
     }
 
     if (nValor === 1) {
-      const opt = document.createElement("option");
-      opt.value = 2;
-      opt.innerHTML = 2;
-      selectobject.appendChild(opt);
-      const opt2 = document.createElement("option");
-      opt2.value = 3;
-      opt2.innerHTML = 3;
-      selectobject.appendChild(opt2);
-      const opt3 = document.createElement("option");
-      opt3.value = 4;
-      opt3.innerHTML = 4;
-      selectobject.appendChild(opt3);
+      for(let i =2;i<5;i++){
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.innerHTML = i;
+        selectobject.appendChild(opt);
+      }
     } else {
-      const opt = document.createElement("option");
-      opt.value = 4;
-      opt.innerHTML = 4;
-      selectobject.appendChild(opt);
-      const opt2 = document.createElement("option");
-      opt2.value = 6;
-      opt2.innerHTML = 6;
-      selectobject.appendChild(opt2);
+      for(let i =4;i<7;i+=2){
+        const opt = document.createElement("option");
+        opt.value = i;
+        opt.innerHTML = i;
+        selectobject.appendChild(opt);
+      }
     }
   };
 
