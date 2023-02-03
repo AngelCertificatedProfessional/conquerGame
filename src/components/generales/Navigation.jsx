@@ -19,12 +19,11 @@ const Navigation = () => {
     }else if(usuarioT !== null &&
       usuarioT !== undefined &&
       usuarioT.usuario !== "" && 
-      location.pathname !== "/login"){
+      location.pathname === "/login"){
         navigate("/");  
         //window.location.href = window.location.href;
     }
     setUsuario(usuarioT);
-    console.log('test')
   }, []);
 
   const cerrarSesion = (e) => {
