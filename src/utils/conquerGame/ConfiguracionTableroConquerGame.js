@@ -1,4 +1,4 @@
-import { alfabetoANumero, eliminarLetras, eliminarNumeros, numeroAAlfabeto } from "../UtileriasPagina";
+import { alfabetoANumero, eliminarLetras, eliminarNumeros, reconvertirTextoAJson } from "../UtileriasPagina";
 
 export const colorTablero = "rgb(240, 201, 150)";
 export const colorMontana = "rgb(14, 155, 0)";
@@ -11,7 +11,6 @@ export const colorCasstilloEntrada = "rgb(185, 185, 179)";
 export const colorCasstilloSala = "rgb(94, 94, 89)";
 export const tamanoTableroLargo = 24;
 export const tamanoTableroAncho = 24;
-export const cantidadJugadores = 3;
 export const arregloJugadores = ["O", "B", "R", "B", "G", "Y"];
 
 export const validaPiezaMontana = (idDiv) => {
@@ -123,47 +122,8 @@ export const validaPosicionPieza = (sPieza, sPosicion,nCantidadJugadores,sTurno,
     alert("Esta pieza no puede invadir una montaña");
     return true;
   }
+  return false;
 };
-
-export const agregarImagenesListado = async (sTurno,vArregloPiezas) => {
-  for (const piecePosition in vArregloPiezas) {
-    const response = await import(
-      `@images/${sTurno + vArregloPiezas[piecePosition].icono}.png`
-    );
-    vArregloPiezas[piecePosition].direccion = response.default;
-    let divElement = document.createElement("div");
-    divElement.className = "iconoMenu";
-    divElement.id = vArregloPiezas[piecePosition].nombre;
-    divElement.innerHTML =
-    vArregloPiezas[piecePosition].nombre +
-      `<img class='allimg' src="${vArregloPiezas[piecePosition].direccion}" alt="">`;
-    divElement.style.cursor = "pointer";
-    document.getElementById("lista_personajes").appendChild(divElement);
-  }
-  return vArregloPiezas;
-}
-
-export const agregarDivsTablero = () => {
-  for (let nContRow = tamanoTableroLargo; nContRow > 0; nContRow--) {
-    let divElement = document.createElement("div");
-    divElement.id = "row" + nContRow;
-    divElement.className = "row";
-    document.getElementById("tablero_juego").appendChild(divElement);
-    for (let nContCol = 1; nContCol < tamanoTableroAncho + 1; nContCol++) {
-      let liElement2 = document.createElement("li");
-      liElement2.id = nContRow + numeroAAlfabeto(nContCol);
-      //Se toma la desicion de como se pintara el tablero
-      if (lagos.includes(liElement2.id)) {
-        liElement2.className = "box blue-box";
-      } else if (montanas.includes(liElement2.id)) {
-        liElement2.className = "box green-box";
-      } else {
-        liElement2.className = "box white-box";
-      }
-      document.getElementById("row" + nContRow).appendChild(liElement2);
-    }
-  }
-}
 
 export const coloring = (colorDiv) => {
   if (colorDiv.classList.contains("white-box")) {
@@ -371,7 +331,7 @@ export const lagos = [
   "11T",
 ];
 
-export const arregloPiezas = [
+export const arrEstructuraPiezas = [
   {
     nombre: "hachero1",
     icono: "hachero",

@@ -32,3 +32,7 @@ export const eliminarNumeros = (sValor) => {
 export const eliminarSaltosLinea = (sValor) => {
   return sValor.replace(/\s+/g, " ");
 };
+
+export const reconvertirTextoAJson = (vResultado) => {
+  return JSON.parse(JSON.stringify(vResultado));
+}

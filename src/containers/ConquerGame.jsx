@@ -4,17 +4,17 @@ import { b64_to_utf8 } from "../utils/UtileriasPagina";
 import { actualizarEspecifico, consultaById } from "../utils/ConexionAPI";
 import {
   agregarDivsTablero,
-  agregarImagenesListado,
   coloring,
   guardarConfiguracionPiezas,
-  limpiarVariables,
   posicionPiezaJugador,
+  setArregloPiezas,
   posicionPiezaJuego as posicionPiezaJuegoConfiguracion,
   setPartida as setPartidaConfiguracion,
+  setTurnoJugador as setTurnoJugadorConfiguracion,
+  seleccionImagenListadoPieza
 } from "../utils/conquerGame/ConquerGameConfiguracion";
 import {
   agregarDivsTableroJuego,
-  agregarImagenesListado as agregarImagenesListadoJuego,
   colocarPiezaEspecial,
   coloring as coloringJuego,
   conometro,
@@ -29,6 +29,7 @@ import {
   setJugador,
   setPartida,
   setTurno,
+  setTurnoJugador as setTurnoJugadorJuego
 } from "../utils/conquerGame/ConquerGameJuego";
 import swal from "sweetalert";
 const ListaEspera = React.lazy(() =>
@@ -111,7 +112,6 @@ const ConquerGame = ({ socket }) => {
           }
           dispatchPartidas(payload);
           setAccion(1);
-          limpiarVariables();
           break;
         case 2:
           dispatchPartidas(payload);
@@ -119,6 +119,8 @@ const ConquerGame = ({ socket }) => {
           //Esta seccion indica que si la pagina se esta refrescando al presionar f5 o se salio y volvio a ingresar
           if (!payload.hasOwnProperty("notificarUsuarioListo")) {
             dispatchTurnoUsuarioRes(payload);
+            setTurnoJugadorConfiguracion(detectarJugador(payload));
+            setTurnoJugadorJuego(detectarJugador(payload));
             if(accion!= 2){
               setAccion(2);
             }
@@ -138,6 +140,7 @@ const ConquerGame = ({ socket }) => {
           dispatchMostrarImagen(payload);
           setPartida(payload);
           setAccion(3);
+          setTurnoJugadorJuego(detectarJugador(payload));
           if (payload.hasOwnProperty("posicionPiezasGlobal")) {
             setJugador(usuario.usuario);
             payload.hasOwnProperty("turno")
@@ -254,6 +257,10 @@ const ConquerGame = ({ socket }) => {
     if (state !== "") {
       return state;
     }
+    return detectarJugador(action);
+  }
+
+  function detectarJugador (action){
     const nResultado = action.jugadores.findIndex(function (item, i) {
       return usuario.usuario == item.usuario;
     });
@@ -417,7 +424,8 @@ const ConquerGame = ({ socket }) => {
               <Suspense fallback={<div>Loading...</div>}>
                 <ListadoPiezas
                   turnoUsuario={turnoUsuario}
-                  agregarImagenesListado={agregarImagenesListado}
+                  setArregloPiezas={setArregloPiezas}
+                  seleccionImagenListadoPieza = {seleccionImagenListadoPieza}
                 />
               </Suspense>
 
@@ -482,7 +490,6 @@ const ConquerGame = ({ socket }) => {
               <Suspense fallback={<div>Loading...</div>}>
                 <ListadoPiezas
                   turnoUsuario={turnoUsuario}
-                  agregarImagenesListado={agregarImagenesListadoJuego}
                 />
               </Suspense>
               <div className="contenedor-contenido-row">

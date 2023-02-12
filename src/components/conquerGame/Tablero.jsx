@@ -1,4 +1,11 @@
 import React, { useEffect } from "react";
+import {numeroAAlfabeto } from "../../utils/UtileriasPagina";
+import {
+  tamanoTableroLargo,
+  tamanoTableroAncho,
+  lagos,
+  montanas
+} from "../../utils/conquerGame/ConfiguracionTableroConquerGame";
 const Tablero = ({
   partida,
   agregarDivsTablero,
@@ -48,7 +55,17 @@ const Tablero = ({
   return (
     <>
       <div className="juego">
-        <ul id="tablero_juego"></ul>
+        <ul id="tablero_juego">
+          {[...Array(tamanoTableroLargo)].map((x, row) =>
+            <div id={`row${tamanoTableroLargo - (row)}`} className="row">
+              {[...Array(tamanoTableroAncho)].map((x, col) =>
+                <li id={`${tamanoTableroLargo - row}${numeroAAlfabeto(col+1)}`} className = {lagos.includes(`${tamanoTableroLargo - row}${numeroAAlfabeto(col+1)}`) ? "box blue-box" : montanas.includes(`${tamanoTableroLargo - row}${numeroAAlfabeto(col+1)}`) ? "box green-box" : "box white-box"}>
+
+                </li>
+              )}
+            </div>
+          )}
+        </ul>
       </div>
     </>
   );

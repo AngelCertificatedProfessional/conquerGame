@@ -248,14 +248,15 @@ select {
     display: flex;
     flex-direction: row;
     color:black;
+    cursor:pointer;
 }
 
 /*ConqueGame */
 
 .allimg {
-    width: 55px;
     position: relative;
     bottom: 5px;
+    width: 45px;
 }
 
 ul {
@@ -278,12 +279,6 @@ li {
 
 .row {
     display: flex;
-}
-
-.allimg {
-    width: 45px;
-    position: relative;
-    bottom: 5px;
 }
 
 .listado-opciones{

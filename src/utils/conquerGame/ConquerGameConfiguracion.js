@@ -5,97 +5,87 @@ import {
   colorTablero,
   lagos,
   validaPosicionPieza,
-  agregarImagenesListado as agregarImagenesListadoTablero,
-  agregarDivsTablero as agregarDivsTableroConfiguracion,
   coloring as coloringTablero,
   insertImage,
-  seccionTableroJugador,
-  arregloPiezas
+  seccionTableroJugador
 } from "./ConfiguracionTableroConquerGame.js";
 import swal from "sweetalert";
 import { actualizarEspecifico } from "../ConexionAPI.js";
 
-let sTurno = "Z";
+let sTurnoJugador = "Z";
 let vPartida = {};
 let sPiezaAColocar = "";
 let piezaSeleccionada = null;
 
-let vArregloPiezas = arregloPiezas;
+let vArregloPiezas = null;
 
-export const limpiarVariables = () => {
-  for (const piecePosition in vArregloPiezas) {
-    vArregloPiezas[piecePosition].direccion = "";
-    vArregloPiezas[piecePosition].posicion = "";
-  }
+export const setTurnoJugador = (turnoUsuario) => {
+  sTurnoJugador = turnoUsuario;
+};
+
+export const setArregloPiezas = (arrPiezas) => {
+  vArregloPiezas = arrPiezas;
 };
 
 //indica el listado de las piesas del usuario
-export const agregarImagenesListado = async (turnoUsuario) => {
-  sTurno = turnoUsuario;
-  vArregloPiezas = await agregarImagenesListadoTablero(sTurno,vArregloPiezas);
-
-  document.querySelectorAll(".iconoMenu").forEach((hathiTest) => {
-    hathiTest.addEventListener("click", function () {
-      //guardamos la pieza
-      sPiezaAColocar = sTurno + hathiTest.innerText;
-      //Segmento para deselecconar las opciones tanto del tablero como del listado
-      if (piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id) {
-        piezaSeleccionada.style.backgroundColor = "rgb(255, 255, 255)";
-        let nValor = vArregloPiezas.findIndex(
-          (obj) => obj.nombre === piezaSeleccionada.innerText.replace(/\s/g, "")
-        );
-        if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
-          if (lagos.includes(vArregloPiezas[nValor].posicion)) {
-            document.getElementById(
-              vArregloPiezas[nValor].posicion
-            ).style.backgroundColor = colorLago;
-          } else {
-            document.getElementById(
-              vArregloPiezas[nValor].posicion
-            ).style.backgroundColor = colorTablero;
-          }
-        }
-        piezaSeleccionada = null;
-      }
-      //pintar el seleccionado normal o gris sobre la misma pieza
-      if (hathiTest.style.backgroundColor === colorSeleccionadoListado) {
-        hathiTest.style.backgroundColor = "rgb(255, 255, 255)";
-        let nValor = vArregloPiezas.findIndex(
-          (obj) =>
-            obj.nombre === hathiTest.innerText.replace(/\s/g, "")
-        );
-        if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
-          if (lagos.includes(vArregloPiezas[nValor].posicion)) {
-            document.getElementById(
-              vArregloPiezas[nValor].posicion
-            ).style.backgroundColor = colorLago;
-          } else {
-            document.getElementById(
-              vArregloPiezas[nValor].posicion
-            ).style.backgroundColor = colorTablero;
-          }
-        }
-        piezaSeleccionada = null;
+export const seleccionImagenListadoPieza = async (nombreDiv) => {
+  //guardamos la pieza
+  const hathiTest = document.getElementById(nombreDiv);
+  sPiezaAColocar = sTurnoJugador + hathiTest.innerText;
+  //Segmento para deselecconar las opciones tanto del tablero como del listado
+  if (piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id) {
+    piezaSeleccionada.style.backgroundColor = "rgb(255, 255, 255)";
+    let nValor = vArregloPiezas.findIndex(
+      (obj) => obj.nombre === piezaSeleccionada.innerText.replace(/\s/g, "")
+    );
+    if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
+      if (lagos.includes(vArregloPiezas[nValor].posicion)) {
+        document.getElementById(
+          vArregloPiezas[nValor].posicion
+        ).style.backgroundColor = colorLago;
       } else {
-        hathiTest.style.backgroundColor = colorSeleccionadoListado;
-        piezaSeleccionada = hathiTest;
-        //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
-        let nValor = vArregloPiezas.findIndex(
-          (obj) => obj.nombre === hathiTest.innerText.replace(/\s/g, "")
-        );
-        if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
-          document.getElementById(
-            vArregloPiezas[nValor].posicion
-          ).style.backgroundColor = colorSeleccionadoTablero;
-        }
+        document.getElementById(
+          vArregloPiezas[nValor].posicion
+        ).style.backgroundColor = colorTablero;
       }
-    });
-  });
+    }
+    piezaSeleccionada = null;
+  }
+  //pintar el seleccionado normal o gris sobre la misma pieza
+  if (hathiTest.style.backgroundColor === colorSeleccionadoListado) {
+    hathiTest.style.backgroundColor = "rgb(255, 255, 255)";
+    let nValor = vArregloPiezas.findIndex(
+      (obj) =>
+        obj.nombre === hathiTest.innerText.replace(/\s/g, "")
+    );
+    if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
+      if (lagos.includes(vArregloPiezas[nValor].posicion)) {
+        document.getElementById(
+          vArregloPiezas[nValor].posicion
+        ).style.backgroundColor = colorLago;
+      } else {
+        document.getElementById(
+          vArregloPiezas[nValor].posicion
+        ).style.backgroundColor = colorTablero;
+      }
+    }
+    piezaSeleccionada = null;
+  } else {
+    hathiTest.style.backgroundColor = colorSeleccionadoListado;
+    piezaSeleccionada = hathiTest;
+    //Detectamos que si la pieza ya fue puesta la marcamos para no confundir al usuario
+    let nValor = vArregloPiezas.findIndex(
+      (obj) => obj.nombre === hathiTest.innerText.replace(/\s/g, "")
+    );
+    if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
+      document.getElementById(
+        vArregloPiezas[nValor].posicion
+      ).style.backgroundColor = colorSeleccionadoTablero;
+    }
+  }
 };
 
 export const agregarDivsTablero = () => {
-  agregarDivsTableroConfiguracion();
-
   // Moving the element
   document.querySelectorAll(".box").forEach((hathiTest) => {
     hathiTest.addEventListener("click", function () {
@@ -131,7 +121,7 @@ export const agregarDivsTablero = () => {
           sPiezaAColocar.replace(/\s/g, "").substring(1, sPiezaAColocar.length),
           hathiTest.id,
           vPartida.cantidadJugadores,
-          sTurno,
+          sTurnoJugador,
           vPartida.tipoJuego
         )
       ) {
@@ -192,7 +182,7 @@ export const agregarDivsTablero = () => {
 export const coloring = (nTipoJuego) => {
   document.querySelectorAll(".box").forEach((vDivTablero) => {
     coloringTablero(vDivTablero)
-    seccionTableroJugador(vDivTablero,sTurno,vPartida.cantidadJugadores,true,nTipoJuego)
+    seccionTableroJugador(vDivTablero,sTurnoJugador,vPartida.cantidadJugadores,true,nTipoJuego)
   });
 }
 
@@ -212,7 +202,7 @@ export const guardarConfiguracionPiezas = () => {
   //agregamos la informaicon a un arreglo para poderlo limpar la info despues
   const piezasGame = {};
   for (const piecePosition in vArregloPiezas) {
-    piezasGame[sTurno + vArregloPiezas[piecePosition].nombre] =
+    piezasGame[sTurnoJugador + vArregloPiezas[piecePosition].nombre] =
       vArregloPiezas[piecePosition].posicion;
   }
   sPiezaAColocar = "";
@@ -242,7 +232,7 @@ export const posicionPiezaJuego= (partidaJugador,turnoUsuario) => {
 
 
   if(turnoUsuario === undefined){
-    turnoUsuario = sTurno
+    turnoUsuario = sTurnoJugador
   }
   for (const piecePosition in partidaJugador.posicionPiezasGlobal) {
     if((partidaJugador.cantidadJugadores === 4 && 

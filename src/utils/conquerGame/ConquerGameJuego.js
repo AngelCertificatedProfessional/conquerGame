@@ -5,10 +5,7 @@ import {
   colorOpciones,
   colorSeleccionadoTablero,
   colorTablero,
-  arregloPiezas,
   validaPosicionPieza,
-  agregarImagenesListado as agregarImagenesListadoTablero,
-  agregarDivsTablero as agregarDivsTableroConfiguracion,
   coloring as coloringTablero,
   insertImage,
   seccionTableroJugador,
@@ -92,7 +89,6 @@ export const limpiarVariablesJuego = () => {
 };
 
 export const agregarDivsTableroJuego = () => {
-  agregarDivsTableroConfiguracion();
 
   document.querySelectorAll(".box").forEach((item) => {
     item.addEventListener("click", function () {
@@ -437,9 +433,8 @@ export const agregarDivsTableroJuego = () => {
 };
 
 //indica el listado de las piesas del usuario
-export const agregarImagenesListado = async (turnoUsuario) => {
+export const setTurnoJugador = (turnoUsuario) => {
   sTurnoJugador = turnoUsuario;
-  await agregarImagenesListadoTablero(sTurnoJugador,arregloPiezas)
 };
 
 export const posicionPiezasJuego = (partida) => {
