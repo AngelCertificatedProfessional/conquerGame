@@ -12,16 +12,6 @@ const MenuUsuario = ({ setAccion }) => {
           Modificar Contrasena
         </button>
       </div>
-      <div className="contenido-anuncio">
-        <button
-          className="boton blue w-100"
-          onClick={() => {
-            setAccion(5);
-          }}
-        >
-          Cambiar Iconos
-        </button>
-      </div>
     </div>
   );
 };

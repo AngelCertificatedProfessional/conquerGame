@@ -1,6 +1,5 @@
 //Material UI
 import React, { useState, useEffect, lazy, Suspense } from "react";
-import ListadoIconos from "../components/Usuario/ListadoIconos";
 import { consultaById } from "../utils/ConexionAPI";
 import { b64_to_utf8 } from "../utils/UtileriasPagina";
 const FormularioUsuario = lazy(() =>
@@ -54,11 +53,6 @@ const Usuario = () => {
               accion={4}
               usuario={usuario}
             />
-          </Suspense>
-        )}
-        {accion === 5 && (
-          <Suspense fallback={<div>Loading...</div>}>
-            <ListadoIconos setAccion={setAccion} accion={5} usuario={usuario} />
           </Suspense>
         )}
       </div>

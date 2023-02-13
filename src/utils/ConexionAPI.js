@@ -224,12 +224,6 @@ export const iniciarSesion = async (sRuta, data) => {
       UtileriasPagina.b64_to_utf8(json.data)
     );
 
-    if (jsonDescodificado.hasOwnProperty("meme")) {
-      sessionStorage.setItem("meme", jsonDescodificado.meme);
-    } else {
-      sessionStorage.setItem("meme", "sinImagen");
-    }
-
     if (jsonDescodificado.hasOwnProperty("token")) {
       usuario = jsonDescodificado;
       sessionStorage.setItem("usuario", json.data);

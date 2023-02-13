@@ -1,4 +1,4 @@
-import { alfabetoANumero, eliminarLetras, eliminarNumeros, reconvertirTextoAJson } from "../UtileriasPagina";
+import { alfabetoANumero, eliminarLetras, eliminarNumeros} from "../UtileriasPagina";
 
 export const colorTablero = "rgb(240, 201, 150)";
 export const colorMontana = "rgb(14, 155, 0)";

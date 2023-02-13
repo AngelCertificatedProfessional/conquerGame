@@ -37,7 +37,7 @@ const Navigation = () => {
     <>
       {usuario !== null && usuario !== undefined && usuario.usuario !== "" && (
         <header>
-          <Link className="ligaT" to="login">
+          <Link className="ligaT" to="">
             <h1>Liuts Company Platform</h1>
           </Link>
           <nav>

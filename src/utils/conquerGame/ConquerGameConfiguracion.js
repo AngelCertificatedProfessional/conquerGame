@@ -16,7 +16,6 @@ let sTurnoJugador = "Z";
 let vPartida = {};
 let sPiezaAColocar = "";
 let piezaSeleccionada = null;
-
 let vArregloPiezas = null;
 
 export const setTurnoJugador = (turnoUsuario) => {

@@ -73,28 +73,9 @@ const ConquerGame = ({ socket }) => {
     turnoUsuarioRes,
     ""
   );
-  const [mostrarImagen, dispatchMostrarImagen] = useReducer(
-    mostrarImagenRes,
-    false
-  );
-
-  const [imagen, setImagen] = useState([]);
-  const [memeUsuario, setMemeUsuario] = useState(
-    sessionStorage.getItem("meme")
-  );
-
-  async function fetchImage(sImagen, sCarpeta) {
-    try {
-      const response = await import(`@images/${sCarpeta}/${sImagen}.jpg`); // change relative path to suit your needs
-      setImagen(response.default);
-    } catch (err) {
-      console.log(err);
-    }
-  }
 
   useEffect(() => {
     //window.addEventListener('beforeunload', desconectarUsuarioPartida)
-    setMemeUsuario(sessionStorage.getItem("meme"));
     socket.disconnect();
     socket.connect();
     socket.on("connect", () => {
@@ -136,8 +117,6 @@ const ConquerGame = ({ socket }) => {
         case 3:
           dispatchTurnoUsuarioRes(payload);
           dispatchPartidas(payload);
-          payload.memeUsuario = memeUsuario;
-          dispatchMostrarImagen(payload);
           setPartida(payload);
           setAccion(3);
           setTurnoJugadorJuego(detectarJugador(payload));
@@ -277,38 +256,6 @@ const ConquerGame = ({ socket }) => {
         return "G";
       case 5:
         return "Y";
-    }
-  }
-
-  function mostrarImagenRes(state, action) {
-    if (
-      action.hasOwnProperty("memeUsuario") &&
-      action.memeUsuario != "" &&
-      !action.hasOwnProperty("detenerImagen")
-    ) {
-      const payload = {};
-      payload.detenerImagen = true;
-      if (action.jugadorPiezaEliminada === turnoUsuario) {
-        fetchImage(
-          "medio" + Math.floor(Math.random() * (8 - 1) + 1),
-          action.memeUsuario
-        );
-        setTimeout(() => {
-          dispatchMostrarImagen(payload);
-        }, 5000);
-        return true;
-      } else if (action.jugadorEliminoPieza === turnoUsuario) {
-        fetchImage(
-          "kill" + Math.floor(Math.random() * (2 - 1) + 1),
-          action.memeUsuario
-        );
-        setTimeout(() => {
-          dispatchMostrarImagen(payload);
-        }, 5000);
-        return true;
-      }
-    } else {
-      return false;
     }
   }
 
@@ -551,13 +498,6 @@ const ConquerGame = ({ socket }) => {
                       </div>
                     ))}
               </div>
-              {mostrarImagen && (
-                <img
-                  className="image-logo"
-                  src={imagen}
-                  alt="Anuncio casa en el lago"
-                ></img>
-              )}
               <Suspense fallback={<div>Loading...</div>}>
                 <Tablero
                   partida={partida}
