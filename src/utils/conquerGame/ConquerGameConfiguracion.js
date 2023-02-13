@@ -211,24 +211,14 @@ export const guardarConfiguracionPiezas = () => {
 export const setPartida= (vPartidaT) => {
   vPartida = vPartidaT;
 };
-//Este metodo se realiza al final para poder indicar que las piezas estaran ahio
-export const posicionPiezaJugador = (partidaJugador) => {
-  for (const piecePosition in partidaJugador.posicionPiezasJugador) {
-    var div = document.getElementById(
-      partidaJugador.posicionPiezasJugador[piecePosition]
-    );
-    div.innerHTML = piecePosition.replace(" ", "");
-  }
-  insertImage();
-};
-//Este metodo es para indicar que el jugador esta colocando las piezas en el mapa
+
+//Este metodo es para indicar que el jugador esta colocando las piezas en el mapa, solo se usa en partidas de equipo
 export const posicionPiezaJuego= (partidaJugador,turnoUsuario) => {
   document.querySelectorAll(".box").forEach((ee) => {
     ee.innerHTML = "";
     ee.title = "";
     ee.style.cursor = "default";
   });
-
 
   if(turnoUsuario === undefined){
     turnoUsuario = sTurnoJugador

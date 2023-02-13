@@ -148,6 +148,8 @@ export const agregarDivsTableroJuego = () => {
             coloring();
             insertImage();
             //Se realiza la evaluacion con el asesino elite para poder evaluar primero con el caracter
+            console.log('antes nTurno')
+            console.log(nTurno)
             if (sPiezaMovimiento.includes("asesinoE") && !bMovioAsesinoElite) {
               bMovioAsesinoElite = true;
             } else if (
@@ -161,14 +163,15 @@ export const agregarDivsTableroJuego = () => {
               bMovioAsesino = false;
               bMovioAsesinoElite = false;
             }
-
+            console.log('despues nTurno')
+            console.log(nTurno)
             posicionPiezasGlobal[piezaAnterior] = "";
             posicionPiezasGlobal[sPiezaMovimiento] = item.id;
 
             if (piezaAnterior.includes("rey")) {
-              if (!bMovioAsesinoElite) {
-                nTurno--;
-              }
+              // if (!bMovioAsesinoElite) {
+              //   nTurno--;
+              // }
               //detectamos la posicion del rey que estan atacando
               const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
               //detectamos la posicion del rey que esta ordenando el ataque.
@@ -176,12 +179,14 @@ export const agregarDivsTableroJuego = () => {
               if (indexReyMuerto < indexReyOrden) {
                 nTurno--;
               }
+              console.log('fin nTurno')
+              console.log(nTurno)
               if (indexReyMuerto > -1) {
                 // only splice array when item is found
                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
-              if (partida.tipoJuego === 1 || 
+              if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
                 //Condicion para 4 jugadores
                 (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
                 (arrReyes.length === 2 && 
@@ -252,9 +257,9 @@ export const agregarDivsTableroJuego = () => {
               bMovioAsesinoElite = false;
             }
             if (piezaAnterior.includes("rey")) {
-              if (!bMovioAsesinoElite) {
-                nTurno--;
-              }
+              // if (sPiezaMovimiento.includes("asesino") && !bMovioAsesinoElite) {
+              //   nTurno--;
+              // }
               //detectamos la posicion del rey que estan atacando
               const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
               //detectamos la posicion del rey que esta ordenando el ataque.
@@ -268,7 +273,7 @@ export const agregarDivsTableroJuego = () => {
                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
-              if (partida.tipoJuego === 1 || 
+              if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
                   //Condicion para 4 jugadores
                   (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
                   (arrReyes.length === 2 && 
@@ -631,12 +636,14 @@ export const evaluarResultadoPartida = (partidaT) => {
 };
 
 export const conometro = (partidaT) => {
+  console.log('entre')
   if (!partidaT.hasOwnProperty("fechaTurno")) {
     return;
   }
   detenerCronometro();
   var countDownDate = new Date(partidaT.fechaTurno).getTime() + 1 * 60000;
   // Update the count down every 1 second
+
   nIntervalo = setInterval(function () {
     // Get today's date and time
     var now = Date.now(partidaT.fechaTurno);
@@ -651,25 +658,19 @@ export const conometro = (partidaT) => {
     // Output the result in an element with id="demo"
     document.getElementById("temporizador").innerHTML =
       minutes + "m " + seconds + "s ";
-    if (esTurnoJugadorTurno()) {
-      document.getElementById("temporizador").classList.remove("col-gray");
-      document.getElementById("tiempo").classList.remove("col-gray");
-      if (seconds === 20) {
-        document.getElementById("temporizador").classList.add("col-orange");
-        document.getElementById("tiempo").classList.add("col-orange");
-      } else if (seconds === 10) {
-        document.getElementById("temporizador").classList.remove("col-orange");
-        document.getElementById("tiempo").classList.remove("col-orange");
-        document.getElementById("temporizador").classList.add("col-red");
-        document.getElementById("tiempo").classList.add("col-red");
-      }
-    } else {
-      document.getElementById("temporizador").classList.remove("col-orange");
-      document.getElementById("tiempo").classList.remove("col-orange");
+    if (seconds >20){
       document.getElementById("temporizador").classList.remove("col-red");
       document.getElementById("tiempo").classList.remove("col-red");
-      document.getElementById("temporizador").classList.add("col-gray");
-      document.getElementById("tiempo").classList.add("col-gray");
+      document.getElementById("temporizador").classList.remove("col-orange");
+      document.getElementById("tiempo").classList.remove("col-orange");  
+    }else if (seconds === 20) {
+      document.getElementById("temporizador").classList.add("col-orange");
+      document.getElementById("tiempo").classList.add("col-orange");
+    } else if (seconds === 10) {
+      document.getElementById("temporizador").classList.remove("col-orange");
+      document.getElementById("tiempo").classList.remove("col-orange");
+      document.getElementById("temporizador").classList.add("col-red");
+      document.getElementById("tiempo").classList.add("col-red");
     }
 
     // If the count down is over, write some text
@@ -738,7 +739,6 @@ export const agregarPiezaEspecialClick = (sId) => {
   ) {
     return;
   }
-  nTurno++;
   posicionPiezasGlobal[sTurnoJugador + sAgregarPiezaEspecial] = sId;
   let sPiezaEspecialTemp = sAgregarPiezaEspecial;
   sAgregarPiezaEspecial = "";

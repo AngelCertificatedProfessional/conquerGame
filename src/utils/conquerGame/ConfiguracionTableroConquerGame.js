@@ -11,7 +11,7 @@ export const colorCasstilloEntrada = "rgb(185, 185, 179)";
 export const colorCasstilloSala = "rgb(94, 94, 89)";
 export const tamanoTableroLargo = 24;
 export const tamanoTableroAncho = 24;
-export const arregloJugadores = ["O", "B", "R", "B", "G", "Y"];
+export const arregloJugadores = ["O", "B", "R", "P", "G", "Y"];
 
 export const validaPiezaMontana = (idDiv) => {
   if (montanas.includes(idDiv)) {

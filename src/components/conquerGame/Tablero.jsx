@@ -13,36 +13,18 @@ const Tablero = ({
   accion,
   posicionPiezasJuego,
   setPartida,
-  posicionPiezaJugador,
-  usuario,
-  setBloquearOpciones,
   indicarSiguienteJugador,
   conometro,
-  posicionPiezaJuegoConfiguracion,
+  posicionPiezaJuego,
   turnoUsuario
 }) => {
   useEffect(() => {
     setPartida(partida);
     agregarDivsTablero();
     coloring(partida.tipoJuego);
-    if (accion === 2) {
-      const nValor = partida.jugadores.findIndex(
-        (obj) =>
-          obj.usuario === usuario.usuario &&
-          obj.hasOwnProperty("posicionPiezasJugador")
-      );
-      //esta condicion es para pintar las piezas del jugador que ya dio aceptar
-      if (nValor !== -1) {
-        if(partida.tipoJuego === 1){
-          posicionPiezaJugador(partida.jugadores[nValor]);
-        }else if (partida.tipoJuego === 2){
-          //Este else es para indetificar las pieas del los juegadores en caso de que la partida sea en equipos
-          posicionPiezaJuegoConfiguracion(partida,turnoUsuario);
-        }
-        setBloquearOpciones(true);
-      }else if (partida.tipoJuego === 2){
-        //Este else es para indetificar las pieas del los juegadores en caso de que la partida sea en equipos
-        posicionPiezaJuegoConfiguracion(partida,turnoUsuario);
+    if(accion ===2){
+      if(partida.hasOwnProperty('posicionPiezasGlobal')){
+        posicionPiezaJuego(partida,turnoUsuario)
       }
     }
     if (accion === 3) {

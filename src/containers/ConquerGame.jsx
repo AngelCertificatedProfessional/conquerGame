@@ -1,14 +1,13 @@
 import React, { useState, useEffect, Suspense, useReducer } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { b64_to_utf8 } from "../utils/UtileriasPagina";
+import { b64_to_utf8, reconvertirTextoAJson } from "../utils/UtileriasPagina";
 import { actualizarEspecifico, consultaById } from "../utils/ConexionAPI";
 import {
   agregarDivsTablero,
   coloring,
   guardarConfiguracionPiezas,
-  posicionPiezaJugador,
   setArregloPiezas,
-  posicionPiezaJuego as posicionPiezaJuegoConfiguracion,
+  posicionPiezaJuego,
   setPartida as setPartidaConfiguracion,
   setTurnoJugador as setTurnoJugadorConfiguracion,
   seleccionImagenListadoPieza
@@ -31,6 +30,10 @@ import {
   setTurno,
   setTurnoJugador as setTurnoJugadorJuego
 } from "../utils/conquerGame/ConquerGameJuego";
+import {
+  arrEstructuraPiezas
+} from "../utils/conquerGame/ConfiguracionTableroConquerGame";
+
 import swal from "sweetalert";
 const ListaEspera = React.lazy(() =>
   import("../components/conquerGame/ListaEspera")
@@ -74,8 +77,13 @@ const ConquerGame = ({ socket }) => {
     ""
   );
 
+  const [arrRecursos, dispatchRecursosJugador] = useReducer(
+    recursoImagen,
+    []
+  );
+
+
   useEffect(() => {
-    //window.addEventListener('beforeunload', desconectarUsuarioPartida)
     socket.disconnect();
     socket.connect();
     socket.on("connect", () => {
@@ -100,8 +108,21 @@ const ConquerGame = ({ socket }) => {
           //Esta seccion indica que si la pagina se esta refrescando al presionar f5 o se salio y volvio a ingresar
           if (!payload.hasOwnProperty("notificarUsuarioListo")) {
             dispatchTurnoUsuarioRes(payload);
+            if(arrRecursos.length <= 0){
+              dispatchRecursosJugador(payload);
+              setArregloPiezas(recursoImagen(null,{turno :detectarJugador(payload)}))
+            }
             setTurnoJugadorConfiguracion(detectarJugador(payload));
             setTurnoJugadorJuego(detectarJugador(payload));
+            const nValor = payload.jugadores.findIndex(
+              (obj) =>
+                obj.usuario === usuario.usuario &&
+                obj.hasOwnProperty("posicionPiezasJugador")
+            );
+            //esta condicion es para pintar las piezas del jugador que ya dio aceptar
+            if (nValor !== -1) {
+              setBloquearOpciones(true)
+            }
             if(accion!= 2){
               setAccion(2);
             }
@@ -110,9 +131,6 @@ const ConquerGame = ({ socket }) => {
                 "El jugador " + payload.usuarioListo + " esta listo para jugar"
               );
           }
-          if(payload.tipoJuego === 2){
-            posicionPiezaJuegoConfiguracion(payload);
-          }
           break;
         case 3:
           dispatchTurnoUsuarioRes(payload);
@@ -120,6 +138,10 @@ const ConquerGame = ({ socket }) => {
           setPartida(payload);
           setAccion(3);
           setTurnoJugadorJuego(detectarJugador(payload));
+          if(arrRecursos.length <= 0){
+            dispatchRecursosJugador(payload);
+            setArregloPiezas(recursoImagen(null,{turno :detectarJugador(payload)}))
+          }
           if (payload.hasOwnProperty("posicionPiezasGlobal")) {
             setJugador(usuario.usuario);
             payload.hasOwnProperty("turno")
@@ -200,6 +222,10 @@ const ConquerGame = ({ socket }) => {
 
   function agregarPartidaRes(state, action) {
     return action;
+  }
+
+  function recursoImagen(state,action){
+    return reconvertirTextoAJson(arrEstructuraPiezas).map( recurso => {recurso.direccion = (require(`@images/${(turnoUsuario === '' ? action.turno :turnoUsuario) + recurso.icono}.png`)); return recurso;});
   }
 
   const desconectarUsuarioPartida = () => {
@@ -370,8 +396,7 @@ const ConquerGame = ({ socket }) => {
             <div className="listado-opciones">
               <Suspense fallback={<div>Loading...</div>}>
                 <ListadoPiezas
-                  turnoUsuario={turnoUsuario}
-                  setArregloPiezas={setArregloPiezas}
+                  arrRecursos = {arrRecursos}
                   seleccionImagenListadoPieza = {seleccionImagenListadoPieza}
                 />
               </Suspense>
@@ -418,12 +443,9 @@ const ConquerGame = ({ socket }) => {
                   accion={accion}
                   agregarDivsTablero={agregarDivsTablero}
                   coloring={coloring}
-                  posicionPiezaJugador={posicionPiezaJugador}
                   setPartida={setPartidaConfiguracion}
-                  usuario={usuario}
-                  setBloquearOpciones={setBloquearOpciones}
-                  posicionPiezaJuegoConfiguracion = {posicionPiezaJuegoConfiguracion}
-                  turnoUsuario={turnoUsuario}
+                  posicionPiezaJuego = {posicionPiezaJuego}
+                  turnoUsuario = {turnoUsuario}
                 />
               </Suspense>
             </div>
@@ -436,7 +458,7 @@ const ConquerGame = ({ socket }) => {
             <div className="listado-opciones">
               <Suspense fallback={<div>Loading...</div>}>
                 <ListadoPiezas
-                  turnoUsuario={turnoUsuario}
+                  arrRecursos = {arrRecursos}
                 />
               </Suspense>
               <div className="contenedor-contenido-row">
