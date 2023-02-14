@@ -130,26 +130,32 @@ export const agregarDivsTableroJuego = () => {
         return;
         //en este segmento enviaremos la peticion de la posicion de las unidades
       } else if (
-        item.style.backgroundColor == colorOpciones &&
-        item.innerText.length !== 0
+        (item.style.backgroundColor == colorOpciones &&
+        item.innerText.length !== 0) ||
+        (item.style.backgroundColor == colorDisparoArcher &&
+        item.innerText.length !== 0)
       ) {
         //este segmento de codigo sirve para validar que se este eliminando la pieza
         document.querySelectorAll(".box").forEach((i) => {
           if (i.style.backgroundColor == colorSeleccionadoTablero) {
-            let pinkId2 = i.id;
             let pinkText2 = i.innerText;
-
-            document.getElementById(pinkId2).innerText = "";
             let piezaAnterior = item.innerText;
+            
+            posicionPiezasGlobal[piezaAnterior] = "";
+            if(item.style.backgroundColor == colorOpciones &&
+              item.innerText.length !== 0) {
+                document.getElementById(i.id).innerText = "";
+                item.innerText = pinkText2;
+                posicionPiezasGlobal[sPiezaMovimiento] = item.id;
+            }else if(item.style.backgroundColor == colorDisparoArcher &&
+              item.innerText.length !== 0){
+              item.innerText = "";
+            }
+              
             //Sirve para indicar si una pieza esta muerta o no
-            //document.getElementById(piezaAnterior).style.opacity = 0.5;
-
-            item.innerText = pinkText2;
             coloring();
             insertImage();
             //Se realiza la evaluacion con el asesino elite para poder evaluar primero con el caracter
-            console.log('antes nTurno')
-            console.log(nTurno)
             if (sPiezaMovimiento.includes("asesinoE") && !bMovioAsesinoElite) {
               bMovioAsesinoElite = true;
             } else if (
@@ -163,15 +169,12 @@ export const agregarDivsTableroJuego = () => {
               bMovioAsesino = false;
               bMovioAsesinoElite = false;
             }
-            console.log('despues nTurno')
-            console.log(nTurno)
-            posicionPiezasGlobal[piezaAnterior] = "";
-            posicionPiezasGlobal[sPiezaMovimiento] = item.id;
+
+            if (item.style.backgroundColor == colorOpciones &&
+              item.innerText.length !== 0){
+            }
 
             if (piezaAnterior.includes("rey")) {
-              // if (!bMovioAsesinoElite) {
-              //   nTurno--;
-              // }
               //detectamos la posicion del rey que estan atacando
               const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
               //detectamos la posicion del rey que esta ordenando el ataque.
@@ -179,14 +182,12 @@ export const agregarDivsTableroJuego = () => {
               if (indexReyMuerto < indexReyOrden) {
                 nTurno--;
               }
-              console.log('fin nTurno')
-              console.log(nTurno)
               if (indexReyMuerto > -1) {
                 // only splice array when item is found
                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
-              if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
+              if (arrReyes.length === 1 || partida.tipoJuego === 1 || 
                 //Condicion para 4 jugadores
                 (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
                 (arrReyes.length === 2 && 
@@ -222,93 +223,6 @@ export const agregarDivsTableroJuego = () => {
                   piezaAnterior[0],
                   false
                 )} con ${sPiezaMovimiento.substring(1)}`,
-                getPuntuajePieza(piezaAnterior),
-                piezaAnterior[0],
-                sTurnoJugador
-              );
-              return;
-            }
-          }
-        });
-      } else if (
-        item.style.backgroundColor == colorDisparoArcher &&
-        item.innerText.length !== 0
-      ) {
-        //este segmento de codigo sirve para validar que se este eliminando la pieza
-        document.querySelectorAll(".box").forEach((i) => {
-          if (i.style.backgroundColor == colorSeleccionadoTablero) {
-            let piezaAnterior = item.innerText;
-            let pinkText2 = i.innerText;
-            posicionPiezasGlobal[piezaAnterior] = "";
-            item.innerText = "";
-            coloring();
-            insertImage();
-            if (
-              sPiezaMovimiento.includes("asesinoE") &&
-              !sPiezaMovimiento.includes("asesinoE") &&
-              !bMovioAsesinoElite
-            ) {
-              bMovioAsesinoElite = true;
-            } else if (sPiezaMovimiento.includes("asesino") && !bMovioAsesino) {
-              bMovioAsesino = true;
-            } else {
-              nTurno++;
-              bMovioAsesino = false;
-              bMovioAsesinoElite = false;
-            }
-            if (piezaAnterior.includes("rey")) {
-              // if (sPiezaMovimiento.includes("asesino") && !bMovioAsesinoElite) {
-              //   nTurno--;
-              // }
-              //detectamos la posicion del rey que estan atacando
-              const indexReyMuerto = arrReyes.indexOf(piezaAnterior);
-              //detectamos la posicion del rey que esta ordenando el ataque.
-              const indexReyOrden = arrReyes.indexOf(pinkText2[0] + "rey");
-              if (indexReyMuerto < indexReyOrden) {
-                nTurno--;
-              }
-
-              if (indexReyMuerto > -1) {
-                // only splice array when item is found
-                arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
-                //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
-              }
-              if ((partida.tipoJuego === 1 && arrReyes.length === 1) || 
-                  //Condicion para 4 jugadores
-                  (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
-                  (arrReyes.length === 2 && 
-                  ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "R" && arrReyes[1][0] === "P")))) ||
-                  //Condicion para 6 jugadores 
-                  (partida.tipoJuego === 2 && partida.cantidadJugadores === 6 && 
-                  ((arrReyes.length === 3 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B" && arrReyes[2][0] === "R") || (arrReyes[0][0] === "P" && arrReyes[1][0] === "G" && arrReyes[2][0] === "Y"))) ||
-                  (arrReyes.length === 2 && ((arrReyes[0][0] === "O" && arrReyes[1][0] === "B") || (arrReyes[0][0] === "O" && arrReyes[1][0] === "R") || (arrReyes[0][0] === "B" && arrReyes[1][0] === "R") || 
-                  (arrReyes[0][0] === "P" && arrReyes[1][0] === "G") || (arrReyes[0][0] === "P" && arrReyes[1][0] === "Y") || (arrReyes[0][0] === "G" && arrReyes[1][0] === "Y")))))) {
-                evaluartTurnoJugador(
-                  `Jugador ${sJugador} disparo al rey ${piezaAnterior.substring(
-                    1
-                  )} ${getColorPorLetra(
-                    piezaAnterior[0],
-                    false
-                  )} usando ${sPiezaMovimiento.substring(1)}`,
-                  getPuntuajePieza(piezaAnterior),
-                  piezaAnterior[0],
-                  sTurnoJugador
-                );
-                return;
-              } else {
-                mostrarMenuUnidadEspecial(true);
-                sAgregarPiezaEspecial = "pieza";
-                sReyEliminoTemp = piezaAnterior[0];
-                return;
-              }
-            } else {
-              evaluartTurnoJugador(
-                `Jugador ${sJugador} disparo a la pieza ${piezaAnterior.substring(
-                  1
-                )} ${getColorPorLetra(
-                  piezaAnterior[0],
-                  false
-                )} usando ${sPiezaMovimiento.substring(1)} `,
                 getPuntuajePieza(piezaAnterior),
                 piezaAnterior[0],
                 sTurnoJugador
