@@ -187,7 +187,7 @@ export const agregarDivsTableroJuego = () => {
                 arrReyes.splice(indexReyMuerto, 1); // 2nd parameter means remove one item only
                 //validamos que no disminuya el valor del arreglo para que no regrese a la primera posicion
               }
-              if (arrReyes.length === 1 || partida.tipoJuego === 1 || 
+              if (arrReyes.length === 1 || 
                 //Condicion para 4 jugadores
                 (partida.tipoJuego === 2 && partida.cantidadJugadores === 4 && 
                 (arrReyes.length === 2 && 
@@ -550,7 +550,6 @@ export const evaluarResultadoPartida = (partidaT) => {
 };
 
 export const conometro = (partidaT) => {
-  console.log('entre')
   if (!partidaT.hasOwnProperty("fechaTurno")) {
     return;
   }

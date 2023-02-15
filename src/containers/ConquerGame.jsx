@@ -131,6 +131,9 @@ const ConquerGame = ({ socket }) => {
                 "El jugador " + payload.usuarioListo + " esta listo para jugar"
               );
           }
+          if (payload.tipoJuego === 2 && payload.hasOwnProperty("posicionPiezasGlobal")) {
+            posicionPiezasJuego(payload);
+          }
           break;
         case 3:
           dispatchTurnoUsuarioRes(payload);
