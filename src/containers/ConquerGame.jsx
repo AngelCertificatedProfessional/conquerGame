@@ -132,7 +132,7 @@ const ConquerGame = ({ socket }) => {
               );
           }
           if (payload.tipoJuego === 2 && payload.hasOwnProperty("posicionPiezasGlobal")) {
-            posicionPiezasJuego(payload);
+            posicionPiezaJuego(payload);
           }
           break;
         case 3:

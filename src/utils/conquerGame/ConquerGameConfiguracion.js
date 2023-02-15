@@ -23,7 +23,6 @@ export const setTurnoJugador = (turnoUsuario) => {
 };
 
 export const setArregloPiezas = (arrPiezas) => {
-  console.log('entre')
   vArregloPiezas = arrPiezas;
 };
 
@@ -35,14 +34,10 @@ export const seleccionImagenListadoPieza = async (nombreDiv) => {
   //Segmento para deselecconar las opciones tanto del tablero como del listado
 
   if (piezaSeleccionada !== null && piezaSeleccionada.id !== hathiTest.id) {
-    console.log(piezaSeleccionada)
-    console.log(piezaSeleccionada.id)
-    console.log(hathiTest)
     piezaSeleccionada.style.backgroundColor = "rgb(255, 255, 255)";
     let nValor = vArregloPiezas.findIndex(
       (obj) => obj.nombre === piezaSeleccionada.innerText.replace(/\s/g, "")
     );
-    console.log(vArregloPiezas)
     if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
       if (lagos.includes(vArregloPiezas[nValor].posicion)) {
         document.getElementById(
@@ -139,9 +134,6 @@ export const agregarDivsTablero = () => {
           obj.nombre ===
           sPiezaAColocar.replace(/\s/g, "").substring(1, sPiezaAColocar.length)
       );
-      console.log("agregar valores")
-      console.log(nValor)
-      console.log(vArregloPiezas[nValor].posicion )
       if (nValor !== -1 && vArregloPiezas[nValor].posicion !== "") {
         document.getElementById(vArregloPiezas[nValor].posicion).innerHTML = "";
         if (lagos.includes(vArregloPiezas[nValor].posicion)) {
@@ -223,7 +215,6 @@ export const setPartida= (vPartidaT) => {
 
 //Este metodo es para indicar que el jugador esta colocando las piezas en el mapa, solo se usa en partidas de equipo
 export const posicionPiezaJuego= (partidaJugador,turnoUsuario) => {
-  console.log('entre posicionPiezaJuego' )
   document.querySelectorAll(".box").forEach((ee) => {
     ee.innerHTML = "";
     ee.title = "";
@@ -252,7 +243,6 @@ export const posicionPiezaJuego= (partidaJugador,turnoUsuario) => {
       (obj) => obj.nombre === piecePosition.substring(1,piecePosition.length) &&  turnoUsuario === piecePosition[0]
     );
     if(nValor >= 0){
-      console.log(vArregloPiezas[nValor].posicion)
       vArregloPiezas[nValor].posicion = partidaJugador.posicionPiezasGlobal[piecePosition]
     }
   }
