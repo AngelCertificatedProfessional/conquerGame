@@ -3,9 +3,9 @@ import React, { useState, useEffect, lazy, Suspense } from "react";
 import { consultaById } from "../utils/ConexionAPI";
 import { b64_to_utf8 } from "../utils/UtileriasPagina";
 const FormularioUsuario = lazy(() =>
-  import("../components/Usuario/FormularioUsuario")
+  import("../components/usuario/FormularioUsuario")
 );
-const MenuUsuario = lazy(() => import("../components/Usuario/MenuUsuario"));
+const MenuUsuario = lazy(() => import("../components/usuario/MenuUsuario"));
 
 const Usuario = () => {
   const [accion, setAccion] = useState(3);

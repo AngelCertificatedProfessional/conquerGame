@@ -2,7 +2,7 @@
   "name": "conquergame",
   "version": "0.52.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.jsx",
   "scripts": {
     "start": "webpack serve --mode development --config webpack.config.dev.js",
     "build": "webpack --mode production --config webpack.config.js",

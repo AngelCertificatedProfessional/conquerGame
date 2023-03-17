@@ -2,15 +2,15 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 const LoginFormulario = lazy(() =>
-  import("./../components/Usuario/LoginFormulario")
+  import("./../components/usuario/LoginFormulario")
 );
 
 const FormularioUsuario = lazy(() =>
-  import("./../components/Usuario/FormularioUsuario")
+  import("./../components/usuario/FormularioUsuario")
 );
 
 const TerminosCondiciones = lazy(() =>
-  import("./../components/Usuario/TerminosCondiciones")
+  import("./../components/usuario/TerminosCondiciones")
 );
 
 const Login = () => {
