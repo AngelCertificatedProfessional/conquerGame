@@ -14,7 +14,7 @@ const TerminosCondiciones = lazy(() =>
   import("./../components/usuario/TerminosCondiciones")
 );
 
-const Login = () => {
+export const Login = () => {
   const navigate = useNavigate();
   const [accion, setAccion] = useState(1);
   const [mostrarPopup, setmostrarPopup] = useState(false);
@@ -78,5 +78,3 @@ const Login = () => {
     </main>
   );
 };
-
-export default Login;

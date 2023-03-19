@@ -2,7 +2,7 @@ import React, {lazy, Suspense } from "react";
 const Actualizacion = lazy(() =>
   import("./../components/actualizacion/Actualizacion")
 );
-const Mejoras = () => {
+export const Mejoras = () => {
   const actualizaciones = [
     {
       titulo: "Ortografía",
@@ -57,5 +57,3 @@ const Mejoras = () => {
     </main>
   );
 };
-
-export default Mejoras;

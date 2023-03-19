@@ -1,14 +1,8 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Layout from "../components/generales/Layout";
-import Home from "./../containers/Home";
-import Login from "./../containers/Login";
-import ConquerGameOpciones from "../containers/ConquerGameOpciones";
-import ConquerGame from "../containers/ConquerGame";
-import Usuario from "../containers/Usuario";
-import Mejoras from "./../containers/Mejoras";
+import { Navigate,BrowserRouter, Route, Routes } from "react-router-dom";
+import {Layout} from "../components/generales/Layout";
+import {Home,Login,ConquerGameOpciones,ConquerGame,Usuario,Mejoras} from "./../containers";
 import { env } from "../config/config";
-import Error404 from "./../containers/Error404";
 import { io } from "socket.io-client";
 const socket = io.connect(env.apiLiutsVideoURL, {
   // "force new connection" : true,
@@ -30,17 +24,17 @@ const App = () => {
           <Route exact path="/login" element={<Login />} />
           <Route
             exact
-            path="/ConquerGameOpciones"
+            path="/conquerGameOpciones"
             element={<ConquerGameOpciones />}
           />
           <Route
             exact
-            path="/ConquerGame/:numeroPartida"
+            path="/conquerGame/:numeroPartida"
             element={<ConquerGame socket={socket} />}
           />
           <Route exact path="/usuario" element={<Usuario />} />
           <Route exact path="/mejoras" element={<Mejoras />} />
-          <Route element={Error404} />
+          <Route path="/*" element={<Navigate to="/"/>} /> 
         </Routes>
       </Layout>
     </BrowserRouter>

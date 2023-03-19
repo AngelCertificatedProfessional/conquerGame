@@ -411,3 +411,8 @@ export const arrEstructuraPiezas = [
     direccion: ""
   },
 ];
+
+export const detectarJugador = (action,usuario) => {
+  const sResultado = action.jugadores.find(jugador => jugador.usuario === usuario.usuario )
+  return sResultado === undefined ? "" : sResultado.turno
+}

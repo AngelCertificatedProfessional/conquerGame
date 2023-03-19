@@ -7,7 +7,7 @@ const FormularioUsuario = lazy(() =>
 );
 const MenuUsuario = lazy(() => import("../components/usuario/MenuUsuario"));
 
-const Usuario = () => {
+export const Usuario = () => {
   const [accion, setAccion] = useState(3);
   const [usuario, setUsuario] = useState({});
   useEffect(() => {
@@ -59,5 +59,3 @@ const Usuario = () => {
     </main>
   );
 };
-
-export default Usuario;

@@ -17,14 +17,14 @@ const ListaPartidas = lazy(() =>
 const ListaMejores10 = lazy(() =>
   import("../components/conquerGame/ListaMejores10")
 );
-const ConquerGame = () => {
+export const ConquerGameOpciones = () => {
   let navigate = useNavigate();
   const [accion, setAccion] = useState(0); //Este metodo se utiliza para ver que accion esta realizando el usuario
   const [partidas, setPartidas] = useState(null); //Este metodo se utiliza para ver que accion esta realizando el usuario
   const [usuarios, setUsuarios] = useState(null); //Este metodo se utiliza para ver que accion esta realizando el usuario
 
   const abrirPartidaJuego = (numeroPartida) => {
-    navigate("/ConquerGame/" + numeroPartida);
+    navigate("/conquerGame/" + numeroPartida);
   };
 
   const buscarPartidas = () => {
@@ -96,5 +96,3 @@ const ConquerGame = () => {
     </main>
   );
 };
-
-export default ConquerGame;
