@@ -1,21 +1,21 @@
 import React, { useState,lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { listado } from "../utils/ConexionAPI";
-const CrearUniser = lazy(() =>
-  import("../components/conquerGame/CrearUniser")
+const CrearUnirse = lazy(() =>
+  import("../components/conquerGameOptions/CrearUnirse")
 );
 const FormularioConfiguracion = lazy(() =>
-  import("../components/conquerGame/FormularioConfiguracion")
+  import("../components/conquerGameOptions/FormularioConfiguracion")
 );
 const BuscarPartida = lazy(() =>
-  import("../components/conquerGame/BuscarPartida")
+  import("../components/conquerGameOptions/BuscarPartida")
 );
 const ListaPartidas = lazy(() =>
-  import("../components/conquerGame/ListaPartidas")
+  import("../components/conquerGameOptions/ListaPartidas")
 );
 
 const ListaMejores10 = lazy(() =>
-  import("../components/conquerGame/ListaMejores10")
+  import("../components/conquerGameOptions/ListaMejores10")
 );
 export const ConquerGameOpciones = () => {
   let navigate = useNavigate();
@@ -62,7 +62,7 @@ export const ConquerGameOpciones = () => {
       <h2 className="fw-300 centrar-texto">Opciones</h2>
       <div className="contenedor-contenido">
         <Suspense fallback={<div>Loading...</div>}>
-          <CrearUniser
+          <CrearUnirse
             accion={accion}
             setAccion={setAccion}
             buscarPartidas={buscarPartidas}
