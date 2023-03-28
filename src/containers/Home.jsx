@@ -1,17 +1,10 @@
 import React, {Suspense,lazy} from "react";
+import { contenidoListado } from "../utils/home/configuracion";
 const CardContenido = lazy(() =>
   import("./../components/generales/CardContenido")
 );
-const Home = () => {
-  const contenidoListado = [
-    {
-      tipo: 1, //juego
-      titulo: "Conquer Game",
-      img: "conquerGame.jpg",
-      descripcion:
-        "Juego de estrategia basado en conquistas y ajedrez, de 2 a 6 jugadores",
-    },
-  ];
+
+export const Home = () => {
   return (
     <main className="contenedor seccion">
       <h2 className="fw-300 centrar-texto">Contenido</h2>
@@ -25,5 +18,3 @@ const Home = () => {
     </main>
   );
 };
-
-export default Home;

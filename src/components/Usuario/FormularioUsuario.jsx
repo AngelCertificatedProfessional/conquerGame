@@ -145,7 +145,7 @@ const FormularioUsuario = ({
         isValid,
         errors,
       }) => (
-        <div className="contenido-menu-opciones contenido-border">
+        <div className="contenido-menu-opciones">
           <form onSubmit={handleSubmit} noValidate>
             <h2 className="tituloCentrado">
               {accion === 2

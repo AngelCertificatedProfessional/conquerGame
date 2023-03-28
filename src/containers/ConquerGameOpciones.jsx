@@ -1,30 +1,30 @@
 import React, { useState,lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { listado } from "../utils/ConexionAPI";
-const CrearUniser = lazy(() =>
-  import("../components/conquerGame/CrearUniser")
+const CrearUnirse = lazy(() =>
+  import("../components/conquerGameOptions/CrearUnirse")
 );
 const FormularioConfiguracion = lazy(() =>
-  import("../components/conquerGame/FormularioConfiguracion")
+  import("../components/conquerGameOptions/FormularioConfiguracion")
 );
 const BuscarPartida = lazy(() =>
-  import("../components/conquerGame/BuscarPartida")
+  import("../components/conquerGameOptions/BuscarPartida")
 );
 const ListaPartidas = lazy(() =>
-  import("../components/conquerGame/ListaPartidas")
+  import("../components/conquerGameOptions/ListaPartidas")
 );
 
 const ListaMejores10 = lazy(() =>
-  import("../components/conquerGame/ListaMejores10")
+  import("../components/conquerGameOptions/ListaMejores10")
 );
-const ConquerGame = () => {
+export const ConquerGameOpciones = () => {
   let navigate = useNavigate();
   const [accion, setAccion] = useState(0); //Este metodo se utiliza para ver que accion esta realizando el usuario
   const [partidas, setPartidas] = useState(null); //Este metodo se utiliza para ver que accion esta realizando el usuario
   const [usuarios, setUsuarios] = useState(null); //Este metodo se utiliza para ver que accion esta realizando el usuario
 
   const abrirPartidaJuego = (numeroPartida) => {
-    navigate("/ConquerGame/" + numeroPartida);
+    navigate("/conquerGame/" + numeroPartida);
   };
 
   const buscarPartidas = () => {
@@ -62,7 +62,7 @@ const ConquerGame = () => {
       <h2 className="fw-300 centrar-texto">Opciones</h2>
       <div className="contenedor-contenido">
         <Suspense fallback={<div>Loading...</div>}>
-          <CrearUniser
+          <CrearUnirse
             accion={accion}
             setAccion={setAccion}
             buscarPartidas={buscarPartidas}
@@ -96,5 +96,3 @@ const ConquerGame = () => {
     </main>
   );
 };
-
-export default ConquerGame;

@@ -1,5 +1,5 @@
 import React from "react";
-const CrearUniser = ({ setAccion, buscarPartidas, buscar10Mejores }) => {
+const CrearUnirse = ({ setAccion, buscarPartidas, buscar10Mejores }) => {
   return (
     <div className="contenido-menu-opciones w-100 contenido-border">
       <div className="contenido-anuncio">
@@ -38,4 +38,4 @@ const CrearUniser = ({ setAccion, buscarPartidas, buscar10Mejores }) => {
   );
 };
 
-export default CrearUniser;
+export default CrearUnirse;

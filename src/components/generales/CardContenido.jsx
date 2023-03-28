@@ -20,7 +20,7 @@ const CardContenido = ({ contenido, agregarUnidadMapa }) => {
         <h3>{contenido.titulo}</h3>
         <p>{contenido.descripcion}</p>
         {contenido.tipo === 1 && (
-          <Link className="boton blue d-block" to="ConquerGameOpciones">
+          <Link className="boton blue d-block" to={contenido.enviar}>
             Ingresa
           </Link>
         )}

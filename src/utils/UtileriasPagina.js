@@ -36,3 +36,8 @@ export const eliminarSaltosLinea = (sValor) => {
 export const reconvertirTextoAJson = (vResultado) => {
   return JSON.parse(JSON.stringify(vResultado));
 }
+
+export const numeroMes = (nMes) => {
+  const arrMes = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"]
+  return arrMes[nMes];
+}

@@ -31,7 +31,7 @@ import {
   setTurnoJugador as setTurnoJugadorJuego
 } from "../utils/conquerGame/ConquerGameJuego";
 import {
-  arrEstructuraPiezas
+  arrEstructuraPiezas, detectarJugador
 } from "../utils/conquerGame/ConfiguracionTableroConquerGame";
 
 import swal from "sweetalert";
@@ -57,8 +57,9 @@ const HistorialJugadores = React.lazy(() =>
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { imagenReducer,objectReducer} from "../hooks/reducerGame";
 
-const ConquerGame = ({ socket }) => {
+export const ConquerGame = ({ socket }) => {
   let { numeroPartida } = useParams();
 
   let navigate = useNavigate();
@@ -71,17 +72,15 @@ const ConquerGame = ({ socket }) => {
   const [mostrarAyuda, setmostrarAyuda] = useState(false);
   const [mostrarMenuUnidadEspecial, setmostrarMenuUnidadEspecial] =
     useState(false);
-  const [partida, dispatchPartidas] = useReducer(agregarPartidaRes, null);
+  const [partida, dispatchPartidas] = useReducer(objectReducer, null);
   const [turnoUsuario, dispatchTurnoUsuarioRes] = useReducer(
-    turnoUsuarioRes,
+    objectReducer,
     ""
   );
-
   const [arrRecursos, dispatchRecursosJugador] = useReducer(
-    recursoImagen,
+    imagenReducer,
     []
   );
-
 
   useEffect(() => {
     socket.disconnect();
@@ -96,7 +95,8 @@ const ConquerGame = ({ socket }) => {
     socket.on("partida" + numeroPartida, (payload) => {
       switch (payload.estatus) {
         case 1:
-          if (usuario.usuario == payload.jugadores[0].usuario) {
+          //Inicio de sesion
+          if (usuario.usuario === payload.jugadores[0].usuario) {
             setMostrarIniciar(true);
           }
           dispatchPartidas(payload);
@@ -105,15 +105,19 @@ const ConquerGame = ({ socket }) => {
         case 2:
           dispatchPartidas(payload);
           setPartidaConfiguracion(payload);
+          const sTurnoJugador = detectarJugador(payload,usuario);
           //Esta seccion indica que si la pagina se esta refrescando al presionar f5 o se salio y volvio a ingresar
           if (!payload.hasOwnProperty("notificarUsuarioListo")) {
-            dispatchTurnoUsuarioRes(payload);
+            dispatchTurnoUsuarioRes(sTurnoJugador);
             if(arrRecursos.length <= 0){
-              dispatchRecursosJugador(payload);
-              setArregloPiezas(recursoImagen(null,{turno :detectarJugador(payload)}))
+              dispatchRecursosJugador({
+                payload,
+                turno:sTurnoJugador,
+                arrEstructuraPiezas
+              });
+              setArregloPiezas(recursoImagen(null,{turno :sTurnoJugador}))
             }
-            setTurnoJugadorConfiguracion(detectarJugador(payload));
-            setTurnoJugadorJuego(detectarJugador(payload));
+            setTurnoJugadorConfiguracion(sTurnoJugador);
             const nValor = payload.jugadores.findIndex(
               (obj) =>
                 obj.usuario === usuario.usuario &&
@@ -123,27 +127,30 @@ const ConquerGame = ({ socket }) => {
             if (nValor !== -1) {
               setBloquearOpciones(true)
             }
-            if(accion!= 2){
-              setAccion(2);
-            }
+            setAccion(2);
           } else if(payload.usuarioListo !== usuario.usuario){
             toast(
                 "El jugador " + payload.usuarioListo + " esta listo para jugar"
-              );
+            );
           }
           if (payload.tipoJuego === 2 && payload.hasOwnProperty("posicionPiezasGlobal")) {
             posicionPiezaJuego(payload);
           }
           break;
         case 3:
-          dispatchTurnoUsuarioRes(payload);
+          const sTurnoJugadorT = detectarJugador(payload,usuario);
+          dispatchTurnoUsuarioRes(sTurnoJugadorT);
           dispatchPartidas(payload);
           setPartida(payload);
           setAccion(3);
-          setTurnoJugadorJuego(detectarJugador(payload));
+          setTurnoJugadorJuego(sTurnoJugadorT);
           if(arrRecursos.length <= 0){
-            dispatchRecursosJugador(payload);
-            setArregloPiezas(recursoImagen(null,{turno :detectarJugador(payload)}))
+            dispatchRecursosJugador({
+              payload,
+              turno:sTurnoJugadorT,
+              arrEstructuraPiezas
+            });
+            setArregloPiezas(recursoImagen(null,{turno :sTurnoJugadorT}))
           }
           if (payload.hasOwnProperty("posicionPiezasGlobal")) {
             setJugador(usuario.usuario);
@@ -158,12 +165,12 @@ const ConquerGame = ({ socket }) => {
           }
           break;
         case 4:
-          dispatchTurnoUsuarioRes(payload);
+          dispatchTurnoUsuarioRes(sTurnoJugadorT);
           dispatchPartidas(payload);
           posicionPiezasJuego(payload);
           detenerCronometro();
           const myTimeout = setTimeout(() => {
-            navigate("/ConquerGameOpciones");
+            navigate("/conquerGameOpciones");
           }, 10000);
           const sResultado = evaluarResultadoPartida(payload);
           swal({
@@ -173,7 +180,7 @@ const ConquerGame = ({ socket }) => {
             button: "OK",
           }).then(function () {
             clearTimeout(myTimeout);
-            navigate("/ConquerGameOpciones");
+            navigate("/conquerGameOpciones");
           });
 
           break;
@@ -189,7 +196,7 @@ const ConquerGame = ({ socket }) => {
               button: "OK",
             });
           }
-          navigate("/ConquerGameOpciones");
+          navigate("/conquerGameOpciones");
           break;
       }
     });
@@ -223,11 +230,7 @@ const ConquerGame = ({ socket }) => {
   //     true
   //   );
 
-  function agregarPartidaRes(state, action) {
-    return action;
-  }
-
-  function recursoImagen(state,action){
+  const recursoImagen = (state,action) => {
     return reconvertirTextoAJson(arrEstructuraPiezas).map( recurso => {recurso.direccion = (require(`@images/${(turnoUsuario === '' ? action.turno :turnoUsuario) + recurso.icono}.png`)); return recurso;});
   }
 
@@ -261,32 +264,7 @@ const ConquerGame = ({ socket }) => {
       });
   };
 
-  function turnoUsuarioRes(state, action) {
-    if (state !== "") {
-      return state;
-    }
-    return detectarJugador(action);
-  }
 
-  function detectarJugador (action){
-    const nResultado = action.jugadores.findIndex(function (item, i) {
-      return usuario.usuario == item.usuario;
-    });
-    switch (nResultado) {
-      case 0:
-        return "O";
-      case 1:
-        return "B";
-      case 2:
-        return "R";
-      case 3:
-        return "P";
-      case 4:
-        return "G";
-      case 5:
-        return "Y";
-    }
-  }
 
   /*Seccion funciones res*/
 
@@ -315,7 +293,7 @@ const ConquerGame = ({ socket }) => {
     vPeticion.numeroPartida = numeroPartida;
     actualizarEspecifico("conquerGame/salirPartida", vPeticion)
       .then((resultado) => {
-        navigate("/ConquerGameOpciones");
+        navigate("/conquerGameOpciones");
       })
       .catch((error) => {
         swal({
@@ -572,5 +550,3 @@ const ConquerGame = ({ socket }) => {
     </main>
   );
 };
-
-export default ConquerGame;
