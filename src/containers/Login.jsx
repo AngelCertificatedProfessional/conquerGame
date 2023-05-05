@@ -2,6 +2,7 @@
 import React, { useState, useEffect, lazy, Suspense } from "react";
 import { useNavigate } from "react-router-dom";
 import { numeroMes } from "../utils/UtileriasPagina";
+
 const LoginFormulario = lazy(() =>
   import("./../components/usuario/LoginFormulario")
 );
@@ -13,6 +14,8 @@ const FormularioUsuario = lazy(() =>
 const TerminosCondiciones = lazy(() =>
   import("./../components/usuario/TerminosCondiciones")
 );
+
+LoginFormulario
 
 export const Login = () => {
   const navigate = useNavigate();
