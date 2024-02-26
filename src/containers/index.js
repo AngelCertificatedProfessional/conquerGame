@@ -1,6 +1,0 @@
-export * from './Home'
-export * from './Login'
-export * from './ConquerGameOpciones'
-export * from './ConquerGame'
-export * from './Usuario'
-export * from './Mejoras'
