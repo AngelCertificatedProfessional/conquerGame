@@ -42,11 +42,11 @@ export const useUsuarioStore = () => {
     const sesionInvitado = async() => {
         dispatch(onChecking())
         try {
-            console.log("entre")
             const { data } = await conquerGame.get('/usuario/agregarUsuarioInvitado')
             localStorage.setItem('token', data.token);
+            localStorage.setItem('usuario', data.usuario);
             localStorage.setItem('token-init-date', new Date().getTime());
-            // dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
+            dispatch(onLogin({ usuario: data.usuario }))
         } catch (error) {
             dispatch(onLogout('Credenciales incorrectas'))
         }
