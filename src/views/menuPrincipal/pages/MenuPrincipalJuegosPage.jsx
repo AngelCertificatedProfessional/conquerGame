@@ -2,9 +2,10 @@ import {
     Box, Typography
 } from "@mui/material"
 // import { ListaReporte } from "../views/ListaReporte"
-// import { REPORTES } from '../../../types'
+import { DIRECCIONAMIENTO } from '../../../types'
 // import { useReporteStore } from "../../../hooks"
 import { useEffect } from "react"
+import { ListaJuego } from "../components/ListaJuego"
 
 export const MenuPrincipalJuegosPage = () => {
     // const { cerrarVentana } = useReporteStore()
@@ -14,7 +15,7 @@ export const MenuPrincipalJuegosPage = () => {
     return (
         <>
             <Typography variant="h4">
-                Menu principal
+                Games
             </Typography>
             <Box
                 sx={{
@@ -25,9 +26,9 @@ export const MenuPrincipalJuegosPage = () => {
                     },
                 }}
             >
-                {/* {REPORTES.map(reporte => (
-                    <ListaReporte key={reporte.id} reporte={reporte} />
-                ))} */}
+                {DIRECCIONAMIENTO.map(direccion => (
+                    <ListaJuego key={direccion.newTitle} juego={direccion} />
+                ))}
             </Box>
         </>
     )

@@ -3,7 +3,6 @@ import { Navigate, Route, Routes } from "react-router-dom"
 const MenuPrincipalJuegosPage = lazy(() =>
     import("../pages/MenuPrincipalJuegosPage")
 );
-
 export const MenuPrincipalRoutes = () => {
     return (
         <Suspense fallback={<div>Cargando...</div>}>
