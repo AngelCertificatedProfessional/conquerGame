@@ -3,7 +3,6 @@ import { Link } from "react-router-dom"
 
 export const ListaJuego = ({ juego }) => {
     if(!juego.juego) return(<></>)
-    console.log(juego)
     return (
         <Card
             sx={{ maxWidth: { xs: '100%', sm: 170 }, flexGrow: { xs: 1, sm: 0 }, height: '100%', display: 'flex', flexDirection: 'column' }}

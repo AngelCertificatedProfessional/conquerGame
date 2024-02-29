@@ -1,8 +1,7 @@
 import {
-    Box, Grid, Typography
+     Grid, Typography
 } from "@mui/material"
-// // import { ListaReporte } from "../views/ListaReporte"
-// import { DIRECCIONAMIENTO } from '../../../types'
+import { MenuJuego,AgregarPartida } from "../components"
 // // import { useReporteStore } from "../../../hooks"
 // import { useEffect } from "react"
 
@@ -13,14 +12,15 @@ export const ConquerGamePage = () => {
     // }, [])
     return (
         <>
-            
-            <Grid container columnSpacing={2}>
+            <Typography variant="h4">
+                Conquer Game
+            </Typography>
+            <Grid container columnSpacing={2} mt={2}>
                 <Grid item xs={12} md={6}>
-                    <Typography variant="h4">
-                        Conquer Game
-                    </Typography>
+                    <MenuJuego/>
                 </Grid>
                 <Grid item xs={12} md={6}>
+                    <AgregarPartida/>
                 </Grid>
             </Grid>
         </>
