@@ -1,1 +1,1 @@
-export { default as conquerGame } from './conquerGame'
+export { default as conquerGameApi } from './conquerGame'

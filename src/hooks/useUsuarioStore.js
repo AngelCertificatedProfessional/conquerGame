@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { onChecking, onLogin, onLogout } from '../store';
-import { conquerGame } from '../api';
+import { conquerGameApi } from '../api';
 
 export const useUsuarioStore = () => {
 
@@ -10,7 +10,7 @@ export const useUsuarioStore = () => {
     const startLogin = async ({ correo, contrasena }) => {
         dispatch(onChecking())
         try {
-            const { data } = await conquerGame.post('/usuario/iniciarSesion', { correo, contrasena })
+            const { data } = await conquerGameApi.post('/usuario/iniciarSesion', { correo, contrasena })
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
@@ -29,7 +29,7 @@ export const useUsuarioStore = () => {
         if (!token) return dispatch(onLogout())
 
         try {
-            const { data } = await conquerGame.get('/usuario/renew')
+            const { data } = await conquerGameApi.get('/usuario/renew')
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
@@ -42,7 +42,7 @@ export const useUsuarioStore = () => {
     const sesionInvitado = async() => {
         dispatch(onChecking())
         try {
-            const { data } = await conquerGame.get('/usuario/agregarUsuarioInvitado')
+            const { data } = await conquerGameApi.get('/usuario/agregarUsuarioInvitado')
             localStorage.setItem('token', data.token);
             localStorage.setItem('usuario', data.usuario);
             localStorage.setItem('token-init-date', new Date().getTime());

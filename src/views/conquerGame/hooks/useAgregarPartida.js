@@ -14,7 +14,7 @@ export const useAgregarPartida = () => {
             // vValor: deseo,
             // modificar: modificarDeseo,
             // agregar: agregarDeseo,
-            yup: YUPCONQUERGAME
+            // yup: YUPCONQUERGAME
         })
 
     const { handleSubmit, errors } = formik;
