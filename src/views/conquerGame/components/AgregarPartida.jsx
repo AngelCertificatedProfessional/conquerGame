@@ -1,18 +1,27 @@
-import { Button, Card, CardContent, Stack } from "@mui/material"
+import { Box, Button, Card, CardContent, DialogActions, Stack, Typography } from "@mui/material"
 import { FormikProvider } from "formik"
+import { MyErrorF, MyRadioF, MySelectF } from "../../../template/components/inputs";
 import { useAgregarPartida } from "../hooks"
+import { Cargando } from "../../../template/components";
+import { ACCIONTIPOJUEGO, ACCIONTIPOJUEGOOBJETO, CANTIDADJUGADORESTIPOJUEGO } from "../../../types";
 export const AgregarPartida = () => {
 
     const {
         handleSubmit,
         formik,
         errors,
+        errorMessage,
+        mostrarVentana,
+        values,
+        handleActualizarCantidadJugadores
     } = useAgregarPartida()
+
+    if(mostrarVentana !== 1) return(<></>)
     return (
         <Card sx={{ display: 'flex' }}>
             <CardContent sx={{ flex: 1 }}>
                 <FormikProvider value={formik}>
-                    {/* <Box
+                    <Box
                         component="form"
                         noValidate
                         onSubmit={handleSubmit}
@@ -21,82 +30,36 @@ export const AgregarPartida = () => {
                             flexDirection: 'column',
                             justifyContent: 'center',
                             alignItems: 'center',
-                            opacity: isCargando ? 0.5 : 1,
-                            pointerEvents: isCargando ? "none" : "auto"
+                            // opacity: isCargando ? 0.5 : 1,
+                            // pointerEvents: isCargando ? "none" : "auto"
                         }}>
                         <Typography variant="h6">
-                            {
-                                deseo.id !== undefined && deseo.id !== '' ? "Modificar " : "Agregar "
-                            }
-                            Deseos
+                            Agregar Partida
                         </Typography>
-
-                        <Grid container columnSpacing={2}>
-                            <Grid item xs={12} md={6}>
-                                <MyTextFieldF
-                                    label="Titulo"
-                                    name="titulo"
-                                    required
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <MySelectF
-                                    label="Prioridad"
-                                    name="prioridad"
-                                    menuIt={PRIORIDAD}
-                                    defaultValue="1"
-                                />
-                            </Grid>
-                        </Grid>
-                        <Grid container columnSpacing={2}>
-                            <Grid item xs={12} md={6}>
-                                <MyDatePickerF
-                                    label="Conseguir Antes de"
-                                    name="fechaAsignacion"
-                                    setFieldValue={setFieldValue} />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <MyTextFieldF
-                                    label="Gasto Aprox"
-                                    name="gasto"
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">$</InputAdornment>,
-                                        inputComponent: NumericFormatCustom,
-                                    }}
-                                />
-                            </Grid>
-                        </Grid>
-                        <Grid container columnSpacing={2}>
-                            <Grid item xs={12} >
-                                <MyCheckBox
-                                    label="Comprado"
-                                    name="comprado"
-                                />
-                            </Grid>
-                        </Grid>
-
-                        <MyTextFieldF
-                            label="Descripcion"
-                            name="descripcion"
-                            required
-                            multiline
-                            rows={4}
+                        <MyRadioF
+                            label="Tipo Juego"
+                            name="tipoJuego"
+                            menuIt={ACCIONTIPOJUEGO}
+                            onChange={handleActualizarCantidadJugadores}
                         />
-
+                        <MySelectF
+                            label="Cantidad de Jugadores"
+                            name="cantidadJugadores"
+                            menuIt={
+                                parseInt(values.tipoJuego) === ACCIONTIPOJUEGOOBJETO.INDIVIDUAL ? 
+                                CANTIDADJUGADORESTIPOJUEGO.INDIVIDUAL : 
+                                CANTIDADJUGADORESTIPOJUEGO.EQUIPO
+                            }
+                        />
                         <DialogActions>
-                            <Button onClick={cerrarVentana} >
-                                Cerrar
-                            </Button>
                             <Button type="submit" variant="contained">
-                                {
-                                    deseo.id !== undefined && deseo.id !== '' ? "Modificar" : "Agregar"
-                                }
+                                Crear Partida
                             </Button>
-                        </DialogActions>
+                        </DialogActions>                       
                         <MyErrorF errors={errors.submit} />
                         <MyErrorF errors={errorMessage} />
                         <Cargando />
-                    </Box> */}
+                    </Box>
                 </FormikProvider>
             </CardContent>
         </Card>

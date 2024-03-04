@@ -1,5 +1,5 @@
 import { Box, Toolbar } from "@mui/material";
-import { NavBar } from "./components/NavBar"
+import { NavBar } from "./components"
 
 export const TemplateIndex = ({ children }) => {
     return (

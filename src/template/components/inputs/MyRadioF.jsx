@@ -1,7 +1,7 @@
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
 import { useField } from "formik";
 
-export const MyRadioF = ({ label, name, menuIt }) => {
+export const MyRadioF = ({ label, name, menuIt,onChange }) => {
     const [field] = useField(name);
     return (
         <FormControl fullWidth margin="normal">
@@ -11,7 +11,7 @@ export const MyRadioF = ({ label, name, menuIt }) => {
                 aria-labelledby="demo-radio-buttons-group-label"
                 id={field.name}
                 value={field.value}
-                onChange={field.onChange}
+                onChange={(e) => { !!onChange && onChange(e); field.onChange(e); }}
                 name={field.name}
                 onBlur={field.onBlur}
             >

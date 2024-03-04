@@ -1,28 +1,36 @@
 //conquerGame
 import { useDispatch, useSelector } from 'react-redux'
 import { conquerGameApi } from '../api';
-import { actualizarConquerGame, cargarConquerGames, reiniciarValoresConquerGame } from '../store';
+import { actualizarConquerGame, actualizarVentana, cargarConquerGames, 
+    reiniciarPartida, reiniciarValoresConquerGame } from '../store';
 import { useUiStore } from './useUiStore';
 import { detectarError } from '../helpers';
-import { alertAdvertencia, alertError, alertMensaje, convertirFechaTOEpoch, convertirFechaToDay } from '../plugins';
+import { alertAdvertencia, alertError, alertMensaje} from '../plugins';
+import { useNavigate } from 'react-router-dom';
 export const useConquerGameStore = () => {
+    const navigate = useNavigate();
    const dispatch = useDispatch();
    const { closeDialog, startCargando,startMensajeError } = useUiStore();
-   const { conquerGame, conquerGames } = useSelector(state => state.conquerGame);
+   const { conquerGame, conquerGames,partida,mostrarVentana } = useSelector(state => state.conquerGame);
 
    const agregarPartida= async ({
-       titulo,
-//       fechaAsignacion,
+        tipoJuego,
+        cantidadJugadores
     }) => {
        try {
-           startCargando(true);
-           await conquerGameApi.post('/conquerGame/agregar', {
-               titulo,
-//             fechaAsignacion: convertirFechaTOEpoch(fechaAsignacion),
-           });
-           alertMensaje("Guardado",'ConquerGame Guardado', "success");
-           cerrarVentana();
-           buscarConquerGames();
+            startCargando(true);
+            const {data} = await conquerGameApi.post('/conquerGame/crearPartida', {
+                tipoJuego,
+                cantidadJugadores
+            });
+            alertMensaje("Guardado",'ConquerGame Guardado', "success");
+            console.log(data.data)
+           
+            dispatch(reiniciarPartida());
+            dispatch(actualizarConquerGame(data.data))
+            cerrarVentana();
+            navigate("conquerGameLobby");
+            //   buscarConquerGames();
        } catch (error) {
            const erroresSinArreglo = detectarError(error);
            startMensajeError(erroresSinArreglo);
@@ -118,21 +126,28 @@ export const useConquerGameStore = () => {
 //        }
 //    };
 
-//    const cerrarVentana = () => {
-//        closeDialog();
-//        dispatch(reiniciarValoresConquerGame());
-//        startMensajeError('');
-//        setTimeout(function () {
-//            startCargando(false);
-//        }, 300);
-//    };
+   const startMostrarVentana = (nVentana) => {
+    dispatch(actualizarVentana(nVentana))
+   }
+
+   const cerrarVentana = () => {
+       closeDialog();
+    //    dispatch(reiniciarValoresConquerGame());
+       startMensajeError('');
+       setTimeout(function () {
+           startCargando(false);
+       }, 300);
+   };
 
    return {
        //status,
-    //    conquerGame,
+       partida,
+       mostrarVentana,
+       conquerGame,
     //    conquerGames,
     //    //Metodos
-    agregarPartida
+        agregarPartida,
+        startMostrarVentana
     //    agregarConquerGame,
     //    buscarConquerGames,
     //    buscarConquerGameById,
