@@ -2,6 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { conquerGameApi } from '../api';
 import { actualizarConquerGame, actualizarVentana, cargarConquerGames, 
+    cargarPartidas, 
     reiniciarPartida, reiniciarValoresConquerGame } from '../store';
 import { useUiStore } from './useUiStore';
 import { detectarError } from '../helpers';
@@ -11,7 +12,7 @@ export const useConquerGameStore = () => {
     const navigate = useNavigate();
    const dispatch = useDispatch();
    const { closeDialog, startCargando,startMensajeError } = useUiStore();
-   const { conquerGame, conquerGames,partida,mostrarVentana } = useSelector(state => state.conquerGame);
+   const { conquerGame, conquerGames,partida,partidas,mostrarVentana } = useSelector(state => state.conquerGame);
 
    const agregarPartida= async ({
         tipoJuego,
@@ -39,6 +40,17 @@ export const useConquerGameStore = () => {
        }
    };
 
+      const buscarPartidas = async () => {
+       try {
+           startCargando(true);
+           const { data } = await conquerGameApi.get('/conquerGame/buscarPartidas');
+           dispatch(cargarPartidas(data.data));
+           startCargando(false);
+       } catch (error) {
+           startMensajeError(detectarError(error));
+           startCargando(false);
+       }
+   };
 
 //    const agregarConquerGame= async ({
 //        titulo,
@@ -142,12 +154,14 @@ export const useConquerGameStore = () => {
    return {
        //status,
        partida,
+       partidas,
        mostrarVentana,
        conquerGame,
     //    conquerGames,
     //    //Metodos
         agregarPartida,
-        startMostrarVentana
+        startMostrarVentana,
+        buscarPartidas
     //    agregarConquerGame,
     //    buscarConquerGames,
     //    buscarConquerGameById,

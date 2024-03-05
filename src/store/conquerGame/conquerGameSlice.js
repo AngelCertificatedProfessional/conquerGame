@@ -9,7 +9,8 @@ export const conquerGameSlice = createSlice({
         partida: { ...ESTRUCTURACREARPARTIDA },
         // conquerGame: { ...ESTRUCTURACONQUERGAME },
         conquerGame: {  },
-        conquerGames: []
+        conquerGames: [],
+        partidas: []
     },
     reducers: {
         actualizarConquerGame: (state, { payload }) => {
@@ -25,6 +26,9 @@ export const conquerGameSlice = createSlice({
         actualizarPartida: (state, { payload }) => {
             state.partida = payload;
         },
+        cargarPartidas: (state, { payload = [] }) => {
+            state.partidas = payload;
+        },
         reiniciarPartida: (state) => {
             state.partida = { ...ESTRUCTURACREARPARTIDA }
         },
@@ -34,11 +38,11 @@ export const conquerGameSlice = createSlice({
     }
 });
 export const {
-    partida,
     actualizarConquerGame,
-    cargarConquerGames,
-    reiniciarValoresConquerGame,
     actualizarPartida,
+    actualizarVentana ,
+    cargarConquerGames,
+    cargarPartidas,
     reiniciarPartida,
-    actualizarVentana 
+    reiniciarValoresConquerGame,
 } = conquerGameSlice.actions;
