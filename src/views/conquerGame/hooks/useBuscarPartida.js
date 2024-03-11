@@ -1,21 +1,28 @@
-import { useState } from "react";
-import { 
+import { useEffect, useState } from "react";
+import {
     useConquerGameStore,
-    useUiStore 
+    useUiStore
 } from "../../../hooks";
 
 const columns = [
     { field: 'id', headerName: 'ID', headerClassName: 'super-app-theme--header', flex: 1, hideable: true },
-    // { field: 'creador', headerName: 'Creador', headerClassName: 'super-app-theme--header', flex: 1 },
-    { field: 'cantidadJugadores', headerName: 'Jugadores', headerClassName: 'super-app-theme--header', flex: 1 },
+    { field: 'cantidadJugadores', headerName: 'Cant Jugadores', headerClassName: 'super-app-theme--header', flex: 1 },
     { field: 'tipoJuego', headerName: 'Tipo', headerClassName: 'super-app-theme--header', flex: 1 },
+    {
+        field: 'usuario', headerName: 'Usuario', headerClassName: 'super-app-theme--header', flex: 1,
+        valueGetter: (params) => params.row?.usuarios?.usuario
+    },
 ];
 
 export const useBuscarPartida = () => {
     const [rowSelectionModel, setRowSelectionModel] = useState([]);
-    const {partidas,mostrarVentana} = useConquerGameStore()
+    const { partidas, mostrarVentana, buscarPartidas } = useConquerGameStore()
 
     const { errorMessage } = useUiStore();
+
+    useEffect(() => {
+        buscarPartidas()
+    }, [])
 
     return {
         partidas,

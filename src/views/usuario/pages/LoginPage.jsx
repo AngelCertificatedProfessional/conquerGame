@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, Grid, Paper, Typography,Stack } from "@mui/material"
+import { Box, Button, CircularProgress, Grid, Paper, Typography, Stack } from "@mui/material"
 import { FormikProvider } from "formik";
 import { USER_STATUS } from "../../../types";
 import { MyErrorF, MyTextFieldF } from "../../../template/components/inputs";
@@ -59,8 +59,8 @@ export const LoginPage = () => {
                                 type="password"
                             />
                             <Stack spacing={2} direction="row" sx={{ mt: 2 }} useFlexGap flexWrap="wrap">
-                                <Button variant="contained" type="submit"  sx={{ flexGrow: { xs: 1, sm: 0 } }}> Ingresar </Button>
-                                <Button variant="contained" onClick = {sesionInvitado} sx={{ flexGrow: { xs: 1, sm: 0 } }}> Invitado </Button>
+                                <Button variant="contained" type="submit" sx={{ flexGrow: { xs: 1, sm: 0 } }}> Ingresar </Button>
+                                <Button variant="contained" onClick={sesionInvitado} sx={{ flexGrow: { xs: 1, sm: 0 } }}> Invitado </Button>
                             </Stack>
                             <MyErrorF errors={errors.submit} />
                             <MyErrorF errors={errorMessage} />

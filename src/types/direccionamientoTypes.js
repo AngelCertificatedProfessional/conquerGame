@@ -6,7 +6,7 @@ import {
 
 export const DIRECCIONAMIENTO = Object.freeze([
     {
-        juego:false,
+        juego: false,
         newTitle: 'MenuPrincipal',
         icono: CalendarMonth,
         ruta: 'menuPrincipal',

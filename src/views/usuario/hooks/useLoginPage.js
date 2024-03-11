@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMyFormik, useUsuarioStore } from "../../../hooks"
 import { YUPUSUARIO } from "../../../types";
 export const useLoginPage = () => {
-    const { status, startLogin, errorMessage,sesionInvitado } = useUsuarioStore()
+    const { status, startLogin, errorMessage, sesionInvitado } = useUsuarioStore()
     const [vValor] = useState({
         correo: '',
         contrasena: '',

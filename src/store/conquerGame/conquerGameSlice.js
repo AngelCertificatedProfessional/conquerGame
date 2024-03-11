@@ -5,10 +5,10 @@ import { ESTRUCTURACREARPARTIDA } from '../../types';
 export const conquerGameSlice = createSlice({
     name: 'conquerGame',
     initialState: {
-        mostrarVentana:0,
+        mostrarVentana: 0,
         partida: { ...ESTRUCTURACREARPARTIDA },
         // conquerGame: { ...ESTRUCTURACONQUERGAME },
-        conquerGame: {  },
+        conquerGame: {},
         conquerGames: [],
         partidas: []
     },
@@ -21,7 +21,7 @@ export const conquerGameSlice = createSlice({
         },
         reiniciarValoresConquerGame: (state) => {
             // state.conquerGame = { ...ESTRUCTURACONQUERGAME }
-            state.conquerGame = { }
+            state.conquerGame = {}
         },
         actualizarPartida: (state, { payload }) => {
             state.partida = payload;
@@ -32,7 +32,7 @@ export const conquerGameSlice = createSlice({
         reiniciarPartida: (state) => {
             state.partida = { ...ESTRUCTURACREARPARTIDA }
         },
-        actualizarVentana: (state,{payload}) => {
+        actualizarVentana: (state, { payload }) => {
             state.mostrarVentana = payload
         },
     }
@@ -40,7 +40,7 @@ export const conquerGameSlice = createSlice({
 export const {
     actualizarConquerGame,
     actualizarPartida,
-    actualizarVentana ,
+    actualizarVentana,
     cargarConquerGames,
     cargarPartidas,
     reiniciarPartida,

@@ -16,7 +16,7 @@ export const AgregarPartida = () => {
         handleActualizarCantidadJugadores
     } = useAgregarPartida()
 
-    if(mostrarVentana !== 1) return(<></>)
+    if (mostrarVentana !== 1) return (<></>)
     return (
         <Card sx={{ display: 'flex' }}>
             <CardContent sx={{ flex: 1 }}>
@@ -46,16 +46,16 @@ export const AgregarPartida = () => {
                             label="Cantidad de Jugadores"
                             name="cantidadJugadores"
                             menuIt={
-                                parseInt(values.tipoJuego) === ACCIONTIPOJUEGOOBJETO.INDIVIDUAL ? 
-                                CANTIDADJUGADORESTIPOJUEGO.INDIVIDUAL : 
-                                CANTIDADJUGADORESTIPOJUEGO.EQUIPO
+                                parseInt(values.tipoJuego) === ACCIONTIPOJUEGOOBJETO.INDIVIDUAL ?
+                                    CANTIDADJUGADORESTIPOJUEGO.INDIVIDUAL :
+                                    CANTIDADJUGADORESTIPOJUEGO.EQUIPO
                             }
                         />
                         <DialogActions>
                             <Button type="submit" variant="contained">
                                 Crear Partida
                             </Button>
-                        </DialogActions>                       
+                        </DialogActions>
                         <MyErrorF errors={errors.submit} />
                         <MyErrorF errors={errorMessage} />
                         <Cargando />
