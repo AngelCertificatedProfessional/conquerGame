@@ -11,6 +11,7 @@ export const useUsuarioStore = () => {
         dispatch(onChecking())
         try {
             const { data } = await conquerGameApi.post('/usuario/iniciarSesion', { correo, contrasena })
+            if (!!!data.token) throw 'Es necesario recibir el token';
             localStorage.setItem('token', data.token);
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
@@ -39,10 +40,11 @@ export const useUsuarioStore = () => {
         }
     }
 
-    const sesionInvitado = async() => {
+    const sesionInvitado = async () => {
         dispatch(onChecking())
         try {
             const { data } = await conquerGameApi.get('/usuario/agregarUsuarioInvitado')
+            if (!!!data.token) throw 'Es necesario recibir el token';
             localStorage.setItem('token', data.token);
             localStorage.setItem('usuario', data.usuario);
             localStorage.setItem('token-init-date', new Date().getTime());
