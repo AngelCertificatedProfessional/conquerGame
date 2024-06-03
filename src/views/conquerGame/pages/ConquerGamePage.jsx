@@ -1,8 +1,7 @@
 import {
     Grid, Typography
 } from "@mui/material"
-import { MenuJuego, AgregarPartida } from "../components"
-import { BuscarPartida } from "../components/BuscarPartida"
+import { MenuJuego, AgregarPartida, BuscarPartida } from "../components"
 // // import { useReporteStore } from "../../../hooks"
 // import { useEffect } from "react"
 
@@ -21,8 +20,8 @@ export const ConquerGamePage = () => {
                     <MenuJuego />
                 </Grid>
                 <Grid item xs={12} md={6}>
-                    <BuscarPartida />
                     <AgregarPartida />
+                    <BuscarPartida />
                 </Grid>
             </Grid>
         </>

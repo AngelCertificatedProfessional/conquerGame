@@ -30,8 +30,7 @@ export const useConquerGameStore = () => {
             dispatch(reiniciarPartida());
             dispatch(actualizarConquerGame(data.data))
             cerrarVentana();
-            navigate("conquerGameLobby");
-            //   buscarConquerGames();
+            navigate("/conquerGame/conquerGameLobby");
         } catch (error) {
             const erroresSinArreglo = detectarError(error);
             startMensajeError(erroresSinArreglo);
@@ -39,7 +38,7 @@ export const useConquerGameStore = () => {
             startCargando(false);
         }
     };
-
+    //Metodo para obtener el listados de las partidas y mostrarlas en la tabla
     const buscarPartidas = async () => {
         try {
             startCargando(true);
@@ -51,6 +50,35 @@ export const useConquerGameStore = () => {
             startCargando(false);
         }
     };
+
+    //Metodo utilizado para poder ingresar a las partidas, desde el listado
+    const ingresarPartida = async (conquerGame_id) => {
+        try {
+            startCargando(true);
+            const { data } = await conquerGameApi.patch(`/conquerGame/ingresarPartida/${conquerGame_id}`);
+            startCargando(false);
+            dispatch(reiniciarPartida());
+            dispatch(actualizarConquerGame(data.data))
+            cerrarVentana();
+            navigate("/conquerGame/conquerGameLobby");
+        } catch (error) {
+            startMensajeError(detectarError(error));
+            startCargando(false);
+        }
+    };
+
+    const startActualizarConquerGame = async (conquerGame) => {
+        dispatch(actualizarConquerGame(conquerGame))
+    }
+    //Al momento que el usuario da ingresar
+    const mostrarTableroSeleccion = async () => {
+        startCargando(true);
+        console.log(conquerGame)
+        await conquerGameApi.patch(`/conquerGame/ingresarSeleccionPersonaje/${conquerGame.id}`);
+        startCargando(false);
+        cerrarVentana();
+        // navigate("/conquerGame/conquerGameJuego");
+    }
 
     //    const agregarConquerGame= async ({
     //        titulo,
@@ -161,7 +189,10 @@ export const useConquerGameStore = () => {
         //    //Metodos
         agregarPartida,
         startMostrarVentana,
-        buscarPartidas
+        buscarPartidas,
+        ingresarPartida,
+        startActualizarConquerGame,
+        mostrarTableroSeleccion
         //    agregarConquerGame,
         //    buscarConquerGames,
         //    buscarConquerGameById,

@@ -32,6 +32,7 @@ export const useUsuarioStore = () => {
         try {
             const { data } = await conquerGameApi.get('/usuario/renew')
             localStorage.setItem('token', data.token);
+            localStorage.setItem('usuario', data.usuario);
             localStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
         } catch (error) {
@@ -48,7 +49,7 @@ export const useUsuarioStore = () => {
             localStorage.setItem('token', data.token);
             localStorage.setItem('usuario', data.usuario);
             localStorage.setItem('token-init-date', new Date().getTime());
-            dispatch(onLogin({ usuario: data.usuario }))
+            dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
         } catch (error) {
             dispatch(onLogout('Credenciales incorrectas'))
         }

@@ -6,8 +6,9 @@ import {
 
 const columns = [
     { field: 'id', headerName: 'ID', headerClassName: 'super-app-theme--header', flex: 1, hideable: true },
-    { field: 'cantidadJugadores', headerName: 'Cant Jugadores', headerClassName: 'super-app-theme--header', flex: 1 },
-    { field: 'tipoJuego', headerName: 'Tipo', headerClassName: 'super-app-theme--header', flex: 1 },
+    { field: 'cantidadJugadores', headerName: 'Max. Cant Jugadores', headerClassName: 'super-app-theme--header', flex: 1 },
+    { field: 'numeroPartida', headerName: 'Partida', headerClassName: 'super-app-theme--header', flex: 1 },
+    { field: 'tipoJuegoDescripcion', headerName: 'Tipo', headerClassName: 'super-app-theme--header', flex: 1 },
     {
         field: 'usuario', headerName: 'Usuario', headerClassName: 'super-app-theme--header', flex: 1,
         valueGetter: (params) => params.row?.usuarios?.usuario
@@ -16,18 +17,22 @@ const columns = [
 
 export const useBuscarPartida = () => {
     const [rowSelectionModel, setRowSelectionModel] = useState([]);
-    const { partidas, mostrarVentana, buscarPartidas } = useConquerGameStore()
-
+    const { partidas, mostrarVentana, buscarPartidas, ingresarPartida } = useConquerGameStore()
     const { errorMessage } = useUiStore();
 
     useEffect(() => {
         buscarPartidas()
     }, [])
 
+    const handleIngresar = () => {
+        ingresarPartida(rowSelectionModel[0])
+    }
+
     return {
         partidas,
         mostrarVentana,
         columns,
-        setRowSelectionModel
+        setRowSelectionModel,
+        handleIngresar
     }
 }

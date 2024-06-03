@@ -1,8 +1,9 @@
 //ConquerGameLobby
 // import { YUPCONQUERGAMELOBBY } from '../../../types'
-import { useMyFormik, useConquerGameStore, useUiStore } from '../../../hooks';
-export const useConquerGameLobbyPage= () => {
-    const { conquerGame } = useConquerGameStore();
+import { useMyFormik, useConquerGameStore, useUiStore, useUsuarioStore } from '../../../hooks';
+export const useConquerGameLobbyPage = () => {
+    const { conquerGame, startActualizarConquerGame, mostrarTableroSeleccion } = useConquerGameStore();
+    const { user } = useUsuarioStore();
     // const { isDialogOpen, isCargando } = useUiStore();
     // const { formik } = useMyFormik(
     //     {
@@ -15,7 +16,10 @@ export const useConquerGameLobbyPage= () => {
     // const { handleSubmit, errors, setFieldValue } = formik;
 
     return {
-        conquerGame
+        conquerGame,
+        user,
+        startActualizarConquerGame,
+        mostrarTableroSeleccion
         // handleSubmit,
         // formik,
         // errors,
