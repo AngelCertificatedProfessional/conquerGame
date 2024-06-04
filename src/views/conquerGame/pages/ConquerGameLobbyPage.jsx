@@ -3,9 +3,10 @@ import { Button, Container, Grid, Typography } from "@mui/material"
 import { useConquerGameLobbyPage } from "../hooks"
 import { ListaJugadores } from "../views/ListaJugadores"
 import { useSocket } from "../../../hooks/useSocket";
+import { useNavigate } from 'react-router-dom';
 
 export const ConquerGameLobbyPage = () => {
-
+  const navigate = useNavigate();
   const { conquerGame, startActualizarConquerGame,
     mostrarTableroSeleccion, user } = useConquerGameLobbyPage()
   const { socket, conectarSocket } = useSocket("http://localhost:8087")
@@ -15,8 +16,16 @@ export const ConquerGameLobbyPage = () => {
   }, [conectarSocket])
   //Eschucar los cambios en los usuarios conectados
   useEffect(() => {
-    socket?.on('conquerGame' + conquerGame.numeroPartida, (conquerGameT) => {
+    socket?.on(`conquerGame${conquerGame.numeroPartida}Lobby`, (conquerGameT) => {
       startActualizarConquerGame(conquerGameT)
+    })
+  }, [socket])
+
+  useEffect(() => {
+    socket?.on(`conquerGame${conquerGame.numeroPartida}IngresarSeleccionPersonaje`, (conquerGameT) => {
+      navigate("/conquerGame/conquerGameJuego")
+      console.log(conquerGameT)
+      // startActualizarConquerGame(conquerGameT)
     })
   }, [socket])
 

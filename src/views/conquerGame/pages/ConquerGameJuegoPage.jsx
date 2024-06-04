@@ -1,6 +1,9 @@
+import { ListadoPiezas } from "../views"
+
 export const ConquerGameJuegoPage = () => {
     return (
-        <div>ConquerGameJuegoPage</div>
+        <ListadoPiezas color={"B"} nombreImagen={"archer"} />
+        // <div>ConquerGameJuegoPage</div>
     )
 }
 export default ConquerGameJuegoPage

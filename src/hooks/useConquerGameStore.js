@@ -73,7 +73,6 @@ export const useConquerGameStore = () => {
     //Al momento que el usuario da ingresar
     const mostrarTableroSeleccion = async () => {
         startCargando(true);
-        console.log(conquerGame)
         await conquerGameApi.patch(`/conquerGame/ingresarSeleccionPersonaje/${conquerGame.id}`);
         startCargando(false);
         cerrarVentana();
