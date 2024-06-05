@@ -4,16 +4,20 @@ import { conquerGameApi } from '../api';
 import {
     actualizarConquerGame, actualizarVentana, cargarConquerGames,
     cargarPartidas,
+    cargarPiezas,
     reiniciarPartida, reiniciarValoresConquerGame
 } from '../store';
 import { useUiStore } from './useUiStore';
 import { detectarError } from '../helpers';
 import { alertAdvertencia, alertError, alertMensaje } from '../plugins';
 import { useNavigate } from 'react-router-dom';
+import { useUsuarioStore } from './useUsuarioStore';
+import { ESTRUCTURAPIEZAS } from '../types';
 export const useConquerGameStore = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { closeDialog, startCargando, startMensajeError } = useUiStore();
+    const { user } = useUsuarioStore();
     const { conquerGame, conquerGames, partida, partidas, mostrarVentana } = useSelector(state => state.conquerGame);
 
     const agregarPartida = async ({
@@ -67,8 +71,10 @@ export const useConquerGameStore = () => {
         }
     };
 
-    const startActualizarConquerGame = async (conquerGame) => {
-        dispatch(actualizarConquerGame(conquerGame))
+    const startActualizarConquerGame = async (conquerGameP) => {
+        //Evaluamos el jugador y le asignamos el turno correspondiente
+        conquerGameP.turno = conquerGameP.jugadores.find(conquerGameT => conquerGameT._id === user.uid).turno;
+        dispatch(actualizarConquerGame(conquerGameP))
     }
     //Al momento que el usuario da ingresar
     const mostrarTableroSeleccion = async () => {
@@ -76,7 +82,18 @@ export const useConquerGameStore = () => {
         await conquerGameApi.patch(`/conquerGame/ingresarSeleccionPersonaje/${conquerGame.id}`);
         startCargando(false);
         cerrarVentana();
-        // navigate("/conquerGame/conquerGameJuego");
+    }
+
+    const inicializarPiezasJugador = async () => {
+        console.log(ESTRUCTURAPIEZAS)
+        const piezas = ESTRUCTURAPIEZAS.map(pieza => {
+            return {
+                ...pieza,
+                nombre: `${conquerGame.turno}${pieza.nombre}`
+            }
+        });
+        console.log(piezas)
+        dispatch(cargarPiezas(piezas))
     }
 
     //    const agregarConquerGame= async ({
@@ -191,7 +208,8 @@ export const useConquerGameStore = () => {
         buscarPartidas,
         ingresarPartida,
         startActualizarConquerGame,
-        mostrarTableroSeleccion
+        mostrarTableroSeleccion,
+        inicializarPiezasJugador
         //    agregarConquerGame,
         //    buscarConquerGames,
         //    buscarConquerGameById,
