@@ -32,6 +32,7 @@ export const useConquerGameStore = () => {
             });
             alertMensaje("Guardado", 'ConquerGame Guardado', "success");
             dispatch(reiniciarPartida());
+            data.data.turno = data.turnoJugador;
             dispatch(actualizarConquerGame(data.data))
             cerrarVentana();
             navigate("/conquerGame/conquerGameLobby");
@@ -62,7 +63,8 @@ export const useConquerGameStore = () => {
             const { data } = await conquerGameApi.patch(`/conquerGame/ingresarPartida/${conquerGame_id}`);
             startCargando(false);
             dispatch(reiniciarPartida());
-            dispatch(actualizarConquerGame(data.data))
+            data.data.turno = data.turnoJugador;
+            startActualizarConquerGame(data.data)
             cerrarVentana();
             navigate("/conquerGame/conquerGameLobby");
         } catch (error) {
@@ -73,7 +75,6 @@ export const useConquerGameStore = () => {
 
     const startActualizarConquerGame = async (conquerGameP) => {
         //Evaluamos el jugador y le asignamos el turno correspondiente
-        conquerGameP.turno = conquerGameP.jugadores.find(conquerGameT => conquerGameT._id === user.uid).turno;
         dispatch(actualizarConquerGame(conquerGameP))
     }
     //Al momento que el usuario da ingresar
@@ -85,14 +86,12 @@ export const useConquerGameStore = () => {
     }
 
     const inicializarPiezasJugador = async () => {
-        console.log(ESTRUCTURAPIEZAS)
         const piezas = ESTRUCTURAPIEZAS.map(pieza => {
             return {
                 ...pieza,
                 nombre: `${conquerGame.turno}${pieza.nombre}`
             }
         });
-        console.log(piezas)
         dispatch(cargarPiezas(piezas))
     }
 

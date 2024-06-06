@@ -24,7 +24,6 @@ export const ConquerGameLobbyPage = () => {
   useEffect(() => {
     socket?.on(`conquerGame${conquerGame.numeroPartida}IngresarSeleccionPersonaje`, (conquerGameT) => {
       navigate("/conquerGame/conquerGameJuego")
-      // startActualizarConquerGame(conquerGameT)
     })
   }, [socket])
 

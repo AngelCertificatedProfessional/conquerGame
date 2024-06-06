@@ -14,7 +14,7 @@ export const conquerGameSlice = createSlice({
     },
     reducers: {
         actualizarConquerGame: (state, { payload }) => {
-            state.conquerGame = payload;
+            state.conquerGame = { ...state.conquerGame, ...payload };
         },
         cargarConquerGames: (state, { payload = [] }) => {
             state.conquerGames = payload;
