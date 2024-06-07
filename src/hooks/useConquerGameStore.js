@@ -2,14 +2,14 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { conquerGameApi } from '../api';
 import {
-    actualizarConquerGame, actualizarVentana, cargarConquerGames,
+    actualizarConquerGame, actualizarVentana,
     cargarPartidas,
     cargarPiezas,
-    reiniciarPartida, reiniciarValoresConquerGame
+    reiniciarPartida
 } from '../store';
 import { useUiStore } from './useUiStore';
 import { detectarError } from '../helpers';
-import { alertAdvertencia, alertError, alertMensaje } from '../plugins';
+import { alertError, alertMensaje } from '../plugins';
 import { useNavigate } from 'react-router-dom';
 import { useUsuarioStore } from './useUsuarioStore';
 import { ESTRUCTURAPIEZAS } from '../types';
@@ -86,12 +86,13 @@ export const useConquerGameStore = () => {
     }
 
     const inicializarPiezasJugador = async () => {
-        const piezas = ESTRUCTURAPIEZAS.map(pieza => {
-            return {
-                ...pieza,
-                nombre: `${conquerGame.turno}${pieza.nombre}`
-            }
-        });
+        const piezas = await Promise.all(
+            ESTRUCTURAPIEZAS.map(async (pieza) => {
+                return {
+                    ...pieza,
+                    direccion: (await import(`../images/conquerGame/${conquerGame.turno}${pieza.icono}.png`)).default
+                }
+            }));
         dispatch(cargarPiezas(piezas))
     }
 

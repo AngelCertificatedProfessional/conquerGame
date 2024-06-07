@@ -1,20 +1,20 @@
-import { Card, CardActionArea, CardMedia } from "@mui/material";
+import { Card, CardActionArea, CardMedia, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
-export const ListadoPiezas = ({ nombreImagen, color }) => {
-    const [image, setImage] = useState(null)
+export const ListadoPiezas = ({ pieza }) => {
+    // const [image, setImage] = useState(null)
+    // console.log(pieza)
+    // const fetchImage = async () => {
+    //     try {
+    //         const response = await import(`../../../images/conquerGame/${pieza.nombre}.png`) // change relative path to suit your needs
+    //         setImage(response.default)
+    //     } catch (err) {
+    //     } finally {
+    //     }
+    // }
 
-    const fetchImage = async () => {
-        try {
-            const response = await import(`../../../images/conquerGame/${color}${nombreImagen}.png`) // change relative path to suit your needs
-            setImage(response.default)
-        } catch (err) {
-        } finally {
-        }
-    }
-
-    useEffect(() => {
-        fetchImage()
-    }, [])
+    // useEffect(() => {
+    //     fetchImage()
+    // }, [])
     return (
         <Card
             sx={{ width: 80, flexGrow: { xs: 1, sm: 0 }, height: 80, display: 'flex', flexDirection: 'column' }}
@@ -24,10 +24,11 @@ export const ListadoPiezas = ({ nombreImagen, color }) => {
                     height="80"
                     width="80"
                     component="img"
-                    image={image}
+                    image={pieza.direccion}
                 />
             </CardActionArea>
         </Card>
+
 
     );
 }
