@@ -33,7 +33,7 @@ export const conquerGameSlice = createSlice({
             state.partida = { ...ESTRUCTURACREARPARTIDA }
         },
         cargarPiezas: (state, { payload }) => {
-            state.conquerGame.piezas = payload
+            state.conquerGame.piezas = payload;
         },
         actualizarVentana: (state, { payload }) => {
             state.mostrarVentana = payload

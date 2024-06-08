@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardMedia, Grid } from "@mui/material";
+import { Card, CardActionArea, CardMedia, Grid, Tooltip } from "@mui/material";
 import { useEffect, useState } from "react";
 export const ListadoPiezas = ({ pieza }) => {
     // const [image, setImage] = useState(null)
@@ -16,18 +16,20 @@ export const ListadoPiezas = ({ pieza }) => {
     //     fetchImage()
     // }, [])
     return (
-        <Card
-            sx={{ width: 80, flexGrow: { xs: 1, sm: 0 }, height: 80, display: 'flex', flexDirection: 'column' }}
-        >
-            <CardActionArea >
-                <CardMedia
-                    height="80"
-                    width="80"
-                    component="img"
-                    image={pieza.direccion}
-                />
-            </CardActionArea>
-        </Card>
+        <Tooltip title={pieza.icono} >
+            <Card
+                sx={{ width: 80, flexGrow: { xs: 1, sm: 0 }, height: 80, display: 'flex', flexDirection: 'column' }}
+            >
+                <CardActionArea >
+                    <CardMedia
+                        height="80"
+                        width="80"
+                        component="img"
+                        image={pieza.direccion}
+                    />
+                </CardActionArea>
+            </Card>
+        </Tooltip>
 
 
     );
