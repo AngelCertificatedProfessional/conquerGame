@@ -46,10 +46,10 @@ export const ACCIONTIPOJUEGO = Object.freeze([
   { id: 2, descripcion: "EQUIPO" },
 ])
 
-export const ESTRUCTURACREARPARTIDA = {
+export const ESTRUCTURACREARPARTIDA = Object.freeze({
   tipoJuego: ACCIONTIPOJUEGOOBJETO.INDIVIDUAL,
   cantidadJugadores: 2
-}
+})
 export const YUPCONQUERGAME = Yup.object({
   cantidadJugadores: Yup
     .string()
@@ -58,7 +58,7 @@ export const YUPCONQUERGAME = Yup.object({
 });
 
 
-export const montanas = [
+export const montanasConquerGame = Object.freeze([
   "1F",
   "1G",
   "2V",
@@ -127,9 +127,9 @@ export const montanas = [
   "21Q",
   "22R",
   "23T",
-];
+]);
 
-export const lagos = [
+export const lagosConquerGame = Object.freeze([
   "4B",
   "5F",
   "8H",
@@ -146,9 +146,9 @@ export const lagos = [
   "5V",
   "6O",
   "11T",
-];
+]);
 
-export const ESTRUCTURAPIEZAS = [
+export const ESTRUCTURAPIEZAS = Object.freeze([
   {
     nombre: "hachero1",
     icono: "hachero",
@@ -227,4 +227,42 @@ export const ESTRUCTURAPIEZAS = [
     posicion: "",
     direccion: ""
   },
-];
+]);
+export const useStylesConquerGame = Object.freeze({
+  targetaJugadorO: {
+    backgroundColor: "rgb(245, 167, 49)",
+    color: "#242020"
+  },
+  targetaJugadorB: {
+    backgroundColor: "rgb(14, 13, 13)",
+    color: "#ebe5e5"
+  },
+  targetaJugadorR: {
+    backgroundColor: "rgb(218, 22, 22)",
+    color: "#ebe5e5"
+  },
+  targetaJugadorP: {
+    backgroundColor: "rgb(129, 8, 153)",
+    color: "#ebe5e5"
+  },
+  targetaJugadorG: {
+    backgroundColor: "rgb(14, 95, 48)",
+    color: "#ebe5e5"
+  },
+  targetaJugadorY: {
+    backgroundColor: "rgb(255, 251, 0)",
+    color: "#050505"
+  }
+})
+
+export const colorTablero = Object.freeze("rgb(240, 201, 150)");
+export const colorMontana = Object.freeze("rgb(14, 155, 0)");
+export const colorLago = Object.freeze("rgb(63, 234, 229)");
+export const colorOpciones = Object.freeze("rgb(195, 208, 39)");
+export const colorDisparoArcher = Object.freeze("rgb(223, 55, 19)");
+export const colorSeleccionadoTablero = Object.freeze("rgb(213, 92, 209)");
+export const colorSeleccionadoListado = Object.freeze("rgb(72, 66, 65)");
+export const colorCasstilloEntrada = Object.freeze("rgb(185, 185, 179)");
+export const colorCasstilloSala = Object.freeze("rgb(94, 94, 89)");
+export const tamanoTableroX = Object.freeze(24);
+export const tamanoTableroY = Object.freeze(24);

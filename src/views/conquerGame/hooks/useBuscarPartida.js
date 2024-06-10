@@ -33,6 +33,7 @@ export const useBuscarPartida = () => {
         mostrarVentana,
         columns,
         setRowSelectionModel,
-        handleIngresar
+        handleIngresar,
+        buscarPartidas
     }
 }

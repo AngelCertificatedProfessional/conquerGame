@@ -3,6 +3,7 @@ import { useConquerGameStore } from "../../../hooks"
 
 export const useListadoPiezas = () => {
 
+    const drawerWidth = '200px'
     const { conquerGame, inicializarPiezasJugador } = useConquerGameStore();
 
     useEffect(() => {
@@ -11,6 +12,7 @@ export const useListadoPiezas = () => {
 
 
     return {
-        conquerGame
+        conquerGame,
+        drawerWidth
     }
 }

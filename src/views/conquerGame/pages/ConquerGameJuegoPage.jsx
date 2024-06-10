@@ -1,67 +1,104 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Card, CardActionArea, Grid } from "@mui/material";
 import { useListadoPiezas } from "../hooks/useListadoPiezas"
-import { ListadoPiezas } from "../views"
+import { CuadroMapa, ListadoPiezas } from "../views"
 import { SideBarConquerGame } from "../components";
+import { tamanoTableroY, tamanoTableroX } from "../../../types";
+import { numeroAAlfabeto } from "../../../helpers";
+import { useEffect, useState } from "react";
 
 export const ConquerGameJuegoPage = () => {
 
-    const { conquerGame } = useListadoPiezas()
+    const { conquerGame, drawerWidth } = useListadoPiezas()
+    const [piezaSeleccionada, setPiezaSeleccionada] = useState()
+    const [piezasJugador, setPiezasJugador] = useState([])
 
-    if (!!!conquerGame.piezas) return <></>;
+    useEffect(() => {
+        setPiezasJugador(conquerGame.piezas)
+    }, [conquerGame])
+
+    const handleClickPersonaje = (pieza) => {
+        if (!!piezaSeleccionada) {
+            setPiezaSeleccionada(null)
+        } else {
+            setPiezaSeleccionada(pieza)
+        }
+    }
+
+    const handleClickTablero = (posicionPieza) => {
+        if (!!!piezaSeleccionada) return
+        const nuevaPiezaJugador = piezasJugador.map((pieza) => {
+            return {
+                ...pieza,
+                posicion: pieza.nombre === piezaSeleccionada.nombre ? posicionPieza : pieza.posicion
+            };
+        })
+        setPiezasJugador(nuevaPiezaJugador)
+    }
+
+    if (!!!piezasJugador) return <></>;
+
 
     return (
 
         <Box sx={{
             display: 'flex',
         }} >
-            <SideBarConquerGame>
-                {/* <Stack mt={2} direction="row" >
-                    <Button variant="contained" margin="normal" fullWidth onClick={handleAgregarKey}> Key</Button>
-                </Stack>
-                <Stack mt={2} direction="row" >
-                    <Button variant="contained" margin="normal" fullWidth onClick={handleAgregarHkey}> HKey</Button>
-                </Stack> */}
-            </SideBarConquerGame >
-            {/* 
+            <SideBarConquerGame />
+            {/* necesario para mostrar el lado derecho de la pantalla */}
             <Box component='main' //Main
                 sx={{
                     width: {
                         sm: `calc(100% - ${drawerWidth}px)`,
-                        // xs: `100%`
                     },
                     flexGrow: 1,
-                    p: 3 //PADING GLOBAL
+                    p: 3
                 }}
             >
-                <ConexionRedisInfo />
-                <ConexionRedisAM />
-                <ConexionRedisHSET />
-            </Box> */}
+                {/* necesario para la divicion de las columnas */}
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        '& > :not(style)': {
+                            m: 1,
+                        },
+                    }}
+                >
+                    {
+                        piezasJugador.map((pieza) =>
+                            < ListadoPiezas
+                                pieza={pieza}
+                                key={pieza.nombre}
+                                handleClick={handleClickPersonaje}
+                            />
+                        )
+                    }
+                </Box>
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'column'
+                    }}
+                >
+                    {[...Array(tamanoTableroX)].map((x, row) =>
+                        <Box key={`row${tamanoTableroX - (row)}`} sx={{ display: 'flex', flexDirection: 'row' }}>
+                            {[...Array(tamanoTableroY)].map((y, col) =>
+                                < CuadroMapa
+                                    key={`${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`}
+                                    posicion={`${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`}
+                                    handleClick={handleClickTablero}
+                                    piezasJugador={piezasJugador}
+                                />
+                                // <li id={`${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`} className={lagos.includes(`${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`) ? "box blue-box" : montanas.includes(`${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`) ? "box green-box" : "box white-box"}>
+
+                                // </li>
+                            )}
+                        </Box>
+
+                    )}
+                </Box>
+            </Box>
         </Box>
-
-
-        // <>
-        //     <Box
-        //         sx={{
-        //             display: 'flex',
-        //             flexWrap: 'wrap',
-        //             '& > :not(style)': {
-        //                 m: 1,
-        //             },
-        //         }}
-        //     >
-        //         {
-        //             conquerGame.piezas.map((pieza) =>
-        //                 < ListadoPiezas pieza={pieza} key={pieza.nombre} />
-        //             )
-        //         }
-        //     </Box>
-        //     <Grid container direction='row'>
-        //         <Grid item>
-
-        //         </Grid>
-        //     </Grid>
-        // </>
     )
 }
 export default ConquerGameJuegoPage

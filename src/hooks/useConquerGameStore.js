@@ -93,7 +93,7 @@ export const useConquerGameStore = () => {
                     direccion: (await import(`../images/conquerGame/${conquerGame.turno}${pieza.icono}.png`)).default
                 }
             }));
-        dispatch(cargarPiezas(piezas))
+        dispatch(cargarPiezas([...piezas]))
     }
 
     //    const agregarConquerGame= async ({

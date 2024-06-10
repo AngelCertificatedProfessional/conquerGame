@@ -5,7 +5,6 @@ import { SideBarItemConquerGame } from "../views"
 const drawerWidth = '200px'
 export const SideBarConquerGame = () => {
     const { conquerGame } = useSideBarConquerGame()
-    console.log(conquerGame)
     return (
         <Box
             component="nav"

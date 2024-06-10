@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, DialogActions } from "@mui/material"
+import { Button, Card, CardContent, DialogActions, Stack } from "@mui/material"
 import { useBuscarPartida } from "../hooks"
 import { MyDataGrid } from "../../../template/components";
 export const BuscarPartida = () => {
@@ -8,6 +8,7 @@ export const BuscarPartida = () => {
         partidas,
         columns,
         handleIngresar,
+        buscarPartidas,
         setRowSelectionModel
     } = useBuscarPartida()
 
@@ -15,11 +16,24 @@ export const BuscarPartida = () => {
     return (
         <Card sx={{ display: 'flex' }}>
             <CardContent sx={{ flex: 1 }}>
-                <Button type="submit" variant="contained"
-                    onClick={handleIngresar}
+                <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="flex-start"
+                    spacing={0}
                 >
-                    Ingresar
-                </Button>
+                    <Button type="submit" variant="contained"
+                        onClick={handleIngresar}
+                    >
+                        Ingresar
+                    </Button>
+                    <Button type="submit" variant="contained"
+                        onClick={buscarPartidas}
+                    >
+                        Actualizar
+                    </Button>
+                </Stack>
+
                 <MyDataGrid
                     rows={partidas}
                     columns={columns}
