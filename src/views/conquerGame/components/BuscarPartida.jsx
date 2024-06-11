@@ -22,15 +22,16 @@ export const BuscarPartida = () => {
                     alignItems="flex-start"
                     spacing={0}
                 >
-                    <Button type="submit" variant="contained"
-                        onClick={handleIngresar}
-                    >
-                        Ingresar
-                    </Button>
+
                     <Button type="submit" variant="contained"
                         onClick={buscarPartidas}
                     >
                         Actualizar
+                    </Button>
+                    <Button type="submit" variant="contained"
+                        onClick={handleIngresar}
+                    >
+                        Ingresar
                     </Button>
                 </Stack>
 

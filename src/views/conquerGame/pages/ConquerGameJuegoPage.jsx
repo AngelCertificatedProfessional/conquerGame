@@ -4,27 +4,28 @@ import { CuadroMapa, ListadoPiezas } from "../views"
 import { SideBarConquerGame } from "../components";
 import { tamanoTableroY, tamanoTableroX } from "../../../types";
 import { numeroAAlfabeto } from "../../../helpers";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const ConquerGameJuegoPage = () => {
 
     const { conquerGame, drawerWidth } = useListadoPiezas()
     const [piezaSeleccionada, setPiezaSeleccionada] = useState()
     const [piezasJugador, setPiezasJugador] = useState([])
+    const refs = useRef({});
 
     useEffect(() => {
         setPiezasJugador(conquerGame.piezas)
     }, [conquerGame])
 
-    const handleClickPersonaje = (pieza) => {
-        if (!!piezaSeleccionada) {
+    const handleClickPersonaje = useCallback((pieza) => {
+        if (!!piezaSeleccionada && piezaSeleccionada.nombre === pieza.nombre) {
             setPiezaSeleccionada(null)
         } else {
             setPiezaSeleccionada(pieza)
         }
-    }
+    }, [])
 
-    const handleClickTablero = (posicionPieza) => {
+    const handleClickTablero = useCallback((posicionPieza) => {
         if (!!!piezaSeleccionada) return
         const nuevaPiezaJugador = piezasJugador.map((pieza) => {
             return {
@@ -33,7 +34,21 @@ export const ConquerGameJuegoPage = () => {
             };
         })
         setPiezasJugador(nuevaPiezaJugador)
-    }
+        const ref = refs.current[posicionPieza];
+        console.log(ref)
+        console.log("entre")
+        if (ref) {
+            const pieza = nuevaPiezaJugador.find(p => p.posicion === posicionPieza);
+            console.log(pieza)
+            ref.innerHTML = pieza ? `<img src="${pieza.direccion}" alt="Pieza" style="width:100%; height:100%;" />` : '';
+        }
+    }, [])
+
+    const setCuadroRef = useCallback((node, posicion) => {
+        if (node) {
+            refs.current[posicion] = node;
+        }
+    }, []);
 
     if (!!!piezasJugador) return <></>;
 
@@ -82,16 +97,17 @@ export const ConquerGameJuegoPage = () => {
                 >
                     {[...Array(tamanoTableroX)].map((x, row) =>
                         <Box key={`row${tamanoTableroX - (row)}`} sx={{ display: 'flex', flexDirection: 'row' }}>
-                            {[...Array(tamanoTableroY)].map((y, col) =>
-                                < CuadroMapa
-                                    key={`${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`}
-                                    posicion={`${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`}
-                                    handleClick={handleClickTablero}
-                                    piezasJugador={piezasJugador}
-                                />
-                                // <li id={`${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`} className={lagos.includes(`${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`) ? "box blue-box" : montanas.includes(`${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`) ? "box green-box" : "box white-box"}>
-
-                                // </li>
+                            {[...Array(tamanoTableroY)].map((y, col) => {
+                                const posicion = `${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`;
+                                return (
+                                    < CuadroMapa
+                                        ref={node => setCuadroRef(node, posicion)}
+                                        key={posicion}
+                                        posicion={posicion}
+                                        handleClick={handleClickTablero}
+                                    />
+                                )
+                            }
                             )}
                         </Box>
 
