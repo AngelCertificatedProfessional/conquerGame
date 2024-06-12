@@ -13,32 +13,19 @@ export const CuadroMapa = forwardRef(({ posicion, handleClick }, ref) => {
     }, [])
     console.log(ref)
     return (
-        <Tooltip title="{ }" >
-            <Box
-                ref={ref}
-                sx={{
-                    width: 40,
-                    height: 40,
-                    backgroundColor: color,
-                    border: '1px',
-                    borderStyle: 'solid'
-                }}
-                onClick={() => handleClick(posicion)}
-            >
-                {/* {
-                    imagen && <Box
-                        component="img"
-                        sx={{
-                            height: 40,
-                            width: 40,
-                        }}
-                        alt="Tablero"
-                        src={imagen.direccion}
-                    />
-                } */}
+        <Box
+            ref={ref}
+            sx={{
+                width: 40,
+                height: 40,
+                backgroundColor: color,
+                border: '1px',
+                borderStyle: 'solid'
+            }}
+            onClick={() => handleClick(posicion)}
+        >
 
-            </Box>
-        </Tooltip >
+        </Box>
     );
 }
 )

@@ -17,32 +17,40 @@ export const ConquerGameJuegoPage = () => {
         setPiezasJugador(conquerGame.piezas)
     }, [conquerGame])
 
-    const handleClickPersonaje = useCallback((pieza) => {
+    const handleClickPersonaje = (pieza) => {
         if (!!piezaSeleccionada && piezaSeleccionada.nombre === pieza.nombre) {
             setPiezaSeleccionada(null)
         } else {
             setPiezaSeleccionada(pieza)
         }
-    }, [])
+    }
 
-    const handleClickTablero = useCallback((posicionPieza) => {
+    const handleClickTablero = (posicionPieza) => {
         if (!!!piezaSeleccionada) return
+        let posicionVieja = null
         const nuevaPiezaJugador = piezasJugador.map((pieza) => {
+            if (!!!posicionVieja && pieza.nombre === piezaSeleccionada.nombre && pieza.posicion !== '') {
+                posicionVieja = pieza.posicion
+            }
             return {
                 ...pieza,
                 posicion: pieza.nombre === piezaSeleccionada.nombre ? posicionPieza : pieza.posicion
             };
         })
         setPiezasJugador(nuevaPiezaJugador)
+        if (!!posicionVieja) {
+            const ref = refs.current[posicionVieja];
+            if (ref) {
+                ref.innerHTML = '';
+            }
+        }
+
         const ref = refs.current[posicionPieza];
-        console.log(ref)
-        console.log("entre")
         if (ref) {
             const pieza = nuevaPiezaJugador.find(p => p.posicion === posicionPieza);
-            console.log(pieza)
             ref.innerHTML = pieza ? `<img src="${pieza.direccion}" alt="Pieza" style="width:100%; height:100%;" />` : '';
         }
-    }, [])
+    }
 
     const setCuadroRef = useCallback((node, posicion) => {
         if (node) {
@@ -51,7 +59,6 @@ export const ConquerGameJuegoPage = () => {
     }, []);
 
     if (!!!piezasJugador) return <></>;
-
 
     return (
 
