@@ -12,21 +12,9 @@ export const CANTIDADJUGADORESTIPOJUEGO = Object.freeze({
       descripcion: 2
     },
     {
-      id: 3,
-      descripcion: 3
-    },
-    {
       id: 4,
       descripcion: 4
     },
-    {
-      id: 5,
-      descripcion: 5
-    },
-    {
-      id: 6,
-      descripcion: 6
-    }
   ],
   EQUIPO: [
     {

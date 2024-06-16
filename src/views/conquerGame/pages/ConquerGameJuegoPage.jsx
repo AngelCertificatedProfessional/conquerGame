@@ -5,6 +5,7 @@ import { SideBarConquerGame } from "../components";
 import { tamanoTableroY, tamanoTableroX } from "../../../types";
 import { numeroAAlfabeto } from "../../../helpers";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { piezaInvadePosicionConfiguracion } from "../../../helpers/conquerGame/validaPosicionPieza";
 
 export const ConquerGameJuegoPage = () => {
 
@@ -27,7 +28,13 @@ export const ConquerGameJuegoPage = () => {
 
     const handleClickTablero = (posicionPieza) => {
         if (!!!piezaSeleccionada) return
-        let posicionVieja = null
+        let posicionVieja = null;
+
+        if (piezaInvadePosicionConfiguracion(posicionPieza, piezaSeleccionada.nombre,
+            conquerGame, piezasJugador)) return
+
+
+
         const nuevaPiezaJugador = piezasJugador.map((pieza) => {
             if (!!!posicionVieja && pieza.nombre === piezaSeleccionada.nombre && pieza.posicion !== '') {
                 posicionVieja = pieza.posicion
