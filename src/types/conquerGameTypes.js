@@ -254,3 +254,11 @@ export const colorCasstilloEntrada = Object.freeze("rgb(185, 185, 179)");
 export const colorCasstilloSala = Object.freeze("rgb(94, 94, 89)");
 export const tamanoTableroX = Object.freeze(24);
 export const tamanoTableroY = Object.freeze(24);
+
+export const CONQUERGAMEPARTIDA = Object.freeze({
+  LOBBY: 1,
+  AGREGARPIEZASTABLERO: 2,
+  JUEGOINICIADO: 3,
+  FINALIZADO: 4,
+  CANCELADO: 5,
+})

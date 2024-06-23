@@ -12,7 +12,7 @@ export const useSocket = (serverPath) => {
     //Se rememorzan para poder evitar que cuando el la aplicacion refresca, evitar 
     //ejecutar los metodos cada ves que el elemento se redibjuje
     const conectarSocket = useCallback(() => {
-        // const token = localStorage.getItem('token')
+        // const token = sessionStorage.getItem('token')
         const socketTemp = io.connect(serverPath,
             {
                 transports: ['websocket'],

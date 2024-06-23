@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, DialogActions, Stack } from "@mui/material"
+import { Button, Card, CardContent, Stack } from "@mui/material"
 import { useBuscarPartida } from "../hooks"
 import { MyDataGrid } from "../../../template/components";
 export const BuscarPartida = () => {

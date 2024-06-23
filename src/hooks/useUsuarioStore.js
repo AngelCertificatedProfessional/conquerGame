@@ -12,8 +12,8 @@ export const useUsuarioStore = () => {
         try {
             const { data } = await conquerGameApi.post('/usuario/iniciarSesion', { correo, contrasena })
             if (!!!data.token) throw 'Es necesario recibir el token';
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('token-init-date', new Date().getTime());
+            sessionStorage.setItem('token', data.token);
+            sessionStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
         } catch (error) {
             dispatch(onLogout('Credenciales incorrectas'))
@@ -21,22 +21,22 @@ export const useUsuarioStore = () => {
     }
 
     const startLogout = () => {
-        localStorage.clear();
+        sessionStorage.clear();
         dispatch(onLogout())
     }
 
     const checkAuthToken = async () => {
-        const token = localStorage.getItem('token')
+        const token = sessionStorage.getItem('token')
         if (!token) return dispatch(onLogout())
 
         try {
             const { data } = await conquerGameApi.get('/usuario/renew')
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('usuario', data.usuario);
-            localStorage.setItem('token-init-date', new Date().getTime());
+            sessionStorage.setItem('token', data.token);
+            sessionStorage.setItem('usuario', data.usuario);
+            sessionStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
         } catch (error) {
-            localStorage.clear();
+            sessionStorage.clear();
             dispatch(onLogout())
         }
     }
@@ -46,9 +46,9 @@ export const useUsuarioStore = () => {
         try {
             const { data } = await conquerGameApi.get('/usuario/agregarUsuarioInvitado')
             if (!!!data.token) throw 'Es necesario recibir el token';
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('usuario', data.usuario);
-            localStorage.setItem('token-init-date', new Date().getTime());
+            sessionStorage.setItem('token', data.token);
+            sessionStorage.setItem('usuario', data.usuario);
+            sessionStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
         } catch (error) {
             dispatch(onLogout('Credenciales incorrectas'))

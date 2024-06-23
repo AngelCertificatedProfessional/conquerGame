@@ -1,14 +1,16 @@
 import { Card, CardActionArea, CardMedia, Tooltip } from "@mui/material";
-export const ListadoPiezas = ({ pieza, handleClick }) => {
+import { forwardRef } from "react";
+export const ListadoPiezas = forwardRef(({ pieza, handleClick }, ref) => {
     return (
         <Tooltip title={pieza.icono} >
             <Card
+                ref={ref}
                 sx={{
                     width: 80,
                     flexGrow: { sm: 0 },
                     height: 80,
                     display: 'flex',
-                    flexDirection: 'column'
+                    flexDirection: 'column',
                 }}
             >
                 <CardActionArea onClick={() => handleClick(pieza)}>
@@ -25,7 +27,7 @@ export const ListadoPiezas = ({ pieza, handleClick }) => {
 
     );
 }
-
+)
 
 
 

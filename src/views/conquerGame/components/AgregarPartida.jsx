@@ -34,7 +34,7 @@ export const AgregarPartida = () => {
                             // pointerEvents: isCargando ? "none" : "auto"
                         }}>
                         <Typography variant="h6">
-                            Agregar Partida
+                            Crear Partida
                         </Typography>
                         <MyRadioF
                             label="Tipo Juego"

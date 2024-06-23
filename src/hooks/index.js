@@ -1,4 +1,5 @@
 export * from './useConquerGameStore'
 export * from './useUiStore'
 export * from './useMyFormik'
+export * from './useSocket'
 export * from './useUsuarioStore'

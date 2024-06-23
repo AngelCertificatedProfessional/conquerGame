@@ -10,22 +10,19 @@ export const validaPiezaLago = (idDiv) => {
 
 export const validaInvacionTerreno2Jugadores = (sPiezaNuevaPosicion, turno) => {
     const nValor = eliminarLetras(sPiezaNuevaPosicion);
-    if (
+    return (
         (turno === "O" && nValor >= 1 && nValor <= tamanoTableroX / 2) ||
         (turno === "B" &&
             nValor >= tamanoTableroX / 2 + 1 &&
             nValor <= tamanoTableroX)
-    ) {
-        alert("Esta pieza esta invadiendo terreno");
-        return true;
-    }
+    )
 }
 
 export const validaInvacionTerreno4Jugadores = (sPiezaNuevaPosicion, turno) => {
     const nValor = eliminarLetras(sPiezaNuevaPosicion);
     //eliminacion de numeros para el lado vertical
     const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion));
-    if (
+    return (
         (turno === "O" &&
             ((nValor >= 1 && nValor <= tamanoTableroX / 2) ||
                 (nValorCol >= tamanoTableroY / 2 + 1 &&
@@ -42,10 +39,7 @@ export const validaInvacionTerreno4Jugadores = (sPiezaNuevaPosicion, turno) => {
             ((nValor >= tamanoTableroX / 2 + 1 &&
                 nValor <= tamanoTableroX) ||
                 (nValorCol >= 1 && nValorCol <= tamanoTableroY / 2)))
-    ) {
-        alert("Esta pieza esta invadiendo terreno");
-        return true;
-    }
+    )
 }
 
 export const piezaInvadePosicionConfiguracion = (sPiezaNuevaPosicion, nombrePiezaSeleccinada, conquerGame, piezasJugador) => {
@@ -54,10 +48,16 @@ export const piezaInvadePosicionConfiguracion = (sPiezaNuevaPosicion, nombrePiez
     if (ACCIONTIPOJUEGOOBJETO.INDIVIDUAL === conquerGame.tipoJuego) {
         switch (conquerGame.cantidadJugadores) {
             case 2:
-                if (validaInvacionTerreno2Jugadores(sPiezaNuevaPosicion, conquerGame.turno)) return true
+                if (validaInvacionTerreno2Jugadores(sPiezaNuevaPosicion, conquerGame.turno)) {
+                    alert("Esta pieza esta invadiendo terreno");
+                    return true
+                }
                 break;
             case 4:
-                if (validaInvacionTerreno4Jugadores(sPiezaNuevaPosicion, conquerGame.turno)) return true
+                if (validaInvacionTerreno4Jugadores(sPiezaNuevaPosicion, conquerGame.turno)) {
+                    alert("Esta pieza esta invadiendo terreno");
+                    return true
+                }
                 break;
         }
         // } else if (nTipoJuego === 2) {

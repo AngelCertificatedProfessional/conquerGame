@@ -1,10 +1,11 @@
-import { Box, Divider, List, Typography } from "@mui/material"
-import { useSideBarConquerGame } from "../hooks/useSideBarConquerGame"
+import { Box, Button, Divider, List, Typography } from "@mui/material"
+import { useSideBarConquerGame } from "../hooks"
 import { SideBarItemConquerGame } from "../views"
+import { CONQUERGAMEPARTIDA } from "../../../types"
 
 const drawerWidth = '200px'
-export const SideBarConquerGame = () => {
-    const { conquerGame } = useSideBarConquerGame()
+export const SideBarConquerGame = ({ handleClick, habilitarOpcionAceptar }) => {
+    const { conquerGame, iniciarPartida, user } = useSideBarConquerGame()
     return (
         <Box
             component="nav"
@@ -15,10 +16,27 @@ export const SideBarConquerGame = () => {
                 Jugadores
             </Typography>
             <Divider />
+            {
+                conquerGame.estatus === CONQUERGAMEPARTIDA.AGREGARPIEZASTABLERO && habilitarOpcionAceptar &&
+                <Button variant="contained" onClick={() => handleClick()} fullWidth >
+                    Aceptar
+                </Button>
+            }
+            {
+                conquerGame.estatus === CONQUERGAMEPARTIDA.AGREGARPIEZASTABLERO &&
+                conquerGame.jugadores.every(jugador => !!jugador.listo) &&
+                conquerGame.usuario_id === user.uid &&
+                <Button variant="contained" onClick={() => iniciarPartida()} fullWidth >
+                    Iniciar Partida
+                </Button>
+            }
             <List>
                 {
                     conquerGame.jugadores.map(jugador => (
-                        < SideBarItemConquerGame key={jugador._id} jugador={jugador} />
+                        < SideBarItemConquerGame
+                            key={jugador._id}
+                            jugador={jugador}
+                            estatus={conquerGame.estatus} />
                     ))
                 }
             </List>

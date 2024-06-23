@@ -30,7 +30,7 @@ export const useConquerGameStore = () => {
                 tipoJuego,
                 cantidadJugadores
             });
-            alertMensaje("Guardado", 'ConquerGame Guardado', "success");
+            alertMensaje("Guardado", 'Partida Generada', "success");
             dispatch(reiniciarPartida());
             data.data.turno = data.turnoJugador;
             dispatch(actualizarConquerGame(data.data))
@@ -57,10 +57,10 @@ export const useConquerGameStore = () => {
     };
 
     //Metodo utilizado para poder ingresar a las partidas, desde el listado
-    const ingresarPartida = async (conquerGame_id) => {
+    const ingresarLobbyPartida = async (conquerGame_id) => {
         try {
             startCargando(true);
-            const { data } = await conquerGameApi.patch(`/conquerGame/ingresarPartida/${conquerGame_id}`);
+            const { data } = await conquerGameApi.patch(`/conquerGame/ingresarLobbyPartida/${conquerGame_id}`);
             startCargando(false);
             dispatch(reiniciarPartida());
             data.data.turno = data.turnoJugador;
@@ -94,6 +94,22 @@ export const useConquerGameStore = () => {
                 }
             }));
         dispatch(cargarPiezas([...piezas]))
+    }
+
+    const indicarJugadorListo = async (piezasJugador) => {
+        startCargando(true);
+        await conquerGameApi.patch(`/conquerGame/indicarJugadorListo/${conquerGame.id}`, {
+            piezasJugador
+        });
+        startCargando(false);
+        cerrarVentana();
+    }
+
+    const iniciarPartida = async () => {
+        startCargando(true);
+        await conquerGameApi.patch(`/conquerGame/iniciarPartida/${conquerGame.id}`,);
+        startCargando(false);
+        cerrarVentana();
     }
 
     //    const agregarConquerGame= async ({
@@ -206,10 +222,12 @@ export const useConquerGameStore = () => {
         agregarPartida,
         startMostrarVentana,
         buscarPartidas,
-        ingresarPartida,
+        ingresarLobbyPartida,
         startActualizarConquerGame,
         mostrarTableroSeleccion,
-        inicializarPiezasJugador
+        inicializarPiezasJugador,
+        indicarJugadorListo,
+        iniciarPartida
         //    agregarConquerGame,
         //    buscarConquerGames,
         //    buscarConquerGameById,
