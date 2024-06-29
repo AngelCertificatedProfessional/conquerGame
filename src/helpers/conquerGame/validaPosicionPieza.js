@@ -1,5 +1,6 @@
-import { ACCIONTIPOJUEGOOBJETO, lagosConquerGame, montanasConquerGame, tamanoTableroX, tamanoTableroY } from "../../types";
+import { ARREGLOTIPOPIEZAS, lagosConquerGame, montanasConquerGame, tamanoTableroX, tamanoTableroY } from "../../types";
 import { eliminarLetras, eliminarNumeros, alfabetoANumero } from "../numerosLetras";
+import { movimientoRey } from "./piezas/rey";
 export const validaPiezaMontana = (idDiv) => {
     return montanasConquerGame.includes(idDiv);
 };
@@ -42,51 +43,7 @@ export const validaInvacionTerreno4Jugadores = (sPiezaNuevaPosicion, turno) => {
     )
 }
 
-export const piezaInvadePosicionConfiguracion = (sPiezaNuevaPosicion, nombrePiezaSeleccinada, conquerGame, piezasJugador) => {
-    //Evaluaremos si la pieza esta invadiendo terreno
-    //Validamos que el usuario pueda poner la pieza en esa posicion
-    if (ACCIONTIPOJUEGOOBJETO.INDIVIDUAL === conquerGame.tipoJuego) {
-        switch (conquerGame.cantidadJugadores) {
-            case 2:
-                if (validaInvacionTerreno2Jugadores(sPiezaNuevaPosicion, conquerGame.turno)) {
-                    alert("Esta pieza esta invadiendo terreno");
-                    return true
-                }
-                break;
-            case 4:
-                if (validaInvacionTerreno4Jugadores(sPiezaNuevaPosicion, conquerGame.turno)) {
-                    alert("Esta pieza esta invadiendo terreno");
-                    return true
-                }
-                break;
-        }
-        // } else if (nTipoJuego === 2) {
-        //     switch (nCantidadJugadores) {
-        //         case 4:
-        //             if (
-        //                 ((sTurno === "O" || sTurno === "B") && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-        //                 ((sTurno === "R" || sTurno === "P") &&
-        //                     nValor >= tamanoTableroLargo / 2 + 1 &&
-        //                     nValor <= tamanoTableroLargo)
-        //             ) {
-        //                 alert("Esta pieza esta invadiendo terreno");
-        //                 return true;
-        //             }
-        //             break;
-        //         case 6:
-        //             if (
-        //                 ((sTurno === "O" || sTurno === "B" || sTurno === "R") && nValor >= 1 && nValor <= tamanoTableroLargo / 2) ||
-        //                 ((sTurno === "P" || sTurno === "G" || sTurno === "Y") &&
-        //                     nValor >= tamanoTableroLargo / 2 + 1 &&
-        //                     nValor <= tamanoTableroLargo)
-        //             ) {
-        //                 alert("Esta pieza esta invadiendo terreno");
-        //                 return true;
-        //             }
-        //             break;
-        //     }
-    }
-
+export const piezaInvadePosicionConfiguracion = (sPiezaNuevaPosicion, nombrePiezaSeleccinada, piezasJugador) => {
     //Validamos que la pieza no este en esa posicion previamente
     const nPosicion = piezasJugador.findIndex(({ posicion, nombre }) => posicion === sPiezaNuevaPosicion && nombre !== nombrePiezaSeleccinada)
     if (nPosicion > -1) {
@@ -106,4 +63,35 @@ export const piezaInvadePosicionConfiguracion = (sPiezaNuevaPosicion, nombrePiez
         return true;
     }
     return false;
+}
+
+export const pintarCuadrosTableroPosicion = (pieza, posicionPieza, piezaJugador) => {
+    const col = eliminarNumeros(posicionPieza);
+    const row = parseInt(eliminarLetras(posicionPieza));
+    switch (pieza) {
+        case ARREGLOTIPOPIEZAS.ARCHERE:
+            return [];
+        case ARREGLOTIPOPIEZAS.ARCHER:
+            return [];
+        case ARREGLOTIPOPIEZAS.REY:
+            return movimientoRey(row, col, piezaJugador)
+        case ARREGLOTIPOPIEZAS.HACHEROE:
+            return [];
+        case ARREGLOTIPOPIEZAS.HACHERO:
+            return [];
+        case ARREGLOTIPOPIEZAS.LANCEROE:
+            return [];
+        case ARREGLOTIPOPIEZAS.LANCERO:
+            return [];
+        case ARREGLOTIPOPIEZAS.CABALLERO:
+            return [];
+        case ARREGLOTIPOPIEZAS.ASESINOE:
+            return [];
+        case ARREGLOTIPOPIEZAS.ASESINO:
+            return [];
+        case ARREGLOTIPOPIEZAS.HECHICERO:
+            return [];
+        case ARREGLOTIPOPIEZAS.CANON:
+            return [];
+    }
 }

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useConquerGameStore, useSocket } from "../../../../hooks"
-import { piezaInvadePosicionConfiguracion } from "../../../../helpers/conquerGame/validaPosicionPieza";
+import { piezaInvadePosicionConfiguracion, pintarCuadrosTableroPosicion } from "../../../../helpers/conquerGame/validaPosicionPieza";
 import { getEnvVariables } from "../../../../helpers";
 import { useNavigate } from 'react-router-dom';
 
@@ -11,6 +11,7 @@ export const useConquerGameLobbyTableroPage = () => {
         indicarJugadorListo, startActualizarConquerGame } = useConquerGameStore();
     const [piezaSeleccionada, setPiezaSeleccionada] = useState(null)
     const [piezasJugador, setPiezasJugador] = useState([])
+    const [posicionesPiezaMoverse, setPosicionesPiezaMoverse] = useState([])
     const [habilitarOpcionAceptar, setHabilitarOpcionAceptar] = useState(false)
     const [bloquearOpciones, setBloquearOpciones] = useState(false)
     const { socket, conectarSocket } = useSocket(VITE_SOCKET_URL)
@@ -58,8 +59,6 @@ export const useConquerGameLobbyTableroPage = () => {
         }
     }, []);
 
-
-
     const handleClickPersonaje = (pieza) => {
         if (!!bloquearOpciones) return
         if (!!piezaSeleccionada && piezaSeleccionada.nombre === pieza.nombre) {
@@ -87,11 +86,9 @@ export const useConquerGameLobbyTableroPage = () => {
     const handleClickTablero = (posicionPieza) => {
         if (!!bloquearOpciones) return
         if (!!!piezaSeleccionada) return
+        if (piezaInvadePosicionConfiguracion(posicionPieza, piezaSeleccionada.nombre, piezasJugador)) return
+        //Agregamos las posiciones al nuevo arreglo
         let posicionVieja = null;
-
-        if (piezaInvadePosicionConfiguracion(posicionPieza, piezaSeleccionada.nombre,
-            conquerGame, piezasJugador)) return
-
         const nuevaPiezaJugador = piezasJugador.map((pieza) => {
             if (!!!posicionVieja && pieza.nombre === piezaSeleccionada.nombre && pieza.posicion !== '') {
                 posicionVieja = pieza.posicion
@@ -116,6 +113,9 @@ export const useConquerGameLobbyTableroPage = () => {
         }
 
         setHabilitarOpcionAceptar(nuevaPiezaJugador.every((valor) => valor.posicion !== ''))
+        const pintarPosiciones = pintarCuadrosTableroPosicion(piezaSeleccionada.icono, posicionPieza, nuevaPiezaJugador);
+        console.log(pintarPosiciones)
+        setPosicionesPiezaMoverse(pintarPosiciones)
     }
 
     const aceptarPartida = () => {
@@ -129,10 +129,11 @@ export const useConquerGameLobbyTableroPage = () => {
         drawerWidth,
         piezasJugador,
         habilitarOpcionAceptar,
+        posicionesPiezaMoverse,
         handleClickTablero,
         handleClickPersonaje,
         setListadoRef,
         setCuadroRef,
-        aceptarPartida
+        aceptarPartida,
     }
 }
