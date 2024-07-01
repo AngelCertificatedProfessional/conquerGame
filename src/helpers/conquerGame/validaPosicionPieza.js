@@ -1,5 +1,10 @@
 import { ARREGLOTIPOPIEZAS, lagosConquerGame, montanasConquerGame, tamanoTableroX, tamanoTableroY } from "../../types";
 import { eliminarLetras, eliminarNumeros, alfabetoANumero } from "../numerosLetras";
+import { disparoArcher, movimientoArcher } from "./piezas/archer";
+import { movimientoAsesino } from "./piezas/asesino";
+import { movimientoCaballero } from "./piezas/caballero";
+import { movimientoHachero } from "./piezas/hachero";
+import { movimientoLancero } from "./piezas/lancero";
 import { movimientoRey } from "./piezas/rey";
 export const validaPiezaMontana = (idDiv) => {
     return montanasConquerGame.includes(idDiv);
@@ -65,33 +70,50 @@ export const piezaInvadePosicionConfiguracion = (sPiezaNuevaPosicion, nombrePiez
     return false;
 }
 
-export const pintarCuadrosTableroPosicion = (pieza, posicionPieza, piezaJugador) => {
+export const posicionesMovimientosPiezas = (pieza, posicionPieza, piezaJugador) => {
     const col = eliminarNumeros(posicionPieza);
     const row = parseInt(eliminarLetras(posicionPieza));
     switch (pieza) {
         case ARREGLOTIPOPIEZAS.ARCHERE:
             return [];
         case ARREGLOTIPOPIEZAS.ARCHER:
-            return [];
+            return movimientoArcher(row, col, piezaJugador)
         case ARREGLOTIPOPIEZAS.REY:
             return movimientoRey(row, col, piezaJugador)
         case ARREGLOTIPOPIEZAS.HACHEROE:
             return [];
         case ARREGLOTIPOPIEZAS.HACHERO:
-            return [];
+            return movimientoHachero(row, col, piezaJugador)
         case ARREGLOTIPOPIEZAS.LANCEROE:
             return [];
         case ARREGLOTIPOPIEZAS.LANCERO:
-            return [];
+            return movimientoLancero(row, col, piezaJugador)
         case ARREGLOTIPOPIEZAS.CABALLERO:
-            return [];
+            return movimientoCaballero(row, col, piezaJugador)
         case ARREGLOTIPOPIEZAS.ASESINOE:
             return [];
         case ARREGLOTIPOPIEZAS.ASESINO:
-            return [];
+            return movimientoAsesino(row, col, piezaJugador, false)
         case ARREGLOTIPOPIEZAS.HECHICERO:
             return [];
         case ARREGLOTIPOPIEZAS.CANON:
+            return [];
+    }
+}
+
+export const posicionesDispararPieza = (pieza, posicionPieza, piezaJugador) => {
+    const col = eliminarNumeros(posicionPieza);
+    const row = parseInt(eliminarLetras(posicionPieza));
+    switch (pieza) {
+        case ARREGLOTIPOPIEZAS.ARCHERE:
+            return [];
+        case ARREGLOTIPOPIEZAS.ARCHER:
+            return disparoArcher(row, col, piezaJugador)
+        case ARREGLOTIPOPIEZAS.HECHICERO:
+            return [];
+        case ARREGLOTIPOPIEZAS.CANON:
+            return [];
+        default:
             return [];
     }
 }

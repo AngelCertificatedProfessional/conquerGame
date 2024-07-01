@@ -14,6 +14,8 @@ export const ConquerGameJuegoPage = () => {
         piezasJugador,
         habilitarOpcionAceptar,
         posicionesPiezaMoverse,
+        posicionesPiezaDisparar,
+        posicionPiezaSeleccionada,
         setCuadroRef,
         setListadoRef,
         handleClickTablero,
@@ -91,6 +93,8 @@ export const ConquerGameJuegoPage = () => {
                                         handleClick={handleClickTablero}
                                         bAreaNoSeleccionable={bAreaNoSeleccionable}
                                         posicionesPiezaMoverse={posicionesPiezaMoverse}
+                                        posicionesPiezaDisparar={posicionesPiezaDisparar}
+                                        posicionPiezaSeleccionada={posicionPiezaSeleccionada}
                                     />
                                 )
                             }

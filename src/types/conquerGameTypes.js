@@ -31,7 +31,7 @@ export const CANTIDADJUGADORESTIPOJUEGO = Object.freeze({
 
 export const ACCIONTIPOJUEGO = Object.freeze([
   { id: 1, descripcion: "INDIVIDUAL" },
-  { id: 2, descripcion: "EQUIPO" },
+  // { id: 2, descripcion: "EQUIPO" },
 ])
 
 export const ESTRUCTURACREARPARTIDA = Object.freeze({
@@ -247,14 +247,14 @@ export const colorTablero = Object.freeze("rgb(240, 201, 150)");
 export const colorMontana = Object.freeze("rgb(14, 155, 0)");
 export const colorLago = Object.freeze("rgb(63, 234, 229)");
 export const colorMovimientoOpciones = Object.freeze("rgb(195, 208, 39)");
-export const colorDisparoArcher = Object.freeze("rgb(223, 55, 19)");
+export const colorDisparo = Object.freeze("rgb(223, 55, 19)");
 export const colorSeleccionadoTablero = Object.freeze("rgb(213, 92, 209)");
 export const colorSeleccionadoListado = Object.freeze("rgb(72, 66, 65)");
 export const colorCasstilloEntrada = Object.freeze("rgb(185, 185, 179)");
 export const colorCasstilloSala = Object.freeze("rgb(94, 94, 89)");
 export const ARREGLOTIPOPIEZAS = Object.freeze({
   ARCHERE: "archerE",
-  ARCHER: "arquero",
+  ARCHER: "archer",
   REY: "rey",
   HACHEROE: "hacheroE",
   HACHERO: "hachero",

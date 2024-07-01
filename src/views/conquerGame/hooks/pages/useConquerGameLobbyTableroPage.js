@@ -1,6 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useConquerGameStore, useSocket } from "../../../../hooks"
-import { piezaInvadePosicionConfiguracion, pintarCuadrosTableroPosicion } from "../../../../helpers/conquerGame/validaPosicionPieza";
+import {
+    piezaInvadePosicionConfiguracion,
+    posicionesMovimientosPiezas,
+    posicionesDispararPieza
+} from "../../../../helpers/conquerGame/validaPosicionPieza";
 import { getEnvVariables } from "../../../../helpers";
 import { useNavigate } from 'react-router-dom';
 
@@ -12,6 +16,8 @@ export const useConquerGameLobbyTableroPage = () => {
     const [piezaSeleccionada, setPiezaSeleccionada] = useState(null)
     const [piezasJugador, setPiezasJugador] = useState([])
     const [posicionesPiezaMoverse, setPosicionesPiezaMoverse] = useState([])
+    const [posicionesPiezaDisparar, setPosicionesPiezaDisparar] = useState([])
+    const [posicionPiezaSeleccionada, setPosicionPiezaSeleccionada] = useState('')
     const [habilitarOpcionAceptar, setHabilitarOpcionAceptar] = useState(false)
     const [bloquearOpciones, setBloquearOpciones] = useState(false)
     const { socket, conectarSocket } = useSocket(VITE_SOCKET_URL)
@@ -61,6 +67,7 @@ export const useConquerGameLobbyTableroPage = () => {
 
     const handleClickPersonaje = (pieza) => {
         if (!!bloquearOpciones) return
+
         if (!!piezaSeleccionada && piezaSeleccionada.nombre === pieza.nombre) {
             setPiezaSeleccionada(null)
             const ref = refsPiezas.current[pieza.nombre];
@@ -77,6 +84,8 @@ export const useConquerGameLobbyTableroPage = () => {
             }
         }
         setPiezaSeleccionada(pieza)
+        const { posicion } = piezasJugador.find(({ nombre }) => nombre === pieza.nombre)
+        evaluarPosiciones(!!posicion ? posicion : '', piezasJugador, pieza)
         const ref = refsPiezas.current[pieza.nombre];
         if (ref) {
             ref.style.backgroundColor = "rgba(225, 234, 57, 0.65)";
@@ -113,9 +122,13 @@ export const useConquerGameLobbyTableroPage = () => {
         }
 
         setHabilitarOpcionAceptar(nuevaPiezaJugador.every((valor) => valor.posicion !== ''))
-        const pintarPosiciones = pintarCuadrosTableroPosicion(piezaSeleccionada.icono, posicionPieza, nuevaPiezaJugador);
-        console.log(pintarPosiciones)
-        setPosicionesPiezaMoverse(pintarPosiciones)
+        evaluarPosiciones(posicionPieza, nuevaPiezaJugador, piezaSeleccionada)
+    }
+
+    const evaluarPosiciones = (posicionPieza, piezaJugador, piezaSeleccionada) => {
+        setPosicionesPiezaMoverse(posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza, piezaJugador))
+        setPosicionesPiezaDisparar(posicionesDispararPieza(piezaSeleccionada.icono, posicionPieza, piezaJugador))
+        setPosicionPiezaSeleccionada(posicionPieza)
     }
 
     const aceptarPartida = () => {
@@ -130,6 +143,8 @@ export const useConquerGameLobbyTableroPage = () => {
         piezasJugador,
         habilitarOpcionAceptar,
         posicionesPiezaMoverse,
+        posicionesPiezaDisparar,
+        posicionPiezaSeleccionada,
         handleClickTablero,
         handleClickPersonaje,
         setListadoRef,

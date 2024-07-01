@@ -1,4 +1,9 @@
-// import { alfabetoANumero, numeroAAlfabeto } from "../../UtileriasPagina.js";
+import { alfabetoANumero } from "../../numerosLetras";
+import {
+  movimientoEste, movimientoNorEste, movimientoNorOeste,
+  movimientoNorte, movimientoOeste, movimientoSur,
+  movimientoSurEste, movimientoSurOeste
+} from "./base";
 // import {
 //   colorOpciones,
 //   colorSeleccionadoTablero,
@@ -6,138 +11,200 @@
 //   tamanoTableroLargo,
 //   validaPiezaMontana,
 // } from "../ConfiguracionTableroConquerGame.js";
-// export const valorPuntos = 10;
-// export const valorPuntosElite = 40;
-export const movimientoAsesino = (row, col, item, bMovioAsesino) => {
-  let nCol = alfabetoANumero(col);
-  //La funcionalidad del asesino es matar dos caminar dos veces, matar dos veces por eso
-  // se realiza una evaluacion de su movimiento
-  if (!bMovioAsesino) {
-    if (nCol < tamanoTableroAncho) {
-      if (!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol + 1)}`)) {
-        document.getElementById(
-          `${row}${numeroAAlfabeto(nCol + 1)}`
-        ).style.backgroundColor = colorOpciones;
-      }
+// export const valorPuntos = 100;
+const limitePosicionDiagonal = 1;
+const limitePosicionLineal = 1;
+const inicioPazos = 1;
+export const movimientoAsesino = (row, col, piezaJugador, bSegundoMovimientoAsesino) => {
+  let arregloPosiciones = []
+  const nCol = alfabetoANumero(col);
+  let arregloTemp = []
+  if (bSegundoMovimientoAsesino) {
+    arregloTemp = movimientoNorEste(row, nCol, piezaJugador, inicioPazos, limitePosicionDiagonal, false);
+    if (arregloTemp.length > 0) {
+      arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
     }
-    //Oeste
-    if (nCol > 1) {
-      if (!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol - 1)}`)) {
-        document.getElementById(
-          `${row}${numeroAAlfabeto(nCol - 1)}`
-        ).style.backgroundColor = colorOpciones;
-      }
+    arregloTemp = movimientoSurEste(row, nCol, piezaJugador, inicioPazos, limitePosicionDiagonal, false);
+    if (arregloTemp.length > 0) {
+      arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
     }
-    //Norte
-    if (row < tamanoTableroLargo) {
-      if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol)}`)) {
-        document.getElementById(
-          `${row + 1}${numeroAAlfabeto(nCol)}`
-        ).style.backgroundColor = colorOpciones;
-      }
+    arregloTemp = movimientoNorOeste(row, nCol, piezaJugador, inicioPazos, limitePosicionDiagonal, false);
+    if (arregloTemp.length > 0) {
+      arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
     }
-    //Sur
-    if (row > 1) {
-      if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol)}`)) {
-        document.getElementById(
-          `${row - 1}${numeroAAlfabeto(nCol)}`
-        ).style.backgroundColor = colorOpciones;
-      }
+
+    arregloTemp = movimientoSurOeste(row, nCol, piezaJugador, inicioPazos, limitePosicionDiagonal, false);
+    if (arregloTemp.length > 0) {
+      arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
     }
   } else {
-    if (row > 1 && nCol < tamanoTableroAncho) {
-      if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol + 1)}`)) {
-        document.getElementById(
-          `${row - 1}${numeroAAlfabeto(nCol + 1)}`
-        ).style.backgroundColor = colorOpciones;
-      }
+
+    arregloTemp = movimientoNorte(row, nCol, piezaJugador, inicioPazos, limitePosicionLineal, false);
+    if (arregloTemp.length > 0) {
+      arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
     }
-    if (row > 1 && nCol > 1) {
-      if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol - 1)}`)) {
-        document.getElementById(
-          `${row - 1}${numeroAAlfabeto(nCol - 1)}`
-        ).style.backgroundColor = colorOpciones;
-      }
+
+    arregloTemp = movimientoSur(row, nCol, piezaJugador, inicioPazos, limitePosicionLineal, false);
+    if (arregloTemp.length > 0) {
+      arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
     }
-    if (row < tamanoTableroLargo && nCol < tamanoTableroAncho) {
-      if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol + 1)}`)) {
-        document.getElementById(
-          `${row + 1}${numeroAAlfabeto(nCol + 1)}`
-        ).style.backgroundColor = colorOpciones;
-      }
+
+    arregloTemp = movimientoEste(row, nCol, piezaJugador, inicioPazos, limitePosicionLineal, false);
+    if (arregloTemp.length > 0) {
+      arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
     }
-    if (row < tamanoTableroLargo && nCol > 1) {
-      if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol - 1)}`)) {
-        document.getElementById(
-          `${row + 1}${numeroAAlfabeto(nCol - 1)}`
-        ).style.backgroundColor = colorOpciones;
-      }
+
+    arregloTemp = movimientoOeste(row, nCol, piezaJugador, inicioPazos, limitePosicionLineal, false);
+    if (arregloTemp.length > 0) {
+      arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
     }
+
+
   }
-  item.style.backgroundColor = colorSeleccionadoTablero;
+  return arregloPosiciones;
 };
-export const movimientoAsesinoElite = (row, col, item) => {
-  let nCol = alfabetoANumero(col);
-  //La funcionalidad del asesino es matar dos caminar dos veces, matar dos veces por eso
-  // se realiza una evaluacion de su movimiento
-  if (nCol < tamanoTableroAncho) {
-    if (!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol + 1)}`)) {
-      document.getElementById(
-        `${row}${numeroAAlfabeto(nCol + 1)}`
-      ).style.backgroundColor = colorOpciones;
-    }
-  }
-  //Oeste
-  if (nCol > 1) {
-    if (!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol - 1)}`)) {
-      document.getElementById(
-        `${row}${numeroAAlfabeto(nCol - 1)}`
-      ).style.backgroundColor = colorOpciones;
-    }
-  }
-  //Norte
-  if (row < tamanoTableroLargo) {
-    if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol)}`)) {
-      document.getElementById(
-        `${row + 1}${numeroAAlfabeto(nCol)}`
-      ).style.backgroundColor = colorOpciones;
-    }
-  }
-  //Sur
-  if (row > 1) {
-    if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol)}`)) {
-      document.getElementById(
-        `${row - 1}${numeroAAlfabeto(nCol)}`
-      ).style.backgroundColor = colorOpciones;
-    }
-  }
-  if (row > 1 && nCol < tamanoTableroAncho) {
-    if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol + 1)}`)) {
-      document.getElementById(
-        `${row - 1}${numeroAAlfabeto(nCol + 1)}`
-      ).style.backgroundColor = colorOpciones;
-    }
-  }
-  if (row > 1 && nCol > 1) {
-    if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol - 1)}`)) {
-      document.getElementById(
-        `${row - 1}${numeroAAlfabeto(nCol - 1)}`
-      ).style.backgroundColor = colorOpciones;
-    }
-  }
-  if (row < tamanoTableroLargo && nCol < tamanoTableroAncho) {
-    if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol + 1)}`)) {
-      document.getElementById(
-        `${row + 1}${numeroAAlfabeto(nCol + 1)}`
-      ).style.backgroundColor = colorOpciones;
-    }
-  }
-  if (row < tamanoTableroLargo && nCol > 1) {
-    if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol - 1)}`)) {
-      document.getElementById(
-        `${row + 1}${numeroAAlfabeto(nCol - 1)}`
-      ).style.backgroundColor = colorOpciones;
-    }
-  }
-  item.style.backgroundColor = colorSeleccionadoTablero;
-};
+
+
+// // import { alfabetoANumero, numeroAAlfabeto } from "../../UtileriasPagina.js";
+// // import {
+// //   colorOpciones,
+// //   colorSeleccionadoTablero,
+// //   tamanoTableroAncho,
+// //   tamanoTableroLargo,
+// //   validaPiezaMontana,
+// // } from "../ConfiguracionTableroConquerGame.js";
+// // export const valorPuntos = 10;
+// // export const valorPuntosElite = 40;
+// export const movimientoAsesino = (row, col, item, bMovioAsesino) => {
+//   let nCol = alfabetoANumero(col);
+//   //La funcionalidad del asesino es matar dos caminar dos veces, matar dos veces por eso
+//   // se realiza una evaluacion de su movimiento
+//   if (!bMovioAsesino) {
+//     if (nCol < tamanoTableroAncho) {
+//       if (!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol + 1)}`)) {
+//         document.getElementById(
+//           `${row}${numeroAAlfabeto(nCol + 1)}`
+//         ).style.backgroundColor = colorOpciones;
+//       }
+//     }
+//     //Oeste
+//     if (nCol > 1) {
+//       if (!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol - 1)}`)) {
+//         document.getElementById(
+//           `${row}${numeroAAlfabeto(nCol - 1)}`
+//         ).style.backgroundColor = colorOpciones;
+//       }
+//     }
+//     //Norte
+//     if (row < tamanoTableroLargo) {
+//       if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol)}`)) {
+//         document.getElementById(
+//           `${row + 1}${numeroAAlfabeto(nCol)}`
+//         ).style.backgroundColor = colorOpciones;
+//       }
+//     }
+//     //Sur
+//     if (row > 1) {
+//       if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol)}`)) {
+//         document.getElementById(
+//           `${row - 1}${numeroAAlfabeto(nCol)}`
+//         ).style.backgroundColor = colorOpciones;
+//       }
+//     }
+//   } else {
+//     if (row > 1 && nCol < tamanoTableroAncho) {
+//       if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol + 1)}`)) {
+//         document.getElementById(
+//           `${row - 1}${numeroAAlfabeto(nCol + 1)}`
+//         ).style.backgroundColor = colorOpciones;
+//       }
+//     }
+//     if (row > 1 && nCol > 1) {
+//       if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol - 1)}`)) {
+//         document.getElementById(
+//           `${row - 1}${numeroAAlfabeto(nCol - 1)}`
+//         ).style.backgroundColor = colorOpciones;
+//       }
+//     }
+//     if (row < tamanoTableroLargo && nCol < tamanoTableroAncho) {
+//       if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol + 1)}`)) {
+//         document.getElementById(
+//           `${row + 1}${numeroAAlfabeto(nCol + 1)}`
+//         ).style.backgroundColor = colorOpciones;
+//       }
+//     }
+//     if (row < tamanoTableroLargo && nCol > 1) {
+//       if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol - 1)}`)) {
+//         document.getElementById(
+//           `${row + 1}${numeroAAlfabeto(nCol - 1)}`
+//         ).style.backgroundColor = colorOpciones;
+//       }
+//     }
+//   }
+//   item.style.backgroundColor = colorSeleccionadoTablero;
+// };
+// export const movimientoAsesinoElite = (row, col, item) => {
+//   let nCol = alfabetoANumero(col);
+//   //La funcionalidad del asesino es matar dos caminar dos veces, matar dos veces por eso
+//   // se realiza una evaluacion de su movimiento
+//   if (nCol < tamanoTableroAncho) {
+//     if (!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol + 1)}`)) {
+//       document.getElementById(
+//         `${row}${numeroAAlfabeto(nCol + 1)}`
+//       ).style.backgroundColor = colorOpciones;
+//     }
+//   }
+//   //Oeste
+//   if (nCol > 1) {
+//     if (!validaPiezaMontana(`${row}${numeroAAlfabeto(nCol - 1)}`)) {
+//       document.getElementById(
+//         `${row}${numeroAAlfabeto(nCol - 1)}`
+//       ).style.backgroundColor = colorOpciones;
+//     }
+//   }
+//   //Norte
+//   if (row < tamanoTableroLargo) {
+//     if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol)}`)) {
+//       document.getElementById(
+//         `${row + 1}${numeroAAlfabeto(nCol)}`
+//       ).style.backgroundColor = colorOpciones;
+//     }
+//   }
+//   //Sur
+//   if (row > 1) {
+//     if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol)}`)) {
+//       document.getElementById(
+//         `${row - 1}${numeroAAlfabeto(nCol)}`
+//       ).style.backgroundColor = colorOpciones;
+//     }
+//   }
+//   if (row > 1 && nCol < tamanoTableroAncho) {
+//     if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol + 1)}`)) {
+//       document.getElementById(
+//         `${row - 1}${numeroAAlfabeto(nCol + 1)}`
+//       ).style.backgroundColor = colorOpciones;
+//     }
+//   }
+//   if (row > 1 && nCol > 1) {
+//     if (!validaPiezaMontana(`${row - 1}${numeroAAlfabeto(nCol - 1)}`)) {
+//       document.getElementById(
+//         `${row - 1}${numeroAAlfabeto(nCol - 1)}`
+//       ).style.backgroundColor = colorOpciones;
+//     }
+//   }
+//   if (row < tamanoTableroLargo && nCol < tamanoTableroAncho) {
+//     if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol + 1)}`)) {
+//       document.getElementById(
+//         `${row + 1}${numeroAAlfabeto(nCol + 1)}`
+//       ).style.backgroundColor = colorOpciones;
+//     }
+//   }
+//   if (row < tamanoTableroLargo && nCol > 1) {
+//     if (!validaPiezaMontana(`${row + 1}${numeroAAlfabeto(nCol - 1)}`)) {
+//       document.getElementById(
+//         `${row + 1}${numeroAAlfabeto(nCol - 1)}`
+//       ).style.backgroundColor = colorOpciones;
+//     }
+//   }
+//   item.style.backgroundColor = colorSeleccionadoTablero;
+// };
