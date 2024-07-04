@@ -69,7 +69,10 @@ export const useConquerGameLobbyTableroPage = () => {
         if (!!bloquearOpciones) return
 
         if (!!piezaSeleccionada && piezaSeleccionada.nombre === pieza.nombre) {
+            setPosicionesPiezaMoverse([])
+            setPosicionesPiezaDisparar([])
             setPiezaSeleccionada(null)
+            setPosicionPiezaSeleccionada("")
             const ref = refsPiezas.current[pieza.nombre];
             if (ref) {
                 ref.style.backgroundColor = "rgba(255, 255, 255, 1)";
@@ -132,6 +135,7 @@ export const useConquerGameLobbyTableroPage = () => {
     }
 
     const aceptarPartida = () => {
+        handleClickPersonaje(piezaSeleccionada)
         indicarJugadorListo(piezasJugador)
         setHabilitarOpcionAceptar(false)
         setBloquearOpciones(true)

@@ -5,7 +5,7 @@ export const ListaJugadores = ({ jugador, index }) => {
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea>
-        <Card sx={[useStylesConquerGame[`targetaJugador${jugador.turno}`], { display: 'flex' }]}>
+        <Card sx={[{ display: 'flex' }]}>
           <CardContent sx={{ flex: 1 }} >
             <Typography component="h2" variant="h5">
               {jugador.usuario}

@@ -22,6 +22,12 @@ export const useConquerGameLobbyPage = () => {
 
     useEffect(() => {
         socket?.on(`conquerGame${conquerGame.numeroPartida}IngresarSeleccionPersonaje`, (conquerGameT) => {
+            for (let index = 0; index < conquerGameT.jugadores.length; index++) {
+                if (conquerGameT.jugadores[index]._id === user.uid) {
+                    conquerGameT.turno = conquerGameT.jugadores[index].turno;
+                    break;
+                }
+            };
             startActualizarConquerGame(conquerGameT)
             navigate("/conquerGame/conquerGameLobbyTablero")
         })

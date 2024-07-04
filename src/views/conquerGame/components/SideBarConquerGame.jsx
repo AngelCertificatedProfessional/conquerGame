@@ -36,7 +36,8 @@ export const SideBarConquerGame = ({ handleClick, habilitarOpcionAceptar }) => {
                         < SideBarItemConquerGame
                             key={jugador._id}
                             jugador={jugador}
-                            estatus={conquerGame.estatus} />
+                            estatus={conquerGame.estatus}
+                        />
                     ))
                 }
             </List>

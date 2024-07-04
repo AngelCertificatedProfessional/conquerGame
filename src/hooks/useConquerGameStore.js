@@ -32,7 +32,6 @@ export const useConquerGameStore = () => {
             });
             alertMensaje("Guardado", 'Partida Generada', "success");
             dispatch(reiniciarPartida());
-            data.data.turno = data.turnoJugador;
             dispatch(actualizarConquerGame(data.data))
             cerrarVentana();
             navigate("/conquerGame/conquerGameLobby");
@@ -63,7 +62,6 @@ export const useConquerGameStore = () => {
             const { data } = await conquerGameApi.patch(`/conquerGame/ingresarLobbyPartida/${conquerGame_id}`);
             startCargando(false);
             dispatch(reiniciarPartida());
-            data.data.turno = data.turnoJugador;
             startActualizarConquerGame(data.data)
             cerrarVentana();
             navigate("/conquerGame/conquerGameLobby");
@@ -90,6 +88,7 @@ export const useConquerGameStore = () => {
             ESTRUCTURAPIEZAS.map(async (pieza) => {
                 return {
                     ...pieza,
+                    nombre: `${conquerGame.turno}${pieza.nombre}`,
                     direccion: (await import(`../images/conquerGame/${conquerGame.turno}${pieza.icono}.png`)).default
                 }
             }));
