@@ -72,7 +72,6 @@ export const useConquerGameStore = () => {
     };
 
     const startActualizarConquerGame = async (conquerGameP) => {
-        //Evaluamos el jugador y le asignamos el turno correspondiente
         dispatch(actualizarConquerGame(conquerGameP))
     }
     //Al momento que el usuario da ingresar
@@ -88,8 +87,8 @@ export const useConquerGameStore = () => {
             ESTRUCTURAPIEZAS.map(async (pieza) => {
                 return {
                     ...pieza,
-                    nombre: `${conquerGame.turno}${pieza.nombre}`,
-                    direccion: (await import(`../images/conquerGame/${conquerGame.turno}${pieza.icono}.png`)).default
+                    nombre: `${conquerGame.turnoJugador}${pieza.nombre}`,
+                    direccion: (await import(`../images/conquerGame/${conquerGame.turnoJugador}${pieza.icono}.png`)).default
                 }
             }));
         dispatch(cargarPiezas([...piezas]))
@@ -106,7 +105,16 @@ export const useConquerGameStore = () => {
 
     const iniciarPartida = async () => {
         startCargando(true);
-        await conquerGameApi.patch(`/conquerGame/iniciarPartida/${conquerGame.id}`,);
+        await conquerGameApi.patch(`/conquerGame/iniciarPartida/${conquerGame.id}`);
+        startCargando(false);
+        cerrarVentana();
+    }
+
+    const moverPosicionPiezasGlobal = async (posicionPiezasGlobal) => {
+        startCargando(true);
+        await conquerGameApi.patch(`/conquerGame/moverPosicionPiezasGlobal/${conquerGame.id}`, {
+            posicionPiezasGlobal
+        });
         startCargando(false);
         cerrarVentana();
     }
@@ -226,7 +234,8 @@ export const useConquerGameStore = () => {
         mostrarTableroSeleccion,
         inicializarPiezasJugador,
         indicarJugadorListo,
-        iniciarPartida
+        iniciarPartida,
+        moverPosicionPiezasGlobal
         //    agregarConquerGame,
         //    buscarConquerGames,
         //    buscarConquerGameById,

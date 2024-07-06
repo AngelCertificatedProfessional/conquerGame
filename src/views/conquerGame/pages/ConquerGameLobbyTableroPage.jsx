@@ -78,10 +78,10 @@ export const ConquerGameJuegoPage = () => {
                                 if (ACCIONTIPOJUEGOOBJETO.INDIVIDUAL === conquerGame.tipoJuego) {
                                     switch (conquerGame.cantidadJugadores) {
                                         case 2:
-                                            bAreaNoSeleccionable = validaInvacionTerreno2Jugadores(posicion, conquerGame.turno)
+                                            bAreaNoSeleccionable = validaInvacionTerreno2Jugadores(posicion, conquerGame.turnoJugador)
                                             break;
                                         case 4:
-                                            bAreaNoSeleccionable = validaInvacionTerreno4Jugadores(posicion, conquerGame.turno)
+                                            bAreaNoSeleccionable = validaInvacionTerreno4Jugadores(posicion, conquerGame.turnoJugador)
                                             break;
                                     }
                                 }

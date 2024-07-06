@@ -14,34 +14,34 @@ export const validaPiezaLago = (idDiv) => {
     return lagosConquerGame.includes(idDiv);
 };
 
-export const validaInvacionTerreno2Jugadores = (sPiezaNuevaPosicion, turno) => {
+export const validaInvacionTerreno2Jugadores = (sPiezaNuevaPosicion, turnoJugador) => {
     const nValor = eliminarLetras(sPiezaNuevaPosicion);
     return (
-        (turno === "O" && nValor >= 1 && nValor <= tamanoTableroX / 2) ||
-        (turno === "B" &&
+        (turnoJugador === "O" && nValor >= 1 && nValor <= tamanoTableroX / 2) ||
+        (turnoJugador === "B" &&
             nValor >= tamanoTableroX / 2 + 1 &&
             nValor <= tamanoTableroX)
     )
 }
 
-export const validaInvacionTerreno4Jugadores = (sPiezaNuevaPosicion, turno) => {
+export const validaInvacionTerreno4Jugadores = (sPiezaNuevaPosicion, turnoJugador) => {
     const nValor = eliminarLetras(sPiezaNuevaPosicion);
     //eliminacion de numeros para el lado vertical
     const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion));
     return (
-        (turno === "O" &&
+        (turnoJugador === "O" &&
             ((nValor >= 1 && nValor <= tamanoTableroX / 2) ||
                 (nValorCol >= tamanoTableroY / 2 + 1 &&
                     nValorCol <= tamanoTableroY))) ||
-        (turno === "B" &&
+        (turnoJugador === "B" &&
             ((nValor >= 1 && nValor <= tamanoTableroX / 2) ||
                 (nValorCol >= 1 && nValorCol <= tamanoTableroY / 2))) ||
-        (turno === "R" &&
+        (turnoJugador === "R" &&
             ((nValor >= tamanoTableroX / 2 + 1 &&
                 nValor <= tamanoTableroX) ||
                 (nValorCol >= tamanoTableroY / 2 + 1 &&
                     nValorCol <= tamanoTableroY))) ||
-        (turno === "P" &&
+        (turnoJugador === "P" &&
             ((nValor >= tamanoTableroX / 2 + 1 &&
                 nValor <= tamanoTableroX) ||
                 (nValorCol >= 1 && nValorCol <= tamanoTableroY / 2)))

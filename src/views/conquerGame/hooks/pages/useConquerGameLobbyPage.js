@@ -24,7 +24,7 @@ export const useConquerGameLobbyPage = () => {
         socket?.on(`conquerGame${conquerGame.numeroPartida}IngresarSeleccionPersonaje`, (conquerGameT) => {
             for (let index = 0; index < conquerGameT.jugadores.length; index++) {
                 if (conquerGameT.jugadores[index]._id === user.uid) {
-                    conquerGameT.turno = conquerGameT.jugadores[index].turno;
+                    conquerGameT.turnoJugador = conquerGameT.jugadores[index].turnoJugador;
                     break;
                 }
             };
