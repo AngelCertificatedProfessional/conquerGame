@@ -16,7 +16,6 @@ export const ConquerGameJuegoPage = () => {
         posicionesPiezaMoverse,
         posicionesPiezaDisparar,
         posicionPiezaSeleccionada,
-        setCuadroRef,
         setListadoRef,
         handleClickTablero,
         handleClickPersonaje,
@@ -87,7 +86,7 @@ export const ConquerGameJuegoPage = () => {
                                 }
                                 return (
                                     < CuadroMapa
-                                        ref={node => setCuadroRef(node, posicion)}
+                                        piezasJugador={piezasJugador}
                                         key={posicion}
                                         posicion={posicion}
                                         handleClick={handleClickTablero}

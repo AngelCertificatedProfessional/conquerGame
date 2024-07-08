@@ -7,11 +7,12 @@ import {
 } from "../../../../helpers/conquerGame/validaPosicionPieza";
 import { getEnvVariables } from "../../../../helpers";
 import { useNavigate } from 'react-router-dom';
+import { inicializarPiezasJugador } from "../../../../helpers/conquerGame/inicializarPiezasJugador";
 
 const drawerWidth = '200px';
 export const useConquerGameLobbyTableroPage = () => {
     const { VITE_SOCKET_URL } = getEnvVariables()
-    const { conquerGame, inicializarPiezasJugador,
+    const { conquerGame,
         indicarJugadorListo, startActualizarConquerGame } = useConquerGameStore();
     const [piezaSeleccionada, setPiezaSeleccionada] = useState(null)
     const [piezasJugador, setPiezasJugador] = useState([])
@@ -22,15 +23,15 @@ export const useConquerGameLobbyTableroPage = () => {
     const [bloquearOpciones, setBloquearOpciones] = useState(false)
     const { socket, conectarSocket } = useSocket(VITE_SOCKET_URL)
     const refsPiezas = useRef({});
-    const refsCuadro = useRef({});
     const navigate = useNavigate();
 
-    useEffect(() => {
-        setPiezasJugador(conquerGame.piezas)
-    }, [conquerGame])
+    const cargarPiezasJugador = async () => {
+        const piezas = await inicializarPiezasJugador(conquerGame)
+        setPiezasJugador(piezas)
+    }
 
     useEffect(() => {
-        inicializarPiezasJugador()
+        cargarPiezasJugador()
     }, [])
 
 
@@ -56,12 +57,6 @@ export const useConquerGameLobbyTableroPage = () => {
     const setListadoRef = useCallback((node, posicion) => {
         if (node) {
             refsPiezas.current[posicion] = node;
-        }
-    }, []);
-
-    const setCuadroRef = useCallback((node, posicion) => {
-        if (node) {
-            refsCuadro.current[posicion] = node;
         }
     }, []);
 
@@ -100,37 +95,20 @@ export const useConquerGameLobbyTableroPage = () => {
         if (!!!piezaSeleccionada) return
         if (piezaInvadePosicionConfiguracion(posicionPieza, piezaSeleccionada.nombre, piezasJugador)) return
         //Agregamos las posiciones al nuevo arreglo
-        let posicionVieja = null;
         const nuevaPiezaJugador = piezasJugador.map((pieza) => {
-            if (!!!posicionVieja && pieza.nombre === piezaSeleccionada.nombre && pieza.posicion !== '') {
-                posicionVieja = pieza.posicion
-            }
             return {
                 ...pieza,
                 posicion: pieza.nombre === piezaSeleccionada.nombre ? posicionPieza : pieza.posicion
             };
         })
         setPiezasJugador(nuevaPiezaJugador)
-        if (!!posicionVieja) {
-            const ref = refsCuadro.current[posicionVieja];
-            if (ref) {
-                ref.innerHTML = '';
-            }
-        }
-
-        const ref = refsCuadro.current[posicionPieza];
-        if (ref) {
-            const pieza = nuevaPiezaJugador.find(p => p.posicion === posicionPieza);
-            ref.innerHTML = pieza ? `<img src="${pieza.direccion}" alt="Pieza" style="width:100%; height:100%;" />` : '';
-        }
-
         setHabilitarOpcionAceptar(nuevaPiezaJugador.every((valor) => valor.posicion !== ''))
         evaluarPosiciones(posicionPieza, nuevaPiezaJugador, piezaSeleccionada)
     }
 
     const evaluarPosiciones = (posicionPieza, piezaJugador, piezaSeleccionada) => {
-        setPosicionesPiezaMoverse(posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza, piezaJugador))
-        setPosicionesPiezaDisparar(posicionesDispararPieza(piezaSeleccionada.icono, posicionPieza, piezaJugador))
+        setPosicionesPiezaMoverse(posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador))
+        setPosicionesPiezaDisparar(posicionesDispararPieza(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador))
         setPosicionPiezaSeleccionada(posicionPieza)
     }
 
@@ -152,7 +130,6 @@ export const useConquerGameLobbyTableroPage = () => {
         handleClickTablero,
         handleClickPersonaje,
         setListadoRef,
-        setCuadroRef,
         aceptarPartida,
     }
 }

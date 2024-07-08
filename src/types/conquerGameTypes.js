@@ -213,7 +213,8 @@ export const ESTRUCTURAPIEZAS = Object.freeze([
     nombre: "rey",
     icono: "rey",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    rey: true
   },
 ]);
 export const useStylesConquerGame = Object.freeze({

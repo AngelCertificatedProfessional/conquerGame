@@ -6,17 +6,17 @@ export const ListadoPiezas = forwardRef(({ pieza, handleClick }, ref) => {
             <Card
                 ref={ref}
                 sx={{
-                    width: 80,
+                    width: 60,
                     flexGrow: { sm: 0 },
-                    height: 80,
+                    height: 60,
                     display: 'flex',
                     flexDirection: 'column',
                 }}
             >
                 <CardActionArea onClick={() => handleClick(pieza)}>
                     <CardMedia
-                        height="80"
-                        width="80"
+                        height="60"
+                        width="60"
                         component="img"
                         image={pieza.direccion}
                     />

@@ -2,7 +2,7 @@ import { tamanoTableroX, tamanoTableroY } from "../../../types";
 import { numeroAAlfabeto } from "../../numeroAAlfabeto";
 import { validaPiezaLago, validaPiezaMontana } from "../validaPosicionPieza";
 
-export const movimientoNorEste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero) => {
+export const movimientoNorEste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero, turnoJugador) => {
     const arregloPosiciones = [];
     for (let nPos = inicioPosicion; nPos <= limit; nPos++) {
         const posicionCadena = `${(row + nPos)}${numeroAAlfabeto(col + nPos)}`
@@ -17,7 +17,12 @@ export const movimientoNorEste = (row, col, piezaJugador, inicioPosicion, limit,
             return arregloPosiciones;
         }
         //Validamos que si existe la pieza donde esta una amiga entonces detenga el proceso
-        if (piezaJugador.some(({ posicion }) => posicion === posicionCadena)) {
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) === turnoJugador)) {
+            return arregloPosiciones
+        }
+        //Validamos que si existe la pieza donde esta una enemiga entonces la agregamos y detenemos el proceso
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) !== turnoJugador)) {
+            arregloPosiciones.push(posicionCadena)
             return arregloPosiciones
         }
         arregloPosiciones.push(posicionCadena)
@@ -25,7 +30,7 @@ export const movimientoNorEste = (row, col, piezaJugador, inicioPosicion, limit,
     return arregloPosiciones;
 }
 
-export const movimientoSurEste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero) => {
+export const movimientoSurEste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero, turnoJugador) => {
 
     const arregloPosiciones = [];
     for (let nPos = inicioPosicion; nPos <= limit; nPos++) {
@@ -40,7 +45,12 @@ export const movimientoSurEste = (row, col, piezaJugador, inicioPosicion, limit,
             return arregloPosiciones;
         }
         //Validamos que si existe la pieza donde esta una amiga entonces detenga el proceso
-        if (piezaJugador.some(({ posicion }) => posicion === posicionCadena)) {
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) === turnoJugador)) {
+            return arregloPosiciones
+        }
+        //Validamos que si existe la pieza donde esta una enemiga entonces la agregamos y detenemos el proceso
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) !== turnoJugador)) {
+            arregloPosiciones.push(posicionCadena)
             return arregloPosiciones
         }
         arregloPosiciones.push(posicionCadena)
@@ -48,7 +58,7 @@ export const movimientoSurEste = (row, col, piezaJugador, inicioPosicion, limit,
     return arregloPosiciones;
 }
 
-export const movimientoNorOeste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero) => {
+export const movimientoNorOeste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero, turnoJugador) => {
     const arregloPosiciones = [];
     for (let nPos = inicioPosicion; nPos <= limit; nPos++) {
         const posicionCadena = `${row + nPos}${numeroAAlfabeto(col - nPos)}`
@@ -62,7 +72,12 @@ export const movimientoNorOeste = (row, col, piezaJugador, inicioPosicion, limit
             return arregloPosiciones;
         }
         //Validamos que si existe la pieza donde esta una amiga entonces detenga el proceso
-        if (piezaJugador.some(({ posicion }) => posicion === posicionCadena)) {
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) === turnoJugador)) {
+            return arregloPosiciones
+        }
+        //Validamos que si existe la pieza donde esta una enemiga entonces la agregamos y detenemos el proceso
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) !== turnoJugador)) {
+            arregloPosiciones.push(posicionCadena)
             return arregloPosiciones
         }
         arregloPosiciones.push(posicionCadena)
@@ -70,7 +85,7 @@ export const movimientoNorOeste = (row, col, piezaJugador, inicioPosicion, limit
     return arregloPosiciones;
 }
 
-export const movimientoSurOeste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero) => {
+export const movimientoSurOeste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero, turnoJugador) => {
 
     const arregloPosiciones = [];
     for (let nPos = inicioPosicion; nPos <= limit; nPos++) {
@@ -85,7 +100,12 @@ export const movimientoSurOeste = (row, col, piezaJugador, inicioPosicion, limit
             return arregloPosiciones;
         }
         //Validamos que si existe la pieza donde esta una amiga entonces detenga el proceso
-        if (piezaJugador.some(({ posicion }) => posicion === posicionCadena)) {
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) === turnoJugador)) {
+            return arregloPosiciones
+        }
+        //Validamos que si existe la pieza donde esta una enemiga entonces la agregamos y detenemos el proceso
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) !== turnoJugador)) {
+            arregloPosiciones.push(posicionCadena)
             return arregloPosiciones
         }
         arregloPosiciones.push(posicionCadena)
@@ -93,7 +113,7 @@ export const movimientoSurOeste = (row, col, piezaJugador, inicioPosicion, limit
     return arregloPosiciones;
 }
 
-export const movimientoNorte = (row, col, piezaJugador, inicioPosicion, limit, bCaballero) => {
+export const movimientoNorte = (row, col, piezaJugador, inicioPosicion, limit, bCaballero, turnoJugador) => {
     const arregloPosiciones = [];
     for (let nPos = inicioPosicion; nPos <= limit; nPos++) {
         const posicionCadena = `${row + nPos}${numeroAAlfabeto(col)}`
@@ -107,7 +127,12 @@ export const movimientoNorte = (row, col, piezaJugador, inicioPosicion, limit, b
             return arregloPosiciones;
         }
         //Validamos que si existe la pieza donde esta una amiga entonces detenga el proceso
-        if (piezaJugador.some(({ posicion }) => posicion === posicionCadena)) {
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) === turnoJugador)) {
+            return arregloPosiciones
+        }
+        //Validamos que si existe la pieza donde esta una enemiga entonces la agregamos y detenemos el proceso
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) !== turnoJugador)) {
+            arregloPosiciones.push(posicionCadena)
             return arregloPosiciones
         }
         arregloPosiciones.push(posicionCadena)
@@ -115,7 +140,7 @@ export const movimientoNorte = (row, col, piezaJugador, inicioPosicion, limit, b
     return arregloPosiciones;
 }
 
-export const movimientoSur = (row, col, piezaJugador, inicioPosicion, limit, bCaballero) => {
+export const movimientoSur = (row, col, piezaJugador, inicioPosicion, limit, bCaballero, turnoJugador) => {
     const arregloPosiciones = [];
     for (let nPos = inicioPosicion; nPos <= limit; nPos++) {
         const posicionCadena = `${row - nPos}${numeroAAlfabeto(col)}`
@@ -129,7 +154,12 @@ export const movimientoSur = (row, col, piezaJugador, inicioPosicion, limit, bCa
             return arregloPosiciones;
         }
         //Validamos que si existe la pieza donde esta una amiga entonces detenga el proceso
-        if (piezaJugador.some(({ posicion }) => posicion === posicionCadena)) {
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) === turnoJugador)) {
+            return arregloPosiciones
+        }
+        //Validamos que si existe la pieza donde esta una enemiga entonces la agregamos y detenemos el proceso
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) !== turnoJugador)) {
+            arregloPosiciones.push(posicionCadena)
             return arregloPosiciones
         }
         arregloPosiciones.push(posicionCadena)
@@ -137,7 +167,7 @@ export const movimientoSur = (row, col, piezaJugador, inicioPosicion, limit, bCa
     return arregloPosiciones;
 }
 
-export const movimientoEste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero) => {
+export const movimientoEste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero, turnoJugador) => {
     const arregloPosiciones = [];
     for (let nPos = inicioPosicion; nPos <= limit; nPos++) {
         const posicionCadena = `${row}${numeroAAlfabeto(col + nPos)}`
@@ -151,7 +181,12 @@ export const movimientoEste = (row, col, piezaJugador, inicioPosicion, limit, bC
             return arregloPosiciones;
         }
         //Validamos que si existe la pieza donde esta una amiga entonces detenga el proceso
-        if (piezaJugador.some(({ posicion }) => posicion === posicionCadena)) {
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) === turnoJugador)) {
+            return arregloPosiciones
+        }
+        //Validamos que si existe la pieza donde esta una enemiga entonces la agregamos y detenemos el proceso
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) !== turnoJugador)) {
+            arregloPosiciones.push(posicionCadena)
             return arregloPosiciones
         }
         arregloPosiciones.push(posicionCadena)
@@ -159,7 +194,7 @@ export const movimientoEste = (row, col, piezaJugador, inicioPosicion, limit, bC
     return arregloPosiciones;
 }
 
-export const movimientoOeste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero) => {
+export const movimientoOeste = (row, col, piezaJugador, inicioPosicion, limit, bCaballero, turnoJugador) => {
     const arregloPosiciones = [];
     for (let nPos = inicioPosicion; nPos <= limit; nPos++) {
         const posicionCadena = `${row}${numeroAAlfabeto(col - nPos)}`
@@ -173,7 +208,12 @@ export const movimientoOeste = (row, col, piezaJugador, inicioPosicion, limit, b
             return arregloPosiciones;
         }
         //Validamos que si existe la pieza donde esta una amiga entonces detenga el proceso
-        if (piezaJugador.some(({ posicion }) => posicion === posicionCadena)) {
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) === turnoJugador)) {
+            return arregloPosiciones
+        }
+        //Validamos que si existe la pieza donde esta una enemiga entonces la agregamos y detenemos el proceso
+        if (piezaJugador.some(({ posicion, nombre }) => posicion === posicionCadena && nombre.at(0) !== turnoJugador)) {
+            arregloPosiciones.push(posicionCadena)
             return arregloPosiciones
         }
         arregloPosiciones.push(posicionCadena)

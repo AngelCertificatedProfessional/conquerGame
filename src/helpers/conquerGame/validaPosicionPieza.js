@@ -70,30 +70,30 @@ export const piezaInvadePosicionConfiguracion = (sPiezaNuevaPosicion, nombrePiez
     return false;
 }
 
-export const posicionesMovimientosPiezas = (pieza, posicionPieza, piezaJugador) => {
+export const posicionesMovimientosPiezas = (pieza, posicionPieza, piezaJugador, turnoJugador) => {
     const col = eliminarNumeros(posicionPieza);
     const row = parseInt(eliminarLetras(posicionPieza));
     switch (pieza) {
         case ARREGLOTIPOPIEZAS.ARCHERE:
             return [];
         case ARREGLOTIPOPIEZAS.ARCHER:
-            return movimientoArcher(row, col, piezaJugador)
+            return movimientoArcher(row, col, piezaJugador, turnoJugador)
         case ARREGLOTIPOPIEZAS.REY:
-            return movimientoRey(row, col, piezaJugador)
+            return movimientoRey(row, col, piezaJugador, turnoJugador)
         case ARREGLOTIPOPIEZAS.HACHEROE:
             return [];
         case ARREGLOTIPOPIEZAS.HACHERO:
-            return movimientoHachero(row, col, piezaJugador)
+            return movimientoHachero(row, col, piezaJugador, turnoJugador)
         case ARREGLOTIPOPIEZAS.LANCEROE:
             return [];
         case ARREGLOTIPOPIEZAS.LANCERO:
-            return movimientoLancero(row, col, piezaJugador)
+            return movimientoLancero(row, col, piezaJugador, turnoJugador)
         case ARREGLOTIPOPIEZAS.CABALLERO:
-            return movimientoCaballero(row, col, piezaJugador)
+            return movimientoCaballero(row, col, piezaJugador, turnoJugador)
         case ARREGLOTIPOPIEZAS.ASESINOE:
             return [];
         case ARREGLOTIPOPIEZAS.ASESINO:
-            return movimientoAsesino(row, col, piezaJugador, false)
+            return movimientoAsesino(row, col, piezaJugador, false, turnoJugador)
         case ARREGLOTIPOPIEZAS.HECHICERO:
             return [];
         case ARREGLOTIPOPIEZAS.CANON:
@@ -101,14 +101,14 @@ export const posicionesMovimientosPiezas = (pieza, posicionPieza, piezaJugador) 
     }
 }
 
-export const posicionesDispararPieza = (pieza, posicionPieza, piezaJugador) => {
+export const posicionesDispararPieza = (pieza, posicionPieza, piezaJugador, turnoJugador) => {
     const col = eliminarNumeros(posicionPieza);
     const row = parseInt(eliminarLetras(posicionPieza));
     switch (pieza) {
         case ARREGLOTIPOPIEZAS.ARCHERE:
             return [];
         case ARREGLOTIPOPIEZAS.ARCHER:
-            return disparoArcher(row, col, piezaJugador)
+            return disparoArcher(row, col, piezaJugador, turnoJugador)
         case ARREGLOTIPOPIEZAS.HECHICERO:
             return [];
         case ARREGLOTIPOPIEZAS.CANON:

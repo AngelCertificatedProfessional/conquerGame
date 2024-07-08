@@ -2,10 +2,8 @@ import { Box } from "@mui/material";
 import { useConquerGameJuegoTableroPage } from "../hooks"
 import { CuadroMapa, ListadoPiezas } from "../views"
 import { SideBarConquerGame } from "../components";
-import { tamanoTableroY, tamanoTableroX, ACCIONTIPOJUEGOOBJETO } from "../../../types";
+import { tamanoTableroY, tamanoTableroX } from "../../../types";
 import { numeroAAlfabeto } from "../../../helpers";
-import { validaInvacionTerreno2Jugadores } from "../../../helpers/conquerGame/validaPosicionPieza";
-
 export const ConquerGameJuegoTableroPage = () => {
 
     const {
@@ -16,7 +14,6 @@ export const ConquerGameJuegoTableroPage = () => {
         posicionesPiezaMoverse,
         posicionesPiezaDisparar,
         posicionPiezaSeleccionada,
-        setCuadroRef,
         setListadoRef,
         handleClickTablero,
         handleClickPersonaje,
@@ -76,8 +73,8 @@ export const ConquerGameJuegoTableroPage = () => {
                                 const posicion = `${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`;
                                 return (
                                     < CuadroMapa
-                                        ref={node => setCuadroRef(node, posicion)}
                                         key={posicion}
+                                        piezasJugador={conquerGame.posicionPiezasGlobal}
                                         posicion={posicion}
                                         handleClick={handleClickTablero}
                                         bAreaNoSeleccionable={false}

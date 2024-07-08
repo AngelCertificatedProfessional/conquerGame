@@ -2,23 +2,20 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { conquerGameApi } from '../api';
 import {
-    actualizarConquerGame, actualizarVentana,
+    actualizarConquerGame,
+    actualizarVentana,
     cargarPartidas,
-    cargarPiezas,
     reiniciarPartida
 } from '../store';
 import { useUiStore } from './useUiStore';
 import { detectarError } from '../helpers';
 import { alertError, alertMensaje } from '../plugins';
 import { useNavigate } from 'react-router-dom';
-import { useUsuarioStore } from './useUsuarioStore';
-import { ESTRUCTURAPIEZAS } from '../types';
 export const useConquerGameStore = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { closeDialog, startCargando, startMensajeError } = useUiStore();
-    const { user } = useUsuarioStore();
-    const { conquerGame, conquerGames, partida, partidas, mostrarVentana } = useSelector(state => state.conquerGame);
+    const { conquerGame, partida, partidas, mostrarVentana } = useSelector(state => state.conquerGame);
 
     const agregarPartida = async ({
         tipoJuego,
@@ -82,18 +79,6 @@ export const useConquerGameStore = () => {
         cerrarVentana();
     }
 
-    const inicializarPiezasJugador = async () => {
-        const piezas = await Promise.all(
-            ESTRUCTURAPIEZAS.map(async (pieza) => {
-                return {
-                    ...pieza,
-                    nombre: `${conquerGame.turnoJugador}${pieza.nombre}`,
-                    direccion: (await import(`../images/conquerGame/${conquerGame.turnoJugador}${pieza.icono}.png`)).default
-                }
-            }));
-        dispatch(cargarPiezas([...piezas]))
-    }
-
     const indicarJugadorListo = async (piezasJugador) => {
         startCargando(true);
         await conquerGameApi.patch(`/conquerGame/indicarJugadorListo/${conquerGame.id}`, {
@@ -110,100 +95,16 @@ export const useConquerGameStore = () => {
         cerrarVentana();
     }
 
-    const moverPosicionPiezasGlobal = async (posicionPiezasGlobal) => {
+    const moverPosicionPiezasGlobal = async (posicionPiezasGlobal, siguienteTurno, reyesVivos) => {
         startCargando(true);
         await conquerGameApi.patch(`/conquerGame/moverPosicionPiezasGlobal/${conquerGame.id}`, {
-            posicionPiezasGlobal
+            posicionPiezasGlobal,
+            siguienteTurno,
+            reyesVivos
         });
         startCargando(false);
         cerrarVentana();
     }
-
-    //    const agregarConquerGame= async ({
-    //        titulo,
-    // //       fechaAsignacion,
-    //     }) => {
-    //        try {
-    //            startCargando(true);
-    //            await conquerGameApi.post('/conquerGame/agregar', {
-    //                titulo,
-    // //             fechaAsignacion: convertirFechaTOEpoch(fechaAsignacion),
-    //            });
-    //            alertMensaje("Guardado",'ConquerGame Guardado', "success");
-    //            cerrarVentana();
-    //            buscarConquerGames();
-    //        } catch (error) {
-    //            const erroresSinArreglo = detectarError(error);
-    //            startMensajeError(erroresSinArreglo);
-    //            alertError('Error al guardar', erroresSinArreglo)
-    //            startCargando(false);
-    //        }
-    //    };
-
-    //    const buscarConquerGames = async () => {
-    //        try {
-    //            startCargando(true);
-    //            const { data } = await conquerGameApi.get('/conquerGame/listado');
-    //            dispatch(cargarConquerGames(data.data));
-    //            startCargando(false);
-    //        } catch (error) {
-    //            startMensajeError(detectarError(error));
-    //            startCargando(false);
-    //        }
-    //    };
-
-    //    const eliminarConquerGame = async (id) => {
-    //     try {
-    //            if (id.length <= 0) return;
-    //             const resultado = await alertAdvertencia('Estas seguro de eliminar el conquerGame!')
-    //            if (!resultado.isConfirmed) {
-    //                return;
-    //            }
-    //            await conquerGameApi.delete(`/conquerGame/eliminar/${id}`);
-    //            buscarConquerGames();
-    //             alertMensaje('Eliminado', 'ConquerGame Eliminado', 'success');
-    //        } catch (error) {
-    //            const erroresSinArreglo = detectarError(error);
-    //            startMensajeError(erroresSinArreglo);
-    //            alertError('Error al eliminar', erroresSinArreglo)
-    //        }
-    //    };
-
-    //    const buscarConquerGameById = async (id) => {
-    //        try {
-    //            if (id.length <= 0) return;
-    //            startCargando(true);
-    //            const { data } = await conquerGameApi.get(`/conquerGame/buscarById/${id}`);
-    // //           data.data.fechaAsignacion = convertirFechaToDay(data.data.fechaAsignacion);
-    //            dispatch(actualizarConquerGame(data.data));
-    //            startCargando(false);
-    //        } catch (error) {
-    //            startMensajeError(detectarError(error));
-    //        }
-    //    };
-
-    //    const modificarConquerGame = async ({
-    //        id,
-    //        titulo,
-    // //       fechaAsignacion
-    //  }) => {
-    //        try {
-    //            startCargando(true);
-    //            await conquerGameApi.put('/conquerGame/modificar', {
-    //                _id: id,
-    //                titulo,
-    // //             fechaAsignacion: convertirFechaTOEpoch(fechaAsignacion),
-    //            });
-    //            alertMensaje('Modificado', 'ConquerGame Modificado', 'success');
-    //            cerrarVentana();
-    //            buscarConquerGames();
-    //        } catch (error) {
-    //            const erroresSinArreglo = detectarError(error);
-    //            startMensajeError(erroresSinArreglo);
-    //            alertError('Error al Modificar', erroresSinArreglo);
-    //            startCargando(false);
-    //        }
-    //    };
 
     const startMostrarVentana = (nVentana) => {
         dispatch(actualizarVentana(nVentana))
@@ -211,7 +112,6 @@ export const useConquerGameStore = () => {
 
     const cerrarVentana = () => {
         closeDialog();
-        //    dispatch(reiniciarValoresConquerGame());
         startMensajeError('');
         setTimeout(function () {
             startCargando(false);
@@ -219,28 +119,19 @@ export const useConquerGameStore = () => {
     };
 
     return {
-        //status,
         partida,
         partidas,
         mostrarVentana,
         conquerGame,
-        //    conquerGames,
-        //    //Metodos
+        //Metodos
         agregarPartida,
         startMostrarVentana,
         buscarPartidas,
         ingresarLobbyPartida,
         startActualizarConquerGame,
         mostrarTableroSeleccion,
-        inicializarPiezasJugador,
         indicarJugadorListo,
         iniciarPartida,
         moverPosicionPiezasGlobal
-        //    agregarConquerGame,
-        //    buscarConquerGames,
-        //    buscarConquerGameById,
-        //    eliminarConquerGame,
-        //    modificarConquerGame,
-        //    cerrarVentana
     };
 };

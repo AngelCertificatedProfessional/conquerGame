@@ -15,7 +15,7 @@ import {
 const limitePosicionDiagonal = 1;
 const limitePosicionLineal = 1;
 const inicioPazos = 1;
-export const movimientoAsesino = (row, col, piezaJugador, bSegundoMovimientoAsesino) => {
+export const movimientoAsesino = (row, col, piezaJugador, bSegundoMovimientoAsesino, turnoJugador) => {
   let arregloPosiciones = []
   const nCol = alfabetoANumero(col);
   let arregloTemp = []

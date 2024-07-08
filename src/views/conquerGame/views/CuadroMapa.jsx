@@ -1,13 +1,18 @@
 import { Box, Tooltip } from "@mui/material";
 import { colorDisparo, colorLago, colorMontana, colorMovimientoOpciones, colorSeleccionadoTablero, colorTablero, lagosConquerGame, montanasConquerGame } from "../../../types";
-import { forwardRef } from "react";
+import { useEffect, useState } from "react";
 
-export const CuadroMapa = forwardRef(({ posicion, handleClick,
+export const CuadroMapa = ({ posicion, handleClick,
     bAreaNoSeleccionable, posicionesPiezaMoverse,
-    posicionesPiezaDisparar, posicionPiezaSeleccionada }, ref) => {
+    posicionesPiezaDisparar, posicionPiezaSeleccionada, piezasJugador }) => {
+
+    const [imagen, setImagen] = useState('')
+    useEffect(() => {
+        const { direccion } = piezasJugador.find(piezasJugador => piezasJugador.posicion === posicion) || ''
+        setImagen(!!direccion ? direccion : '')
+    }, [piezasJugador])
     return (
         <Box
-            ref={ref}
             sx={{
                 width: 40,
                 height: 40,
@@ -24,7 +29,14 @@ export const CuadroMapa = forwardRef(({ posicion, handleClick,
             }}
             onClick={() => bAreaNoSeleccionable ? {} : handleClick(posicion)}
         >
+            {imagen !== '' &&
+                <Box
+                    component="img"
+                    height="100%"
+                    width="100%"
+                    src={imagen}
+                />
+            }
         </Box>
     );
 }
-)
