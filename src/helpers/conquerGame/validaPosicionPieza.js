@@ -70,7 +70,7 @@ export const piezaInvadePosicionConfiguracion = (sPiezaNuevaPosicion, nombrePiez
     return false;
 }
 
-export const posicionesMovimientosPiezas = (pieza, posicionPieza, piezaJugador, turnoJugador) => {
+export const posicionesMovimientosPiezas = (pieza, posicionPieza, piezaJugador, turnoJugador, bSegundoMovimientoAsesino) => {
     const col = eliminarNumeros(posicionPieza);
     const row = parseInt(eliminarLetras(posicionPieza));
     switch (pieza) {
@@ -93,7 +93,7 @@ export const posicionesMovimientosPiezas = (pieza, posicionPieza, piezaJugador, 
         case ARREGLOTIPOPIEZAS.ASESINOE:
             return [];
         case ARREGLOTIPOPIEZAS.ASESINO:
-            return movimientoAsesino(row, col, piezaJugador, false, turnoJugador)
+            return movimientoAsesino(row, col, piezaJugador, bSegundoMovimientoAsesino, turnoJugador)
         case ARREGLOTIPOPIEZAS.HECHICERO:
             return [];
         case ARREGLOTIPOPIEZAS.CANON:

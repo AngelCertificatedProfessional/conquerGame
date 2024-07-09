@@ -21,6 +21,7 @@ export const useConquerGameJuegoTableroPage = () => {
     const [posicionPiezaSeleccionada, setPosicionPiezaSeleccionada] = useState('')
     const [habilitarOpcionAceptar, setHabilitarOpcionAceptar] = useState(false)
     const [bloquearOpciones, setBloquearOpciones] = useState(false)
+    const [movioAsesino, setMovioAsesino] = useState(false)
     const { socket, conectarSocket } = useSocket(VITE_SOCKET_URL)
     const refsPiezas = useRef({});
     const navigate = useNavigate();
@@ -102,11 +103,14 @@ export const useConquerGameJuegoTableroPage = () => {
             [nuevasPocisiones, reyEliminado] = clickDisparo(posicionPieza)
             if (compararJSON(conquerGame.posicionPiezasGlobal, nuevoPosiciones)) return
         }
-        console.log(reyEliminado)
         const nuevosReyesVivos = eliminoRey(reyEliminado, nuevasPocisiones)
-        console.log(nuevosReyesVivos)
-        const siguienteTurno = evaluarSiguienteTurno(nuevosReyesVivos);
-        console.log(siguienteTurno)
+        let siguienteTurno = conquerGame.turnoJugador
+        if (!!piezaSeleccionada.asesino && !movioAsesino) {
+            setMovioAsesino(true)
+        } else {
+            setMovioAsesino(false)
+            siguienteTurno = evaluarSiguienteTurno(nuevosReyesVivos);
+        }
         setBloquearOpciones(true)
         moverPosicionPiezasGlobal(nuevasPocisiones, siguienteTurno, nuevosReyesVivos)
         if (!!piezaSeleccionada) limpiarPiezaSeleccionada(piezaSeleccionada)
@@ -168,8 +172,8 @@ export const useConquerGameJuegoTableroPage = () => {
         return reyesVivos[nPosicion];
     }
 
-    const evaluarPosiciones = (posicionPieza, piezaJugador, piezaSeleccionada,) => {
-        setPosicionesPiezaMoverse(posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador))
+    const evaluarPosiciones = (posicionPieza, piezaJugador, piezaSeleccionada) => {
+        setPosicionesPiezaMoverse(posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador, movioAsesino))
         setPosicionesPiezaDisparar(posicionesDispararPieza(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador))
         setPosicionPiezaSeleccionada(posicionPieza)
     }

@@ -183,7 +183,8 @@ export const ESTRUCTURAPIEZAS = Object.freeze([
     nombre: "asesino",
     icono: "asesino",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    asesino: true
   },
   {
     nombre: "caballero1",
