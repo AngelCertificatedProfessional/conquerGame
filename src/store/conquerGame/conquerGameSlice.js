@@ -34,10 +34,14 @@ export const conquerGameSlice = createSlice({
         actualizarVentana: (state, { payload }) => {
             state.mostrarVentana = payload
         },
+        actualizarPosicionAsesino: (state, { payload }) => {
+            state.conquerGame.posicionPiezasGlobal = payload
+        },
     }
 });
 export const {
     actualizarConquerGame,
+    actualizarPosicionAsesino,
     actualizarPartida,
     actualizarVentana,
     cargarPartidas,

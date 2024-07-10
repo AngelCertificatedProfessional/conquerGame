@@ -11,8 +11,10 @@ import { alertMensaje } from "../../../../plugins";
 const drawerWidth = '200px';
 export const useConquerGameJuegoTableroPage = () => {
     const { VITE_SOCKET_URL } = getEnvVariables()
-    const { conquerGame, indicarJugadorListo,
+    const { conquerGame,
+        indicarJugadorListo,
         startActualizarConquerGame,
+        startActualizarPosicionAsesino,
         moverPosicionPiezasGlobal } = useConquerGameStore();
     const [piezaSeleccionada, setPiezaSeleccionada] = useState(null)
     const [piezasJugador, setPiezasJugador] = useState([])
@@ -66,8 +68,9 @@ export const useConquerGameJuegoTableroPage = () => {
 
     const handleClickPersonaje = (pieza) => {
         if (!!bloquearOpciones) return
+        if (!!movioAsesino) return
         if (conquerGame.turno !== conquerGame.turnoJugador) return
-        if (conquerGame.posicionPiezasGlobal.some(({ nombre }) => nombre === pieza.nombre && pieza.posicion !== '')) return
+        if (conquerGame.posicionPiezasGlobal.some(({ nombre, posicion }) => nombre === pieza.nombre && posicion === '')) return
         if (!!piezaSeleccionada && piezaSeleccionada.nombre === pieza.nombre) {
             limpiarPiezaSeleccionada(pieza)
             return
@@ -81,7 +84,7 @@ export const useConquerGameJuegoTableroPage = () => {
         }
         setPiezaSeleccionada(pieza)
         const { posicion } = conquerGame.posicionPiezasGlobal.find(({ nombre }) => nombre === pieza.nombre)
-        evaluarPosiciones(!!posicion ? posicion : '', conquerGame.posicionPiezasGlobal, pieza)
+        evaluarPosiciones(!!posicion ? posicion : '', conquerGame.posicionPiezasGlobal, pieza, movioAsesino)
         const ref = refsPiezas.current[pieza.nombre];
         if (ref) {
             ref.style.backgroundColor = "rgba(225, 234, 57, 0.65)";
@@ -105,15 +108,17 @@ export const useConquerGameJuegoTableroPage = () => {
         }
         const nuevosReyesVivos = eliminoRey(reyEliminado, nuevasPocisiones)
         let siguienteTurno = conquerGame.turnoJugador
-        if (!!piezaSeleccionada.asesino && !movioAsesino) {
+        if (!!piezaSeleccionada.asesino && !movioAsesino && nuevosReyesVivos.length > 1) {
             setMovioAsesino(true)
+            startActualizarPosicionAsesino(nuevasPocisiones)
+            evaluarPosiciones(posicionPieza, nuevasPocisiones, piezaSeleccionada, true)
         } else {
             setMovioAsesino(false)
             siguienteTurno = evaluarSiguienteTurno(nuevosReyesVivos);
+            setBloquearOpciones(true)
+            moverPosicionPiezasGlobal(nuevasPocisiones, siguienteTurno, nuevosReyesVivos)
+            if (!!piezaSeleccionada) limpiarPiezaSeleccionada(piezaSeleccionada)
         }
-        setBloquearOpciones(true)
-        moverPosicionPiezasGlobal(nuevasPocisiones, siguienteTurno, nuevosReyesVivos)
-        if (!!piezaSeleccionada) limpiarPiezaSeleccionada(piezaSeleccionada)
     }
 
     const clickMovimiento = (posicionPieza) => {
@@ -172,8 +177,8 @@ export const useConquerGameJuegoTableroPage = () => {
         return reyesVivos[nPosicion];
     }
 
-    const evaluarPosiciones = (posicionPieza, piezaJugador, piezaSeleccionada) => {
-        setPosicionesPiezaMoverse(posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador, movioAsesino))
+    const evaluarPosiciones = (posicionPieza, piezaJugador, piezaSeleccionada, bMovioAsesino) => {
+        setPosicionesPiezaMoverse(posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador, bMovioAsesino))
         setPosicionesPiezaDisparar(posicionesDispararPieza(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador))
         setPosicionPiezaSeleccionada(posicionPieza)
     }

@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { conquerGameApi } from '../api';
 import {
     actualizarConquerGame,
+    actualizarPosicionAsesino,
     actualizarVentana,
     cargarPartidas,
-    reiniciarPartida
+    reiniciarPartida,
 } from '../store';
 import { useUiStore } from './useUiStore';
 import { detectarError } from '../helpers';
@@ -110,6 +111,10 @@ export const useConquerGameStore = () => {
         dispatch(actualizarVentana(nVentana))
     }
 
+    const startActualizarPosicionAsesino = (vPosiciones) => {
+        dispatch(actualizarPosicionAsesino(vPosiciones))
+    }
+
     const cerrarVentana = () => {
         closeDialog();
         startMensajeError('');
@@ -129,6 +134,7 @@ export const useConquerGameStore = () => {
         buscarPartidas,
         ingresarLobbyPartida,
         startActualizarConquerGame,
+        startActualizarPosicionAsesino,
         mostrarTableroSeleccion,
         indicarJugadorListo,
         iniciarPartida,
