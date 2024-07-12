@@ -4,7 +4,7 @@ import { SideBarItemConquerGame } from "../views"
 import { CONQUERGAMEPARTIDA } from "../../../types"
 
 const drawerWidth = '200px'
-export const SideBarConquerGame = ({ handleClick, habilitarOpcionAceptar }) => {
+export const SideBarConquerGame = ({ handleClick, habilitarBoton, mensajeBoton }) => {
     const { conquerGame, iniciarPartida, user } = useSideBarConquerGame()
     return (
         <Box
@@ -17,9 +17,9 @@ export const SideBarConquerGame = ({ handleClick, habilitarOpcionAceptar }) => {
             </Typography>
             <Divider />
             {
-                conquerGame.estatus === CONQUERGAMEPARTIDA.AGREGARPIEZASTABLERO && habilitarOpcionAceptar &&
+                habilitarBoton &&
                 <Button variant="contained" onClick={() => handleClick()} fullWidth >
-                    Aceptar
+                    {mensajeBoton}
                 </Button>
             }
             {

@@ -30,7 +30,8 @@ export const ConquerGameJuegoPage = () => {
         }} >
             <SideBarConquerGame
                 handleClick={aceptarPartida}
-                habilitarOpcionAceptar={habilitarOpcionAceptar}
+                habilitarBoton={habilitarOpcionAceptar}
+                mensajeBoton={`Aceptar`}
             />
             {/* necesario para mostrar el lado derecho de la pantalla */}
             <Box component='main' //Main

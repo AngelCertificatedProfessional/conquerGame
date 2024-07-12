@@ -12,7 +12,6 @@ const drawerWidth = '200px';
 export const useConquerGameJuegoTableroPage = () => {
     const { VITE_SOCKET_URL } = getEnvVariables()
     const { conquerGame,
-        indicarJugadorListo,
         startActualizarConquerGame,
         startActualizarPosicionAsesino,
         moverPosicionPiezasGlobal } = useConquerGameStore();
@@ -39,6 +38,7 @@ export const useConquerGameJuegoTableroPage = () => {
 
     useEffect(() => {
         cargarPiezasJugador()
+        setHabilitarOpcionAceptar(conquerGame.turno === conquerGame.turnoJugador)
     }, [])
 
     //Eschucar los cambios en los usuarios conectados
@@ -46,6 +46,7 @@ export const useConquerGameJuegoTableroPage = () => {
         socket?.on(`conquerGame${conquerGame.numeroPartida}MoverPosicionPiezasGlobal`, (conquerGameT) => {
             startActualizarConquerGame(conquerGameT)
             setBloquearOpciones(false)
+            setHabilitarOpcionAceptar(conquerGameT.turno === conquerGame.turnoJugador)
         })
     }, [socket])
 
@@ -113,6 +114,7 @@ export const useConquerGameJuegoTableroPage = () => {
             startActualizarPosicionAsesino(nuevasPocisiones)
             evaluarPosiciones(posicionPieza, nuevasPocisiones, piezaSeleccionada, true)
         } else {
+            setHabilitarOpcionAceptar(false)
             setMovioAsesino(false)
             siguienteTurno = evaluarSiguienteTurno(nuevosReyesVivos);
             setBloquearOpciones(true)
@@ -183,11 +185,14 @@ export const useConquerGameJuegoTableroPage = () => {
         setPosicionPiezaSeleccionada(posicionPieza)
     }
 
-    const aceptarPartida = () => {
-        handleClickPersonaje(piezaSeleccionada)
-        indicarJugadorListo(piezasJugador)
+    const handlePasarTurno = () => {
+        const nuevosReyesVivos = eliminoRey('', conquerGame.posicionPiezasGlobal)
         setHabilitarOpcionAceptar(false)
         setBloquearOpciones(true)
+        setMovioAsesino(false)
+        const siguienteTurno = evaluarSiguienteTurno(nuevosReyesVivos);
+        moverPosicionPiezasGlobal(conquerGame.posicionPiezasGlobal, siguienteTurno, nuevosReyesVivos)
+        if (!!piezaSeleccionada) limpiarPiezaSeleccionada(piezaSeleccionada)
     }
 
     const limpiarPiezaSeleccionada = (pieza) => {
@@ -203,6 +208,7 @@ export const useConquerGameJuegoTableroPage = () => {
 
     return {
         conquerGame,
+        movioAsesino,
         drawerWidth,
         piezasJugador,
         habilitarOpcionAceptar,
@@ -212,6 +218,6 @@ export const useConquerGameJuegoTableroPage = () => {
         handleClickTablero,
         handleClickPersonaje,
         setListadoRef,
-        aceptarPartida,
+        handlePasarTurno,
     }
 }

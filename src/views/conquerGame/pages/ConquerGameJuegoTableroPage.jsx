@@ -14,10 +14,11 @@ export const ConquerGameJuegoTableroPage = () => {
         posicionesPiezaMoverse,
         posicionesPiezaDisparar,
         posicionPiezaSeleccionada,
+        movioAsesino,
         setListadoRef,
         handleClickTablero,
         handleClickPersonaje,
-        aceptarPartida,
+        handlePasarTurno,
     } = useConquerGameJuegoTableroPage()
     if (!!!piezasJugador) return <></>;
 
@@ -27,8 +28,9 @@ export const ConquerGameJuegoTableroPage = () => {
             display: 'flex',
         }} >
             <SideBarConquerGame
-                handleClick={aceptarPartida}
-                habilitarOpcionAceptar={habilitarOpcionAceptar}
+                handleClick={handlePasarTurno}
+                habilitarBoton={habilitarOpcionAceptar}
+                mensajeBoton={movioAsesino ? `Finalizar Turno` : `Saltar Turno`}
             />
             {/* necesario para mostrar el lado derecho de la pantalla */}
             <Box component='main' //Main
