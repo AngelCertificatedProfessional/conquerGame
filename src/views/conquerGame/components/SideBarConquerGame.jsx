@@ -4,7 +4,7 @@ import { SideBarItemConquerGame } from "../views"
 import { CONQUERGAMEPARTIDA } from "../../../types"
 
 const drawerWidth = '200px'
-export const SideBarConquerGame = ({ handleClick, habilitarBoton, mensajeBoton }) => {
+export const SideBarConquerGame = ({ handleClick, habilitarBoton, mensajeBoton, tiempoTexto }) => {
     const { conquerGame, iniciarPartida, user } = useSideBarConquerGame()
     return (
         <Box
@@ -12,16 +12,23 @@ export const SideBarConquerGame = ({ handleClick, habilitarBoton, mensajeBoton }
             sx={{ zIndex: 1099, width: { sm: drawerWidth }, flexShrink: { sm: 0 } }
             }
         >
-            <Typography variant='h6' noWrap component='div'>
-                Jugadores
-            </Typography>
-            <Divider />
+            {
+                tiempoTexto !== '' &&
+                <Typography variant='h6' noWrap component='div'>
+                    Tiempo: {tiempoTexto}
+                </Typography>
+
+            }
             {
                 habilitarBoton &&
                 <Button variant="contained" onClick={() => handleClick()} fullWidth >
                     {mensajeBoton}
                 </Button>
             }
+            <Typography variant='h6' noWrap component='div' mt={2}>
+                Jugadores
+            </Typography>
+            <Divider />
             {
                 conquerGame.estatus === CONQUERGAMEPARTIDA.AGREGARPIEZASTABLERO &&
                 conquerGame.jugadores.every(jugador => !!jugador.listo) &&

@@ -32,6 +32,7 @@ export const ConquerGameJuegoPage = () => {
                 handleClick={aceptarPartida}
                 habilitarBoton={habilitarOpcionAceptar}
                 mensajeBoton={`Aceptar`}
+                tiempoTexto={''}
             />
             {/* necesario para mostrar el lado derecho de la pantalla */}
             <Box component='main' //Main

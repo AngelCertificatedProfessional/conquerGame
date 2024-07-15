@@ -15,6 +15,7 @@ export const ConquerGameJuegoTableroPage = () => {
         posicionesPiezaDisparar,
         posicionPiezaSeleccionada,
         movioAsesino,
+        tiempoTexto,
         setListadoRef,
         handleClickTablero,
         handleClickPersonaje,
@@ -31,6 +32,7 @@ export const ConquerGameJuegoTableroPage = () => {
                 handleClick={handlePasarTurno}
                 habilitarBoton={habilitarOpcionAceptar}
                 mensajeBoton={movioAsesino ? `Finalizar Turno` : `Saltar Turno`}
+                tiempoTexto={tiempoTexto}
             />
             {/* necesario para mostrar el lado derecho de la pantalla */}
             <Box component='main' //Main

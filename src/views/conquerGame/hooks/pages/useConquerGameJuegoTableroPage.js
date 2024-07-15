@@ -23,6 +23,9 @@ export const useConquerGameJuegoTableroPage = () => {
     const [habilitarOpcionAceptar, setHabilitarOpcionAceptar] = useState(false)
     const [bloquearOpciones, setBloquearOpciones] = useState(false)
     const [movioAsesino, setMovioAsesino] = useState(false)
+    const [tiempoTexto, setTiempoTexto] = useState('01:00')
+    const [tiempoContador, setTiempoContador] = useState(60)
+    const intervalRef = useRef(0);
     const { socket, conectarSocket } = useSocket(VITE_SOCKET_URL)
     const refsPiezas = useRef({});
     const navigate = useNavigate();
@@ -39,6 +42,7 @@ export const useConquerGameJuegoTableroPage = () => {
     useEffect(() => {
         cargarPiezasJugador()
         setHabilitarOpcionAceptar(conquerGame.turno === conquerGame.turnoJugador)
+        actualizarTiempoTexto()
     }, [])
 
     //Eschucar los cambios en los usuarios conectados
@@ -47,6 +51,7 @@ export const useConquerGameJuegoTableroPage = () => {
             startActualizarConquerGame(conquerGameT)
             setBloquearOpciones(false)
             setHabilitarOpcionAceptar(conquerGameT.turno === conquerGame.turnoJugador)
+            actualizarTiempoTexto()
         })
     }, [socket])
 
@@ -54,6 +59,7 @@ export const useConquerGameJuegoTableroPage = () => {
     useEffect(() => {
         socket?.on(`conquerGame${conquerGame.numeroPartida}FinalizarPartida`, ({ mensaje }) => {
             alertMensaje("Ganador", mensaje, "success");
+            clearInterval(intervalRef.current);
             setTimeout(() => {
                 startActualizarConquerGame({})
                 navigate("/conquerGame")
@@ -61,11 +67,35 @@ export const useConquerGameJuegoTableroPage = () => {
         })
     }, [socket])
 
+    useEffect(() => {
+        if (tiempoContador === 60) {
+            setTiempoTexto("01:00")
+        } else {
+            setTiempoTexto(`00:${tiempoContador >= 10 ? tiempoContador : '0' + tiempoContador}`)
+            if (tiempoContador - 1 <= 0) {
+                if (conquerGame.turno === conquerGame.turnoJugador) {
+                    handlePasarTurno()
+                }
+                clearInterval(intervalRef.current);
+            }
+        }
+    }, [tiempoContador])
+
     const setListadoRef = useCallback((node, posicion) => {
         if (node) {
             refsPiezas.current[posicion] = node;
         }
     }, []);
+
+    const actualizarTiempoTexto = () => {
+        clearInterval(intervalRef.current);
+        setTiempoContador(60)
+        intervalRef.current = setInterval(() => {
+            setTiempoContador((tiempoContador) => tiempoContador - 1)
+        }, 1000);
+    }
+
+
 
     const handleClickPersonaje = (pieza) => {
         if (!!bloquearOpciones) return
@@ -215,6 +245,7 @@ export const useConquerGameJuegoTableroPage = () => {
         posicionesPiezaMoverse,
         posicionesPiezaDisparar,
         posicionPiezaSeleccionada,
+        tiempoTexto,
         handleClickTablero,
         handleClickPersonaje,
         setListadoRef,
