@@ -72,11 +72,11 @@ export const useConquerGameJuegoTableroPage = () => {
             setTiempoTexto("01:00")
         } else {
             setTiempoTexto(`00:${tiempoContador >= 10 ? tiempoContador : '0' + tiempoContador}`)
-            if (tiempoContador - 1 <= 0) {
+            if (tiempoContador <= 0) {
+                clearInterval(intervalRef.current);
                 if (conquerGame.turno === conquerGame.turnoJugador) {
                     handlePasarTurno()
                 }
-                clearInterval(intervalRef.current);
             }
         }
     }, [tiempoContador])

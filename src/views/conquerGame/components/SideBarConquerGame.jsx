@@ -43,7 +43,6 @@ export const SideBarConquerGame = ({ handleClick, habilitarBoton, mensajeBoton, 
                         < SideBarItemConquerGame
                             key={jugador._id}
                             jugador={jugador}
-                            estatus={conquerGame.estatus}
                         />
                     ))
                 }
