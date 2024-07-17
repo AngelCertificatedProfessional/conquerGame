@@ -64,8 +64,10 @@ export const useConquerGameStore = () => {
             cerrarVentana();
             navigate("/conquerGame/conquerGameLobby");
         } catch (error) {
-            startMensajeError(detectarError(error));
+            const erroresSinArreglo = detectarError(error);
+            startMensajeError(erroresSinArreglo);
             startCargando(false);
+            alertError('Error al guardar', erroresSinArreglo)
         }
     };
 
