@@ -1,12 +1,3 @@
-// import { alfabetoANumero, numeroAAlfabeto } from "../../UtileriasPagina.js";
-// import {
-//   colorOpciones,
-//   colorSeleccionadoTablero,
-//   tamanoTableroAncho,
-//   tamanoTableroLargo,
-//   validaPiezaLago,
-//   validaPiezaMontana,
-// } from "../ConfiguracionTableroConquerGame.js";
 // export const valorPuntos = 35;
 import {
   movimientoEste, movimientoNorEste, movimientoNorOeste,

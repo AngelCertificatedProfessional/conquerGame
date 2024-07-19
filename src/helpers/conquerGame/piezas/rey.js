@@ -4,13 +4,6 @@ import {
   movimientoNorte, movimientoOeste, movimientoSur,
   movimientoSurEste, movimientoSurOeste
 } from "./base";
-// import {
-//   colorOpciones,
-//   colorSeleccionadoTablero,
-//   tamanoTableroAncho,
-//   tamanoTableroLargo,
-//   validaPiezaMontana,
-// } from "../ConfiguracionTableroConquerGame.js";
 // export const valorPuntos = 100;
 const limiteCantidadPazos = 2;
 const inicioPazos = 1;

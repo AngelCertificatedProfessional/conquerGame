@@ -1,5 +1,5 @@
 import { Box, Tooltip } from "@mui/material";
-import { colorDisparo, colorLago, colorMontana, colorMovimientoOpciones, colorSeleccionadoTablero, colorTablero, lagosConquerGame, montanasConquerGame } from "../../../types";
+import { COLORDISPARO, COLORLAGO, COLORMONTANA, COLORMOVIMIENTOOPCIONES, COLORSELECCIONADOTABLERO, COLORTABLERO, lagosConquerGame, montanasConquerGame } from "../../../types";
 import { useEffect, useState } from "react";
 
 export const CuadroMapa = ({ posicion, handleClick,
@@ -7,9 +7,11 @@ export const CuadroMapa = ({ posicion, handleClick,
     posicionesPiezaDisparar, posicionPiezaSeleccionada, piezasJugador }) => {
 
     const [imagen, setImagen] = useState('')
+    const [icono, setIcono] = useState('')
     useEffect(() => {
-        const { direccion } = piezasJugador.find(piezasJugador => piezasJugador.posicion === posicion) || ''
+        const { direccion, icono } = piezasJugador.find(piezasJugador => piezasJugador.posicion === posicion) || ''
         setImagen(!!direccion ? direccion : '')
+        setIcono(!!direccion ? icono : '')
     }, [piezasJugador])
     return (
         <Box
@@ -18,11 +20,11 @@ export const CuadroMapa = ({ posicion, handleClick,
                 height: 40,
                 backgroundColor:
                     posicionesPiezaMoverse.includes(posicion)
-                        ? colorMovimientoOpciones : posicionPiezaSeleccionada === posicion
-                            ? colorSeleccionadoTablero : posicionesPiezaDisparar.includes(posicion)
-                                ? colorDisparo : montanasConquerGame.includes(posicion)
-                                    ? colorMontana : lagosConquerGame.includes(posicion)
-                                        ? colorLago : colorTablero,
+                        ? COLORMOVIMIENTOOPCIONES : posicionPiezaSeleccionada === posicion
+                            ? COLORSELECCIONADOTABLERO : posicionesPiezaDisparar.includes(posicion)
+                                ? COLORDISPARO : montanasConquerGame.includes(posicion)
+                                    ? COLORMONTANA : lagosConquerGame.includes(posicion)
+                                        ? COLORLAGO : COLORTABLERO,
                 border: '1px',
                 borderStyle: 'solid',
                 opacity: bAreaNoSeleccionable ? "50%" : "100%"
@@ -30,12 +32,23 @@ export const CuadroMapa = ({ posicion, handleClick,
             onClick={() => bAreaNoSeleccionable ? {} : handleClick(posicion)}
         >
             {imagen !== '' &&
-                <Box
-                    component="img"
-                    height="100%"
-                    width="100%"
-                    src={imagen}
-                />
+                <Tooltip title={icono} PopperProps={{
+                    modifiers: [
+                        {
+                            name: "offset",
+                            options: {
+                                offset: [0, 25],
+                            },
+                        },
+                    ],
+                }}>
+                    <Box
+                        component="img"
+                        height="100%"
+                        width="100%"
+                        src={imagen}
+                    />
+                </Tooltip>
             }
         </Box>
     );

@@ -34,7 +34,7 @@ export const AppRouter = () => {
                             {/* <Route path="/configuracion/*" element={<ConfiguracionRouter />} /> */}
 
                             <Route path="/*" element={<Navigate to="/auth/login" />}></Route>
-                            <Route path="/auth/login" element={<Navigate to="/menuPrincipal" />}></Route>
+                            <Route path="/auth/login" element={<Navigate to="/conquerGame" />}></Route>
                         </Routes>
                     </TemplateIndex>
             }

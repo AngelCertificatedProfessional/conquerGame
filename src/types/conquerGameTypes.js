@@ -245,15 +245,16 @@ export const useStylesConquerGame = Object.freeze({
   }
 })
 
-export const colorTablero = Object.freeze("rgb(240, 201, 150)");
-export const colorMontana = Object.freeze("rgb(14, 155, 0)");
-export const colorLago = Object.freeze("rgb(63, 234, 229)");
-export const colorMovimientoOpciones = Object.freeze("rgb(195, 208, 39)");
-export const colorDisparo = Object.freeze("rgb(223, 55, 19)");
-export const colorSeleccionadoTablero = Object.freeze("rgb(213, 92, 209)");
-export const colorSeleccionadoListado = Object.freeze("rgb(72, 66, 65)");
-export const colorCasstilloEntrada = Object.freeze("rgb(185, 185, 179)");
-export const colorCasstilloSala = Object.freeze("rgb(94, 94, 89)");
+export const COLORTABLERO = Object.freeze("rgb(240, 201, 150)");
+export const COLORMONTANA = Object.freeze("rgb(14, 155, 0)");
+export const COLORLAGO = Object.freeze("rgb(63, 234, 229)");
+export const COLORMOVIMIENTOOPCIONES = Object.freeze("rgb(195, 208, 39)");
+export const COLORMOVIMIENTOSELECCION = "rgba(225, 234, 57, 0.65)"
+export const COLORMOVIMIENTODESSELECCION = "rgba(255, 255, 255, 1)"
+export const COLORDISPARO = Object.freeze("rgb(223, 55, 19)");
+export const COLORSELECCIONADOTABLERO = Object.freeze("rgb(213, 92, 209)");
+export const COLORCASSTILLOENTRADA = Object.freeze("rgb(185, 185, 179)");
+export const COLORCASTILLOSALA = Object.freeze("rgb(94, 94, 89)");
 export const ARREGLOTIPOPIEZAS = Object.freeze({
   ARCHERE: "archerE",
   ARCHER: "archer",

@@ -8,6 +8,7 @@ import { compararJSON, getEnvVariables } from "../../../../helpers";
 import { useNavigate } from 'react-router-dom';
 import { inicializarPiezasJugador } from "../../../../helpers/conquerGame/inicializarPiezasJugador";
 import { alertMensaje } from "../../../../plugins";
+import { COLORMOVIMIENTODESSELECCION, COLORMOVIMIENTOSELECCION } from "../../../../types";
 const drawerWidth = '200px';
 export const useConquerGameJuegoTableroPage = () => {
     const { VITE_SOCKET_URL } = getEnvVariables()
@@ -110,7 +111,7 @@ export const useConquerGameJuegoTableroPage = () => {
         if (!!piezaSeleccionada) {
             const ref = refsPiezas.current[piezaSeleccionada.nombre];
             if (ref) {
-                ref.style.backgroundColor = "rgba(255, 255, 255, 1)";
+                ref.style.backgroundColor = COLORMOVIMIENTODESSELECCION;
             }
         }
         setPiezaSeleccionada(pieza)
@@ -118,12 +119,22 @@ export const useConquerGameJuegoTableroPage = () => {
         evaluarPosiciones(!!posicion ? posicion : '', conquerGame.posicionPiezasGlobal, pieza, movioAsesino)
         const ref = refsPiezas.current[pieza.nombre];
         if (ref) {
-            ref.style.backgroundColor = "rgba(225, 234, 57, 0.65)";
+            ref.style.backgroundColor = COLORMOVIMIENTOSELECCION;
         }
     }
 
     const handleClickTablero = (posicionPieza) => {
-        //Agregamos las posiciones al nuevo arreglo\
+        if (conquerGame.turno !== conquerGame.turnoJugador) return
+        const pieza = conquerGame.posicionPiezasGlobal.find(pieza =>
+            posicionPieza === pieza.posicion && pieza.jugador === conquerGame.turnoJugador)
+        if (!!pieza) {
+            handleClickPersonaje(pieza)
+        } else {
+            clickMoverDisparar(posicionPieza)
+        }
+    }
+
+    const clickMoverDisparar = (posicionPieza) => {
         if (!!bloquearOpciones) return
         if (!!!piezaSeleccionada) return
         const bExisteMovimiento = posicionesPiezaMoverse.includes(posicionPieza)
@@ -232,7 +243,7 @@ export const useConquerGameJuegoTableroPage = () => {
         setPosicionPiezaSeleccionada("")
         const ref = refsPiezas.current[pieza.nombre];
         if (ref) {
-            ref.style.backgroundColor = "rgba(255, 255, 255, 1)";
+            ref.style.backgroundColor = COLORMOVIMIENTODESSELECCION;
         }
     }
 
