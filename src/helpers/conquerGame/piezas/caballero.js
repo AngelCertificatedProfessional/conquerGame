@@ -12,44 +12,31 @@ const inicioPazos = 1;
 export const movimientoCaballero = (row, col, piezaJugador, turnoJugador) => {
   let arregloPosiciones = []
   const nCol = alfabetoANumero(col);
-  let arregloTemp = []
+  let vResultado = {}
 
-  arregloTemp = movimientoNorEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-  arregloTemp = movimientoSurEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-  arregloTemp = movimientoNorOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
+  vResultado = movimientoNorEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
 
-  arregloTemp = movimientoSurOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
+  vResultado = movimientoSurEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
 
-  arregloTemp = movimientoNorte(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
+  vResultado = movimientoNorOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
 
-  arregloTemp = movimientoSur(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
+  vResultado = movimientoSurOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
 
-  arregloTemp = movimientoEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
+  vResultado = movimientoNorte(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
 
-  arregloTemp = movimientoOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-  return arregloPosiciones;
+  vResultado = movimientoSur(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+
+  vResultado = movimientoEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+
+  vResultado = movimientoOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, true, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+
+  return [arregloPosiciones, []];
 }

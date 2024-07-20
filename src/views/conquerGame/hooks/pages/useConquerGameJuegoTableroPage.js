@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useConquerGameStore, useSocket } from "../../../../hooks"
 import {
-    posicionesMovimientosPiezas,
-    posicionesDispararPieza
+    posicionesMovimientosPiezas
 } from "../../../../helpers/conquerGame/validaPosicionPieza";
 import { compararJSON, getEnvVariables } from "../../../../helpers";
 import { useNavigate } from 'react-router-dom';
@@ -146,7 +145,7 @@ export const useConquerGameJuegoTableroPage = () => {
             [nuevasPocisiones, reyEliminado] = clickMovimiento(posicionPieza);
         } else if (bExisteDisparar) {
             [nuevasPocisiones, reyEliminado] = clickDisparo(posicionPieza)
-            if (compararJSON(conquerGame.posicionPiezasGlobal, nuevoPosiciones)) return
+            if (compararJSON(conquerGame.posicionPiezasGlobal, nuevasPocisiones)) return
         }
         const nuevosReyesVivos = eliminoRey(reyEliminado, nuevasPocisiones)
         let siguienteTurno = conquerGame.turnoJugador
@@ -221,8 +220,13 @@ export const useConquerGameJuegoTableroPage = () => {
     }
 
     const evaluarPosiciones = (posicionPieza, piezaJugador, piezaSeleccionada, bMovioAsesino) => {
-        setPosicionesPiezaMoverse(posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador, bMovioAsesino))
-        setPosicionesPiezaDisparar(posicionesDispararPieza(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador))
+
+        const [posicionesPiezaMoverseT, posicionesPiezaDisparar] =
+            posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza,
+                piezaJugador, conquerGame.turnoJugador, bMovioAsesino)
+
+        setPosicionesPiezaMoverse(posicionesPiezaMoverseT)
+        setPosicionesPiezaDisparar(posicionesPiezaDisparar)
         setPosicionPiezaSeleccionada(posicionPieza)
     }
 

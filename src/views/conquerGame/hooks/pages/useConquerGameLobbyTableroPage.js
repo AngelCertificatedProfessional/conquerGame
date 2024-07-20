@@ -2,8 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useConquerGameStore, useSocket } from "../../../../hooks"
 import {
     piezaInvadePosicionConfiguracion,
-    posicionesMovimientosPiezas,
-    posicionesDispararPieza
+    posicionesMovimientosPiezas
 } from "../../../../helpers/conquerGame/validaPosicionPieza";
 import { getEnvVariables } from "../../../../helpers";
 import { useNavigate } from 'react-router-dom';
@@ -107,8 +106,12 @@ export const useConquerGameLobbyTableroPage = () => {
     }
 
     const evaluarPosiciones = (posicionPieza, piezaJugador, piezaSeleccionada) => {
-        setPosicionesPiezaMoverse(posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador))
-        setPosicionesPiezaDisparar(posicionesDispararPieza(piezaSeleccionada.icono, posicionPieza, piezaJugador, conquerGame.turnoJugador))
+        const [posicionesPiezaMoverseT, posicionesPiezaDisparar] =
+            posicionesMovimientosPiezas(piezaSeleccionada.icono, posicionPieza,
+                piezaJugador, conquerGame.turnoJugador)
+
+        setPosicionesPiezaMoverse(posicionesPiezaMoverseT)
+        setPosicionesPiezaDisparar(posicionesPiezaDisparar)
         setPosicionPiezaSeleccionada(posicionPieza)
     }
 

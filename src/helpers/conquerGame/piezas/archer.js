@@ -12,91 +12,73 @@ const inicioDisparoArcher = 3;
 export const movimientoArcher = (row, col, piezaJugador, turnoJugador) => {
   let arregloPosiciones = []
   const nCol = alfabetoANumero(col);
-  let arregloTemp = []
-
-  arregloTemp = movimientoNorEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
+  let vResultado = {}
+  let arregloPosicionesDisparo = []
+  //Seccion Movimiento
+  vResultado = movimientoNorEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+  //SeccionDisparo
+  if (!vResultado.encontrePared) {
+    vResultado = movimientoNorEste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
+    if (vResultado.arregloPosiciones.length > 0) arregloPosicionesDisparo = [...arregloPosicionesDisparo, ...vResultado.arregloPosiciones]
   }
-  arregloTemp = movimientoSurEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
+  //Seccion Movimiento
+  vResultado = movimientoSurEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+  //Seccion Disparo
+  if (!vResultado.encontrePared) {
+    vResultado = movimientoSurEste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
+    if (vResultado.arregloPosiciones.length > 0) arregloPosicionesDisparo = [...arregloPosicionesDisparo, ...vResultado.arregloPosiciones]
   }
-  arregloTemp = movimientoNorOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
+  //Seccion Movimiento
+  vResultado = movimientoNorOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+  //Seccion Disparo
+  if (!vResultado.encontrePared) {
+    vResultado = movimientoNorOeste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
+    if (vResultado.arregloPosiciones.length > 0) arregloPosicionesDisparo = [...arregloPosicionesDisparo, ...vResultado.arregloPosiciones]
   }
-
-  arregloTemp = movimientoSurOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
+  //Seccion Movimiento
+  vResultado = movimientoSurOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+  //Seccion Disparo
+  if (!vResultado.encontrePared) {
+    vResultado = movimientoSurOeste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
+    if (vResultado.arregloPosiciones.length > 0) arregloPosicionesDisparo = [...arregloPosicionesDisparo, ...vResultado.arregloPosiciones]
   }
-
-  arregloTemp = movimientoNorte(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
+  //Seccion Movimiento
+  vResultado = movimientoNorte(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+  //Seccion Disparo
+  if (!vResultado.encontrePared) {
+    vResultado = movimientoNorte(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
+    if (vResultado.arregloPosiciones.length > 0) arregloPosicionesDisparo = [...arregloPosicionesDisparo, ...vResultado.arregloPosiciones]
   }
-
-  arregloTemp = movimientoSur(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
+  //Seccion Movimiento
+  vResultado = movimientoSur(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+  //Seccion Disparo
+  if (!vResultado.encontrePared) {
+    vResultado = movimientoSur(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
+    if (vResultado.arregloPosiciones.length > 0) arregloPosicionesDisparo = [...arregloPosicionesDisparo, ...vResultado.arregloPosiciones]
   }
-
-  arregloTemp = movimientoEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
+  //Seccion Movimiento
+  vResultado = movimientoEste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+  //Seccion Disparo
+  if (!vResultado.encontrePared) {
+    vResultado = movimientoEste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
+    if (vResultado.arregloPosiciones.length > 0) arregloPosicionesDisparo = [...arregloPosicionesDisparo, ...vResultado.arregloPosiciones]
   }
-
-  arregloTemp = movimientoOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
+  //Seccion Movimiento
+  vResultado = movimientoOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
+  if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
+  //Seccion Disparo
+  if (!vResultado.encontrePared) {
+    vResultado = movimientoOeste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
+    if (vResultado.arregloPosiciones.length > 0) arregloPosicionesDisparo = [...arregloPosicionesDisparo, ...vResultado.arregloPosiciones]
   }
-  return arregloPosiciones;
-};
-
-export const disparoArcher = (row, col, piezaJugador, turnoJugador) => {
-  let arregloPosiciones = []
-  const nCol = alfabetoANumero(col);
-  let arregloTemp = []
-
-  arregloTemp = movimientoNorEste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-  arregloTemp = movimientoSurEste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-  arregloTemp = movimientoNorOeste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-
-  arregloTemp = movimientoSurOeste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-
-  arregloTemp = movimientoNorte(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-
-  arregloTemp = movimientoSur(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-
-  arregloTemp = movimientoEste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-
-  arregloTemp = movimientoOeste(row, nCol, piezaJugador, inicioDisparoArcher, inicioDisparoArcher, false, turnoJugador);
-  if (arregloTemp.length > 0) {
-    arregloPosiciones = [...arregloPosiciones, ...arregloTemp]
-  }
-  return arregloPosiciones;
+  return [arregloPosiciones, arregloPosicionesDisparo];
 };
 
 // export const valorPuntos = 15;

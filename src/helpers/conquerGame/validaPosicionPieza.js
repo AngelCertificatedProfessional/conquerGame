@@ -1,6 +1,6 @@
 import { ARREGLOTIPOPIEZAS, lagosConquerGame, montanasConquerGame, tamanoTableroX, tamanoTableroY } from "../../types";
 import { eliminarLetras, eliminarNumeros, alfabetoANumero } from "../numerosLetras";
-import { disparoArcher, movimientoArcher } from "./piezas/archer";
+import { movimientoArcher } from "./piezas/archer";
 import { movimientoAsesino } from "./piezas/asesino";
 import { movimientoCaballero } from "./piezas/caballero";
 import { movimientoHachero } from "./piezas/hachero";
@@ -97,23 +97,6 @@ export const posicionesMovimientosPiezas = (pieza, posicionPieza, piezaJugador, 
         case ARREGLOTIPOPIEZAS.HECHICERO:
             return [];
         case ARREGLOTIPOPIEZAS.CANON:
-            return [];
-    }
-}
-
-export const posicionesDispararPieza = (pieza, posicionPieza, piezaJugador, turnoJugador) => {
-    const col = eliminarNumeros(posicionPieza);
-    const row = parseInt(eliminarLetras(posicionPieza));
-    switch (pieza) {
-        case ARREGLOTIPOPIEZAS.ARCHERE:
-            return [];
-        case ARREGLOTIPOPIEZAS.ARCHER:
-            return disparoArcher(row, col, piezaJugador, turnoJugador)
-        case ARREGLOTIPOPIEZAS.HECHICERO:
-            return [];
-        case ARREGLOTIPOPIEZAS.CANON:
-            return [];
-        default:
             return [];
     }
 }
