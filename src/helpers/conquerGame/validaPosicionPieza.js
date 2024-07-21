@@ -27,7 +27,7 @@ export const validaInvacionTerreno2Jugadores = (sPiezaNuevaPosicion, turnoJugado
 export const validaInvacionTerreno4Jugadores = (sPiezaNuevaPosicion, turnoJugador) => {
     const nValor = eliminarLetras(sPiezaNuevaPosicion);
     //eliminacion de numeros para el lado vertical
-    const nValorCol = alfabetoANumero(eliminarNumeros(sPosicion));
+    const nValorCol = alfabetoANumero(eliminarNumeros(sPiezaNuevaPosicion));
     return (
         (turnoJugador === "O" &&
             ((nValor >= 1 && nValor <= tamanoTableroX / 2) ||
@@ -55,9 +55,8 @@ export const piezaInvadePosicionConfiguracion = (sPiezaNuevaPosicion, nombrePiez
         alert("Ya existe una pieza en esta posicion");
         return true;
     }
-
     if (
-        (eliminarNumeros(nombrePiezaSeleccinada) === "caballero") &&
+        (eliminarNumeros(nombrePiezaSeleccinada).includes("caballero")) &&
         validaPiezaLago(sPiezaNuevaPosicion)
     ) {
         alert("Esta pieza no puede invadir un lago");

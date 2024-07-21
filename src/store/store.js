@@ -2,7 +2,8 @@ import { configureStore } from "@reduxjs/toolkit";
 import {
     uiSlice,
     usuarioSlice,
-    conquerGameSlice
+    conquerGameSlice,
+    socketSlice
 } from "./";
 
 export const store = configureStore({
@@ -10,6 +11,7 @@ export const store = configureStore({
         ui: uiSlice.reducer,
         usuario: usuarioSlice.reducer,
         conquerGame: conquerGameSlice.reducer,
+        socket: socketSlice.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false

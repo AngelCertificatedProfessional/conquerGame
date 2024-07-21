@@ -1,1 +1,1 @@
-export * from './useSideBarItemConquerGame'
+export * from './useSideBarItemJugador'

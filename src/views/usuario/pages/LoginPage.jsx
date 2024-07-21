@@ -51,12 +51,14 @@ export const LoginPage = () => {
                                 required
                                 type="email"
                                 autoFocus
+                                disabled
                             />
                             <MyTextFieldF
                                 label="Contraseña"
                                 name="contrasena"
                                 required
                                 type="password"
+                                disabled
                             />
                             <Stack spacing={2} direction="row" sx={{ mt: 2 }} useFlexGap flexWrap="wrap">
                                 <Button variant="contained" type="submit" sx={{ flexGrow: { xs: 1, sm: 0 } }}> Ingresar </Button>

@@ -4,7 +4,7 @@ import { CuadroMapa, ListadoPiezas } from "../views"
 import { SideBarConquerGame } from "../components";
 import { tamanoTableroY, tamanoTableroX, ACCIONTIPOJUEGOOBJETO } from "../../../types";
 import { numeroAAlfabeto } from "../../../helpers";
-import { validaInvacionTerreno2Jugadores } from "../../../helpers/conquerGame/validaPosicionPieza";
+import { validaInvacionTerreno2Jugadores, validaInvacionTerreno4Jugadores } from "../../../helpers/conquerGame/validaPosicionPieza";
 
 export const ConquerGameJuegoPage = () => {
 

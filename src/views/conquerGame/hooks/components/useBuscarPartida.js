@@ -25,6 +25,9 @@ export const useBuscarPartida = () => {
     }, [])
 
     const handleIngresar = () => {
+
+        if (rowSelectionModel.length < 1) return
+
         ingresarLobbyPartida(rowSelectionModel[0])
     }
 

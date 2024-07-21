@@ -4,13 +4,12 @@ import {
     piezaInvadePosicionConfiguracion,
     posicionesMovimientosPiezas
 } from "../../../../helpers/conquerGame/validaPosicionPieza";
-import { getEnvVariables } from "../../../../helpers";
 import { useNavigate } from 'react-router-dom';
 import { inicializarPiezasJugador } from "../../../../helpers/conquerGame/inicializarPiezasJugador";
+import { COLORMOVIMIENTODESSELECCION, COLORMOVIMIENTOSELECCION } from "../../../../types";
 
 const drawerWidth = '200px';
 export const useConquerGameLobbyTableroPage = () => {
-    const { VITE_SOCKET_URL } = getEnvVariables()
     const { conquerGame,
         indicarJugadorListo, startActualizarConquerGame } = useConquerGameStore();
     const [piezaSeleccionada, setPiezaSeleccionada] = useState(null)
@@ -20,7 +19,7 @@ export const useConquerGameLobbyTableroPage = () => {
     const [posicionPiezaSeleccionada, setPosicionPiezaSeleccionada] = useState('')
     const [habilitarOpcionAceptar, setHabilitarOpcionAceptar] = useState(false)
     const [bloquearOpciones, setBloquearOpciones] = useState(false)
-    const { socket, conectarSocket } = useSocket(VITE_SOCKET_URL)
+    const { socket } = useSocket()
     const refsPiezas = useRef({});
     const navigate = useNavigate();
 
@@ -32,11 +31,6 @@ export const useConquerGameLobbyTableroPage = () => {
     useEffect(() => {
         cargarPiezasJugador()
     }, [])
-
-
-    useEffect(() => {
-        conectarSocket()
-    }, [conectarSocket])
 
     //Eschucar los cambios en los usuarios conectados
     useEffect(() => {
@@ -69,7 +63,7 @@ export const useConquerGameLobbyTableroPage = () => {
             setPosicionPiezaSeleccionada("")
             const ref = refsPiezas.current[pieza.nombre];
             if (ref) {
-                ref.style.backgroundColor = "rgba(255, 255, 255, 1)";
+                ref.style.backgroundColor = COLORMOVIMIENTODESSELECCION;
             }
             return
         }
@@ -77,7 +71,7 @@ export const useConquerGameLobbyTableroPage = () => {
         if (!!piezaSeleccionada) {
             const ref = refsPiezas.current[piezaSeleccionada.nombre];
             if (ref) {
-                ref.style.backgroundColor = "rgba(255, 255, 255, 1)";
+                ref.style.backgroundColor = COLORMOVIMIENTODESSELECCION;
             }
         }
         setPiezaSeleccionada(pieza)
@@ -85,7 +79,7 @@ export const useConquerGameLobbyTableroPage = () => {
         evaluarPosiciones(!!posicion ? posicion : '', piezasJugador, pieza)
         const ref = refsPiezas.current[pieza.nombre];
         if (ref) {
-            ref.style.backgroundColor = "rgba(225, 234, 57, 0.65)";
+            ref.style.backgroundColor = COLORMOVIMIENTOSELECCION;
         }
     }
 

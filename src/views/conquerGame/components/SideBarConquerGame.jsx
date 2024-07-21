@@ -1,6 +1,6 @@
 import { Box, Button, Divider, List, Typography } from "@mui/material"
 import { useSideBarConquerGame } from "../hooks"
-import { SideBarItemConquerGame } from "../views"
+import { SideBarItemJugador } from "../views"
 import { CONQUERGAMEPARTIDA } from "../../../types"
 
 const drawerWidth = '200px'
@@ -40,7 +40,7 @@ export const SideBarConquerGame = ({ handleClick, habilitarBoton, mensajeBoton, 
             <List>
                 {
                     conquerGame.jugadores.map(jugador => (
-                        < SideBarItemConquerGame
+                        < SideBarItemJugador
                             key={jugador._id}
                             jugador={jugador}
                         />

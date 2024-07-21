@@ -34,6 +34,5 @@ export const movimientoRey = (row, col, piezaJugador, turnoJugador) => {
 
   vResultado = movimientoOeste(row, nCol, piezaJugador, inicioPazos, limiteCantidadPazos, false, turnoJugador);
   if (vResultado.arregloPosiciones.length > 0) arregloPosiciones = [...arregloPosiciones, ...vResultado.arregloPosiciones]
-  console.log(arregloPosiciones)
   return [arregloPosiciones, []];
 };

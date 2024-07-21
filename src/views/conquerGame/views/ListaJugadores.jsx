@@ -1,7 +1,6 @@
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import { useStylesConquerGame } from "../../../types";
 
-export const ListaJugadores = ({ jugador, index }) => {
+export const ListaJugadores = ({ jugador }) => {
   return (
     <Grid item xs={12} md={6}>
       <CardActionArea>

@@ -2,7 +2,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { onChecking, onLogin, onLogout } from '../store';
 import { conquerGameApi } from '../api';
 
+import { useSocket } from './';
+
+
 export const useUsuarioStore = () => {
+
+    const { desconectarSocket, conectarSocket } = useSocket()
 
     const { status, errorMessage, user } = useSelector(state => state.usuario)
     const dispatch = useDispatch();
@@ -22,12 +27,17 @@ export const useUsuarioStore = () => {
 
     const startLogout = () => {
         sessionStorage.clear();
+        desconectarSocket()
         dispatch(onLogout())
     }
 
     const checkAuthToken = async () => {
         const token = sessionStorage.getItem('token')
-        if (!token) return dispatch(onLogout())
+        if (!token) {
+            dispatch(onLogout())
+            desconectarSocket()
+            return
+        }
 
         try {
             const { data } = await conquerGameApi.get('/usuario/renew')
@@ -50,6 +60,7 @@ export const useUsuarioStore = () => {
             sessionStorage.setItem('usuario', data.usuario);
             sessionStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
+            conectarSocket()
         } catch (error) {
             dispatch(onLogout('Credenciales incorrectas'))
         }

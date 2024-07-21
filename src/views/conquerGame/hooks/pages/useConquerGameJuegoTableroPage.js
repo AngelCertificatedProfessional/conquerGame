@@ -3,14 +3,13 @@ import { useConquerGameStore, useSocket } from "../../../../hooks"
 import {
     posicionesMovimientosPiezas
 } from "../../../../helpers/conquerGame/validaPosicionPieza";
-import { compararJSON, getEnvVariables } from "../../../../helpers";
+import { compararJSON } from "../../../../helpers";
 import { useNavigate } from 'react-router-dom';
 import { inicializarPiezasJugador } from "../../../../helpers/conquerGame/inicializarPiezasJugador";
 import { alertMensaje } from "../../../../plugins";
 import { COLORMOVIMIENTODESSELECCION, COLORMOVIMIENTOSELECCION } from "../../../../types";
 const drawerWidth = '200px';
 export const useConquerGameJuegoTableroPage = () => {
-    const { VITE_SOCKET_URL } = getEnvVariables()
     const { conquerGame,
         startActualizarConquerGame,
         startActualizarPosicionAsesino,
@@ -26,13 +25,9 @@ export const useConquerGameJuegoTableroPage = () => {
     const [tiempoTexto, setTiempoTexto] = useState('01:00')
     const [tiempoContador, setTiempoContador] = useState(60)
     const intervalRef = useRef(0);
-    const { socket, conectarSocket } = useSocket(VITE_SOCKET_URL)
+    const { socket } = useSocket()
     const refsPiezas = useRef({});
     const navigate = useNavigate();
-
-    useEffect(() => {
-        conectarSocket()
-    }, [conectarSocket])
 
     const cargarPiezasJugador = async () => {
         const piezas = await inicializarPiezasJugador(conquerGame)
@@ -48,15 +43,17 @@ export const useConquerGameJuegoTableroPage = () => {
     //Eschucar los cambios en los usuarios conectados
     useEffect(() => {
         socket?.on(`conquerGame${conquerGame.numeroPartida}MoverPosicionPiezasGlobal`, (conquerGameT) => {
-            startActualizarConquerGame(conquerGameT)
+            evaluarJugadorDerrotado(conquerGameT, conquerGame)
             setBloquearOpciones(false)
             setHabilitarOpcionAceptar(conquerGameT.turno === conquerGame.turnoJugador)
             actualizarTiempoTexto()
+            startActualizarConquerGame(conquerGameT)
         })
-    }, [socket])
+    }, [socket, conquerGame])
 
     //Eschucar los cambios en los usuarios conectados
     useEffect(() => {
+
         socket?.on(`conquerGame${conquerGame.numeroPartida}FinalizarPartida`, ({ mensaje }) => {
             alertMensaje("Ganador", mensaje, "success");
             clearInterval(intervalRef.current);
@@ -249,6 +246,20 @@ export const useConquerGameJuegoTableroPage = () => {
         if (ref) {
             ref.style.backgroundColor = COLORMOVIMIENTODESSELECCION;
         }
+    }
+
+    const evaluarJugadorDerrotado = (conquerGameT, reyesVivos) => {
+        if (conquerGameT.reyesVivos.length === reyesVivos.length) return
+        console.log(conquerGameT.reyesVivos)
+        console.log(conquerGame.reyesVivos)
+        console.log(conquerGameT.reyesVivos.length)
+        console.log(conquerGame.reyesVivos.length)
+        // console.log(conquerGameT.reyesVivos.length === conquerGame.reyesVivos.length)
+        // for (let reyVivo of conquerGame.reyesVivos) {
+        //     if (!!!conquerGameT.reyesVivos.some((rey) => rey === reyVivo) && reyVivo === conquerGame.turnoJugador) {
+        //         alertMensaje("Perdiste", "Tu rey a muerto, has sido eliminado", "success");
+        //     }
+        // }
     }
 
     return {
