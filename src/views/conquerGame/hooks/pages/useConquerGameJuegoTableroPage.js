@@ -43,13 +43,17 @@ export const useConquerGameJuegoTableroPage = () => {
     //Eschucar los cambios en los usuarios conectados
     useEffect(() => {
         socket?.on(`conquerGame${conquerGame.numeroPartida}MoverPosicionPiezasGlobal`, (conquerGameT) => {
-            evaluarJugadorDerrotado(conquerGameT, conquerGame)
+            evaluarJugadorDerrotado(conquerGameT)
             setBloquearOpciones(false)
             setHabilitarOpcionAceptar(conquerGameT.turno === conquerGame.turnoJugador)
             actualizarTiempoTexto()
             startActualizarConquerGame(conquerGameT)
         })
-    }, [socket, conquerGame])
+        return () => {
+            // Limpiar el evento del socket si el componente se desmonta
+            socket.off(`conquerGame${conquerGame.numeroPartida}MoverPosicionPiezasGlobal`);
+        };
+    }, [socket, conquerGame.reyesVivos])
 
     //Eschucar los cambios en los usuarios conectados
     useEffect(() => {
@@ -62,6 +66,10 @@ export const useConquerGameJuegoTableroPage = () => {
                 navigate("/conquerGame")
             }, 3000);
         })
+        return () => {
+            // Limpiar el evento del socket si el componente se desmonta
+            socket.off(`conquerGame${conquerGame.numeroPartida}FinalizarPartida`);
+        };
     }, [socket])
 
     useEffect(() => {
@@ -248,18 +256,13 @@ export const useConquerGameJuegoTableroPage = () => {
         }
     }
 
-    const evaluarJugadorDerrotado = (conquerGameT, reyesVivos) => {
-        if (conquerGameT.reyesVivos.length === reyesVivos.length) return
-        console.log(conquerGameT.reyesVivos)
-        console.log(conquerGame.reyesVivos)
-        console.log(conquerGameT.reyesVivos.length)
-        console.log(conquerGame.reyesVivos.length)
-        // console.log(conquerGameT.reyesVivos.length === conquerGame.reyesVivos.length)
-        // for (let reyVivo of conquerGame.reyesVivos) {
-        //     if (!!!conquerGameT.reyesVivos.some((rey) => rey === reyVivo) && reyVivo === conquerGame.turnoJugador) {
-        //         alertMensaje("Perdiste", "Tu rey a muerto, has sido eliminado", "success");
-        //     }
-        // }
+    const evaluarJugadorDerrotado = (conquerGameT) => {
+        if (conquerGameT.reyesVivos.length === conquerGame.reyesVivos.length) return
+        for (let reyVivo of conquerGame.reyesVivos) {
+            if (!!!conquerGameT.reyesVivos.some((rey) => rey === reyVivo) && reyVivo === conquerGame.turnoJugador) {
+                alertMensaje("Perdiste", "Tu rey a muerto, has sido eliminado", "success");
+            }
+        }
     }
 
     return {

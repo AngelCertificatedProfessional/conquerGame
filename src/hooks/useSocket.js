@@ -1,6 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { isOnline, disConnectSocket, connectSocket } from '../store';
+import { isOnline, connectSocket } from '../store';
 
 export const useSocket = () => {
 
@@ -14,7 +14,6 @@ export const useSocket = () => {
     }, [])
 
     const desconectarSocket = useCallback(() => {
-        console.log("entre salida")
         if (!!!socket) return
         socket.disconnect();
     }, [socket])
