@@ -1,4 +1,8 @@
-import { ESTRUCTURAPIEZAS2JUGADORESNARANJA, ESTRUCTURAPIEZAS2JUGADORESNEGRO } from "../../test";
+import {
+    ESTRUCTURAPIEZAS2JUGADORESNARANJA, ESTRUCTURAPIEZAS2JUGADORESNEGRO,
+    ESTRUCTURAPIEZAS4JUGADORESNARANJA, ESTRUCTURAPIEZAS4JUGADORESNEGRO,
+    ESTRUCTURAPIEZAS4JUGADORESPURPURA, ESTRUCTURAPIEZAS4JUGADORESROJO
+} from "../../test";
 import { CONTENIDOLISTADO, ESTRUCTURAPIEZAS } from "../../types";
 import { getEnvVariables } from "../getEnvVariables";
 const direccionRuta = `../../images/conquerGame/piezas/`
@@ -37,9 +41,7 @@ export const inicializarPiezasJugador = async (conquerGame) => {
 
 //Metodo creado simplemente para cargar las piezas en el trablero
 const inicializarPiezasJugadorTEST = (conquerGame) => {
-    if (!!!conquerGame) {
-        return
-    } else if (conquerGame.cantidadJugadores === 2) {
+    if (conquerGame.cantidadJugadores === 2) {
         switch (conquerGame.turnoJugador) {
             case "O":
                 return ESTRUCTURAPIEZAS2JUGADORESNARANJA
@@ -47,16 +49,15 @@ const inicializarPiezasJugadorTEST = (conquerGame) => {
                 return ESTRUCTURAPIEZAS2JUGADORESNEGRO
         }
     } else if (conquerGame.cantidadJugadores === 4) {
-        estructuraPiezas = []
         switch (conquerGame.turnoJugador) {
             case "O":
-                return
+                return ESTRUCTURAPIEZAS4JUGADORESNARANJA
             case "B":
-                return
+                return ESTRUCTURAPIEZAS4JUGADORESNEGRO
             case "R":
-                return
+                return ESTRUCTURAPIEZAS4JUGADORESROJO
             case "P":
-                return
+                return ESTRUCTURAPIEZAS4JUGADORESPURPURA
         }
     }
 }

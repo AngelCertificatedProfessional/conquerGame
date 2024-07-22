@@ -43,7 +43,6 @@ export const useConquerGameJuegoTableroPage = () => {
     //Eschucar los cambios en los usuarios conectados
     useEffect(() => {
         socket?.on(`conquerGame${conquerGame.numeroPartida}MoverPosicionPiezasGlobal`, (conquerGameT) => {
-            evaluarJugadorDerrotado(conquerGameT)
             setBloquearOpciones(false)
             setHabilitarOpcionAceptar(conquerGameT.turno === conquerGame.turnoJugador)
             actualizarTiempoTexto()
@@ -53,7 +52,23 @@ export const useConquerGameJuegoTableroPage = () => {
             // Limpiar el evento del socket si el componente se desmonta
             socket.off(`conquerGame${conquerGame.numeroPartida}MoverPosicionPiezasGlobal`);
         };
+    }, [socket])
+
+    //Sirve para indicar que un jugador fue eliminado como tambien, para la asignacion de una nueva pieza
+    useEffect(() => {
+        socket?.on(`conquerGame${conquerGame.numeroPartida}AsignarNuevaPiezaJugador`, (conquerGameT) => {
+            evaluarJugadorDerrotado(conquerGameT)
+            setBloquearOpciones(false)
+            setHabilitarOpcionAceptar(conquerGameT.turno === conquerGame.turnoJugador)
+            actualizarTiempoTexto()
+            startActualizarConquerGame(conquerGameT)
+        })
+        return () => {
+            // Limpiar el evento del socket si el componente se desmonta
+            socket.off(`conquerGame${conquerGame.numeroPartida}AsignarNuevaPiezaJugador`);
+        };
     }, [socket, conquerGame.reyesVivos])
+
 
     //Eschucar los cambios en los usuarios conectados
     useEffect(() => {
@@ -99,8 +114,6 @@ export const useConquerGameJuegoTableroPage = () => {
             setTiempoContador((tiempoContador) => tiempoContador - 1)
         }, 1000);
     }
-
-
 
     const handleClickPersonaje = (pieza) => {
         if (!!bloquearOpciones) return
@@ -161,7 +174,9 @@ export const useConquerGameJuegoTableroPage = () => {
         } else {
             setHabilitarOpcionAceptar(false)
             setMovioAsesino(false)
-            siguienteTurno = evaluarSiguienteTurno(nuevosReyesVivos);
+            if (reyEliminado === '') {
+                siguienteTurno = evaluarSiguienteTurno(nuevosReyesVivos);
+            }
             setBloquearOpciones(true)
             moverPosicionPiezasGlobal(nuevasPocisiones, siguienteTurno, nuevosReyesVivos)
             if (!!piezaSeleccionada) limpiarPiezaSeleccionada(piezaSeleccionada)
@@ -261,8 +276,10 @@ export const useConquerGameJuegoTableroPage = () => {
         for (let reyVivo of conquerGame.reyesVivos) {
             if (!!!conquerGameT.reyesVivos.some((rey) => rey === reyVivo) && reyVivo === conquerGame.turnoJugador) {
                 alertMensaje("Perdiste", "Tu rey a muerto, has sido eliminado", "success");
+                return;
             }
         }
+        alertMensaje("Seleccion de rey", "Se esta seleccionando una pieza especial", "success");
     }
 
     return {
