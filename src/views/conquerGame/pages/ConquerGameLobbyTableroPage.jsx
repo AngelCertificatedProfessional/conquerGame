@@ -55,7 +55,7 @@ export const ConquerGameJuegoPage = () => {
                     }}
                 >
                     {
-                        piezasJugador.map((pieza) =>
+                        !!piezasJugador && piezasJugador.map((pieza) =>
                             < ListadoPiezas
                                 pieza={pieza}
                                 key={pieza.nombre}

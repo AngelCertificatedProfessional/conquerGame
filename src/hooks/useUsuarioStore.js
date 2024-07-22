@@ -45,6 +45,7 @@ export const useUsuarioStore = () => {
             sessionStorage.setItem('usuario', data.usuario);
             sessionStorage.setItem('token-init-date', new Date().getTime());
             dispatch(onLogin({ usuario: data.usuario, uid: data.uid }))
+            conectarSocket()
         } catch (error) {
             sessionStorage.clear();
             dispatch(onLogout())

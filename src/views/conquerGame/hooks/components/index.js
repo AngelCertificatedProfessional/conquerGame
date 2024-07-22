@@ -1,4 +1,5 @@
 export * from './useAgregarPartida'
 export * from './useBuscarPartida'
+export * from './useDialogAyudaPersonajes'
 export * from './useMenuJuego'
 export * from './useSideBarConquerGame'

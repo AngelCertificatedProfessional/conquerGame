@@ -22,7 +22,6 @@ export const useConquerGameLobbyTableroPage = () => {
     const { socket } = useSocket()
     const refsPiezas = useRef({});
     const navigate = useNavigate();
-
     const cargarPiezasJugador = async () => {
         const piezas = await inicializarPiezasJugador(conquerGame)
         setPiezasJugador(piezas)

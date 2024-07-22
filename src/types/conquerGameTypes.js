@@ -136,50 +136,145 @@ export const lagosConquerGame = Object.freeze([
   "11T",
 ]);
 
+export const CONTENIDOLISTADO = [
+  {
+    tipo: 1,
+    titulo: "Lancero",
+    icono: 'lancero',
+    descripcion:
+      "Esta unidad puede moverse hasta 13 espacios en vertical/horizontal o un espacio en diagonal",
+  },
+  {
+    tipo: 1,
+    titulo: "Hachero",
+    icono: 'hachero',
+    descripcion:
+      "Esta unidad puede moverse hasta 13 espacios en diagonal o un espacio en vertical/horizontal",
+  },
+  {
+    tipo: 1,
+    titulo: "Arquero",
+    icono: "archer",
+    descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
+      atacar a distancia en la tercera casilla sin requerir mover la unidad`,
+  },
+  {
+    tipo: 1,
+    titulo: "Asesino",
+    icono: "asesino",
+    descripcion: `Esta unidad puede puede hacer dos movimientos en el mismo turno, el primer movimiento sera 
+      de lado horizontal/vertical, y el segundo turno se movera en diagonal`,
+  },
+  {
+    tipo: 1,
+    titulo: "Caballero",
+    icono: "caballero",
+    descripcion: `Esta unidad puede moverse hacia cualquier direccion sin restriccion de la cantidad de casillas 
+      que pueda moverse, pero no puede atravesar lagos`,
+  },
+  {
+    tipo: 1,
+    titulo: "Rey",
+    icono: "rey",
+    descripcion: `Esta unidad puede moverse uno o dos espacios en cualquier direccion, 
+      en caso de que muera esta unidad es derrota inmediata para el jugador`,
+  },
+  {
+    tipo: 2,
+    titulo: "Asesino Elite",
+    icono: "asesinoE",
+    descripcion: `Esta unidad puede puede hacer dos movimientos en el mismo turno, esta unidad puede moverse un espacio por los dos turnos`,
+  },
+  {
+    tipo: 2,
+    titulo: "Arquero Elite",
+    icono: "archerE",
+    descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
+      atacar a distancia en la tercera casilla o cuarta casilla sin requerir mover la unidad`,
+  },
+  {
+    tipo: 2,
+    titulo: "Hechicero",
+    icono: "hechicero",
+    descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
+      atacar a distancia en la cuarta casilla o quinta casilla sin requerir mover la unidad`,
+  },
+  {
+    tipo: 2,
+    titulo: "Cañon",
+    icono: "canon",
+    descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
+      atacar a distancia en la octava casilla sin requerir mover la unidad`,
+  },
+  {
+    tipo: 2,
+    titulo: "Lancero Elite",
+    icono: "lanceroE",
+    descripcion:
+      "Esta unidad puede moverse hasta 14 espacios en vertical/horizontal o 2 espacios en diagonal",
+  },
+  {
+    tipo: 2,
+    titulo: "Hachero Elite",
+    icono: "hacheroE",
+    descripcion:
+      "Esta unidad puede moverse hasta 14 horizontal o 2 espacios en vertical/horizontal",
+  },
+];
+
+
 export const ESTRUCTURAPIEZAS = Object.freeze([
   {
+    titulo: "Hachero",
     nombre: "hachero1",
     icono: "hachero",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Hachero",
     nombre: "hachero2",
     icono: "hachero",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Lancero",
     nombre: "lancero1",
     icono: "lancero",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Lancero",
     nombre: "lancero2",
     icono: "lancero",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Lancero",
     nombre: "lancero3",
     icono: "lancero",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Lancero",
     nombre: "lancero4",
     icono: "lancero",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Archer",
     nombre: "archer",
     icono: "archer",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Asesino",
     nombre: "asesino",
     icono: "asesino",
     posicion: "",
@@ -187,30 +282,35 @@ export const ESTRUCTURAPIEZAS = Object.freeze([
     asesino: true
   },
   {
+    titulo: "Caballero",
     nombre: "caballero1",
     icono: "caballero",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Caballero",
     nombre: "caballero2",
     icono: "caballero",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Caballero",
     nombre: "caballero3",
     icono: "caballero",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Caballero",
     nombre: "caballero4",
     icono: "caballero",
     posicion: "",
     direccion: ""
   },
   {
+    titulo: "Rey",
     nombre: "rey",
     icono: "rey",
     posicion: "",
@@ -218,6 +318,59 @@ export const ESTRUCTURAPIEZAS = Object.freeze([
     rey: true
   },
 ]);
+
+export const ESTRUCTURAPIEZASESPECIALES = Object.freeze([
+  {
+    titulo: "Hachero Elite",
+    nombre: "hacheroE",
+    icono: "hacheroE",
+    posicion: "",
+    direccion: ""
+  },
+  {
+    titulo: "Lancero Elite",
+    nombre: "lanceroE",
+    icono: "lanceroE",
+    posicion: "",
+    direccion: ""
+  },
+  {
+    titulo: "Asesino Elite",
+    nombre: "asesinoE",
+    icono: "asesinoE",
+    posicion: "",
+    direccion: "",
+    asesino: true
+  },
+  {
+    titulo: "Cañon",
+    nombre: "canon",
+    icono: "canon",
+    posicion: "",
+    direccion: "",
+    asesino: true
+  },
+  {
+    titulo: "Hechicero",
+    nombre: "hechicero",
+    icono: "hechicero",
+    posicion: "",
+    direccion: "",
+    asesino: true
+  },
+  {
+    titulo: "Arquero Elite",
+    nombre: "archerE",
+    icono: "archerE",
+    posicion: "",
+    direccion: "",
+    rey: true
+  },
+]);
+
+
+
+
 export const useStylesConquerGame = Object.freeze({
   targetaJugadorO: {
     backgroundColor: "rgb(245, 167, 49)",
@@ -279,3 +432,5 @@ export const CONQUERGAMEPARTIDA = Object.freeze({
   FINALIZADO: 4,
   CANCELADO: 5,
 })
+
+

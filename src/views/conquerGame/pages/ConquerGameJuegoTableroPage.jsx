@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { useConquerGameJuegoTableroPage } from "../hooks"
 import { CuadroMapa, ListadoPiezas } from "../views"
-import { SideBarConquerGame } from "../components";
+import { DialogSeleccionarNuevaPieza, SideBarConquerGame } from "../components";
 import { tamanoTableroY, tamanoTableroX } from "../../../types";
 import { numeroAAlfabeto } from "../../../helpers";
 export const ConquerGameJuegoTableroPage = () => {
@@ -24,7 +24,6 @@ export const ConquerGameJuegoTableroPage = () => {
     if (!!!piezasJugador) return <></>;
 
     return (
-
         <Box sx={{
             display: 'flex',
         }} >
@@ -93,6 +92,7 @@ export const ConquerGameJuegoTableroPage = () => {
                     )}
                 </Box>
             </Box>
+            <DialogSeleccionarNuevaPieza />
         </Box>
     )
 }

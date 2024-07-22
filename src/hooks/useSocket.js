@@ -10,6 +10,7 @@ export const useSocket = () => {
     //Se rememorzan para poder evitar que cuando el la aplicacion refresca, evitar 
     //ejecutar los metodos cada ves que el elemento se redibjuje
     const conectarSocket = useCallback(() => {
+        if (!!socket) return
         dispatch(connectSocket())
     }, [])
 
