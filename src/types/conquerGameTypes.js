@@ -143,6 +143,7 @@ export const CONTENIDOLISTADO = [
     icono: 'lancero',
     descripcion:
       "Esta unidad puede moverse hasta 13 espacios en vertical/horizontal o un espacio en diagonal",
+    mostrar: true
   },
   {
     tipo: 1,
@@ -150,6 +151,7 @@ export const CONTENIDOLISTADO = [
     icono: 'hachero',
     descripcion:
       "Esta unidad puede moverse hasta 13 espacios en diagonal o un espacio en vertical/horizontal",
+    mostrar: true
   },
   {
     tipo: 1,
@@ -157,6 +159,7 @@ export const CONTENIDOLISTADO = [
     icono: "archer",
     descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
       atacar a distancia en la tercera casilla sin requerir mover la unidad`,
+    mostrar: true
   },
   {
     tipo: 1,
@@ -164,6 +167,7 @@ export const CONTENIDOLISTADO = [
     icono: "asesino",
     descripcion: `Esta unidad puede puede hacer dos movimientos en el mismo turno, el primer movimiento sera 
       de lado horizontal/vertical, y el segundo turno se movera en diagonal`,
+    mostrar: true
   },
   {
     tipo: 1,
@@ -171,6 +175,7 @@ export const CONTENIDOLISTADO = [
     icono: "caballero",
     descripcion: `Esta unidad puede moverse hacia cualquier direccion sin restriccion de la cantidad de casillas 
       que pueda moverse, pero no puede atravesar lagos`,
+    mostrar: true
   },
   {
     tipo: 1,
@@ -178,12 +183,14 @@ export const CONTENIDOLISTADO = [
     icono: "rey",
     descripcion: `Esta unidad puede moverse uno o dos espacios en cualquier direccion, 
       en caso de que muera esta unidad es derrota inmediata para el jugador`,
+    mostrar: true
   },
   {
     tipo: 2,
     titulo: "Asesino Elite",
     icono: "asesinoE",
     descripcion: `Esta unidad puede puede hacer dos movimientos en el mismo turno, esta unidad puede moverse un espacio por los dos turnos`,
+    mostrar: true
   },
   {
     tipo: 2,
@@ -191,6 +198,7 @@ export const CONTENIDOLISTADO = [
     icono: "archerE",
     descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
       atacar a distancia en la tercera casilla o cuarta casilla sin requerir mover la unidad`,
+    mostrar: true
   },
   {
     tipo: 2,
@@ -198,6 +206,7 @@ export const CONTENIDOLISTADO = [
     icono: "hechicero",
     descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
       atacar a distancia en la cuarta casilla o quinta casilla sin requerir mover la unidad`,
+    mostrar: true
   },
   {
     tipo: 2,
@@ -205,6 +214,7 @@ export const CONTENIDOLISTADO = [
     icono: "canon",
     descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
       atacar a distancia en la octava casilla sin requerir mover la unidad`,
+    mostrar: true
   },
   {
     tipo: 2,
@@ -212,6 +222,7 @@ export const CONTENIDOLISTADO = [
     icono: "lanceroE",
     descripcion:
       "Esta unidad puede moverse hasta 14 espacios en vertical/horizontal o 2 espacios en diagonal",
+    mostrar: true
   },
   {
     tipo: 2,
@@ -219,6 +230,7 @@ export const CONTENIDOLISTADO = [
     icono: "hacheroE",
     descripcion:
       "Esta unidad puede moverse hasta 14 horizontal o 2 espacios en vertical/horizontal",
+    mostrar: true
   },
 ];
 

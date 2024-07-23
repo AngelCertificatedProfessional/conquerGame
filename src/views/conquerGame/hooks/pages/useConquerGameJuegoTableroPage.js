@@ -132,12 +132,20 @@ export const useConquerGameJuegoTableroPage = () => {
         }
     }
 
-    // if (pieza.icono === piezaEspecialSeleccionada.icono) {
-    //     pieza.mostrar = true
-    // }
     const handleClickTableroNuevaPieza = (posicionPieza) => {
 
         //TODO LISTADO DE LAS PIEZAS
+        const piezasListadoT = piezasJugador.map((pieza) => {
+            if (pieza.icono === piezaEspecialSeleccionada.icono) {
+                pieza.mostrar = true
+            }
+            return {
+                ...pieza,
+                posicion: pieza.icono === piezaEspecialSeleccionada.icono
+                    && pieza.jugador === conquerGame.turnoJugador ? posicionPieza : pieza.posicion
+            };
+        })
+        setPiezasJugador(piezasListadoT)
         const piezas = conquerGame.posicionPiezasGlobal.map((pieza) => {
             return {
                 ...pieza,

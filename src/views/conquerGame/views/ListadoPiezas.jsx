@@ -1,7 +1,7 @@
 import { Card, CardActionArea, CardMedia, Tooltip } from "@mui/material";
 import { forwardRef } from "react";
 export const ListadoPiezas = forwardRef(({ pieza, handleClick }, ref) => {
-    if (!!pieza.mostrar) {
+    if (!!!pieza.mostrar) {
         return <></>
     }
     return (
