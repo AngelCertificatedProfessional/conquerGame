@@ -229,49 +229,56 @@ export const ESTRUCTURAPIEZAS = Object.freeze([
     nombre: "hachero1",
     icono: "hachero",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Hachero",
     nombre: "hachero2",
     icono: "hachero",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Lancero",
     nombre: "lancero1",
     icono: "lancero",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Lancero",
     nombre: "lancero2",
     icono: "lancero",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Lancero",
     nombre: "lancero3",
     icono: "lancero",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Lancero",
     nombre: "lancero4",
     icono: "lancero",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Archer",
     nombre: "archer",
     icono: "archer",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Asesino",
@@ -279,6 +286,7 @@ export const ESTRUCTURAPIEZAS = Object.freeze([
     icono: "asesino",
     posicion: "",
     direccion: "",
+    mostrar: true,
     asesino: true
   },
   {
@@ -286,28 +294,32 @@ export const ESTRUCTURAPIEZAS = Object.freeze([
     nombre: "caballero1",
     icono: "caballero",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Caballero",
     nombre: "caballero2",
     icono: "caballero",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Caballero",
     nombre: "caballero3",
     icono: "caballero",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Caballero",
     nombre: "caballero4",
     icono: "caballero",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: true
   },
   {
     titulo: "Rey",
@@ -315,24 +327,24 @@ export const ESTRUCTURAPIEZAS = Object.freeze([
     icono: "rey",
     posicion: "",
     direccion: "",
+    mostrar: true,
     rey: true
   },
-]);
-
-export const ESTRUCTURAPIEZASESPECIALES = Object.freeze([
   {
     titulo: "Hachero Elite",
     nombre: "hacheroE",
     icono: "hacheroE",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: false
   },
   {
     titulo: "Lancero Elite",
     nombre: "lanceroE",
     icono: "lanceroE",
     posicion: "",
-    direccion: ""
+    direccion: "",
+    mostrar: false
   },
   {
     titulo: "Asesino Elite",
@@ -340,6 +352,7 @@ export const ESTRUCTURAPIEZASESPECIALES = Object.freeze([
     icono: "asesinoE",
     posicion: "",
     direccion: "",
+    mostrar: false,
     asesino: true
   },
   {
@@ -348,7 +361,7 @@ export const ESTRUCTURAPIEZASESPECIALES = Object.freeze([
     icono: "canon",
     posicion: "",
     direccion: "",
-    asesino: true
+    mostrar: false
   },
   {
     titulo: "Hechicero",
@@ -356,7 +369,7 @@ export const ESTRUCTURAPIEZASESPECIALES = Object.freeze([
     icono: "hechicero",
     posicion: "",
     direccion: "",
-    asesino: true
+    mostrar: false
   },
   {
     titulo: "Arquero Elite",
@@ -364,12 +377,9 @@ export const ESTRUCTURAPIEZASESPECIALES = Object.freeze([
     icono: "archerE",
     posicion: "",
     direccion: "",
-    rey: true
+    mostrar: false
   },
 ]);
-
-
-
 
 export const useStylesConquerGame = Object.freeze({
   targetaJugadorO: {

@@ -15,6 +15,7 @@ export const useConquerGameJuegoTableroPage = () => {
         startActualizarPosicionAsesino,
         moverPosicionPiezasGlobal } = useConquerGameStore();
     const [piezaSeleccionada, setPiezaSeleccionada] = useState(null)
+    const [piezaEspecialSeleccionada, setPiezasEspecialSeleccionada] = useState(null)
     const [piezasJugador, setPiezasJugador] = useState([])
     const [posicionesPiezaMoverse, setPosicionesPiezaMoverse] = useState([])
     const [posicionesPiezaDisparar, setPosicionesPiezaDisparar] = useState([])
@@ -22,6 +23,7 @@ export const useConquerGameJuegoTableroPage = () => {
     const [habilitarOpcionAceptar, setHabilitarOpcionAceptar] = useState(false)
     const [bloquearOpciones, setBloquearOpciones] = useState(false)
     const [movioAsesino, setMovioAsesino] = useState(false)
+    const [mostrarVentanaPiezaEspecial, setMostrarVentanaPiezaEspecial] = useState(false)
     const [tiempoTexto, setTiempoTexto] = useState('01:00')
     const [tiempoContador, setTiempoContador] = useState(60)
     const intervalRef = useRef(0);
@@ -115,6 +117,39 @@ export const useConquerGameJuegoTableroPage = () => {
         }, 1000);
     }
 
+    const handleClickTablero = (posicionPieza) => {
+        if (conquerGame.turno !== conquerGame.turnoJugador) return
+        if (piezaEspecialSeleccionada !== null) {
+            handleClickTableroNuevaPieza(posicionPieza)
+        }
+
+        const pieza = conquerGame.posicionPiezasGlobal.find(pieza =>
+            posicionPieza === pieza.posicion && pieza.jugador === conquerGame.turnoJugador)
+        if (!!pieza) {
+            handleClickPersonaje(pieza)
+        } else {
+            clickMoverDisparar(posicionPieza)
+        }
+    }
+
+    // if (pieza.icono === piezaEspecialSeleccionada.icono) {
+    //     pieza.mostrar = true
+    // }
+    const handleClickTableroNuevaPieza = (posicionPieza) => {
+
+        //TODO LISTADO DE LAS PIEZAS
+        const piezas = conquerGame.posicionPiezasGlobal.map((pieza) => {
+            return {
+                ...pieza,
+                posicion: pieza.icono === piezaEspecialSeleccionada.icono
+                    && pieza.jugador === conquerGame.turnoJugador ? posicionPieza : pieza.posicion
+            };
+        })
+        const siguienteTurno = evaluarSiguienteTurno(conquerGame.reyesVivos);
+        moverPosicionPiezasGlobal(piezas, siguienteTurno, conquerGame.reyesVivos)
+        setPiezasEspecialSeleccionada(null)
+    }
+
     const handleClickPersonaje = (pieza) => {
         if (!!bloquearOpciones) return
         if (!!movioAsesino) return
@@ -137,17 +172,6 @@ export const useConquerGameJuegoTableroPage = () => {
         const ref = refsPiezas.current[pieza.nombre];
         if (ref) {
             ref.style.backgroundColor = COLORMOVIMIENTOSELECCION;
-        }
-    }
-
-    const handleClickTablero = (posicionPieza) => {
-        if (conquerGame.turno !== conquerGame.turnoJugador) return
-        const pieza = conquerGame.posicionPiezasGlobal.find(pieza =>
-            posicionPieza === pieza.posicion && pieza.jugador === conquerGame.turnoJugador)
-        if (!!pieza) {
-            handleClickPersonaje(pieza)
-        } else {
-            clickMoverDisparar(posicionPieza)
         }
     }
 
@@ -279,7 +303,16 @@ export const useConquerGameJuegoTableroPage = () => {
                 return;
             }
         }
-        alertMensaje("Seleccion de rey", "Se esta seleccionando una pieza especial", "success");
+        if (conquerGameT.turno !== conquerGame.turnoJugador) {
+            alertMensaje("Seleccion pieza espcial", "Un rey a sido eliminado, y el jugador que lo elimino esta seleccionando una pieza especial", "success");
+        } else {
+            setMostrarVentanaPiezaEspecial(true)
+        }
+    }
+
+    const clickAceptarNuevaPieza = (pieza) => {
+        setMostrarVentanaPiezaEspecial(false)
+        setPiezasEspecialSeleccionada(pieza)
     }
 
     return {
@@ -292,9 +325,11 @@ export const useConquerGameJuegoTableroPage = () => {
         posicionesPiezaDisparar,
         posicionPiezaSeleccionada,
         tiempoTexto,
+        mostrarVentanaPiezaEspecial,
         handleClickTablero,
         handleClickPersonaje,
         setListadoRef,
         handlePasarTurno,
+        clickAceptarNuevaPieza
     }
 }

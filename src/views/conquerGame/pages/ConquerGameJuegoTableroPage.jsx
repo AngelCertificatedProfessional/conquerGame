@@ -16,10 +16,12 @@ export const ConquerGameJuegoTableroPage = () => {
         posicionPiezaSeleccionada,
         movioAsesino,
         tiempoTexto,
+        mostrarVentanaPiezaEspecial,
         setListadoRef,
         handleClickTablero,
         handleClickPersonaje,
         handlePasarTurno,
+        clickAceptarNuevaPieza,
     } = useConquerGameJuegoTableroPage()
     if (!!!piezasJugador) return <></>;
 
@@ -92,7 +94,10 @@ export const ConquerGameJuegoTableroPage = () => {
                     )}
                 </Box>
             </Box>
-            <DialogSeleccionarNuevaPieza />
+            <DialogSeleccionarNuevaPieza
+                mostrarVentana={mostrarVentanaPiezaEspecial}
+                aceptarPieza={clickAceptarNuevaPieza}
+            />
         </Box>
     )
 }

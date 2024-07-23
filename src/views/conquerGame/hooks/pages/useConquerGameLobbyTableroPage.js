@@ -94,7 +94,8 @@ export const useConquerGameLobbyTableroPage = () => {
             };
         })
         setPiezasJugador(nuevaPiezaJugador)
-        setHabilitarOpcionAceptar(nuevaPiezaJugador.every((valor) => valor.posicion !== ''))
+        const piezasFiltrar = nuevaPiezaJugador.filter((valor) => !!valor.mostrar)
+        setHabilitarOpcionAceptar(piezasFiltrar.every((valor) => valor.posicion !== ''))
         evaluarPosiciones(posicionPieza, nuevaPiezaJugador, piezaSeleccionada)
     }
 
