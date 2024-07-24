@@ -318,7 +318,7 @@ export const useConquerGameJuegoTableroPage = () => {
             }
         }
         if (conquerGameT.turno !== conquerGame.turnoJugador) {
-            alertMensaje("Seleccion pieza espcial", "Un rey a sido eliminado, y el jugador que lo elimino esta seleccionando una pieza especial", "success");
+            alertMensaje("Seleccion pieza especial", "Un rey a sido eliminado, y el jugador que lo elimino esta seleccionando una pieza especial", "success");
         } else {
             setMostrarVentanaPiezaEspecial(true)
         }

@@ -1,8 +1,9 @@
 import { ARREGLOTIPOPIEZAS, lagosConquerGame, montanasConquerGame, tamanoTableroX, tamanoTableroY } from "../../types";
 import { eliminarLetras, eliminarNumeros, alfabetoANumero } from "../numerosLetras";
 import { movimientoArcher } from "./piezas/archer";
-import { movimientoAsesino } from "./piezas/asesino";
+import { movimientoAsesino, movimientoAsesinoElite } from "./piezas/asesino";
 import { movimientoCaballero } from "./piezas/caballero";
+import { movimientoCanon } from "./piezas/canon";
 import { movimientoHachero } from "./piezas/hachero";
 import { movimientoHechicero } from "./piezas/hechicero";
 import { movimientoLancero } from "./piezas/lancero";
