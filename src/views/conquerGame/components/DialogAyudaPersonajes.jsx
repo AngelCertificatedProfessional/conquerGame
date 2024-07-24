@@ -52,7 +52,7 @@ export const DialogAyudaPersonajes = ({
                         <DialogTitle variant="h6">
                             {piezaSeleccionada.titulo}
                         </DialogTitle>
-                        <Grid container columnSpacing={2} dividers>
+                        <Grid container columnSpacing={2} dividers={true}>
                             <Grid item xs={12} md={6}>
                                 <Typography gutterBottom>
                                     {piezaSeleccionada.descripcion}

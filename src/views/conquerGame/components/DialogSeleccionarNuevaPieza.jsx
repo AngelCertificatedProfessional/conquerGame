@@ -10,7 +10,7 @@ export const DialogSeleccionarNuevaPieza = ({ mostrarVentana, aceptarPieza }) =>
         cerrarVentana,
         piezasAyuda,
         piezaSeleccionada
-    } = useDialogSeleccionarNuevaPieza(aceptarPieza);
+    } = useDialogSeleccionarNuevaPieza(aceptarPieza, mostrarVentana);
 
     return (
         <Dialog open={mostrarVentana}
@@ -45,7 +45,7 @@ export const DialogSeleccionarNuevaPieza = ({ mostrarVentana, aceptarPieza }) =>
                         <DialogTitle variant="h6">
                             {piezaSeleccionada.titulo}
                         </DialogTitle>
-                        <Grid container columnSpacing={2} dividers>
+                        <Grid container columnSpacing={2} dividers={true}>
                             <Grid item xs={12} md={6}>
                                 <Typography gutterBottom>
                                     {piezaSeleccionada.descripcion}

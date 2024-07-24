@@ -76,15 +76,13 @@ export const ConquerGameJuegoPage = () => {
                             {[...Array(tamanoTableroY)].map((y, col) => {
                                 const posicion = `${tamanoTableroX - row}${numeroAAlfabeto(col + 1)}`;
                                 let bAreaNoSeleccionable = false;
-                                if (ACCIONTIPOJUEGOOBJETO.INDIVIDUAL === conquerGame.tipoJuego) {
-                                    switch (conquerGame.cantidadJugadores) {
-                                        case 2:
-                                            bAreaNoSeleccionable = validaInvacionTerreno2Jugadores(posicion, conquerGame.turnoJugador)
-                                            break;
-                                        case 4:
-                                            bAreaNoSeleccionable = validaInvacionTerreno4Jugadores(posicion, conquerGame.turnoJugador)
-                                            break;
-                                    }
+                                switch (conquerGame.cantidadJugadores) {
+                                    case 2:
+                                        bAreaNoSeleccionable = validaInvacionTerreno2Jugadores(posicion, conquerGame.turnoJugador)
+                                        break;
+                                    case 4:
+                                        bAreaNoSeleccionable = validaInvacionTerreno4Jugadores(posicion, conquerGame.turnoJugador)
+                                        break;
                                 }
                                 return (
                                     < CuadroMapa

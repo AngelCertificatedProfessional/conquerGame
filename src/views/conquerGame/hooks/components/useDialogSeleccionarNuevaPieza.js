@@ -2,9 +2,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { inicializarPiezasJugador } from "../../../../helpers/conquerGame/inicializarPiezasJugador";
 import { COLORMOVIMIENTODESSELECCION, COLORMOVIMIENTOSELECCION } from "../../../../types";
+import { useConquerGameStore } from "../../../../hooks";
 
-export const useDialogSeleccionarNuevaPieza = (aceptarPieza) => {
-
+export const useDialogSeleccionarNuevaPieza = (aceptarPieza, mostrarVentana) => {
+    const { conquerGame } = useConquerGameStore()
     const [piezasAyuda, setPiezasAyuda] = useState(null)
     const [piezaSeleccionada, setPiezaSeleccionada] = useState(null)
     const refsPiezas = useRef({});
@@ -12,12 +13,21 @@ export const useDialogSeleccionarNuevaPieza = (aceptarPieza) => {
     const inicializarPiezasAyuda = async () => {
         let piezas = await inicializarPiezasJugador(null)
         piezas = piezas.filter(pieza => pieza.tipo === 2)
-        setPiezasAyuda(piezas)
+        const piezasFiltradas = [];
+        //Evitamos que se pueda seleccionar una pieza especial que ya este puesta en el mapa
+        for (let pieza of piezas) {
+            if (conquerGame.posicionPiezasGlobal.some(piezasT =>
+                piezasT.nombre === `${conquerGame.turnoJugador}${pieza.icono}` &&
+                piezasT.mostrar === true && piezasT.posicion !== ''
+            )) continue
+            piezasFiltradas.push(pieza)
+        }
+        setPiezasAyuda(piezasFiltradas)
     }
 
     useEffect(() => {
-        inicializarPiezasAyuda()
-    }, [])
+        if (!!mostrarVentana) inicializarPiezasAyuda()
+    }, [mostrarVentana])
 
     const handleClickPersonaje = (pieza) => {
         if (!!piezaSeleccionada) {

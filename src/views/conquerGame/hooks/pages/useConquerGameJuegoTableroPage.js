@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useConquerGameStore, useSocket } from "../../../../hooks"
 import {
+    piezaInvadePosicionConfiguracion,
     posicionesMovimientosPiezas
 } from "../../../../helpers/conquerGame/validaPosicionPieza";
 import { compararJSON } from "../../../../helpers";
@@ -119,7 +120,7 @@ export const useConquerGameJuegoTableroPage = () => {
 
     const handleClickTablero = (posicionPieza) => {
         if (conquerGame.turno !== conquerGame.turnoJugador) return
-        if (piezaEspecialSeleccionada !== null) {
+        if (!!piezaEspecialSeleccionada) {
             handleClickTableroNuevaPieza(posicionPieza)
         }
 
@@ -133,14 +134,12 @@ export const useConquerGameJuegoTableroPage = () => {
     }
 
     const handleClickTableroNuevaPieza = (posicionPieza) => {
-
-        //TODO LISTADO DE LAS PIEZAS
+        //Coloca una pieza especial en el tablero
+        if (piezaInvadePosicionConfiguracion(posicionPieza, `${conquerGame.turnoJugador}${piezaEspecialSeleccionada.icono}`, conquerGame.posicionPiezasGlobal)) return
         const piezasListadoT = piezasJugador.map((pieza) => {
-            if (pieza.icono === piezaEspecialSeleccionada.icono) {
-                pieza.mostrar = true
-            }
             return {
                 ...pieza,
+                mostrar: pieza.icono === piezaEspecialSeleccionada.icono ? true : pieza.mostrar,
                 posicion: pieza.icono === piezaEspecialSeleccionada.icono
                     && pieza.jugador === conquerGame.turnoJugador ? posicionPieza : pieza.posicion
             };
@@ -149,6 +148,8 @@ export const useConquerGameJuegoTableroPage = () => {
         const piezas = conquerGame.posicionPiezasGlobal.map((pieza) => {
             return {
                 ...pieza,
+                mostrar: pieza.icono === piezaEspecialSeleccionada.icono
+                    && pieza.jugador === conquerGame.turnoJugador ? true : pieza.mostrar,
                 posicion: pieza.icono === piezaEspecialSeleccionada.icono
                     && pieza.jugador === conquerGame.turnoJugador ? posicionPieza : pieza.posicion
             };
@@ -159,6 +160,7 @@ export const useConquerGameJuegoTableroPage = () => {
     }
 
     const handleClickPersonaje = (pieza) => {
+        if (!!piezaEspecialSeleccionada) return
         if (!!bloquearOpciones) return
         if (!!movioAsesino) return
         if (conquerGame.turno !== conquerGame.turnoJugador) return
@@ -290,6 +292,7 @@ export const useConquerGameJuegoTableroPage = () => {
         const siguienteTurno = evaluarSiguienteTurno(nuevosReyesVivos);
         moverPosicionPiezasGlobal(conquerGame.posicionPiezasGlobal, siguienteTurno, nuevosReyesVivos)
         if (!!piezaSeleccionada) limpiarPiezaSeleccionada(piezaSeleccionada)
+        if (!!piezaEspecialSeleccionada || !!mostrarVentanaPiezaEspecial) limpiarPiezaSeleccionada(piezaEspecialSeleccionada)
     }
 
     const limpiarPiezaSeleccionada = (pieza) => {
@@ -297,6 +300,9 @@ export const useConquerGameJuegoTableroPage = () => {
         setPosicionesPiezaDisparar([])
         setPiezaSeleccionada(null)
         setPosicionPiezaSeleccionada("")
+        setPiezasEspecialSeleccionada(null)
+        setMostrarVentanaPiezaEspecial(false)
+        if (!!!pieza) return
         const ref = refsPiezas.current[pieza.nombre];
         if (ref) {
             ref.style.backgroundColor = COLORMOVIMIENTODESSELECCION;
@@ -334,6 +340,7 @@ export const useConquerGameJuegoTableroPage = () => {
         posicionPiezaSeleccionada,
         tiempoTexto,
         mostrarVentanaPiezaEspecial,
+        piezaEspecialSeleccionada,
         handleClickTablero,
         handleClickPersonaje,
         setListadoRef,

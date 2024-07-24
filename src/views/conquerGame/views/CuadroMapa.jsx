@@ -7,11 +7,11 @@ export const CuadroMapa = ({ posicion, handleClick,
     posicionesPiezaDisparar, posicionPiezaSeleccionada, piezasJugador }) => {
 
     const [imagen, setImagen] = useState('')
-    const [icono, setIcono] = useState('')
+    const [titulo, setTitulo] = useState('')
     useEffect(() => {
-        const { direccion, icono } = piezasJugador.find(piezasJugador => piezasJugador.posicion === posicion) || ''
+        const { direccion, titulo } = piezasJugador.find(piezasJugador => piezasJugador.posicion === posicion) || ''
         setImagen(!!direccion ? direccion : '')
-        setIcono(!!direccion ? icono : '')
+        setTitulo(!!titulo ? titulo : '')
     }, [piezasJugador])
     return (
         <Box
@@ -32,7 +32,7 @@ export const CuadroMapa = ({ posicion, handleClick,
             onClick={() => bAreaNoSeleccionable ? {} : handleClick(posicion)}
         >
             {imagen !== '' &&
-                <Tooltip title={icono} PopperProps={{
+                <Tooltip title={titulo} PopperProps={{
                     modifiers: [
                         {
                             name: "offset",
