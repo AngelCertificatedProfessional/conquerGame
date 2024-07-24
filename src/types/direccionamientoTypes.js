@@ -1,4 +1,4 @@
-import { ConquerGameRoutes } from "../views/conquerGame/routes/ConquerGameRoutes"
+import { ConquerGameRoutes } from "../presentation/conquerGame/routes/ConquerGameRoutes"
 import {
     CalendarMonth,
 } from "@mui/icons-material"

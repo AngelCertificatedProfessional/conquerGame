@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { Navigate, Route, Routes } from "react-router-dom"
-import { UsuarioRoutes } from "../views/usuario/routes/UsuarioRoutes"
+import { UsuarioRoutes } from "../presentation/usuario/routes/UsuarioRoutes"
 import { TemplateIndex } from "../template/TemplateIndex"
 import { useUsuarioStore } from "../hooks"
 import { USER_STATUS, DIRECCIONAMIENTO } from "../types"

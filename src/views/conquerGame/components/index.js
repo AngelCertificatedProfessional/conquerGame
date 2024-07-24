@@ -1,6 +1,0 @@
-export * from './AgregarPartida'
-export * from './BuscarPartida'
-export * from './MenuJuego'
-export * from './SideBarConquerGame'
-export * from './DialogAyudaPersonajes'
-export * from './DialogSeleccionarNuevaPieza'
