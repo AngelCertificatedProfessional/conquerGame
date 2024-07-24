@@ -4,6 +4,7 @@ import { movimientoArcher } from "./piezas/archer";
 import { movimientoAsesino } from "./piezas/asesino";
 import { movimientoCaballero } from "./piezas/caballero";
 import { movimientoHachero } from "./piezas/hachero";
+import { movimientoHechicero } from "./piezas/hechicero";
 import { movimientoLancero } from "./piezas/lancero";
 import { movimientoRey } from "./piezas/rey";
 export const validaPiezaMontana = (idDiv) => {
@@ -74,28 +75,28 @@ export const posicionesMovimientosPiezas = (pieza, posicionPieza, piezaJugador, 
     const row = parseInt(eliminarLetras(posicionPieza));
     switch (pieza) {
         case ARREGLOTIPOPIEZAS.ARCHERE:
-            return [];
+            return movimientoArcher(row, col, piezaJugador, turnoJugador, true)
         case ARREGLOTIPOPIEZAS.ARCHER:
-            return movimientoArcher(row, col, piezaJugador, turnoJugador)
+            return movimientoArcher(row, col, piezaJugador, turnoJugador, false)
         case ARREGLOTIPOPIEZAS.REY:
             return movimientoRey(row, col, piezaJugador, turnoJugador)
         case ARREGLOTIPOPIEZAS.HACHEROE:
-            return [];
+            return movimientoHachero(row, col, piezaJugador, turnoJugador, true);
         case ARREGLOTIPOPIEZAS.HACHERO:
-            return movimientoHachero(row, col, piezaJugador, turnoJugador)
+            return movimientoHachero(row, col, piezaJugador, turnoJugador, false)
         case ARREGLOTIPOPIEZAS.LANCEROE:
-            return [];
+            return movimientoLancero(row, col, piezaJugador, turnoJugador, true)
         case ARREGLOTIPOPIEZAS.LANCERO:
-            return movimientoLancero(row, col, piezaJugador, turnoJugador)
+            return movimientoLancero(row, col, piezaJugador, turnoJugador, false)
         case ARREGLOTIPOPIEZAS.CABALLERO:
             return movimientoCaballero(row, col, piezaJugador, turnoJugador)
         case ARREGLOTIPOPIEZAS.ASESINOE:
-            return [];
+            return movimientoAsesinoElite(row, col, piezaJugador, turnoJugador)
         case ARREGLOTIPOPIEZAS.ASESINO:
-            return movimientoAsesino(row, col, piezaJugador, bSegundoMovimientoAsesino, turnoJugador)
+            return movimientoAsesino(row, col, piezaJugador, bSegundoMovimientoAsesino, turnoJugador, false)
         case ARREGLOTIPOPIEZAS.HECHICERO:
-            return [];
+            return movimientoHechicero(row, col, piezaJugador, turnoJugador);
         case ARREGLOTIPOPIEZAS.CANON:
-            return [];
+            return movimientoCanon(row, col, piezaJugador, turnoJugador);
     }
 }
