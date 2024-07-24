@@ -27,7 +27,7 @@ export const useConquerGameJuegoTableroPage = () => {
     const [mostrarVentanaPiezaEspecial, setMostrarVentanaPiezaEspecial] = useState(false)
     const [tiempoTexto, setTiempoTexto] = useState('01:00')
     const [tiempoContador, setTiempoContador] = useState(60)
-    const intervalRef = useRef(0);
+    const timeOutRef = useRef(0);
     const { socket } = useSocket()
     const refsPiezas = useRef({});
     const navigate = useNavigate();
@@ -40,7 +40,7 @@ export const useConquerGameJuegoTableroPage = () => {
     useEffect(() => {
         cargarPiezasJugador()
         setHabilitarOpcionAceptar(conquerGame.turno === conquerGame.turnoJugador)
-        actualizarTiempoTexto()
+        actualizarTiempoContador()
     }, [])
 
     //Eschucar los cambios en los usuarios conectados
@@ -48,7 +48,7 @@ export const useConquerGameJuegoTableroPage = () => {
         socket?.on(`conquerGame${conquerGame.numeroPartida}MoverPosicionPiezasGlobal`, (conquerGameT) => {
             setBloquearOpciones(false)
             setHabilitarOpcionAceptar(conquerGameT.turno === conquerGame.turnoJugador)
-            actualizarTiempoTexto()
+            actualizarTiempoContador()
             startActualizarConquerGame(conquerGameT)
         })
         return () => {
@@ -63,7 +63,7 @@ export const useConquerGameJuegoTableroPage = () => {
             evaluarJugadorDerrotado(conquerGameT)
             setBloquearOpciones(false)
             setHabilitarOpcionAceptar(conquerGameT.turno === conquerGame.turnoJugador)
-            actualizarTiempoTexto()
+            actualizarTiempoContador()
             startActualizarConquerGame(conquerGameT)
         })
         return () => {
@@ -78,7 +78,7 @@ export const useConquerGameJuegoTableroPage = () => {
 
         socket?.on(`conquerGame${conquerGame.numeroPartida}FinalizarPartida`, ({ mensaje }) => {
             alertMensaje("Ganador", mensaje, "success");
-            clearInterval(intervalRef.current);
+            clearTimeout(timeOutRef.current);
             setTimeout(() => {
                 startActualizarConquerGame({})
                 navigate("/conquerGame")
@@ -91,17 +91,15 @@ export const useConquerGameJuegoTableroPage = () => {
     }, [socket])
 
     useEffect(() => {
-        if (tiempoContador === 60) {
-            setTiempoTexto("01:00")
-        } else {
-            setTiempoTexto(`00:${tiempoContador >= 10 ? tiempoContador : '0' + tiempoContador}`)
-            if (tiempoContador <= 0) {
-                clearInterval(intervalRef.current);
-                if (conquerGame.turno === conquerGame.turnoJugador) {
-                    handlePasarTurno()
-                }
+        if (tiempoContador === 60) return
+        setTiempoTexto(`00:${(tiempoContador < 10 ? '0' : '')}${tiempoContador}`)
+        if (tiempoContador <= 0) {
+            clearTimeout(timeOutRef.current);
+            if (conquerGame.turno === conquerGame.turnoJugador) {
+                handlePasarTurno()
             }
         }
+        
     }, [tiempoContador])
 
     const setListadoRef = useCallback((node, posicion) => {
@@ -110,11 +108,17 @@ export const useConquerGameJuegoTableroPage = () => {
         }
     }, []);
 
-    const actualizarTiempoTexto = () => {
-        clearInterval(intervalRef.current);
+    const actualizarTiempoContador = () => {
+        clearTimeout(timeOutRef.current);
         setTiempoContador(60)
-        intervalRef.current = setInterval(() => {
+        setTiempoTexto("01:00")
+        actualizarTiempoContadorR()
+    }
+
+    const actualizarTiempoContadorR = () => {
+        timeOutRef.current = setTimeout(() => {
             setTiempoContador((tiempoContador) => tiempoContador - 1)
+            actualizarTiempoContadorR()
         }, 1000);
     }
 
