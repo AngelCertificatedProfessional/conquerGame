@@ -3,8 +3,10 @@ import { FormikProvider } from "formik";
 import { USER_STATUS } from "../../../types";
 import { MyErrorF, MyTextFieldF } from "../../../template/components/inputs";
 import { useLoginPage } from "../hooks";
+import { getEnvVariables } from "../../../helpers";
 
 export const LoginPage = () => {
+    const { VITE_VERSION } = getEnvVariables()
     const {
         formik,
         handleSubmit,
@@ -36,49 +38,69 @@ export const LoginPage = () => {
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        alignItems: 'center',
-                        my: 8,
-                        mx: 4
+                        height:'100%',
+                        justifyContent:'space-between'
                     }}>
-                    <Typography component="h1" variant="h5">
-                        Inicio de Sesion
-                    </Typography>
-                    <FormikProvider value={formik}>
-                        <Box component="form" noValidate onSubmit={handleSubmit}>
-                            <MyTextFieldF
-                                label="Correo"
-                                name="correo"
-                                required
-                                type="email"
-                                autoFocus
-                                disabled
-                            />
-                            <MyTextFieldF
-                                label="Contraseña"
-                                name="contrasena"
-                                required
-                                type="password"
-                                disabled
-                            />
-                            <Stack spacing={2} direction="row" sx={{ mt: 2 }} useFlexGap flexWrap="wrap">
-                                <Button variant="contained" type="submit" sx={{ flexGrow: { xs: 1, sm: 0 } }}> Ingresar </Button>
-                                <Button variant="contained" onClick={sesionInvitado} sx={{ flexGrow: { xs: 1, sm: 0 } }}> Invitado </Button>
-                            </Stack>
-                            <MyErrorF errors={errors.submit} />
-                            <MyErrorF errors={errorMessage} />
-                            {status === USER_STATUS.CHECKING &&
-                                <Box sx={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    alignItems: 'center',
-                                    my: 8,
-                                    mx: 4
-                                }}>
-                                    <CircularProgress />
-                                </Box>
-                            }
+
+                    <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            my: 8,
+                            mx: 4
+                        }}>
+                        <Typography component="h1" variant="h5">
+                            Inicio de Sesion
+                        </Typography>
+                        <FormikProvider value={formik}>
+                            <Box component="form" noValidate onSubmit={handleSubmit}>
+                                <MyTextFieldF
+                                    label="Correo"
+                                    name="correo"
+                                    required
+                                    type="email"
+                                    autoFocus
+                                    disabled
+                                />
+                                <MyTextFieldF
+                                    label="Contraseña"
+                                    name="contrasena"
+                                    required
+                                    type="password"
+                                    disabled
+                                />
+                                <Stack spacing={2} direction="row" sx={{ mt: 2 }} useFlexGap flexWrap="wrap">
+                                    <Button variant="contained" type="submit" sx={{ flexGrow: { xs: 1, sm: 0 } }}> Ingresar </Button>
+                                    <Button variant="contained" onClick={sesionInvitado} sx={{ flexGrow: { xs: 1, sm: 0 } }}> Invitado </Button>
+                                </Stack>
+                                <MyErrorF errors={errors.submit} />
+                                <MyErrorF errors={errorMessage} />
+                                {status === USER_STATUS.CHECKING &&
+                                    <Box sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                        my: 8,
+                                        mx: 4
+                                    }}>
+                                        <CircularProgress />
+                                    </Box>
+                                }
+                            </Box>
+                        </FormikProvider>
+                            
+                    </Box>
+                    <Box
+                        sx={{
+                            color: 'rgba(0, 0, 0, 0.54)',  // Example color
+                            my: 2,
+                            mx: 4
+                        }}>
+                            <Typography component="h6" variant="h6">
+                                Versión {VITE_VERSION}
+                            </Typography>
                         </Box>
-                    </FormikProvider>
                 </Box>
             </Grid>
         </Grid >
