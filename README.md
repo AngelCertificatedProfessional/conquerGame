@@ -1,5 +1,5 @@
 
-# Ecomoney-API
+# ConquerGame
 
 El proyecto conqueGame es un juego de tablero en base en turnos, todos los jugadores tendran 13 piezas iniciales que pueden acomodar en el tablero donde el jugador lo desee, siempre 4 cuando no sobrepase el area de la neblina, despues de asignar sus piezas se iniciara la partida y cada jugador buscara derrotar al rey enemigo.
 Cada pieza cuenta con su manera unicada de moverse, algunas teniendo mayores rangos de movimiento, otras pudiendo atacar a distancia y otras hasta pudiendo moverse hasta dos veces en el mismo turno.
