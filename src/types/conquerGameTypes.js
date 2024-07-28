@@ -157,7 +157,7 @@ export const CONTENIDOLISTADO = [
     tipo: 1,
     titulo: "Arquero",
     icono: "archer",
-    descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
+    descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier dirección, también puede 
       atacar a distancia en la tercera casilla sin requerir mover la unidad`,
     mostrar: true
   },
@@ -165,15 +165,15 @@ export const CONTENIDOLISTADO = [
     tipo: 1,
     titulo: "Asesino",
     icono: "asesino",
-    descripcion: `Esta unidad puede puede hacer dos movimientos en el mismo turno, el primer movimiento sera 
-      de lado horizontal/vertical, y el segundo turno se movera en diagonal`,
+    descripcion: `Esta unidad puede hacer dos movimientos en el mismo turno, el primer movimiento será 
+      de lado horizontal/vertical, y el segundo turno se moverá en diagonal`,
     mostrar: true
   },
   {
     tipo: 1,
     titulo: "Caballero",
     icono: "caballero",
-    descripcion: `Esta unidad puede moverse hacia cualquier direccion sin restriccion de la cantidad de casillas 
+    descripcion: `Esta unidad puede moverse hacia cualquier dirección sin restricción de la cantidad de casillas 
       que pueda moverse, pero no puede atravesar lagos`,
     mostrar: true
   },
@@ -181,7 +181,7 @@ export const CONTENIDOLISTADO = [
     tipo: 1,
     titulo: "Rey",
     icono: "rey",
-    descripcion: `Esta unidad puede moverse uno o dos espacios en cualquier direccion, 
+    descripcion: `Esta unidad puede moverse uno o dos espacios en cualquier dirección, 
       en caso de que muera esta unidad es derrota inmediata para el jugador`,
     mostrar: true
   },
@@ -189,14 +189,15 @@ export const CONTENIDOLISTADO = [
     tipo: 2,
     titulo: "Asesino Elite",
     icono: "asesinoE",
-    descripcion: `Esta unidad puede puede hacer dos movimientos en el mismo turno, esta unidad puede moverse un espacio por los dos turnos`,
+    descripcion: `Esta unidad puede hacer dos movimientos en el mismo turno, esta unidad puede moverse un espacio por todas las direcciones
+    los dos turnos`,
     mostrar: true
   },
   {
     tipo: 2,
     titulo: "Arquero Elite",
     icono: "archerE",
-    descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
+    descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier dirección, también puede 
       atacar a distancia en la tercera casilla o cuarta casilla sin requerir mover la unidad`,
     mostrar: true
   },
@@ -205,15 +206,15 @@ export const CONTENIDOLISTADO = [
     titulo: "Hechicero",
     icono: "hechicero",
     descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
-      atacar a distancia en la cuarta casilla o quinta casilla sin requerir mover la unidad`,
+      atacar a distancia en la tercera casilla sin requerir mover la unidad, este ataque puede traspasar las montañas`,
     mostrar: true
   },
   {
     tipo: 2,
     titulo: "Cañon",
     icono: "canon",
-    descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier direccion, tambien puede 
-      atacar a distancia en la octava casilla sin requerir mover la unidad`,
+    descripcion: `Esta unidad puede moverse uno o dos espacios hacia cualquier dirección, también puede 
+      atacar a distancia en la octava casilla sin requerir mover la unidad, este ataque puede traspasar las montañas`,
     mostrar: true
   },
   {

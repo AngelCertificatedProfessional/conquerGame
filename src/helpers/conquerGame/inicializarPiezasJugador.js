@@ -28,10 +28,11 @@ export const inicializarPiezasJugador = async (conquerGame) => {
                     direccion: (await import(/* @vite-ignore */`${direccionRuta}${conquerGame.turnoJugador}${pieza.icono}.png`)).default,
                 }
             } else {
+                //Piezas de ayuda
                 return {
                     ...pieza,
                     direccion: (await import(/* @vite-ignore */`${direccionRuta}Y${pieza.icono}.png`)).default,
-                    direccionMovimiento: (await import(/* @vite-ignore */`${direccionRutaMovimiento}movimiento.png`)).default
+                    direccionMovimiento: (await import(/* @vite-ignore */`${direccionRutaMovimiento}${pieza.icono}.png`)).default
                 }
             }
         })

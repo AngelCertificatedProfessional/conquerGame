@@ -4,7 +4,7 @@ import { USER_STATUS } from "../../../types";
 import { MyErrorF, MyTextFieldF } from "../../../template/components/inputs";
 import { useLoginPage } from "../hooks";
 import { getEnvVariables } from "../../../helpers";
-
+import FondoPantalla from "../../../images/conquerGame/targetas/fondoPantalla.png"
 export const LoginPage = () => {
     const { VITE_VERSION } = getEnvVariables()
     const {
@@ -24,7 +24,7 @@ export const LoginPage = () => {
                 sm={4}
                 md={7}
                 sx={{
-                    backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+                    backgroundImage: `url(${FondoPantalla})`,
                     backgroundRepeat: 'no-repeat',
                     backgroundColor: (t) =>
                         t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -38,8 +38,8 @@ export const LoginPage = () => {
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        height:'100%',
-                        justifyContent:'space-between'
+                        height: '100%',
+                        justifyContent: 'space-between'
                     }}>
 
                     <Box
@@ -89,7 +89,7 @@ export const LoginPage = () => {
                                 }
                             </Box>
                         </FormikProvider>
-                            
+
                     </Box>
                     <Box
                         sx={{
@@ -97,10 +97,10 @@ export const LoginPage = () => {
                             my: 2,
                             mx: 4
                         }}>
-                            <Typography component="h6" variant="h6">
-                                Versión {VITE_VERSION}
-                            </Typography>
-                        </Box>
+                        <Typography component="h6" variant="h6">
+                            Versión {VITE_VERSION}
+                        </Typography>
+                    </Box>
                 </Box>
             </Grid>
         </Grid >
